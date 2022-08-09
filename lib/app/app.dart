@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/errors/common_error_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/common_error_widget.dart';
 import '../presentation/common/resources/themes.dart';
 import '../presentation/common/routes.dart';
 

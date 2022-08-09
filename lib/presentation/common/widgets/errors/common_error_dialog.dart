@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_starterkit/app/error_handling/exceptions_ui.dart';
-import 'package:flutter_starterkit/presentation/common/resources/animation_assets.dart';
-import 'package:flutter_starterkit/presentation/common/resources/color_assets.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/animated_dialog_icon.dart';
+import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
+import 'package:speakyfox/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
 
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
 Future<void> showCommonErrorDialog(

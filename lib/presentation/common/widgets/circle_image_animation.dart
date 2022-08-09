@@ -33,8 +33,10 @@ class _CircleImageAnimationState extends State<CircleImageAnimation>
 
   @override
   Widget build(BuildContext context) {
-    return RotationTransition(
-        turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-        child: widget.child);
+    return RepaintBoundary(
+      child: RotationTransition(
+          turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
+          child: widget.child),
+    );
   }
 }

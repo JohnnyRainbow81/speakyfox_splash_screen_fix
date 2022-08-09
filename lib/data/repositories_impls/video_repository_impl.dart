@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/foundation.dart';
-import 'package:flutter_starterkit/app/connectivity_service.dart';
-import 'package:flutter_starterkit/app/error_handling/error_handler.dart';
-import 'package:flutter_starterkit/app/error_handling/exceptions_ui.dart';
-import 'package:flutter_starterkit/data/mappers/video_mapper.dart';
-import 'package:flutter_starterkit/domain/repositories/video_repository.dart';
+import 'package:speakyfox/app/connectivity_service.dart';
+import 'package:speakyfox/app/error_handling/error_handler.dart';
+import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/data/mappers/video_mapper.dart';
+import 'package:speakyfox/domain/repositories/video_repository.dart';
 import '../../domain/models/video.dart';
 import '../../main.dart';
 import '../data_sources/video_sources/fake_video_source.dart';

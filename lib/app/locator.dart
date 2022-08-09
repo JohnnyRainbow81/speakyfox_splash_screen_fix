@@ -1,4 +1,4 @@
-import 'package:flutter_starterkit/presentation/screens/videofeed/videofeed_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/videofeed/videofeed_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';

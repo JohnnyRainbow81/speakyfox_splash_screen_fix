@@ -10,10 +10,12 @@ class LoadingAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     Color? backgroundColor = Colors.transparent;
     if (Platform.isIOS) backgroundColor = ColorAssets.primary;
-    return CircularProgressIndicator.adaptive(
-      strokeWidth: 2,
-      backgroundColor: backgroundColor,
-      valueColor: AlwaysStoppedAnimation<Color>(ColorAssets.primary),
+    return RepaintBoundary(
+      child: CircularProgressIndicator.adaptive(
+        strokeWidth: 2,
+        backgroundColor: backgroundColor,
+        valueColor: AlwaysStoppedAnimation<Color>(ColorAssets.primary),
+      ),
     );
   }
 }

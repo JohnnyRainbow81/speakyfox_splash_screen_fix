@@ -5,7 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_starterkit/firebase_options.dart';
+import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/locator.dart';
 //import 'firebase_options.dart';

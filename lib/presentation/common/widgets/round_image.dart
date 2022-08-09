@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/loading_animation.dart';
+import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 
 class RoundImage extends StatelessWidget {
   final String imageUrl;

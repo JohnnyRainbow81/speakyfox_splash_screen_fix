@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starterkit/presentation/common/resources/color_assets.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/animated_dialog_icon.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/circle_image_animation.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/divider_widget.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/keywords_widget.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/list_tile_widget.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/loading_animation.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/rating_widget.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/round_image.dart';
+import 'package:speakyfox/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
+import 'package:speakyfox/presentation/common/widgets/circle_image_animation.dart';
+import 'package:speakyfox/presentation/common/widgets/divider_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/keywords_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/list_tile_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
+import 'package:speakyfox/presentation/common/widgets/rating_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/round_image.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);

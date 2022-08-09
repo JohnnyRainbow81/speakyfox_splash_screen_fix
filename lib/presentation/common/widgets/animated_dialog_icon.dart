@@ -9,7 +9,7 @@ class AnimatedDialogIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _getIcon(asset);
+    return RepaintBoundary(child: _getIcon(asset));
   }
 
 //Unfortunately this per-case Lottie asset handling is necessary

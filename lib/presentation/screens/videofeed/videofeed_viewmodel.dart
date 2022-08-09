@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_starterkit/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import '../../../app/constants.dart';
 import '../../../domain/services/preferences_service.dart';
 import '../../../domain/services/videofeed_service.dart';

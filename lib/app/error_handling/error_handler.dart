@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_starterkit/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 
 class ErrorHandler {
   ErrorHandler._();

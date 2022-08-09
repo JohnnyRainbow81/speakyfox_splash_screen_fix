@@ -4,19 +4,20 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
-            "name": "starterkit_flutter",
+            "name": "speakyfox",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "starterkit_flutter (profile mode)",
+            "name": "speakyfox (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "starterkit_flutter (release mode)",
+            "name": "speakyfox (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

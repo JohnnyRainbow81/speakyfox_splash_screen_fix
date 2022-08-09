@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starterkit/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 
 class ListTileWidget extends StatelessWidget {
   final String text;

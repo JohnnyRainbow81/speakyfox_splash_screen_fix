@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
 
-import 'package:flutter_starterkit/domain/models/video.dart';
-import 'package:flutter_starterkit/domain/repositories/video_repository.dart';
-import 'package:flutter_starterkit/domain/services/preferences_service.dart';
-import 'package:flutter_starterkit/presentation/screens/videofeed/video_playable.dart';
+import 'package:speakyfox/domain/models/video.dart';
+import 'package:speakyfox/domain/repositories/video_repository.dart';
+import 'package:speakyfox/domain/services/preferences_service.dart';
+import 'package:speakyfox/presentation/screens/videofeed/video_playable.dart';
 
 class VideoFeedService {
   final PreferencesService _preferencesService;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/buttons/long_rounded_confirm_button.dart';
-import 'package:flutter_starterkit/presentation/common/widgets/buttons/payment_amount_button.dart';
+import 'package:speakyfox/presentation/common/widgets/buttons/long_rounded_confirm_button.dart';
+import 'package:speakyfox/presentation/common/widgets/buttons/payment_amount_button.dart';
 import 'buttons/close_x_button.dart';
 
 class CreatorModalBottomSheet extends StatelessWidget {

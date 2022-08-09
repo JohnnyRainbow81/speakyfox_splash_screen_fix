@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter_starterkit/data/mappers/preferences_mapper.dart';
-import 'package:flutter_starterkit/domain/repositories/preferences_repository.dart';
+import 'package:speakyfox/data/mappers/preferences_mapper.dart';
+import 'package:speakyfox/domain/repositories/preferences_repository.dart';
 import '../../app/connectivity_service.dart';
 import '../../domain/models/preferences.dart';
 import '../data_sources/preferences_sources/local_preference_source.dart';
