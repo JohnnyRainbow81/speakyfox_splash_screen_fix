@@ -73,8 +73,8 @@ class TestScreen extends StatelessWidget {
                     ),
                     Row(children: const [
                       ColorTest(ColorAssets.primary, "primary"),
-                      ColorTest(ColorAssets.bluegrey, "blueGrey"),
-                      ColorTest(ColorAssets.grey, "grey"),
+                      ColorTest(ColorAssets.bgBlueDark, "bgBlueDark"),
+                      ColorTest(ColorAssets.bgBlueLight, "bgBlueLight"),
                       ColorTest(ColorAssets.lightGrey, "lightGrey"),
                       ColorTest(ColorAssets.pastel, "pastel")
                     ]),

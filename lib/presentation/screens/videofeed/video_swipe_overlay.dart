@@ -43,7 +43,7 @@ class _VideoSwipeOverlayState extends State<VideoSwipeOverlay> {
         child: Container(
           height: MediaQuery.of(context).size.height * 0.4,
           width: MediaQuery.of(context).size.height* 0.4,
-          decoration:  BoxDecoration(border: Border.all(width: 20, color: ColorAssets.black54.withOpacity(0.3),),
+          decoration:  BoxDecoration(border: Border.all(width: 20, color: ColorAssets.primary.withOpacity(0.3),),
               borderRadius: const BorderRadius.all(Radius.circular(5000))),
           child: Image.asset(
                   'assets/gifs/swipe-up.gif',height: MediaQuery.of(context).size.height * 2, width: MediaQuery.of(context).size.height * 2,

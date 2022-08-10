@@ -1,4 +1,4 @@
 class FontAssets {
-  static const String primary = 'SourceSansPro';
+  static const String primary = 'Lato';
 
 }

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'distance_widget.dart';
-import 'gradient_widget.dart';
 import 'video_swipe_overlay.dart';
 import 'package:video_player/video_player.dart';
 import '../../common/widgets/actions_toolbar.dart';
@@ -24,7 +22,6 @@ class VideoScreen extends StatelessWidget {
                 ? VideoPlayer(videoPlayable.controller!)
                 : const Center(child: Text("No video data"))),
         //Gradient for readability
-        const GradientWidget(),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
@@ -48,7 +45,6 @@ class VideoScreen extends StatelessWidget {
           ],
         ),
         const VideoSwipeOverlay(),
-        DistanceWidget(videoPlayable.video.distance)
       ],
     );
   }
