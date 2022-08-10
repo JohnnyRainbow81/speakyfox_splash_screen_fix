@@ -59,6 +59,7 @@ flutter:
     - assets/videos/
     - assets/gifs/
     - assets/animations/
+    - assets/environments/
   fonts:
     - family: SourceSansPro
       fonts:

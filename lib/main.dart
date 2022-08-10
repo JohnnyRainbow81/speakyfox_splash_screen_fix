@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/locator.dart';
@@ -21,6 +22,8 @@ main() async {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    await BuildEnvironment.init();
 
     //If [false], crashdata is only collected on the local device > [true] for sending errors to remote Crashlytics
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
@@ -44,10 +47,10 @@ main() async {
       );
     }).sendPort);
 
-  //dependency injection
+    //dependency injection
     await initializeServiceLocator();
 
-    runApp(Phoenix(child: FlutterStarterKitApp()));
+    runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {
     //Error that aren't caught by Flutter
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);

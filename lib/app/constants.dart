@@ -4,4 +4,6 @@ class Constants {
   static const int maxCachedVideos = 2;
   static const int videoSwipeOverlayDuration = 5;
   static const int maxLoadVideosRetries = 3;
+
+  
 }

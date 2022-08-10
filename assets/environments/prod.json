@@ -1,0 +1,12 @@
+ {
+  "production": true,
+  "serverUrl": "https://speakyfox-api-production.herokuapp.com/api/v1/",
+  "serverUrlV2": "https://speakyfox-api-production.herokuapp.com/api/v2/",
+  "documentrApiUrl": "https://documentr-api-qa.herokuapp.com/",
+  "documentrApiKey": "394hu0isf02ui4f",
+  "defaultLanguage": "en-US",
+  "payPalClientId": "AaSNeXU6XJQamVP2nvWfC164iCCH8xEHnrOtCEAXZEFjFsq9fxRvpUbs21BlJY7hxfz9k8OBK_fwSrjN",
+  "environmentName": "",
+  "supportedLanguages": ["en-US", "fr-FR"],
+  "hmr": false
+}

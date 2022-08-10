@@ -3,19 +3,19 @@ import 'package:speakyfox/presentation/common/widgets/errors/common_error_widget
 import '../presentation/common/resources/themes.dart';
 import '../presentation/common/routes.dart';
 
-class FlutterStarterKitApp extends StatelessWidget {
-  const FlutterStarterKitApp._();
+class SpeakyFox extends StatelessWidget {
+  const SpeakyFox._();
 
 //Singleton. There must only be one app at a time.
-  static const FlutterStarterKitApp instance = FlutterStarterKitApp._();
+  static const SpeakyFox _instance = SpeakyFox._();
 
-  factory FlutterStarterKitApp() => instance;
+  factory SpeakyFox() => _instance;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(), 
+      theme: getApplicationTheme(),
       onGenerateRoute: Routes.getRoute,
       builder: (ctx, widget) {
         //Building an error widget to show to the user if a build()-method fails

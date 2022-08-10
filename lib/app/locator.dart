@@ -1,3 +1,4 @@
+import 'package:speakyfox/domain/models/video.dart';
 import 'package:speakyfox/presentation/screens/videofeed/videofeed_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
@@ -9,7 +10,6 @@ import '../data/data_sources/video_sources/local_video_source.dart';
 import '../data/data_sources/video_sources/remote_video_source.dart';
 import '../data/repositories_impls/preferences_repository_impl.dart';
 import '../data/repositories_impls/video_repository_impl.dart';
-import '../domain/models/video.dart';
 import '../domain/repositories/preferences_repository.dart';
 import '../domain/repositories/video_repository.dart';
 import '../domain/services/location_service.dart';
