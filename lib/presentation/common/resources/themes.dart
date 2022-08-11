@@ -5,7 +5,7 @@ import 'font_assets.dart';
 ThemeData getApplicationTheme() {
   return ThemeData(
     primaryColor: ColorAssets.primary,
-    backgroundColor: ColorAssets.background,
+    backgroundColor: ColorAssets.bgBlueLight,
     scaffoldBackgroundColor: ColorAssets.background,
     fontFamily: FontAssets.primary,
     textTheme: _getApplicationTextTheme(),
@@ -16,6 +16,8 @@ ThemeData getApplicationTheme() {
     buttonTheme: _getButtonThemeData(), //nearly empty yet
     iconTheme: _getIconThemeData(), 
     primaryIconTheme: _getIconThemeData(),
+    cardTheme: _getCardTheme(),
+    appBarTheme: _getAppBarTheme(),
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(),
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
@@ -39,12 +41,27 @@ TextTheme _getApplicationTextTheme() {
         fontSize: 19, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
     button: TextStyle(
         fontSize: 14, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
-    bodyText1: TextStyle(fontSize: 15, color: ColorAssets.primary, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
-    bodyText2: TextStyle(fontSize: 13, color: ColorAssets.primary, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
+    bodyText1: TextStyle(fontSize: 15, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
+    bodyText2: TextStyle(fontSize: 13, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
     caption: TextStyle(fontSize: 13, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     subtitle1: TextStyle(fontSize: 14, color: ColorAssets.primary, fontFamily: FontAssets.primary,fontWeight: FontWeight.w500),//r
     subtitle2: TextStyle(fontSize: 12, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
-    labelMedium: TextStyle(fontSize: 13, color: ColorAssets.grey, fontFamily: FontAssets.primary,fontWeight: FontWeight.w500),//r
+    labelMedium: TextStyle(fontSize: 13, color: ColorAssets.midGrey, fontFamily: FontAssets.primary,fontWeight: FontWeight.w500),//r
+  );
+}
+
+AppBarTheme _getAppBarTheme() {
+  return AppBarTheme(
+backgroundColor: ColorAssets.lightest,elevation: 0,
+  );
+}
+
+CardTheme _getCardTheme(){
+  return const CardTheme(
+    elevation: 20,
+    color: ColorAssets.lightest,
+    shadowColor: ColorAssets.shadow,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)))
   );
 }
 
@@ -76,7 +93,7 @@ ElevatedButtonThemeData _getElevatedButtonThemeData() {
       style: ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 24)),
     backgroundColor: MaterialStateProperty.all<Color>(ColorAssets.buttonBackgroundActiveColor),
-    foregroundColor: MaterialStateProperty.all<Color>(ColorAssets.black),
+    foregroundColor: MaterialStateProperty.all<Color>(ColorAssets.buttonBackgroundInactiveColor),
     overlayColor: MaterialStateProperty.resolveWith<Color?>(
       (Set<MaterialState> states) {
         if (states.contains(MaterialState.hovered)) return ColorAssets.buttonHoveredColor;
@@ -102,7 +119,7 @@ ButtonStyle _getButtonStyle() {
 }
 
 TextStyle getHintTextStyle() {
-  return const TextStyle(color: ColorAssets.grey, fontWeight: FontWeight.bold, fontFamily: 'SourceSansProBold');
+  return const TextStyle(color: ColorAssets.midGrey, fontWeight: FontWeight.bold, fontFamily: 'SourceSansProBold');
 }
 
 SliderThemeData _getSliderThemeData() {

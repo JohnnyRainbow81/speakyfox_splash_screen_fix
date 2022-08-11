@@ -127,7 +127,7 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
           elevation: 1.5,
           child: Container(
             decoration: BoxDecoration(
-                color: ColorAssets.black,
+                color: ColorAssets.bgBlueLight,
                 shape: BoxShape.rectangle,
                 border: Border.all(width: 1.5, color: ColorAssets.primary),
                 borderRadius: BorderRadius.circular(16),
