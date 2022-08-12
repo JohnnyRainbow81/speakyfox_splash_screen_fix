@@ -251,28 +251,3 @@ enum GameType {
   swipingVocabularyImage7,
 }
 
-class User {
-  String id;
-  String formOfAddress;
-  String firstName;
-  String lastName;
-  String email;
-  String currentLanguagePairId;
-  String currentSourceLanguageId;
-  String currentTargetLanguageId;
-  List<String> roles;
-  List<String> subscriptionIds;
-  User({
-    required this.id,
-    required this.formOfAddress,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.currentLanguagePairId,
-    required this.currentSourceLanguageId,
-    required this.currentTargetLanguageId,
-    required this.roles,
-    required this.subscriptionIds,
-  });
-  
-}

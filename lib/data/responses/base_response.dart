@@ -13,8 +13,4 @@ class BaseResponse {
   int? internalCode;
   @JsonKey(name: "statusCode")
   int? statusCode;
-
-  // factory BaseResponse.fromJson(Map<String, dynamic> json) => _$BaseResponseFromJson(json);
-
-  // Map<String, dynamic> toJson() => _$BaseResponseToJson(this);
 }

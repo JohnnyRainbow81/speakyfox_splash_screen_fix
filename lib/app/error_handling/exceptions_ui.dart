@@ -143,6 +143,15 @@ class UnauthorizedUIException extends UIException {
         );
 }
 
+class LoginNotSuccessfullException extends UIException {
+  LoginNotSuccessfullException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Login was not successful",
+          description: description ?? "Please try again.",
+        );
+}
+
 class NotFoundUIException extends UIException {
   NotFoundUIException({int? code, String? message, String? description})
       : super(

@@ -5,7 +5,7 @@ class Authentication {
   String refreshToken;
   String scope;
   String tokenType;
-  
+
   Authentication({
     required this.accessToken,
     required this.expiresIn,
@@ -13,4 +13,9 @@ class Authentication {
     required this.scope,
     required this.tokenType,
   });
+}
+
+
+class ForgotPassword{
+  
 }

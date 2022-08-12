@@ -36,8 +36,6 @@ class BuildEnvironment {
 
   final BuildFlavor flavor;
 
-  late BuildEnvironment instance;
-
   BuildEnvironment._init(
       {required this.serverUrl,
       required this.serverUrlV2,

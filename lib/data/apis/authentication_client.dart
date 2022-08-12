@@ -1,7 +1,6 @@
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:speakyfox/app/constants.dart';
-import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/responses/authentication_response.dart';
 import 'package:speakyfox/data/responses/forgot_password_response.dart';
 part 'authentication_client.g.dart';
@@ -17,10 +16,7 @@ abstract class AuthenticationClient {
     @Field("grant_type") String grantType,
   );
 
-  @POST("/customer/forgotPassword")
-  Future<ForgotPasswordResponse> forgotPassword(@Field("email") String email);
-
-  @POST("/customer/register")
+  @POST("/users/register")
   Future<AuthenticationResponse> register(
       @Field("country_mobile_code") String countryCode,
       @Field("user_name") String userName,

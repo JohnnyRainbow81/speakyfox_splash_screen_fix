@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:speakyfox/presentation/screens/login/login_screen.dart';
 import '../screens/test_screen.dart';
 
 class Routes {
@@ -10,8 +11,8 @@ class Routes {
     switch (routeSettings.name) {
       case Routes.test:
         return Platform.isIOS
-            ? CupertinoPageRoute(builder: (_) => const TestScreen())
-            : MaterialPageRoute(builder: (_) => const TestScreen());
+            ? CupertinoPageRoute(builder: (_) => const LoginScreen())
+            : MaterialPageRoute(builder: (_) => const LoginScreen());
 
       default:
         return _undefinedRouteScreen();

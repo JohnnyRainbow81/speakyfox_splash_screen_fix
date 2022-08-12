@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
 import 'package:speakyfox/presentation/common/widgets/circle_image_animation.dart';
 import 'package:speakyfox/presentation/common/widgets/divider_widget.dart';
 import 'package:speakyfox/presentation/common/widgets/keywords_widget.dart';
 import 'package:speakyfox/presentation/common/widgets/list_tile_widget.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/common/widgets/rating_widget.dart';
-import 'package:speakyfox/presentation/common/widgets/round_image.dart';
 
 class TestScreen extends StatelessWidget {
   const TestScreen({Key? key}) : super(key: key);
@@ -124,7 +122,6 @@ class TestScreen extends StatelessWidget {
                         "This is a [subTitle2]",
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      const AnimatedDialogIcon(),
                       const CircleImageAnimation(
                         child: Icon(Icons.alarm),
                       ),
@@ -165,6 +162,7 @@ class ColorTest extends StatelessWidget {
   final String colorName;
   final Color color;
   final Color? color2;
+  
   const ColorTest(
     this.color,
     this.colorName, {
@@ -175,9 +173,9 @@ class ColorTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double padding = 8;
+    double padding = 4;
     int colorPerRow = 4;
-    double size = screenWidth / colorPerRow - ((colorPerRow - 1) * padding/2);
+    double size = screenWidth / colorPerRow - ((colorPerRow - 1) * padding);
     return Column(
       children: [
     color2 == null
