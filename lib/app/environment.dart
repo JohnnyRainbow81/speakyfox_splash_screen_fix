@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:speakyfox/app/constants.dart';
 
 enum BuildFlavor { development, qa, production }
 
@@ -22,6 +23,7 @@ class BuildEnvironment {
   static const String _keySupportedLanguages = "supportedLanguages";
   static const String _keyHmr = "hmr";
 
+  final String serverUrlAuth = Constants.baseUrlAuth;
   final String serverUrl;
   final String serverUrlV2;
   final String documentrApiUrl;
@@ -33,6 +35,8 @@ class BuildEnvironment {
   final bool hmr;
 
   final BuildFlavor flavor;
+
+  late BuildEnvironment instance;
 
   BuildEnvironment._init(
       {required this.serverUrl,
@@ -50,7 +54,7 @@ class BuildEnvironment {
     Map<String, dynamic> map = {};
     if (kDebugMode || kProfileMode) {
       String str = await rootBundle.loadString("assets/environments/qa.json");
-      map = jsonDecode(str); 
+      map = jsonDecode(str);
     } else if (kReleaseMode) {
       String str = await rootBundle.loadString("assets/environments/prod.json");
       map = jsonDecode(str);

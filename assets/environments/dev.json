@@ -1,5 +1,6 @@
 {
   "production": false,
+  "authUrl" : "https://speakyfox-api-production.herokuapp.com/",
   "serverUrl": "https://localhost:5001/api/v1/",
   "serverUrlV2": "https://localhost:5001/api/v2/",
   "documentrApiUrl": "https://documentr-api-qa.herokuapp.com/", 

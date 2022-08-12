@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/data/apis/video_remote_client.dart';
+import 'package:speakyfox/data/apis/video_client.dart';
 
 import '../../../domain/repositories/video_repository.dart';
 import '../../dto/video_dto.dart';

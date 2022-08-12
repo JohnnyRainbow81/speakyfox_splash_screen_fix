@@ -1,3 +1,6 @@
+import 'package:speakyfox/app/environment.dart';
+import 'package:speakyfox/data/apis/authentication_client.dart';
+import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/domain/models/video.dart';
 import 'package:speakyfox/presentation/screens/videofeed/videofeed_viewmodel.dart';
 import 'package:get_it/get_it.dart';
@@ -28,6 +31,11 @@ Future<void> initializeServiceLocator() async {
 //ConnectivityService
   locator.registerLazySingleton(() => ConnectivityService());
 
+  //Dio
+  locator.registerLazySingleton(() => DioFactory());
+  final dio = await locator<DioFactory>().initializeDio();
+  locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(dio, baseUrl: env.serverUrlAuth));
+
 //PreferenceService
   final sharedPrefs = await SharedPreferences.getInstance();
   locator.registerLazySingleton(() => sharedPrefs);
@@ -57,10 +65,8 @@ Future<void> initializeServiceLocator() async {
     return LocationService(locator(), locator());
   });
 
-
   ////////////ViewModels//////////////
 
 //VideoFeedModel
   locator.registerLazySingleton<VideoFeedViewModel>(() => VideoFeedViewModel(locator(), locator()));
-
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../common/resources/color_assets.dart';
 import 'videofeed_viewmodel.dart';
 import '../../../app/constants.dart';
-import '../../../app/locator.dart';
+import '../../../app/dependency_injection.dart';
 
 class VideoSwipeOverlay extends StatefulWidget {
   const VideoSwipeOverlay({Key? key}) : super(key: key);

@@ -1,3 +1,3 @@
 //Retrofit will generate this later
-abstract class VideoRemoteClient {
+abstract class VideoClient {
 }

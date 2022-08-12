@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
 import 'package:get_it/get_it.dart';
-import '../../../app/locator.dart';
+import '../../../app/dependency_injection.dart';
 import '../../common/widgets/loading_animation.dart';
 import 'package:stacked/stacked.dart';
 import 'video_playable.dart';
