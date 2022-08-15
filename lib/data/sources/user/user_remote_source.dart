@@ -3,10 +3,10 @@ import 'package:speakyfox/data/responses/authentication_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
 import 'package:speakyfox/domain/repositories/user_repository.dart';
 
-class RemoteUserSource implements UserRepository<UserResponse, ResetPasswordResponse> {
+class UserRemoteSource implements UserRepository<UserResponse, ResetPasswordResponse> {
   UserClient _userClient;
 
-  RemoteUserSource(this._userClient);
+  UserRemoteSource(this._userClient);
 
   @override
   Future<ResetPasswordResponse> resetPassword(String email) async {

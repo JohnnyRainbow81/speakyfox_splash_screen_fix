@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:speakyfox/app/environment.dart';
-import 'package:speakyfox/data/data_sources/authorization/authorization_remote_source.dart';
-import 'package:speakyfox/data/data_sources/user/user_remote_source.dart';
 import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_clients/user_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
@@ -16,6 +14,8 @@ import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../data/sources/authorization/authorization_remote_source.dart';
+import '../data/sources/user/user_remote_source.dart';
 import 'connectivity_service.dart';
 import 'constants.dart';
 
@@ -51,7 +51,7 @@ Future<void> initializeServiceLocator() async {
 //UserClient
 
   locator.registerLazySingleton<UserClient>(() => UserClient(dioV1));
-  locator.registerLazySingleton<RemoteUserSource>(() => RemoteUserSource(locator()));
+  locator.registerLazySingleton<UserRemoteSource>(() => UserRemoteSource(locator()));
   locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<UserService>(() => UserService(locator(), locator()));
 
