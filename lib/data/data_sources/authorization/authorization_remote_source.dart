@@ -3,10 +3,10 @@ import 'package:speakyfox/data/responses/authentication_response.dart';
 import 'package:speakyfox/domain/models/authentication.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class RemoteAuthenticationSource implements AuthenticationRepository<AuthenticationResponse> {
+class AuthenticationRemoteSource implements AuthenticationRepository<AuthenticationResponse> {
   final AuthenticationClient _authenticationClient;
 
-  RemoteAuthenticationSource(this._authenticationClient);
+  AuthenticationRemoteSource(this._authenticationClient);
 
   @override
   Future<AuthenticationResponse> login(String username, String password, String grantType) async {

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:speakyfox/app/environment.dart';
-import 'package:speakyfox/data/data_sources/authorization/remote_authorization_source.dart';
-import 'package:speakyfox/data/data_sources/user/remote_user_source.dart';
+import 'package:speakyfox/data/data_sources/authorization/authorization_remote_source.dart';
+import 'package:speakyfox/data/data_sources/user/user_remote_source.dart';
 import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_clients/user_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
@@ -44,7 +44,7 @@ Future<void> initializeServiceLocator() async {
   //Authentication
 
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(dioAuth));
-  locator.registerLazySingleton<RemoteAuthenticationSource>(() => RemoteAuthenticationSource(locator()));
+  locator.registerLazySingleton<AuthenticationRemoteSource>(() => AuthenticationRemoteSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 

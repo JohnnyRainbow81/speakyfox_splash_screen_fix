@@ -71,6 +71,7 @@ class ErrorHandler {
       case DioErrorType.response:
         switch (dioError.response?.statusCode) {
           case HttpStatus.badRequest:
+          //TODO  switch(internalCode) for finer Error Handling
             FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "badRequest");
             throw BadRequestUIException(code: dioError.response?.statusCode);
           case HttpStatus.forbidden:

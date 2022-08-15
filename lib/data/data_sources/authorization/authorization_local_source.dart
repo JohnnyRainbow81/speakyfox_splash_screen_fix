@@ -1,7 +1,7 @@
 import 'package:speakyfox/data/responses/authentication_response.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class LocalAuthenticationSource implements AuthenticationRepository<AuthenticationResponse> {
+class AuthenticationLocalSource implements AuthenticationRepository<AuthenticationResponse> {
   @override
   Future<AuthenticationResponse> login(String username, String password, String grantType) {
     // TODO: implement login

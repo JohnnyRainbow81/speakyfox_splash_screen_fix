@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -17,9 +19,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  bool loggedIn = false;
   String username_Error = "";
   String password_Error = "";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -40,44 +42,50 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => _loginViewModel,
-      builder: (context, model, child) => Scaffold(
-        body: Center(
-            child: Form(
-                autovalidateMode: AutovalidateMode.disabled,
-                key: _formKey,
-                child: Column( mainAxisAlignment: MainAxisAlignment.center,
-                  children: [ 
-                    const Text("Username"),
-                    TextFormField(
-                      decoration:
-                          InputDecoration(hintText: "username", label: Text("label"), errorText: username_Error),
-                      controller: _usernameController,
-                      //validator: (username) => _loginViewModel.validateUsername(username),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    const Text("Passwort"),
-                    loggedIn ? const Text("Login successful!") : Container(),
-                    TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                          hintText: "password", label: Text("label_password"), errorText: password_Error),
-                    ),
-                    ElevatedButton(
-                        onPressed: () async {
-                          if (_loginViewModel.isLoginFormValid()) {
-                            setState(() async {
-                              loggedIn = await _loginViewModel.login();
-                            });
-                          } else
-                            return null;
-                        },
-                        child: const Text("Login"))
-                  ],
-                ))),
-      ),
+      builder: (context, _, child) {
+        if (_loginViewModel.hasError) {
+          SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+            showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
+          _loginViewModel.clearErrors();
+          });
+        }
+        return Scaffold(
+          body: Center(
+              child: Form(
+                  autovalidateMode: AutovalidateMode.disabled,
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Username"),
+                      TextFormField(
+                        decoration: InputDecoration(hintText: "username", errorText: username_Error),
+                        controller: _usernameController,
+                        //validator: (username) => _loginViewModel.validateUsername(username),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      const Text("Passwort"),
+                      _loginViewModel.isLoggedIn ? const Text("Login successful!") : Container(),
+                      TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: _passwordController,
+                        decoration: InputDecoration(hintText: "password", errorText: password_Error),
+                      ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            if (_loginViewModel.isLoginFormValid()) {
+                              setState(() async {
+                                _loginViewModel.login();
+                              });
+                            }
+                          },
+                          child: const Text("Login"))
+                    ],
+                  ))),
+        );
+      },
     );
   }
 }

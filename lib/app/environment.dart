@@ -23,7 +23,7 @@ class BuildEnvironment {
   static const String _keySupportedLanguages = "supportedLanguages";
   static const String _keyHmr = "hmr";
 
-  final String serverUrlAuth = Constants.baseUrlAuth;
+  final String  serverUrlAuth = Constants.baseUrlAuth;
   final String serverUrl;
   final String serverUrlV2;
   final String documentrApiUrl;

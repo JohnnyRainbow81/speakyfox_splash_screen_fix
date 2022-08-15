@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/data_sources/user/remote_user_source.dart';
+import 'package:speakyfox/data/data_sources/user/user_remote_source.dart';
 import 'package:speakyfox/data/mappers/authentication_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/responses/authentication_response.dart';

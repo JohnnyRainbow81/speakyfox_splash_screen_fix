@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/user.dart';
 import 'package:stacked/stacked.dart';
-
 import 'package:speakyfox/domain/services/user_service.dart';
 
 class LoginViewModel extends BaseViewModel {
@@ -10,9 +8,13 @@ class LoginViewModel extends BaseViewModel {
   String _username = "";
   String _password = "";
 
+  bool _isLoggedIn = false;
+
   LoginViewModel(
     this._userService,
   );
+
+  get isLoggedIn => _isLoggedIn;
 
   String? validateUsername(String? username) {
     if (username == null || username.isEmpty) {
@@ -36,6 +38,8 @@ class LoginViewModel extends BaseViewModel {
   }
 
   Future<bool> login() async {
-    return await _userService.getMe(_username, _password);
+    _isLoggedIn = await runBusyFuture(_userService.getMe(_username, _password));
+    notifyListeners();
+    return _isLoggedIn;
   }
 }

@@ -43,7 +43,7 @@ Future<void> showCommonErrorDialog(
               actionText: actionText ?? "Okay",
             ));
   } else if (exception is Exception) {
-    //Handle more general [Exception]-types
+    //Handle more general [Exception]-types (other than [UIException])
     showDialog(
         context: context,
         builder: (context) => _CommonErrorDialog(
@@ -73,8 +73,7 @@ Future<void> showCommonErrorDialog(
         builder: (context) => _CommonErrorDialog(
               asset: AnimationAssets.failed,
               headline: "Oh no. It's bad.",
-              subline:
-                  "Something unexpected happened which our app couldn't recover from.\nPlease restart the app.",
+              subline: "Something unexpected happened which our app couldn't recover from.\nPlease restart the app.",
               action: () => Future.delayed(const Duration(seconds: 1), () => exit(1)),
               actionText: "Exit",
             ));
@@ -92,12 +91,7 @@ class _CommonErrorDialog extends StatefulWidget {
   final Function? action;
 
   const _CommonErrorDialog(
-      {Key? key,
-      this.asset,
-      required this.actionText,
-      required this.headline,
-      required this.subline,
-      this.action})
+      {Key? key, this.asset, required this.actionText, required this.headline, required this.subline, this.action})
       : super(key: key);
 
   @override
@@ -129,9 +123,10 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
             decoration: BoxDecoration(
                 color: ColorAssets.bgBlueLight,
                 shape: BoxShape.rectangle,
-                border: Border.all(width: 1.5, color: ColorAssets.primary),
+                //border: Border.all(width: 1.5, color: ColorAssets.primary),
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 12, offset: Offset(0, 12))]),
+                boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 12, offset: Offset(0, 12))]
+                ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -168,7 +163,7 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
                         child: ElevatedButton(
                           onPressed: () {
                             _triggerAnim();
-                            widget.action == null ? () => Navigator.of(context).pop() : widget.action!();
+                            widget.action == null ? Navigator.of(context).pop() : widget.action!();
                           },
                           child: Text(widget.actionText),
                         ),
