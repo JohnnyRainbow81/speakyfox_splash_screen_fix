@@ -1,21 +1,19 @@
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
-import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/responses/authentication_response.dart';
-import 'package:speakyfox/data/responses/forgot_password_response.dart';
 part 'authentication_client.g.dart';
 
-@RestApi(baseUrl: Constants.baseUrlAuth )
+@RestApi()
 abstract class AuthenticationClient {
   factory AuthenticationClient(Dio dio, {String baseUrl}) = _AuthenticationClient;
-
+  
   @POST("/connect/token")
   Future<AuthenticationResponse> login(
     @Field("username") String username,
     @Field("password") String password,
     @Field("grant_type") String grantType,
   );
-
+  
   @POST("/users/register")
   Future<AuthenticationResponse> register(
       @Field("country_mobile_code") String countryCode,

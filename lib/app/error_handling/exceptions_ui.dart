@@ -143,11 +143,29 @@ class UnauthorizedUIException extends UIException {
         );
 }
 
-class LoginNotSuccessfullException extends UIException {
-  LoginNotSuccessfullException({int? code, String? message, String? description})
+class LoginNotSuccessfulException extends UIException {
+  LoginNotSuccessfulException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Login was not successful",
+          description: description ?? "Please try again.",
+        );
+}
+
+class UserException extends UIException {
+  UserException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "We couldn't fetch your user data from our server.",
+          description: description ?? "Please try again.",
+        );
+}
+
+class ResetPasswordException extends UIException{
+  ResetPasswordException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "We are having trouble resetting your password.",
           description: description ?? "Please try again.",
         );
 }

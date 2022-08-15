@@ -7,13 +7,13 @@ part of 'user_response.dart';
 // **************************************************************************
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
+      group: json['group'] as int?,
+      statusCode: json['statusCode'] as int?,
+      internalCode: json['internalCode'] as int?,
       data: json['data'] == null
           ? null
           : Data.fromJson(json['data'] as Map<String, dynamic>),
-    )
-      ..group = json['group'] as int?
-      ..internalCode = json['internalCode'] as int?
-      ..statusCode = json['statusCode'] as int?;
+    );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
     <String, dynamic>{

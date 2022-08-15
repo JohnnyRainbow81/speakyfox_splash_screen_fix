@@ -24,7 +24,7 @@ class _UserClient implements UserClient {
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<UserResponse>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/users/me',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -33,42 +33,18 @@ class _UserClient implements UserClient {
   }
 
   @override
-  Future<ForgotPasswordResponse> forgotPassword(email) async {
+  Future<ResetPasswordResponse> resetPassword(email) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'email': email};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ForgotPasswordResponse>(
+        _setStreamType<ResetPasswordResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/users/password-reset',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    //final value = ForgotPasswordResponse.fromJson(_result.data!);
-    return ForgotPasswordResponse();
-  }
-
-  @override
-  Future<AuthenticationResponse> register(countryCode, userName, email,
-      password, mobileNumber, profilePicture) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = {
-      'country_mobile_code': countryCode,
-      'user_name': userName,
-      'email': email,
-      'password': password,
-      'mobile_number': mobileNumber,
-      'profile_picture': profilePicture
-    };
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AuthenticationResponse>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/users/register',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AuthenticationResponse.fromJson(_result.data!);
+    final value = ResetPasswordResponse.fromJson(_result.data!);
     return value;
   }
 

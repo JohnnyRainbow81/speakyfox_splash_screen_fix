@@ -11,8 +11,11 @@ class UserResponse extends BaseResponse {
   Data? data;
 
   UserResponse({
+    int? group,
+    int? statusCode,
+    int? internalCode,
     this.data,
-  });
+  }) : super(group: group, statusCode: statusCode, internalCode: internalCode );
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 

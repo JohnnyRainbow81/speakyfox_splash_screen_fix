@@ -22,12 +22,15 @@ class AuthenticationResponse extends BaseResponse{
   String tokenType;
 
   AuthenticationResponse({
+    int? group,
+    int? statusCode,
+    int? internalCode,
     required this.accessToken,
     required this.expiresIn,
     required this.refreshToken,
     required this.scope,
     required this.tokenType,
-  });
+  }) : super(group: group, statusCode: statusCode, internalCode: internalCode);
 
   factory AuthenticationResponse.fromJson(Map<String, dynamic> json) => _$AuthenticationResponseFromJson(json);
 
@@ -37,4 +40,27 @@ class AuthenticationResponse extends BaseResponse{
   String toString() {
     return 'AuthenticationResponse(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
   }
+}
+
+
+@JsonSerializable()
+class ResetPasswordResponse extends BaseResponse {
+  @JsonKey(name: "password")
+  String password;
+
+  @JsonKey(name: "token")
+  String token;
+
+  ResetPasswordResponse({
+    int? group,
+    int? statusCode,
+    int? internalCode,
+    required this.password,
+    required this.token,
+  }) : super(group: group, internalCode: internalCode, statusCode: statusCode);
+
+factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) => _$ResetPasswordResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResetPasswordResponseToJson(this);
+  
 }

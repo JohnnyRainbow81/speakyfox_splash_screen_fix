@@ -9,8 +9,9 @@ import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
-//import 'firebase_options.dart';
 
+bool isQABackendAvailable = false; //delete later
+//import 'firebase_options.dart';
 main() async {
   //Error handling setup
   //If an error is thrown in a zone, it stays within its boundaries

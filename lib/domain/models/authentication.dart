@@ -16,6 +16,13 @@ class Authentication {
 }
 
 
-class ForgotPassword{
-  
+class ResetPassword {
+  String password;
+  String token;
+
+  ResetPassword({
+    required this.password,
+    required this.token,
+  });
 }
+

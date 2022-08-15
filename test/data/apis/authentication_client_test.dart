@@ -1,10 +1,11 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:speakyfox/data/apis/authentication_client.dart';
+import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 
 void main() async {
-  final authDio = await DioFactory.initializeAuthDio();
+  final authDio = await DioAuth.initialize(Constants.baseUrlAuth);
 
   test('authentication client', () async {
     AuthenticationClient authenticationClient = AuthenticationClient(authDio);

@@ -7,3 +7,12 @@ extension AuthenticationResponseMapper on AuthenticationResponse {
         accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken, scope: scope, tokenType: tokenType);
   }
 }
+
+extension ResetPasswordResponseMapper on ResetPasswordResponse {
+  ResetPassword toResetPassword() {
+    return ResetPassword(
+      password: password, 
+      token: token
+    );
+  }
+}

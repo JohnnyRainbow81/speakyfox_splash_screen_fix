@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/data_sources/authorization_sources.dart/remote_authorization_source.dart';
+import 'package:speakyfox/data/data_sources/authorization/remote_authorization_source.dart';
 import 'package:speakyfox/data/mappers/authentication_mapper.dart';
 import 'package:speakyfox/data/responses/authentication_response.dart';
 import 'package:speakyfox/domain/models/authentication.dart';
@@ -24,11 +24,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentic
     if (await _connectivityService.hasConnection()) {
       try {
         AuthenticationResponse response = await _remoteAuthenticationSource.login(username, password, grantType);
-        if (response.statusCode == HttpStatus.ok) {
-          return response.toAuthentication();
-        } else {
-          throw LoginNotSuccessfullException();
-        }
+        return response.toAuthentication();
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -37,7 +33,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentic
       //get from Cache?
       throw NoInternetConnectionUIException();
     }
-    throw LoginNotSuccessfullException();
+    throw LoginNotSuccessfulException();
   }
 
   @override

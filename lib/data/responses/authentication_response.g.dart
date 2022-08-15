@@ -9,15 +9,15 @@ part of 'authentication_response.dart';
 AuthenticationResponse _$AuthenticationResponseFromJson(
         Map<String, dynamic> json) =>
     AuthenticationResponse(
+      group: json['group'] as int?,
+      statusCode: json['statusCode'] as int?,
+      internalCode: json['internalCode'] as int?,
       accessToken: json['access_token'] as String,
       expiresIn: json['expires_in'] as int,
       refreshToken: json['refresh_token'] as String,
       scope: json['scope'] as String,
       tokenType: json['token_type'] as String,
-    )
-      ..group = json['group'] as int?
-      ..internalCode = json['internalCode'] as int?
-      ..statusCode = json['statusCode'] as int?;
+    );
 
 Map<String, dynamic> _$AuthenticationResponseToJson(
         AuthenticationResponse instance) =>
@@ -30,4 +30,24 @@ Map<String, dynamic> _$AuthenticationResponseToJson(
       'refresh_token': instance.refreshToken,
       'scope': instance.scope,
       'token_type': instance.tokenType,
+    };
+
+ResetPasswordResponse _$ResetPasswordResponseFromJson(
+        Map<String, dynamic> json) =>
+    ResetPasswordResponse(
+      group: json['group'] as int?,
+      statusCode: json['statusCode'] as int?,
+      internalCode: json['internalCode'] as int?,
+      password: json['password'] as String,
+      token: json['token'] as String,
+    );
+
+Map<String, dynamic> _$ResetPasswordResponseToJson(
+        ResetPasswordResponse instance) =>
+    <String, dynamic>{
+      'group': instance.group,
+      'internalCode': instance.internalCode,
+      'statusCode': instance.statusCode,
+      'password': instance.password,
+      'token': instance.token,
     };

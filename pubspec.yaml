@@ -26,7 +26,7 @@ dependencies:
   retrofit: ^3.0.1+1 # easy HTTP method generator
   dio: ^4.0.6 # underlying HTTP API used by retrofit
   json_serializable: ^6.1.6
-  json_annotation: ^4.4.0
+  json_annotation: ^4.6.0
   pretty_dio_logger: ^1.1.1
 
   firebase_crashlytics: ^2.8.5 # protocolling crashes
