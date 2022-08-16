@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:speakyfox/data/dio_clients/user_client.dart';
+import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 
 void main() async {
@@ -7,9 +7,9 @@ void main() async {
   final dio = await DioV1.initialize("https://speakyfox-api-qa.herokuapp.com/api/v1/");
 
   test('invalid email at forgot password request', (() async {
-    UserClient userClient = UserClient(dio);
+    AuthenticationClient _authenticationClient = AuthenticationClient(dio);
     try {
-      final answer = await userClient.resetPassword("not_valid@gmx.net");
+      final answer = await _authenticationClient.resetPassword("not_valid@gmx.net");
       expect(() {}, throwsException);
     } catch (e) {
       print(e);

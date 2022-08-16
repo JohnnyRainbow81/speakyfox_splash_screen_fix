@@ -1,20 +1,17 @@
 import 'package:speakyfox/domain/models/authentication.dart';
 
-abstract class AuthenticationRepository<T>{
-
-  Future<T> login(
-   String username,
+abstract class AuthenticationRepository<A, U, R> {
+  Future<A> fetchAccessToken(
+    String username,
     String password,
-     String grantType,
+    String grantType,
   );
 
+  Future<U> fetchMe(String authToken);
 
-  Future<T> register(
-      String userName,
-      String email,
-      String password,
-      String mobileNumber,
-      String profilePicture,
-      );
+  Future<R> resetPassword(String email);
 
+  Future<bool> sendPasswordResetEmail(String body);
+
+  
 }

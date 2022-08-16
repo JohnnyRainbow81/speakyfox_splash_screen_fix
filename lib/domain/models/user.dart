@@ -1,30 +1,62 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/authentication.dart';
+import 'package:speakyfox/domain/models/base_model.dart';
 
-class User {
-  String id;
+class User extends BaseModel {
+  //String id;
   String formOfAddress;
   String firstName;
   String lastName;
   String email;
+  String normalizedEmail;
+  bool emailConfirmed;
+  String userName;
+  String normalizedUserName;
+  int accessFailedAccount;
+  bool lockoutEnabled;
+  String password;
+  String lockoutEnd;
+  List<String> roles;
+  List<String> policies;
   String currentLanguagePairId;
   String currentSourceLanguageId;
   String currentTargetLanguageId;
-  List<String> roles;
   List<String> subscriptionIds;
 
   User({
-    required this.id,
+    required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.formOfAddress,
     required this.firstName,
     required this.lastName,
     required this.email,
+    required this.normalizedEmail,
+    required this.emailConfirmed,
+    required this.userName,
+    required this.normalizedUserName,
+    required this.accessFailedAccount,
+    required this.lockoutEnabled,
+    required this.password,
+    required this.lockoutEnd,
+    required this.roles,
+    required this.policies,
     required this.currentLanguagePairId,
     required this.currentSourceLanguageId,
     required this.currentTargetLanguageId,
-    required this.roles,
     required this.subscriptionIds,
-  });
+  }) : super(
+            id: id,
+            modified: modified,
+            modifiedBy: modifiedBy,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy);
 }
 
 

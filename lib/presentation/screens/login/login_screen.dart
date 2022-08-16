@@ -19,23 +19,32 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  String username_Error = "";
-  String password_Error = "";
+  String usernameError = "";
+  String passwordError = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _usernameController.addListener(() {
-      setState(() {
-        username_Error = _loginViewModel.validateUsername(_usernameController.text) ?? "";
-      });
-    });
-    _passwordController.addListener(() {
-      setState(() {
-        password_Error = _loginViewModel.validatePassword(_passwordController.text) ?? "";
-      });
-    });
+    _usernameController.addListener(() => validateUsername());
+    _passwordController.addListener(() => validatePassword());
+  }
+
+  void validateUsername() {
+    setState(() => usernameError = _loginViewModel.validateUsername(_usernameController.text) ?? "");
+  }
+
+  void validatePassword() {
+    setState(() => passwordError = _loginViewModel.validatePassword(_passwordController.text) ?? "");
+  }
+
+  @override
+  void dispose() {
+    _usernameController.removeListener(() => validateUsername());
+    _passwordController.removeListener(() => validatePassword());
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (_loginViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
-          _loginViewModel.clearErrors();
+            _loginViewModel.clearErrors();
           });
         }
         return Scaffold(
@@ -59,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const Text("Username"),
                       TextFormField(
-                        decoration: InputDecoration(hintText: "username", errorText: username_Error),
+                        decoration: InputDecoration(hintText: "username", errorText: usernameError),
                         controller: _usernameController,
                         //validator: (username) => _loginViewModel.validateUsername(username),
                       ),
@@ -71,14 +80,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFormField(
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
-                        decoration: InputDecoration(hintText: "password", errorText: password_Error),
+                        decoration: InputDecoration(hintText: "password", errorText: passwordError),
                       ),
                       ElevatedButton(
                           onPressed: () async {
                             if (_loginViewModel.isLoginFormValid()) {
-                              setState(() async {
-                                _loginViewModel.login();
-                              });
+                              _loginViewModel.login();
                             }
                           },
                           child: const Text("Login"))

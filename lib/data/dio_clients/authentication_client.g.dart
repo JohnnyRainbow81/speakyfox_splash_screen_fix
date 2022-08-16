@@ -16,7 +16,8 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<AuthenticationResponse> login(username, password, grantType) async {
+  Future<AuthenticationResponse> getAccessToken(
+      username, password, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -26,36 +27,46 @@ class _AuthenticationClient implements AuthenticationClient {
       'grant_type': grantType
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AuthenticationResponse>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/connect/token',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<AuthenticationResponse>(Options(
+                method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options,
+                'https://speakyfox-api-production.herokuapp.com/connect/token',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AuthenticationResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<AuthenticationResponse> register(countryCode, userName, email,
-      password, mobileNumber, profilePicture) async {
+  Future<UserResponse> getMe(token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<UserResponse>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/me',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = UserResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ResetPasswordResponse> resetPassword(email) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {
-      'country_mobile_code': countryCode,
-      'user_name': userName,
-      'email': email,
-      'password': password,
-      'mobile_number': mobileNumber,
-      'profile_picture': profilePicture
-    };
+    final _data = {'email': email};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AuthenticationResponse>(
+        _setStreamType<ResetPasswordResponse>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/users/register',
+                .compose(_dio.options, '/users/password-reset',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AuthenticationResponse.fromJson(_result.data!);
+    final value = ResetPasswordResponse.fromJson(_result.data!);
     return value;
   }
 
