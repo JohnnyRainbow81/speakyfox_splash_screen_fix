@@ -1,23 +1,14 @@
-import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 
 import 'package:speakyfox/domain/models/sentence.dart';
-
 import 'package:speakyfox/domain/models/screen.dart';
-
+import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 import 'sequence.dart' show Sequence;
 import 'vocabulary.dart' show Vocabulary;
 
 class Game extends Screen {
-  String title;
-  String description;
   String instructions;
-  num order;
-  GameType gameType;
-  List<Vocabulary> vocabularies = [];
-  String sequenceId;
-  Sequence sequence;
 
   Game(
       {required String id,
@@ -31,14 +22,14 @@ class Game extends Screen {
       required List<VocabularyShell> vocabularyShells,
       required List<Sentence> sentences,
       required List<SentenceShell> sentenceShells,
-      required this.title,
-      required this.description,
+      required String title,
+      required String description,
       required this.instructions,
-      required this.order,
-      required this.gameType,
-      required this.sequence,
-      required this.sequenceId,
-      required this.vocabularies})
+      required num order,
+      required GameType gameType,
+      required Sequence sequence,
+      required String sequenceId,
+      required List<Vocabulary> vocabularies})
       : super(
             id: id,
             modified: modified,

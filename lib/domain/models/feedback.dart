@@ -1,4 +1,4 @@
-import 'package:speakyfox/domain/models/Game.dart';
+import 'package:speakyfox/domain/models/game.dart';
 import 'package:speakyfox/domain/models/screen.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 import 'package:speakyfox/domain/models/vocabulary.dart';

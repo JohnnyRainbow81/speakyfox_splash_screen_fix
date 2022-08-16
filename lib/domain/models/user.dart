@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/authentication.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/role.dart';
 
 class User extends BaseModel {
   //String id;
@@ -16,7 +17,7 @@ class User extends BaseModel {
   bool lockoutEnabled;
   String password;
   String lockoutEnd;
-  List<String> roles;
+  List<Role> roles;
   List<String> policies;
   String currentLanguagePairId;
   String currentSourceLanguageId;

@@ -2,10 +2,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/responses/base_response.dart';
 
-part 'authentication_response.g.dart';
+part 'ticket_response.g.dart';
 
 @JsonSerializable()
-class AuthenticationResponse extends BaseResponse{
+class TicketResponse extends BaseResponse{
   @JsonKey(name: "access_token")
   String accessToken;
 
@@ -21,7 +21,7 @@ class AuthenticationResponse extends BaseResponse{
   @JsonKey(name: "token_type")
   String tokenType;
 
-  AuthenticationResponse({
+  TicketResponse({
     int? group,
     int? statusCode,
     int? internalCode,
@@ -32,13 +32,13 @@ class AuthenticationResponse extends BaseResponse{
     required this.tokenType,
   }) : super(group: group, statusCode: statusCode, internalCode: internalCode);
 
-  factory AuthenticationResponse.fromJson(Map<String, dynamic> json) => _$AuthenticationResponseFromJson(json);
+  factory TicketResponse.fromJson(Map<String, dynamic> json) => _$TicketResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthenticationResponseToJson(this);
+  Map<String, dynamic> toJson() => _$TicketResponseToJson(this);
 
   @override
   String toString() {
-    return 'AuthenticationResponse(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
+    return 'TicketResponse(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
   }
 }
 

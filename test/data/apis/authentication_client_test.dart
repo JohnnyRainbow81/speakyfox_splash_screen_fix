@@ -10,7 +10,7 @@ void main() async {
   //Test on production server with real credentials! (because QA Server isn't up-to-date)
   test('authentication client', () async {
     AuthenticationClient authenticationClient = AuthenticationClient(authDio);
-    final answer = await authenticationClient.getAccessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
+    final answer = await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
     print(answer.accessToken.toString());
   });
 

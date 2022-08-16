@@ -4,16 +4,18 @@ import 'dart:io';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/mappers/authentication_mapper.dart';
+import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
-import 'package:speakyfox/data/responses/authentication_response.dart';
+import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
-import 'package:speakyfox/data/sources/authorization/authorization_remote_source.dart';
+import 'package:speakyfox/data/sources/authorization/authentication_remote_source.dart';
 import 'package:speakyfox/domain/models/authentication.dart';
+import 'package:speakyfox/domain/models/lecture.dart';
+import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentication, User, ResetPassword> {
+class AuthenticationRepositoryImpl implements AuthenticationRepository<Ticket, User, ResetPassword, Lecture> {
   final ConnectivityService _connectivityService;
   final AuthenticationRemoteSource _authenticationRemoteSource;
 
@@ -23,11 +25,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentic
   );
 
   @override
-  Future<Authentication> fetchAccessToken(String username, String password, String grantType) async {
+  Future<Ticket> accessToken(String username, String password, String grantType) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        AuthenticationResponse response = await _authenticationRemoteSource.fetchAccessToken(username, password, grantType);
-        return response.toAuthentication();
+        TicketResponse response = await _authenticationRemoteSource.accessToken(username, password, grantType);
+        return response.toTicket();
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -39,6 +41,21 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentic
     throw LoginNotSuccessfulException();
   }
 
+  @override
+  Future<Ticket> refreshToken(String refreshToken, String grantType) async {
+    //more logic here
+    if (await _connectivityService.hasConnection()) {
+      try {
+        TicketResponse response = await _authenticationRemoteSource.refreshToken(refreshToken, grantType);
+        return response.toTicket();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+    throw LoginNotSuccessfulException();
+  }
 
   @override
   Future<ResetPassword> resetPassword(String email) async {
@@ -76,5 +93,23 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Authentic
       throw NoInternetConnectionUIException();
     }
     throw UIException();
+  }
+
+  @override
+  Future<Lecture> getLastLecture(String lectureId) {
+    // TODO: implement getLastLecture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Lecture> setLastLecture(String lectureId) {
+    // TODO: implement setLastLecture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> sendPasswordResetEmail(String body) {
+    // TODO: implement sendPasswordResetEmail
+    throw UnimplementedError();
   }
 }

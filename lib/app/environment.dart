@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
 import 'package:speakyfox/app/constants.dart';
 
 enum BuildFlavor { development, qa, production }
@@ -13,6 +14,7 @@ late BuildEnvironment _env;
 ///Sets up external URLs for connecting to backend, paypal etc depending on
 ///build flavor (debug, profile, release)
 class BuildEnvironment {
+  static const String _keyProduction = "production";
   static const String _keyServerUrl = "serverUrl";
   static const String _keyServerUrlV2 = "serverUrlV2";
   static const String _keyDocumentrApiUrl = "documentrApiUrl";
@@ -23,7 +25,8 @@ class BuildEnvironment {
   static const String _keySupportedLanguages = "supportedLanguages";
   static const String _keyHmr = "hmr";
 
-  final String  serverUrlAuth = Constants.baseUrlAuth;
+  final bool production;
+  final String serverUrlAuth = Constants.baseUrlAuth;
   final String serverUrl;
   final String serverUrlV2;
   final String documentrApiUrl;
@@ -37,7 +40,8 @@ class BuildEnvironment {
   final BuildFlavor flavor;
 
   BuildEnvironment._init(
-      {required this.serverUrl,
+      {required this.production,
+      required this.serverUrl,
       required this.serverUrlV2,
       required this.documentrApiUrl,
       required this.documentrApiKey,
@@ -58,6 +62,7 @@ class BuildEnvironment {
       map = jsonDecode(str);
     }
     _env = BuildEnvironment._init(
+        production: map[_keyProduction],
         serverUrl: map[_keyServerUrl],
         serverUrlV2: map[_keyServerUrlV2],
         documentrApiUrl: map[_keyDocumentrApiUrl],
@@ -70,8 +75,10 @@ class BuildEnvironment {
         flavor: BuildFlavor.production);
   }
 
+  
+
   @override
   String toString() {
-    return 'BuildEnvironment(serverUrl: $serverUrl, serverUrlV2: $serverUrlV2, documentrApiUrl: $documentrApiUrl, documentrApiKey: $documentrApiKey, defaultLanguage: $defaultLanguage, payPalClientId: $payPalClientId, environmentName: $environmentName, supportedLanguages: $supportedLanguages, hmr: $hmr, flavor: $flavor)';
+    return 'BuildEnvironment(production: $production, serverUrl: $serverUrl, serverUrlV2: $serverUrlV2, documentrApiUrl: $documentrApiUrl, documentrApiKey: $documentrApiKey, defaultLanguage: $defaultLanguage, payPalClientId: $payPalClientId, environmentName: $environmentName, supportedLanguages: $supportedLanguages, hmr: $hmr, flavor: $flavor)';
   }
 }

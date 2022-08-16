@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Ticket {
   String accessToken;
-  num expiresIn;
+  int expiresIn;
   String refreshToken;
   String scope;
   String tokenType;
@@ -14,3 +14,14 @@ class Ticket {
     required this.tokenType,
   });
 }
+
+class ResetPassword {
+  String password;
+  String token;
+
+  ResetPassword({
+    required this.password,
+    required this.token,
+  });
+}
+

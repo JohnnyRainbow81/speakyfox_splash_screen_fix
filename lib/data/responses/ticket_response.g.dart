@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'authentication_response.dart';
+part of 'ticket_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthenticationResponse _$AuthenticationResponseFromJson(
-        Map<String, dynamic> json) =>
-    AuthenticationResponse(
+TicketResponse _$TicketResponseFromJson(Map<String, dynamic> json) =>
+    TicketResponse(
       group: json['group'] as int?,
       statusCode: json['statusCode'] as int?,
       internalCode: json['internalCode'] as int?,
@@ -19,8 +18,7 @@ AuthenticationResponse _$AuthenticationResponseFromJson(
       tokenType: json['token_type'] as String,
     );
 
-Map<String, dynamic> _$AuthenticationResponseToJson(
-        AuthenticationResponse instance) =>
+Map<String, dynamic> _$TicketResponseToJson(TicketResponse instance) =>
     <String, dynamic>{
       'group': instance.group,
       'internalCode': instance.internalCode,

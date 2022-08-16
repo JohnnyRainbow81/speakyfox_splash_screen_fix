@@ -16,8 +16,7 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<AuthenticationResponse> getAccessToken(
-      username, password, grantType) async {
+  Future<TicketResponse> accessToken(username, password, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -27,13 +26,30 @@ class _AuthenticationClient implements AuthenticationClient {
       'grant_type': grantType
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<AuthenticationResponse>(Options(
+        _setStreamType<TicketResponse>(Options(
                 method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AuthenticationResponse.fromJson(_result.data!);
+    final value = TicketResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<TicketResponse> refreshToken(refreshToken, grantType) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'refresh_token': refreshToken, 'grant_type': grantType};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TicketResponse>(Options(
+                method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options,
+                'https://speakyfox-api-production.herokuapp.com/connect/token',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = TicketResponse.fromJson(_result.data!);
     return value;
   }
 

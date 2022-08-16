@@ -1,11 +1,11 @@
 enum Role {
-  SystemAdministrator,
-  Administrator,
-  Developer,
-  User,
-  Creator,
-  ContentManager,
-  ContentAssistent,
-  MarketingManager,
-  MarketingAssistent
+  systemAdministrator,
+  administrator,
+  developer,
+  user,
+  creator,
+  contentManager,
+  contentAssistent,
+  marketingManager,
+  marketingAssistent
 }

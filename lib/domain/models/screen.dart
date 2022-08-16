@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/game.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 
-import 'Game.dart' show GameType;
 import 'sequence.dart' show Sequence;
 import 'vocabulary.dart' show Vocabulary;
 

@@ -10,7 +10,7 @@ import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../data/sources/authorization/authorization_remote_source.dart';
+import '../data/sources/authorization/authentication_remote_source.dart';
 import 'connectivity_service.dart';
 import 'constants.dart';
 

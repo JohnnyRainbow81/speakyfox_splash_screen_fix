@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:speakyfox/app/constants.dart';
-import 'package:speakyfox/data/responses/authentication_response.dart';
+import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
 part 'authentication_client.g.dart';
 
@@ -11,20 +11,22 @@ part 'authentication_client.g.dart';
 abstract class AuthenticationClient {
   factory AuthenticationClient(Dio dio, {String baseUrl}) = _AuthenticationClient;
 
- //Overwrites base url because this single request has another url than every other request in this class
+  //Overwrites base url because this single request has another url than every other request in this class
   @POST("${Constants.baseUrlAuth}connect/token")
-  Future<AuthenticationResponse> getAccessToken(
+  Future<TicketResponse> accessToken(
     @Field("username") String username,
     @Field("password") String password,
     @Field("grant_type") String grantType,
   );
+
+  @POST("${Constants.baseUrlAuth}connect/token")
+  Future<TicketResponse> refreshToken(
+      @Field("refresh_token") String refreshToken, 
+      @Field("grant_type") String grantType);
 
   @GET("/users/me")
   Future<UserResponse> getMe(@Header(HttpHeaders.authorizationHeader) String token);
 
   @POST("/users/password-reset")
   Future<ResetPasswordResponse> resetPassword(@Field("email") String email);
-
-
-
 }
