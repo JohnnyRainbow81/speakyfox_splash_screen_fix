@@ -5,10 +5,9 @@ part 'reset_password_body.g.dart';
 
 @JsonSerializable()
 class ResetPasswordBody {
-  @JsonKey(name:"password")
   String password;
-  @JsonKey(name: "token")
   String token;
+  
   ResetPasswordBody({
     required this.password,
     required this.token,

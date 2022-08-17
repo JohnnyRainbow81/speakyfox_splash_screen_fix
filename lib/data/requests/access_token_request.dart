@@ -5,10 +5,9 @@ part 'access_token_request.g.dart';
 
 @JsonSerializable()
 class AccessTokenRequest {
-  @JsonKey(name: "email")
   String email;
-  @JsonKey(name: "token")
   String token;
+  
   AccessTokenRequest({
     required this.email,
     required this.token,

@@ -5,7 +5,6 @@ part 'send_password_reset_body.g.dart';
 
 @JsonSerializable()
 class SendPasswordResetBody {
-  @JsonKey(name: "email")
   String email;
 
   SendPasswordResetBody({

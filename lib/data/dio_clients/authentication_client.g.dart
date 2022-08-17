@@ -16,7 +16,8 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<TicketResponse> accessToken(username, password, grantType) async {
+  Future<Response<TicketResponse>> accessToken(
+      username, password, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -26,63 +27,64 @@ class _AuthenticationClient implements AuthenticationClient {
       'grant_type': grantType
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<TicketResponse>(Options(
+        _setStreamType<Response<TicketResponse>>(Options(
                 method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TicketResponse.fromJson(_result.data!);
+    final value = Response<TicketResponse>.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<TicketResponse> refreshToken(refreshToken, grantType) async {
+  Future<Response<TicketResponse>> refreshToken(refreshToken, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'refresh_token': refreshToken, 'grant_type': grantType};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<TicketResponse>(Options(
+        _setStreamType<Response<TicketResponse>>(Options(
                 method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TicketResponse.fromJson(_result.data!);
+    final value = Response<TicketResponse>.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<UserResponse> fetchMe(token) async {
+  Future<Response<UserResponse>> fetchMe(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<UserResponse>(
+        _setStreamType<Response<UserResponse>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/users/me',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = UserResponse.fromJson(_result.data!);
+    final value = Response<UserResponse>.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<bool> resetPassword(userId, body) async {
+  Future<Response<bool>> resetPassword(userId, body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _result = await _dio.fetch<bool>(_setStreamType<bool>(
-        Options(method: 'PATCH', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/users/${userId}/password-reset',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<bool>>(
+            Options(method: 'PATCH', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/${userId}/password-reset',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<bool>.fromJson(_result.data!);
     return value;
   }
 

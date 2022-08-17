@@ -4,9 +4,6 @@ import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
-import 'package:speakyfox/data/requests/reset_password_body.dart';
-import 'package:speakyfox/data/responses/ticket_response.dart';
-import 'package:speakyfox/data/responses/user_response.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
@@ -18,15 +15,15 @@ void main() async {
   //Test on production server with real credentials! (because QA Server isn't up-to-date)
   test('authentication client', () async {
     final answer = await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
-    print(answer.accessToken.toString());
+    print(answer.data.accessToken.toString());
   });
 
   test('fetch me', (() async {
-    TicketResponse ticketResponse =
+    final response =
         await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
-    Ticket ticket = ticketResponse.toTicket();
-    UserResponse userResponse = await authenticationClient.fetchMe(ticket.accessToken);
-    user = userResponse.toUser();
+    Ticket ticket = response.data.toTicket();
+    final userResponse = await authenticationClient.fetchMe(ticket.accessToken);
+    user = userResponse.data.toUser();
     print(user);
   }));
 

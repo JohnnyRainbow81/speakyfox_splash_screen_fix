@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:speakyfox/data/responses/response.dart';
-
 part 'ticket_response.g.dart';
 
 @JsonSerializable()
@@ -29,22 +27,4 @@ class TicketResponse {
   String toString() {
     return 'TicketResponse(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
   }
-}
-
-@JsonSerializable()
-class ResetPasswordResponse {
-  @JsonKey(name: "password")
-  String password;
-
-  @JsonKey(name: "token")
-  String token;
-
-  ResetPasswordResponse({
-    required this.password,
-    required this.token,
-  });
-
-  factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) => _$ResetPasswordResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ResetPasswordResponseToJson(this);
 }

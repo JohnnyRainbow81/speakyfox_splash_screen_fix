@@ -23,17 +23,3 @@ Map<String, dynamic> _$TicketResponseToJson(TicketResponse instance) =>
       'scope': instance.scope,
       'tokenType': instance.tokenType,
     };
-
-ResetPasswordResponse _$ResetPasswordResponseFromJson(
-        Map<String, dynamic> json) =>
-    ResetPasswordResponse(
-      password: json['password'] as String,
-      token: json['token'] as String,
-    );
-
-Map<String, dynamic> _$ResetPasswordResponseToJson(
-        ResetPasswordResponse instance) =>
-    <String, dynamic>{
-      'password': instance.password,
-      'token': instance.token,
-    };

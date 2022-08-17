@@ -30,7 +30,7 @@ class AuthenticationService {
 
   Future<bool> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(username, password, GrantType.refreshToken.name);
-    User me = await _authenticationRepository.fetchMe(ticket.accessToken);
+    User me = await _authenticationRepository.fetchUser(ticket.accessToken);
 
     IdentityToken identityToken = IdentityToken(
         expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken, user: me);
