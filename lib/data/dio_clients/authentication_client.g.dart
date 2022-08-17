@@ -16,8 +16,7 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<Response<TicketResponse>> accessToken(
-      username, password, grantType) async {
+  Future<TicketResponse> accessToken(username, password, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -27,13 +26,13 @@ class _AuthenticationClient implements AuthenticationClient {
       'grant_type': grantType
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<TicketResponse>>(Options(
+        _setStreamType<TicketResponse>(Options(
                 method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<TicketResponse>.fromJson(_result.data!);
+    final value = TicketResponse.fromJson(_result.data!);
     return value;
   }
 
@@ -50,7 +49,10 @@ class _AuthenticationClient implements AuthenticationClient {
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<TicketResponse>.fromJson(_result.data!);
+    final value = Response<TicketResponse>.fromJson(
+      _result.data!,
+      (json) => TicketResponse.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
@@ -67,7 +69,10 @@ class _AuthenticationClient implements AuthenticationClient {
                 .compose(_dio.options, '/users/me',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<UserResponse>.fromJson(_result.data!);
+    final value = Response<UserResponse>.fromJson(
+      _result.data!,
+      (json) => UserResponse.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
@@ -84,7 +89,10 @@ class _AuthenticationClient implements AuthenticationClient {
                 .compose(_dio.options, '/users/${userId}/password-reset',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<bool>.fromJson(_result.data!);
+    final value = Response<bool>.fromJson(
+      _result.data!,
+      (json) => json as bool,
+    );
     return value;
   }
 

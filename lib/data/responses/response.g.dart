@@ -6,19 +6,26 @@ part of 'response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Response<T> _$ResponseFromJson<T>(Map<String, dynamic> json) => Response<T>(
+Response<T> _$ResponseFromJson<T>(
+  Map<String, dynamic> json,
+  T Function(Object? json) fromJsonT,
+) =>
+    Response<T>(
       code: Code.fromJson(json['code'] as Map<String, dynamic>),
-      data: _Converter<T>().fromJson(json['data'] as Object),
+      data: fromJsonT(json['data']),
       description: json['description'] as String?,
       total: json['total'] as int?,
       errors: json['errors'],
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$ResponseToJson<T>(Response<T> instance) =>
+Map<String, dynamic> _$ResponseToJson<T>(
+  Response<T> instance,
+  Object? Function(T value) toJsonT,
+) =>
     <String, dynamic>{
       'code': instance.code,
-      'data': _Converter<T>().toJson(instance.data),
+      'data': toJsonT(instance.data),
       'description': instance.description,
       'total': instance.total,
       'errors': instance.errors,

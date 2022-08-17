@@ -8,18 +8,18 @@ part of 'ticket_response.dart';
 
 TicketResponse _$TicketResponseFromJson(Map<String, dynamic> json) =>
     TicketResponse(
-      accessToken: json['accessToken'] as String,
-      expiresIn: json['expiresIn'] as int,
-      refreshToken: json['refreshToken'] as String,
+      accessToken: json['access_token'] as String,
+      expiresIn: json['expires_in'] as int,
+      refreshToken: json['refresh_token'] as String,
       scope: json['scope'] as String,
-      tokenType: json['tokenType'] as String,
+      tokenType: json['token_type'] as String,
     );
 
 Map<String, dynamic> _$TicketResponseToJson(TicketResponse instance) =>
     <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'expiresIn': instance.expiresIn,
-      'refreshToken': instance.refreshToken,
+      'access_token': instance.accessToken,
+      'expires_in': instance.expiresIn,
+      'refresh_token': instance.refreshToken,
       'scope': instance.scope,
-      'tokenType': instance.tokenType,
+      'token_type': instance.tokenType,
     };

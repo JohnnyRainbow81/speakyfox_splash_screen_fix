@@ -1,16 +1,13 @@
-
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/data/responses/base_response.dart';
-
 import 'package:speakyfox/data/responses/code.dart';
-import 'package:speakyfox/data/responses/user_response.dart';
 
 part 'response.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(genericArgumentFactories: true)
 class Response<T> {
   Code code;
-  @_Converter()
+  //@_Converter()
+
   T data;
   String? description;
   int? total;
@@ -26,19 +23,31 @@ class Response<T> {
     required this.message,
   });
 
-  factory Response.fromJson(Map<String, dynamic> json) => _$ResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$ResponseToJson(this);
+   factory Response.fromJson(
+    Map<String, dynamic> json,
+    T Function(Object? json) fromJsonT,
+  ) =>
+      _$ResponseFromJson(json, fromJsonT);
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
+      _$ResponseToJson(this, toJsonT);
 }
 
-class _Converter<T> implements JsonConverter<T, Object> {
+
+
+/* class _Converter<T> implements JsonConverter<T, Object> {
   const _Converter();
 
   @override
   T fromJson(Object json) {
-    if (json is Map<String, dynamic> && T is UserResponse) {
-      return UserResponse.fromJson(json) as T;
+    if (json is Map<String, dynamic>) {
+      switch () {
+        case TicketResponse:
+          return TicketResponse.fromJson(json) as T;
+        case UserResponse:
+          return UserResponse.fromJson(json) as T;
+      }
     }
-    return json as T;
+    throw Exception("Couldn't parse json");
   }
 
   @override
@@ -46,28 +55,4 @@ class _Converter<T> implements JsonConverter<T, Object> {
     if (object is BaseResponse) return object.toJson();
     return {};
   }
-}
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-// @JsonSerializable()
-// class Code {
-//   @JsonKey(name: "group")
-//   int? group;
-//   @JsonKey(name: "internalCode")
-//   int? internalCode;
-//   @JsonKey(name: "statusCode")
-//   int? statusCode;
-  
-  
-// }
-
-  
-
-// export class Response<T> {
-//   code: any;
-//   data: T;
-//   description: string;
-//   total: number;
-//   errors: any;
-//   message: string;
-// }
+} */

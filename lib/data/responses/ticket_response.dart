@@ -5,10 +5,14 @@ part 'ticket_response.g.dart';
 
 @JsonSerializable()
 class TicketResponse {
+  @JsonKey(name: "access_token")
   String accessToken;
+  @JsonKey(name: "expires_in")
   int expiresIn;
+  @JsonKey(name: "refresh_token")
   String refreshToken;
   String scope;
+  @JsonKey(name: "token_type")
   String tokenType;
 
   TicketResponse({

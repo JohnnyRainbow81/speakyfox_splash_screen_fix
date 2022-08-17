@@ -9,7 +9,7 @@ import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
   
-enum GrantType {@JsonValue("password") password, @JsonValue("refreshToken")refreshToken }
+enum GrantType {@JsonValue("password") password, @JsonValue("refresh_token")refreshToken }
 
 //Only class to communicate with Auth Server
 class AuthenticationService {

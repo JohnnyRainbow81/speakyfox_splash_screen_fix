@@ -7,9 +7,9 @@ import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class AuthenticationLocalSource implements AuthenticationRepository<Response<TicketResponse>, Response<UserResponse>, Response<LectureResponse>, Response<bool>> {
+class AuthenticationLocalSource implements AuthenticationRepository<TicketResponse, Response<TicketResponse>, Response<UserResponse>, Response<LectureResponse>, Response<bool>> {
   @override
-  Future<Response<TicketResponse>> accessToken(String username, String password, String grantType) {
+  Future<TicketResponse> accessToken(String username, String password, String grantType) {
     // TODO: implement login
     throw UnimplementedError();
   }

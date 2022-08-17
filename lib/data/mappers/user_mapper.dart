@@ -1,4 +1,3 @@
-import 'package:json_serializable/type_helper.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
 import 'package:speakyfox/domain/models/role.dart';
 
@@ -23,7 +22,7 @@ extension UserResponseMapper on UserResponse {
       lastName: lastname ?? "",
       formOfAddress: formOfAddress ?? "",
       id: id ?? "",
-      roles: roles?.map((roleStr) => Role.values.byName(roleStr)).toList() ?? [],
+      roles: roles?.map((roleStr) => Role.values.byName(roleStr.toLowerCase())).toList() ?? [],  //Convert uppercase String (like "User") to lowercase enum
       subscriptionIds: subscriptionIds?.toList() ?? [],
       accessFailedAccount: accessFailedAccount ?? 0,
       created: created ?? "",

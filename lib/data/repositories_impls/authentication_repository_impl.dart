@@ -13,7 +13,7 @@ import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class AuthenticationRepositoryImpl implements AuthenticationRepository<Ticket, User, Lecture, bool> {
+class AuthenticationRepositoryImpl implements AuthenticationRepository<Ticket, Ticket, User, Lecture, bool> {
   final ConnectivityService _connectivityService; //A, U, L, R
   final AuthenticationRemoteSource _authenticationRemoteSource;
 
@@ -27,7 +27,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Ticket, U
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationRemoteSource.accessToken(username, password, grantType);
-        return response.data.toTicket();
+        return response.toTicket();
       } catch (error) {
         ErrorHandler.handleError(error);
       }

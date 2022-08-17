@@ -18,30 +18,30 @@ const String TEXT_PLAIN = "text/plain";
 //touch the dependency injection layer, often while the user is on the same screen, using different functionalities.
 //So i decided to make 4 seperate Dio instances, for auth-server, v1 and v2 and documents
 
-class DioAuth {
-  DioAuth._();
+// class DioAuth {
+//   DioAuth._();
 
-  static Future<Dio> initialize(String baseUrl) async {
-    Dio dio = Dio();
-    int _timeOut = 60 * 1000; // 1 min
-    Map<String, String> headers = {
-      CONTENT_TYPE: X_WWW_FORM_URLENCODED,
-      ACCEPT: APPLICATION_JSON,
-    };
+//   static Future<Dio> initialize(String baseUrl) async {
+//     Dio dio = Dio();
+//     int _timeOut = 60 * 1000; // 1 min
+//     Map<String, String> headers = {
+//       CONTENT_TYPE: X_WWW_FORM_URLENCODED,
+//       ACCEPT: APPLICATION_JSON,
+//     };
 
-    dio.options = BaseOptions(connectTimeout: _timeOut, receiveTimeout: _timeOut, headers: headers);
-    dio.options.baseUrl = baseUrl;
+//     dio.options = BaseOptions(connectTimeout: _timeOut, receiveTimeout: _timeOut, headers: headers);
+//     dio.options.baseUrl = baseUrl;
 
-    if (kReleaseMode) {
-      print("release mode no logs");
-    } else {
-      dio.interceptors.add(
-          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-    }
+//     if (kReleaseMode) {
+//       print("release mode no logs");
+//     } else {
+//       dio.interceptors.add(
+//           PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+//     }
 
-    return dio;
-  }
-}
+//     return dio;
+//   }
+// }
 
 class DioV1 {
   DioV1._();

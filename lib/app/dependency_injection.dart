@@ -8,11 +8,8 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/main.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
-import 'package:places_service/places_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../data/sources/authorization/authentication_remote_source.dart';
 import 'connectivity_service.dart';
-import 'constants.dart';
 
 //Global service locator. All dependencies like services, repositories and viewmodels
 //should be registered and satisfied with their dependencies here

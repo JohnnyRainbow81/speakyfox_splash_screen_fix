@@ -15,7 +15,7 @@ abstract class AuthenticationClient {
 
   //Overwrites base url because this single request has another url than every other request in this class
   @POST("${Constants.baseUrlAuth}connect/token")
-  Future<Response<TicketResponse>> accessToken(
+  Future<TicketResponse> accessToken(
     @Field("username") String username,
     @Field("password") String password,
     @Field("grant_type") String grantType,
