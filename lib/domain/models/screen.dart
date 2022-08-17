@@ -25,7 +25,7 @@ class Screen extends BaseModel {
   ScreenType type;
   String sequenceId;
   Sequence sequence;
-  GameType gameType; //FIXME   only to Subclass?
+  String gameType; //FIXME   only to Subclass?
   List<Vocabulary> vocabularies;
   List<VocabularyShell> vocabularyShells;
   List<Sentence> sentences;

@@ -51,7 +51,7 @@ class Feedback extends Screen {
             type: type,
             sequenceId: sequenceId,
             sequence: sequence,
-            gameType: gameType,
+            gameType: gameType.name,
             vocabularies: vocabularies,
             vocabularyShells: vocabularyShells,
             sentences: sentences,
