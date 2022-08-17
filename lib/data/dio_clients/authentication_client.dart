@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
 part 'authentication_client.g.dart';
@@ -21,12 +22,11 @@ abstract class AuthenticationClient {
 
   @POST("${Constants.baseUrlAuth}connect/token")
   Future<TicketResponse> refreshToken(
-      @Field("refresh_token") String refreshToken, 
-      @Field("grant_type") String grantType);
+      @Field("refresh_token") String refreshToken, @Field("grant_type") String grantType);
 
   @GET("/users/me")
-  Future<UserResponse> getMe(@Header(HttpHeaders.authorizationHeader) String token);
+  Future<UserResponse> fetchMe(@Header(HttpHeaders.authorizationHeader) String token);
 
-  @POST("/users/password-reset")
-  Future<ResetPasswordResponse> resetPassword(@Field("email") String email);
+  @PATCH("/users/{userId}/password-reset")
+  Future<bool> resetPassword(@Path("userId") String userId, @Body() ResetPasswordBody body);
 }

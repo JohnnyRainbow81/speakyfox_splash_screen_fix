@@ -54,7 +54,7 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<UserResponse> getMe(token) async {
+  Future<UserResponse> fetchMe(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'authorization': token};
@@ -71,18 +71,18 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<ResetPasswordResponse> resetPassword(email) async {
+  Future<bool> resetPassword(userId, body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'email': email};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResetPasswordResponse>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/users/password-reset',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = ResetPasswordResponse.fromJson(_result.data!);
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch<bool>(_setStreamType<bool>(
+        Options(method: 'PATCH', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/users/${userId}/password-reset',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 

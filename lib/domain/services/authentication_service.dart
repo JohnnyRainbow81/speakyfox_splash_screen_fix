@@ -1,17 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/app/environment.dart';
+import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/models/role.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-enum GrantType { password, refresh_token }
+  
+enum GrantType {@JsonValue("password") password, @JsonValue("refreshToken")refreshToken }
 
 //Only class to communicate with Auth Server
 class AuthenticationService {
   int _expirationTimestamp = -1;
-  late User _me;
 
   late IdentityToken _credentials; //gets populated by accessToken-flow
 
@@ -21,17 +23,18 @@ class AuthenticationService {
     this._authenticationRepository,
   );
 
-  String get accessToken {
+  IdentityToken get credentials {
     //check if valid here?
-    return _credentials.accessToken;
+    return _credentials;
   }
 
   Future<bool> login(String username, String password) async {
-    Ticket ticket = await _authenticationRepository.accessToken(username, password, GrantType.refresh_token.name);
+    Ticket ticket = await _authenticationRepository.accessToken(username, password, GrantType.refreshToken.name);
     User me = await _authenticationRepository.fetchMe(ticket.accessToken);
-    IdentityToken identityToken =
-        IdentityToken(expires: ticket.expiresIn, accessToken: accessToken, refreshToken: ticket.refreshToken, user: me);
-    _me = me;
+
+    IdentityToken identityToken = IdentityToken(
+        expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken, user: me);
+
     _credentials = identityToken;
     _expirationTimestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor() + ticket.expiresIn;
 
@@ -50,75 +53,72 @@ class AuthenticationService {
   }
 
   Future<bool> sendPasswordResetEmail(String email) async {
-   throw UnimplementedError();
+    throw UnimplementedError();
   }
 
-  Future<bool> resetPassword()
-
-TODO
-export class AccessTokenRequestBody {
-  email: string;
-  password: string;
-}
-
-export class AccessTokenResponse {
-  access_token: string;
-  expires: string;
-  refresh_token: string;
-}
-
-export class SendPasswordResetBody {
-  email: string;
-}
-
-export class ResetPasswordBody {
-  password: string;
-  token: string;
-}
+  Future<bool> resetPassword(String userId, ResetPasswordBody body) async {
+    final response = await _authenticationRepository.resetPassword(userId, body);
+    //TODO response correct? do sth with it?
+    return true;
+  }
 
   bool hasRole(String group) {
+    List<Role> roles = _credentials.user.roles;
+
     if (group.isEmpty) return true;
-    if (env.production && _me.roles.contains(Role.developer)) return true;
-    if (_me.roles.isNotEmpty) {
-      if (_me.roles.contains(Role.systemAdministrator) || _me.roles.contains(Role.administrator)) return true;
+    if (env.production && roles.contains(Role.developer)) return true;
+    if (roles.isNotEmpty) {
+      if (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator)) return true;
     }
-    return _me.roles.any((role) => role.name == group);
+    return roles.any((role) => role.name == group);
   }
 
   bool hasAnyRole(List<String> groups) {
+    List<Role> roles = _credentials.user.roles;
+
     if (groups.isEmpty) return true; //FIXME really?
     if (!env.production) {
-      if (_me.roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.developer)) return true;
     }
-    if (_me.roles.isNotEmpty) {
-      if (_me.roles.contains(Role.systemAdministrator) || _me.roles.contains(Role.administrator)) return true;
+    if (roles.isNotEmpty) {
+      if (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator)) return true;
     }
     //Check if any role in roles == any group in groups
-    return _me.roles.any((role) => groups.any((group) => role.name == group));
+    return roles.any((role) => groups.any((group) => role.name == group));
   }
 
   bool isAdministrator() {
+    List<Role> roles = _credentials.user.roles;
+
     if (!env.production) {
-      if (_me.roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.developer)) return true;
     }
-    return (_me.roles.contains(Role.systemAdministrator) || _me.roles.contains(Role.administrator));
+    return (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator));
   }
 
   bool isCMSUser() {
+    List<Role> roles = _credentials.user.roles;
+
     if (!env.production) {
-      if (_me.roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.developer)) return true;
     }
-    return (_me.roles.contains(Role.systemAdministrator) ||
-        _me.roles.contains(Role.administrator) ||
-        _me.roles.contains(Role.creator) ||
-        _me.roles.contains(Role.contentManager) ||
-        _me.roles.contains(Role.contentAssistent) ||
-        _me.roles.contains(Role.marketingManager) ||
-        _me.roles.contains(Role.marketingAssistent));
+    return (roles.contains(Role.systemAdministrator) ||
+        roles.contains(Role.administrator) ||
+        roles.contains(Role.creator) ||
+        roles.contains(Role.contentManager) ||
+        roles.contains(Role.contentAssistent) ||
+        roles.contains(Role.marketingManager) ||
+        roles.contains(Role.marketingAssistent));
   }
 
   Future<void> refreshToken() async {
-    Ticket ticket = await _authenticationRepository.refreshToken(_ticket.refreshToken, GrantType.refresh_token.name);
-    _ticket = ticket;
+    Ticket ticket =
+        await _authenticationRepository.refreshToken(_credentials.refreshToken, GrantType.refreshToken.name);
+    IdentityToken identityToken = IdentityToken(
+        expires: ticket.expiresIn,
+        accessToken: ticket.accessToken,
+        refreshToken: ticket.refreshToken,
+        user: _credentials.user);
+    _credentials = identityToken;
   }
 }

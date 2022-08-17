@@ -1,4 +1,4 @@
-
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 
 import 'package:speakyfox/domain/models/sentence.dart';
@@ -52,19 +52,33 @@ class Game extends Screen {
 }
 
 enum GameType {
+  @JsonValue("vocabularyImageGame")
   vocabularyImageGame,
+  @JsonValue("sentenceImageGame")
   sentenceImageGame,
+  @JsonValue("vocabularyImageQuiz")
   vocabularyImageQuiz,
+  @JsonValue("vocabularyLearned")
   vocabularyLearned,
+  @JsonValue("chooseTranslation")
   chooseTranslation,
+  @JsonValue("tapWhatYouHear")
   tapWhatYouHear,
+  @JsonValue("matchWords")
   matchWords,
+  @JsonValue("singleTranslationWord")
   singleTranslationWord,
+  @JsonValue("singleTranslationSentence")
   singleTranslationSentence,
+  @JsonValue("multipleTranslation")
   multipleTranslation,
+  @JsonValue("swipingVocabularyImage")
   swipingVocabularyImage,
+  @JsonValue("translateThisSentence")
   translateThisSentence,
+  @JsonValue("translateSourceSentence")
   translateSourceSentence,
+  @JsonValue("translateTargetSentence")
   translateTargetSentence
 }
 

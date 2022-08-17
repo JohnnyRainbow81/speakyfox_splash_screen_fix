@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/game.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
@@ -8,7 +9,14 @@ import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 import 'sequence.dart' show Sequence;
 import 'vocabulary.dart' show Vocabulary;
 
-enum ScreenType { game, feedback, tip }
+enum ScreenType {
+  @JsonValue("game")
+  game,
+  @JsonValue("feedback")
+  feedback,
+  @JsonValue("tip")
+  tip
+}
 
 class Screen extends BaseModel {
   String title;
@@ -41,7 +49,7 @@ class Screen extends BaseModel {
     required this.vocabularyShells,
     required this.sentences,
     required this.sentenceShells,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,
@@ -50,8 +58,3 @@ class Screen extends BaseModel {
             deleted: deleted,
             deletedBy: deletedBy);
 }
-
-
-
-
-

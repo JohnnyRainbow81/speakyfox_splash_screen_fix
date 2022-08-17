@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 
@@ -40,7 +41,7 @@ class Subscription extends BaseModel {
     required this.paymentMethod,
     required this.nextBillingAmount,
     required this.invoices,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,
@@ -51,13 +52,22 @@ class Subscription extends BaseModel {
 }
 
 enum SubscriptionType { oneTime, month, threeMonths, sixMonths, year }
+
 enum SubscriptionStatus {
+  @JsonValue("incomplete")
   incomplete,
+  @JsonValue("incompleteExpired")
   incompleteExpired,
+  @JsonValue("trialing")
   trialing,
+  @JsonValue("active")
   active,
+  @JsonValue("pastDue")
   pastDue,
+  @JsonValue("canceled")
   canceled,
+  @JsonValue("unpaid")
   unpaid,
+  @JsonValue("undefined")
   undefined
 }

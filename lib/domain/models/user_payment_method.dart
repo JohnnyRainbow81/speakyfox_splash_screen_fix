@@ -28,7 +28,7 @@ abstract class UserPaymentMethod extends BaseModel {
 }
 
 class UserCreditCard extends UserPaymentMethod {
-  PaymentMethodType type = PaymentMethodType.CreditCard;
+  PaymentMethodType type = PaymentMethodType.creditCard;
 
   String lastFourDigits;
   String brand;
@@ -62,7 +62,7 @@ class UserCreditCard extends UserPaymentMethod {
 }
 
 class UserPayPal extends UserPaymentMethod {
-  PaymentMethodType type = PaymentMethodType.PayPal;
+  PaymentMethodType type = PaymentMethodType.payPal;
 
   String email;
   String name;
@@ -92,7 +92,7 @@ class UserPayPal extends UserPaymentMethod {
 }
 
 class UserSepaDirectDebit extends UserPaymentMethod {
-  PaymentMethodType type = PaymentMethodType.SEPADirectDebit;
+  PaymentMethodType type = PaymentMethodType.sepaDirectDebit;
 
   String lastFourDigits;
   String bankName;

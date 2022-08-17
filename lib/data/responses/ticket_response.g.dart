@@ -8,34 +8,25 @@ part of 'ticket_response.dart';
 
 TicketResponse _$TicketResponseFromJson(Map<String, dynamic> json) =>
     TicketResponse(
-      group: json['group'] as int?,
-      statusCode: json['statusCode'] as int?,
-      internalCode: json['internalCode'] as int?,
-      accessToken: json['access_token'] as String,
-      expiresIn: json['expires_in'] as int,
-      refreshToken: json['refresh_token'] as String,
+      accessToken: json['accessToken'] as String,
+      expiresIn: json['expiresIn'] as int,
+      refreshToken: json['refreshToken'] as String,
       scope: json['scope'] as String,
-      tokenType: json['token_type'] as String,
+      tokenType: json['tokenType'] as String,
     );
 
 Map<String, dynamic> _$TicketResponseToJson(TicketResponse instance) =>
     <String, dynamic>{
-      'group': instance.group,
-      'internalCode': instance.internalCode,
-      'statusCode': instance.statusCode,
-      'access_token': instance.accessToken,
-      'expires_in': instance.expiresIn,
-      'refresh_token': instance.refreshToken,
+      'accessToken': instance.accessToken,
+      'expiresIn': instance.expiresIn,
+      'refreshToken': instance.refreshToken,
       'scope': instance.scope,
-      'token_type': instance.tokenType,
+      'tokenType': instance.tokenType,
     };
 
 ResetPasswordResponse _$ResetPasswordResponseFromJson(
         Map<String, dynamic> json) =>
     ResetPasswordResponse(
-      group: json['group'] as int?,
-      statusCode: json['statusCode'] as int?,
-      internalCode: json['internalCode'] as int?,
       password: json['password'] as String,
       token: json['token'] as String,
     );
@@ -43,9 +34,6 @@ ResetPasswordResponse _$ResetPasswordResponseFromJson(
 Map<String, dynamic> _$ResetPasswordResponseToJson(
         ResetPasswordResponse instance) =>
     <String, dynamic>{
-      'group': instance.group,
-      'internalCode': instance.internalCode,
-      'statusCode': instance.statusCode,
       'password': instance.password,
       'token': instance.token,
     };

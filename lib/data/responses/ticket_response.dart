@@ -1,36 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/data/responses/base_response.dart';
+
+import 'package:speakyfox/data/responses/response.dart';
 
 part 'ticket_response.g.dart';
 
 @JsonSerializable()
-class TicketResponse extends BaseResponse{
-  @JsonKey(name: "access_token")
+class TicketResponse {
   String accessToken;
-
-  @JsonKey(name: "expires_in")
   int expiresIn;
-
-  @JsonKey(name: "refresh_token")
   String refreshToken;
-
-  @JsonKey(name: "scope")
   String scope;
-
-  @JsonKey(name: "token_type")
   String tokenType;
 
   TicketResponse({
-    int? group,
-    int? statusCode,
-    int? internalCode,
     required this.accessToken,
     required this.expiresIn,
     required this.refreshToken,
     required this.scope,
     required this.tokenType,
-  }) : super(group: group, statusCode: statusCode, internalCode: internalCode);
+  });
 
   factory TicketResponse.fromJson(Map<String, dynamic> json) => _$TicketResponseFromJson(json);
 
@@ -42,9 +31,8 @@ class TicketResponse extends BaseResponse{
   }
 }
 
-
 @JsonSerializable()
-class ResetPasswordResponse extends BaseResponse {
+class ResetPasswordResponse {
   @JsonKey(name: "password")
   String password;
 
@@ -52,15 +40,11 @@ class ResetPasswordResponse extends BaseResponse {
   String token;
 
   ResetPasswordResponse({
-    int? group,
-    int? statusCode,
-    int? internalCode,
     required this.password,
     required this.token,
-  }) : super(group: group, internalCode: internalCode, statusCode: statusCode);
+  });
 
-factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) => _$ResetPasswordResponseFromJson(json);
+  factory ResetPasswordResponse.fromJson(Map<String, dynamic> json) => _$ResetPasswordResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResetPasswordResponseToJson(this);
-  
 }

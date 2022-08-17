@@ -1,9 +1,21 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/file.dart';
 
 import 'language.dart';
 
-enum AudioType { word, sentence }
-enum AudioCodingKeys { audioType, languageType }
+enum AudioType {
+  @JsonValue("word")
+  word,
+  @JsonValue("sentence")
+  sentence
+}
+
+enum AudioCodingKeys {
+  @JsonValue("audioType")
+  audioType,
+  @JsonValue("languageType")
+  languageType
+}
 
 class Audio extends File {
   AudioType audioType;

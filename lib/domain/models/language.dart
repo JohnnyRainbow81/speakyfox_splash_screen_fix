@@ -1,10 +1,14 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 
-
-enum LanguageType { sourceLanguage, targetLanguage }
-
+enum LanguageType {
+  @JsonValue("sourceLanguage")
+  sourceLanguage,
+  @JsonValue("targetLanguage")
+  targetLanguage
+}
 
 class Language extends BaseModel {
   String title;

@@ -1,15 +1,33 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
 
 import 'image.dart';
 
-enum PaymentProvider { AppleStore, PayPal, GooglePlayStore, Stripe, Speakyfox }
+enum PaymentProvider {
+  @JsonValue("appleStore")
+  appleStore,
+  @JsonValue("paypal")
+  payPal,
+  @JsonValue("googlePlaystore")
+  googlePlayStore,
+  @JsonValue("stripe")
+  stripe,
+  @JsonValue("speakyfox")
+  speakyfox
+}
+
 enum PaymentMethodType {
-  SEPADirectDebit,
-  CreditCard,
-  PayPal,
-  AppleId,
-  Internal
+  @JsonValue("sepaDirectDebit")
+  sepaDirectDebit,
+  @JsonValue("creditCard")
+  creditCard,
+  @JsonValue("paypal")
+  payPal,
+  @JsonValue("appleId")
+  appleId,
+  @JsonValue("internal")
+  internal
 }
 
 class PaymentMethod extends BaseModel {
@@ -39,7 +57,7 @@ class PaymentMethod extends BaseModel {
     required this.paymentProvider,
     required this.type,
     required this.externalId,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,
@@ -48,4 +66,3 @@ class PaymentMethod extends BaseModel {
             deleted: deleted,
             deletedBy: deletedBy);
 }
-

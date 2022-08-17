@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/audio.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/highlighted_part.dart';
@@ -6,17 +7,24 @@ import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 
-import "File.dart" show KeyValuePair, Audio, Image;
-
 enum TermType {
+  @JsonValue("adjective")
   adjective,
+  @JsonValue("adverb")
   adverb,
+  @JsonValue("article")
   article,
+  @JsonValue("demonstrativePronoun")
   demonstrativePronoun,
+  @JsonValue("noun")
   noun,
+  @JsonValue("personalPronoun")
   personalPronoun,
+  @JsonValue("possessivePronoun")
   possessivePronoun,
+  @JsonValue("preposition")
   preposition,
+  @JsonValue("verb")
   verb
 }
 
@@ -34,7 +42,7 @@ class Sentence extends BaseModel {
   List<Audio> audios = [];
 
   Sentence({
-     required String id,
+    required String id,
     required String modified,
     required String modifiedBy,
     required String created,
@@ -52,7 +60,7 @@ class Sentence extends BaseModel {
     required this.targetHighlightedParts,
     required this.images,
     required this.audios,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,
@@ -61,8 +69,3 @@ class Sentence extends BaseModel {
             deleted: deleted,
             deletedBy: deletedBy);
 }
-
-
-
-
-

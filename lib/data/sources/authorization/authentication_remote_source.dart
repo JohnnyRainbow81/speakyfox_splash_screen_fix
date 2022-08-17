@@ -1,4 +1,5 @@
 import 'package:speakyfox/data/dio_clients/authentication_client.dart';
+import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/responses/lecture_response.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
@@ -6,7 +7,7 @@ import 'package:speakyfox/domain/models/authentication.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
 class AuthenticationRemoteSource
-    implements AuthenticationRepository<TicketResponse, UserResponse, ResetPasswordResponse, LectureResponse> {
+    implements AuthenticationRepository<TicketResponse, UserResponse, LectureResponse> {
   final AuthenticationClient _authenticationClient;
 
   AuthenticationRemoteSource(this._authenticationClient);
@@ -22,13 +23,13 @@ class AuthenticationRemoteSource
   }
 
   @override
-  Future<ResetPasswordResponse> resetPassword(String email) async {
-    return _authenticationClient.resetPassword(email);
+  Future<bool> resetPassword(String userId, ResetPasswordBody body) async {
+    return _authenticationClient.resetPassword(userId, body);
   }
 
   @override
   Future<UserResponse> fetchMe(String authToken) async {
-    return _authenticationClient.getMe("Bearer $authToken");
+    return _authenticationClient.fetchMe("Bearer $authToken");
   }
 
   @override

@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:json_annotation/json_annotation.dart';
+
 class SpeedRate {
   Rate speed;
   num value;
@@ -8,7 +10,18 @@ class SpeedRate {
   });
 }
 
-enum Rate { normal, extremlySlow, superSlow, slow, fast }
+enum Rate {
+  @JsonValue("normal")
+  normal,
+  @JsonValue("extremlySlow")
+  extremlySlow,
+  @JsonValue("superSlow")
+  superSlow,
+  @JsonValue("slow")
+  slow,
+  @JsonValue("fast")
+  fast
+}
 
 final List<SpeedRate> speedRates = [
   SpeedRate(speed: Rate.extremlySlow, value: 0.5),
@@ -17,5 +30,3 @@ final List<SpeedRate> speedRates = [
   SpeedRate(speed: Rate.normal, value: 1),
   SpeedRate(speed: Rate.fast, value: 1.25)
 ];
-
-

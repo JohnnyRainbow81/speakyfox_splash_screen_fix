@@ -1,3 +1,4 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/game.dart';
 import 'package:speakyfox/domain/models/screen.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
@@ -6,7 +7,7 @@ import 'package:speakyfox/domain/models/sequence.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 
-enum FeedbackType { situative, immediate }
+enum FeedbackType { @JsonValue("situative")situative, @JsonValue("immediate")immediate }
 
 final List<dynamic> FeedbackTypes = [
   {"id": 1, "key": FeedbackType.situative},

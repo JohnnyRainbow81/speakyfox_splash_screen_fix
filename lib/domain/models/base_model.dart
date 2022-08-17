@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 abstract class BaseModel {
-  String id;
-  String modified;
-  String modifiedBy;
-  String created;
-  String createdBy;
-  String deleted;
-  String deletedBy;
+  String? id;
+  String? modified;
+  String? modifiedBy;
+  String? created;
+  String? createdBy;
+  String? deleted;
+  String? deletedBy;
 
   BaseModel({
     required this.id,

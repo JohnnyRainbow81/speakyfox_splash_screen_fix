@@ -9,7 +9,7 @@ void main() async {
   test('invalid email at forgot password request', (() async {
     AuthenticationClient _authenticationClient = AuthenticationClient(dio);
     try {
-      final answer = await _authenticationClient.resetPassword("not_valid@gmx.net");
+      //final answer = await _authenticationClient.resetPassword("not_valid@gmx.net");
       expect(() {}, throwsException);
     } catch (e) {
       print(e);

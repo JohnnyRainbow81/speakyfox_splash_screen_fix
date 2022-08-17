@@ -6,6 +6,7 @@ import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
+import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
 import 'package:speakyfox/data/sources/authorization/authentication_remote_source.dart';
@@ -58,10 +59,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository<Ticket, U
   }
 
   @override
-  Future<ResetPassword> resetPassword(String email) async {
+  Future<bool> resetPassword(String userId, ResetPasswordBody body) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        ResetPasswordResponse response = await _authenticationRemoteSource.resetPassword(email);
+        ResetPasswordResponse response = await _authenticationRemoteSource.resetPassword(userId, body);
         if (response.statusCode == HttpStatus.ok) {
           return response.toResetPassword();
         } else {

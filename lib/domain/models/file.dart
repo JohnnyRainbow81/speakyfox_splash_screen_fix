@@ -1,10 +1,17 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/base_model.dart';
-enum FileType { image, audio }
+
+enum FileType {
+  @JsonValue("image")
+  image,
+  @JsonValue("audio")
+  audio
+}
 
 class File extends BaseModel {
   int size;
   String contentType;
-  String name; 
+  String name;
   FileType type;
 
   File({

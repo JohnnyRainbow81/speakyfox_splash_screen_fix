@@ -1,3 +1,4 @@
+import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/responses/lecture_response.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
@@ -5,7 +6,7 @@ import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-class AuthenticationLocalSource implements AuthenticationRepository<TicketResponse, UserResponse, ResetPasswordResponse, LectureResponse> {
+class AuthenticationLocalSource implements AuthenticationRepository<TicketResponse, UserResponse, LectureResponse> {
   @override
   Future<TicketResponse> accessToken(String username, String password, String grantType) {
     // TODO: implement login
@@ -19,7 +20,7 @@ class AuthenticationLocalSource implements AuthenticationRepository<TicketRespon
   }
 
     @override
-  Future<ResetPasswordResponse> resetPassword(String email) async {
+  Future<bool> resetPassword(String userId, ResetPasswordBody body) async {
    throw UnimplementedError();
   }
 

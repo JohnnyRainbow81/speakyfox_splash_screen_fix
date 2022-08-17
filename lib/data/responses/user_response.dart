@@ -1,56 +1,45 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-
 import 'package:speakyfox/data/responses/base_response.dart';
 
 part 'user_response.g.dart';
 
 @JsonSerializable()
-class UserResponse extends BaseResponse {
-  @JsonKey(name: "data")
-  Data? data;
-
-  UserResponse({
-    int? group,
-    int? statusCode,
-    int? internalCode,
-    this.data,
-  }) : super(group: group, statusCode: statusCode, internalCode: internalCode );
-
-  factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
-}
-
-@JsonSerializable()
-class Data {
-  @JsonKey(name: "id")
+class UserResponse extends BaseResponse{
   String? id;
-  @JsonKey(name: "formOfAddress")
   String? formOfAddress;
-  @JsonKey(name: "firstname")
   String? firstname;
-  @JsonKey(name: "lastname")
   String? lastname;
-  @JsonKey(name: "email")
+  String? userName;
+  String? normalizedUserName;
   String? email;
-  @JsonKey(name: "currentLanguagePairId")
+  bool? emailConfirmed;
+  String? normalizedEmail;
+  int? accessFailedAccount;
+  bool? lockoutEnabled;
+  String? password;
+  String? lockoutEnd;
+  List<String>? policies;
   String? currentLanguagePairId;
-  @JsonKey(name: "currentSourceLanguageId")
   String? currentSourceLanguageId;
-  @JsonKey(name: "currentTargetLanguageId")
   String? currentTargetLanguageId;
-  @JsonKey(name: "roles")
   List<String>? roles;
-  @JsonKey(name: "subscriptionIds")
   List<String>? subscriptionIds;
-
-  Data({
+  UserResponse({
     this.id,
     this.formOfAddress,
     this.firstname,
     this.lastname,
+    this.userName,
+    this.normalizedUserName,
     this.email,
+    this.emailConfirmed,
+    this.normalizedEmail,
+    this.accessFailedAccount,
+    this.lockoutEnabled,
+    this.password,
+    this.lockoutEnd,
+    this.policies,
     this.currentLanguagePairId,
     this.currentSourceLanguageId,
     this.currentTargetLanguageId,
@@ -58,7 +47,7 @@ class Data {
     this.subscriptionIds,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => _$DataFromJson(json);
+  factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DataToJson(this);
+  Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

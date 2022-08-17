@@ -15,6 +15,7 @@ class Ticket {
   });
 }
 
+//redundant?
 class ResetPassword {
   String password;
   String token;
