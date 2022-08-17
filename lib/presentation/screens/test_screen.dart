@@ -15,7 +15,7 @@ class TestScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(appBar: AppBar( ),
         body: Center(
-          child: SingleChildScrollView(padding: EdgeInsets.all(8),
+          child: SingleChildScrollView(padding: const EdgeInsets.all(8),
             child: Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

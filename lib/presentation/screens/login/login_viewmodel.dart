@@ -19,7 +19,9 @@ class LoginViewModel extends BaseViewModel {
   String? validateUsername(String? username) {
     if (username == null || username.isEmpty) {
       return 'Please enter a username';
-    } else if (username.length < 4) return "Too few characters";
+    } else if (username.length < 4) {
+      return "Too few characters";
+    }
     _username = username;
     return null;
   }

@@ -7,7 +7,7 @@ void main() async {
   final dio = await DioV1.initialize("https://speakyfox-api-qa.herokuapp.com/api/v1/");
 
   test('invalid email at forgot password request', (() async {
-    AuthenticationClient _authenticationClient = AuthenticationClient(dio);
+    AuthenticationClient authenticationClient = AuthenticationClient(dio);
     try {
       //final answer = await _authenticationClient.resetPassword("not_valid@gmx.net");
       expect(() {}, throwsException);

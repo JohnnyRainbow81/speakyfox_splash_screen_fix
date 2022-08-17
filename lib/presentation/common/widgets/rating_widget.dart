@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 
 class RatingWidget extends StatelessWidget {
   final double averageRating;

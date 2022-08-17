@@ -1,4 +1,3 @@
-import 'package:speakyfox/data/responses/reset_password_response.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 

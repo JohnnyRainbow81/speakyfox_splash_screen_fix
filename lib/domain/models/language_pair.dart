@@ -1,6 +1,5 @@
 import 'package:speakyfox/domain/models/base_model.dart';
 
-import "File.dart" show Image;
 import 'image.dart';
 import 'language.dart' show Language;
 

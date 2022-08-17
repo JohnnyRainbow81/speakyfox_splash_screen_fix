@@ -28,6 +28,7 @@ abstract class UserPaymentMethod extends BaseModel {
 }
 
 class UserCreditCard extends UserPaymentMethod {
+  @override
   PaymentMethodType type = PaymentMethodType.creditCard;
 
   String lastFourDigits;
@@ -62,6 +63,7 @@ class UserCreditCard extends UserPaymentMethod {
 }
 
 class UserPayPal extends UserPaymentMethod {
+  @override
   PaymentMethodType type = PaymentMethodType.payPal;
 
   String email;
@@ -92,6 +94,7 @@ class UserPayPal extends UserPaymentMethod {
 }
 
 class UserSepaDirectDebit extends UserPaymentMethod {
+  @override
   PaymentMethodType type = PaymentMethodType.sepaDirectDebit;
 
   String lastFourDigits;

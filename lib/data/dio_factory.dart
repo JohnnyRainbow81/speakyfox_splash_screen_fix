@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:speakyfox/app/constants.dart';
 
 const String X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
 const String APPLICATION_JSON = "application/json";
@@ -48,13 +47,13 @@ class DioV1 {
 
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
-    int _timeOut = 60 * 1000; // 1 min
+    int timeOut = 60 * 1000; // 1 min
     Map<String, String> headers = {
       CONTENT_TYPE: X_WWW_FORM_URLENCODED,
       ACCEPT: APPLICATION_JSON,
     };
 
-    dio.options = BaseOptions(connectTimeout: _timeOut, receiveTimeout: _timeOut, headers: headers);
+    dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
     if (kReleaseMode) {
@@ -73,13 +72,13 @@ class DioDocuments {
   
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
-    int _timeOut = 60 * 1000; // 1 min
+    int timeOut = 60 * 1000; // 1 min
     Map<String, String> headers = {
       CONTENT_TYPE: X_WWW_FORM_URLENCODED,
       ACCEPT: APPLICATION_JSON,
     };
 
-    dio.options = BaseOptions(connectTimeout: _timeOut, receiveTimeout: _timeOut, headers: headers);
+    dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
     if (kReleaseMode) {

@@ -14,7 +14,7 @@ class LoadingAnimation extends StatelessWidget {
       child: CircularProgressIndicator.adaptive(
         strokeWidth: 2,
         backgroundColor: backgroundColor,
-        valueColor: AlwaysStoppedAnimation<Color>(ColorAssets.primary),
+        valueColor: const AlwaysStoppedAnimation<Color>(ColorAssets.primary),
       ),
     );
   }

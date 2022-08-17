@@ -6,6 +6,7 @@ part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse extends BaseResponse{
+  @override
   String? id;
   String? formOfAddress;
   String? firstname;
@@ -49,5 +50,6 @@ class UserResponse extends BaseResponse{
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

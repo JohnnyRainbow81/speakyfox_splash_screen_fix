@@ -3,8 +3,6 @@ import 'package:speakyfox/data/responses/lecture_response.dart';
 import 'package:speakyfox/data/responses/response.dart';
 import 'package:speakyfox/data/responses/ticket_response.dart';
 import 'package:speakyfox/data/responses/user_response.dart';
-import 'package:speakyfox/domain/models/lecture.dart';
-import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
 class AuthenticationLocalSource implements AuthenticationRepository<TicketResponse, Response<TicketResponse>, Response<UserResponse>, Response<LectureResponse>, Response<bool>> {

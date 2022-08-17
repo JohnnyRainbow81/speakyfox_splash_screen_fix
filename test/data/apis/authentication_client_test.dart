@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';

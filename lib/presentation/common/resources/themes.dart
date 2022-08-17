@@ -51,7 +51,7 @@ TextTheme _getApplicationTextTheme() {
 }
 
 AppBarTheme _getAppBarTheme() {
-  return AppBarTheme(
+  return const AppBarTheme(
 backgroundColor: ColorAssets.lightest,elevation: 0,
   );
 }
