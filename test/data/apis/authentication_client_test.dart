@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
+import 'package:speakyfox/data/remote_clients/authentication_client.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
@@ -21,7 +21,7 @@ void main() async {
     final response =
         await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
     Ticket ticket = response.toTicket();
-    final userResponse = await authenticationClient.fetchMe("Bearer ${ticket.accessToken}");
+    final userResponse = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
     user = userResponse.data.toUser();
     print(user);
   }));

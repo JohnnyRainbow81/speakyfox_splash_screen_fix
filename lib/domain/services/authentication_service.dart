@@ -2,20 +2,25 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
+import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/models/role.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 
-  
-enum GrantType {@JsonValue("password") password, @JsonValue("refresh_token")refreshToken }
+enum GrantType {
+  @JsonValue("password")
+  password,
+  @JsonValue("refresh_token")
+  refreshToken
+}
 
 //Only class to communicate with Auth Server
 class AuthenticationService {
   int _expirationTimestamp = -1;
 
-  late IdentityToken _credentials; //gets populated by accessToken-flow
+  IdentityToken? _credentials; //gets populated by accessToken-flow
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -23,14 +28,14 @@ class AuthenticationService {
     this._authenticationRepository,
   );
 
-  IdentityToken get credentials {
+  IdentityToken? get credentials {
     //check if valid here?
     return _credentials;
   }
 
   Future<bool> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(username, password, GrantType.refreshToken.name);
-    User me = await _authenticationRepository.fetchUser(ticket.accessToken);
+    User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
 
     IdentityToken identityToken = IdentityToken(
         expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken, user: me);
@@ -49,22 +54,24 @@ class AuthenticationService {
   }
 
   bool isAuthenticated() {
-    throw UnimplementedError();
+    return _credentials != null && _credentials?.user != null;
   }
 
-  Future<bool> sendPasswordResetEmail(String email) async {
-    throw UnimplementedError();
+  Future<bool> sendPasswordResetEmail(SendPasswordResetBody body) async {
+    final bool success = await _authenticationRepository.sendPasswordResetEmail(body);
+    return success;
   }
 
   Future<bool> resetPassword(String userId, ResetPasswordBody body) async {
-    final response = await _authenticationRepository.resetPassword(userId, body);
+    final bool success = await _authenticationRepository.resetPassword(userId, body);
     //TODO response correct? do sth with it?
-    return true;
+    return success;
   }
 
   bool hasRole(String group) {
-    List<Role> roles = _credentials.user.roles;
+    List<Role> roles = _credentials?.user.roles ?? [];
 
+    if (roles.isEmpty) return false;
     if (group.isEmpty) return true;
     if (env.production && roles.contains(Role.developer)) return true;
     if (roles.isNotEmpty) {
@@ -74,8 +81,9 @@ class AuthenticationService {
   }
 
   bool hasAnyRole(List<String> groups) {
-    List<Role> roles = _credentials.user.roles;
+    List<Role> roles = _credentials?.user.roles ?? [];
 
+    if (roles.isEmpty) return false;
     if (groups.isEmpty) return true; //FIXME really?
     if (!env.production) {
       if (roles.contains(Role.developer)) return true;
@@ -88,8 +96,9 @@ class AuthenticationService {
   }
 
   bool isAdministrator() {
-    List<Role> roles = _credentials.user.roles;
+    List<Role> roles = _credentials?.user.roles ?? [];
 
+    if (roles.isEmpty) return false;
     if (!env.production) {
       if (roles.contains(Role.developer)) return true;
     }
@@ -97,8 +106,9 @@ class AuthenticationService {
   }
 
   bool isCMSUser() {
-    List<Role> roles = _credentials.user.roles;
+    List<Role> roles = _credentials?.user.roles ?? [];
 
+    if (roles.isEmpty) return false;
     if (!env.production) {
       if (roles.contains(Role.developer)) return true;
     }
@@ -113,12 +123,12 @@ class AuthenticationService {
 
   Future<void> refreshToken() async {
     Ticket ticket =
-        await _authenticationRepository.refreshToken(_credentials.refreshToken, GrantType.refreshToken.name);
+        await _authenticationRepository.refreshToken(_credentials!.refreshToken, GrantType.refreshToken.name);
     IdentityToken identityToken = IdentityToken(
         expires: ticket.expiresIn,
         accessToken: ticket.accessToken,
         refreshToken: ticket.refreshToken,
-        user: _credentials.user);
+        user: _credentials!.user);
     _credentials = identityToken;
   }
 }

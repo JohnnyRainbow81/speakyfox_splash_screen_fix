@@ -197,5 +197,14 @@ class NoPreferencesFoundException extends UIException {
         );
 }
 
+class CacheException extends UIException {
+  CacheException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Data not found in local storage",
+          description: description ?? "Couldn't load data from local storage",
+        );
+}
+
 
 

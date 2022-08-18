@@ -1,14 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speakyfox/app/environment.dart';
-import 'package:speakyfox/data/dio_clients/authentication_client.dart';
 import 'package:speakyfox/data/dio_factory.dart';
+import 'package:speakyfox/data/local_sources/authentication_local_source.dart';
+import 'package:speakyfox/data/remote_clients/authentication_client.dart';
 import 'package:speakyfox/data/repositories_impls/authentication_repository_impl.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/main.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:get_it/get_it.dart';
-import '../data/sources/authorization/authentication_remote_source.dart';
 import 'connectivity_service.dart';
 
 //Global service locator. All dependencies like services, repositories and viewmodels
@@ -16,9 +17,10 @@ import 'connectivity_service.dart';
 final locator = GetIt.instance;
 
 Future<void> initializeServiceLocator() async {
-  //////////////////////////////////
   //////////initialize general stuff//////////////
-  ///
+
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+
   //Dio http library (used by Retrofit-library)
   Dio dioV1 = isQABackendAvailable
       ? await DioV1.initialize(env.serverUrl)
@@ -27,7 +29,6 @@ Future<void> initializeServiceLocator() async {
   Dio dioDocuments = await DioDocuments.initialize(env.documentrApiUrl);
   //TODO dioV2
 
-//////////////////////////////////////
   ///////////Services//////////////
 
 //ConnectivityService
@@ -35,8 +36,9 @@ Future<void> initializeServiceLocator() async {
 
   //AuthenticationService
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(dioV1));
-  locator.registerLazySingleton<AuthenticationRemoteSource>(() => AuthenticationRemoteSource(locator()));
-  locator.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(preferences));
+  locator.registerLazySingleton<AuthenticationRepository>(
+      () => AuthenticationRepositoryImpl(locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 
   //////////////////////////////////////

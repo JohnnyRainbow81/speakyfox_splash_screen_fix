@@ -57,7 +57,7 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<Response<UserResponse>> fetchMe(token) async {
+  Future<Response<UserResponse>> fetchUser(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'authorization': token};
@@ -87,6 +87,26 @@ class _AuthenticationClient implements AuthenticationClient {
         _setStreamType<Response<bool>>(
             Options(method: 'PATCH', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/users/${userId}/password-reset',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<bool>.fromJson(
+      _result.data!,
+      (json) => json as bool,
+    );
+    return value;
+  }
+
+  @override
+  Future<Response<bool>> sendPasswordResetEmail(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<bool>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/password-reset',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
