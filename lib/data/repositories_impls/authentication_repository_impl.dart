@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/local_sources/authentication_local_source.dart';
+import 'package:speakyfox/data/local/authentication_local_source.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
-import 'package:speakyfox/data/remote_clients/authentication_client.dart';
+import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
@@ -132,7 +132,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         throw NoInternetConnectionUIException();
       }
     }
-
     throw UIException();
   }
 

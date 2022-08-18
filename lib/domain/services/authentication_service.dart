@@ -49,7 +49,6 @@ class AuthenticationService {
   bool isExpired() {
     if (_expirationTimestamp < 0) return true;
     if (_expirationTimestamp < DateTime.now().millisecondsSinceEpoch) return true;
-
     return false;
   }
 

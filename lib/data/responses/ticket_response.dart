@@ -4,6 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'ticket_response.g.dart';
 
 @JsonSerializable()
+//underscore instead of camelCase because of Auth convention
 class TicketResponse {
   @JsonKey(name: "access_token")
   String accessToken;

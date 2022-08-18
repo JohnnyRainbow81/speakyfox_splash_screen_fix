@@ -3,11 +3,11 @@ import 'package:speakyfox/domain/models/base_model.dart';
 class Coupon extends BaseModel {
   String key;
   String name;
-  num amountOff;
-  num percentOff;
+  int amountOff;
+  int percentOff;
   String planId;
   String duration;
-  num durationInMonths;
+  int durationInMonths;
 
   Coupon(
       {required String id,

@@ -25,7 +25,7 @@ class Game extends Screen {
       required String title,
       required String description,
       required this.instructions,
-      required num order,
+      required int order,
       required GameType gameType,
       required Sequence sequence,
       required String sequenceId,

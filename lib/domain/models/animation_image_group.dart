@@ -2,7 +2,7 @@
 import 'package:speakyfox/domain/models/animation_image.dart';
 
 class AnimationImageGroup {
-  num order;
+  int order;
   List<AnimationImage> images = [];
   AnimationImageGroup({
     required this.order,

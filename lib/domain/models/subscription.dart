@@ -16,9 +16,9 @@ class Subscription extends BaseModel {
   String couponKey;
   List<Language> languages = [];
   String interval;
-  num intervalCount;
+  int intervalCount;
   UserPaymentMethod paymentMethod;
-  num nextBillingAmount;
+  int nextBillingAmount;
   List<Invoice> invoices = [];
 
   Subscription({

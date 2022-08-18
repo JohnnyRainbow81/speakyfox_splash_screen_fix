@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
-import 'package:speakyfox/data/remote_clients/authentication_client.dart';
+import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 

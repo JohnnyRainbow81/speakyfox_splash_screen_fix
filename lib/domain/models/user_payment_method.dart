@@ -33,8 +33,8 @@ class UserCreditCard extends UserPaymentMethod {
 
   String lastFourDigits;
   String brand;
-  num expiryMonth;
-  num expiryYear;
+  int expiryMonth;
+  int expiryYear;
 
   UserCreditCard({
     required String id,

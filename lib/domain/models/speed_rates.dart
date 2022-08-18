@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 class SpeedRate {
   Rate speed;
-  num value;
+  int value;
   SpeedRate({
     required this.speed,
     required this.value,

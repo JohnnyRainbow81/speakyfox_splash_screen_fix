@@ -21,7 +21,7 @@ class Tip extends Screen {
       required String deletedBy,
       required String title,
       required String description,
-      required num order,
+      required int order,
       required ScreenType type,
       required String sequenceId,
       required Sequence sequence,

@@ -7,7 +7,12 @@ import 'package:speakyfox/domain/models/sequence.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 
-enum FeedbackType { @JsonValue("situative")situative, @JsonValue("immediate")immediate }
+enum FeedbackType {
+  @JsonValue("situative")
+  situative,
+  @JsonValue("immediate")
+  immediate
+}
 
 final List<dynamic> FeedbackTypes = [
   {"id": 1, "key": FeedbackType.situative},
@@ -27,7 +32,7 @@ class Feedback extends Screen {
       required String deletedBy,
       required String title,
       required String description,
-      required num order,
+      required int order,
       required ScreenType type,
       required String sequenceId,
       required Sequence sequence,

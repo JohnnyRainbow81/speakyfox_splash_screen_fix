@@ -7,13 +7,13 @@ part 'user_response.g.dart';
 @JsonSerializable()
 class UserResponse extends BaseResponse{
   @override
-  String? id;
+  String id;
   String? formOfAddress;
   String? firstname;
   String? lastname;
   String? userName;
   String? normalizedUserName;
-  String? email;
+  String email;
   bool? emailConfirmed;
   String? normalizedEmail;
   int? accessFailedAccount;
@@ -27,13 +27,13 @@ class UserResponse extends BaseResponse{
   List<String>? roles;
   List<String>? subscriptionIds;
   UserResponse({
-    this.id,
+    required this.id,
     this.formOfAddress,
     this.firstname,
     this.lastname,
     this.userName,
     this.normalizedUserName,
-    this.email,
+    required this.email,
     this.emailConfirmed,
     this.normalizedEmail,
     this.accessFailedAccount,
@@ -46,7 +46,7 @@ class UserResponse extends BaseResponse{
     this.currentTargetLanguageId,
     this.roles,
     this.subscriptionIds,
-  });
+  }) : super(id: id);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 

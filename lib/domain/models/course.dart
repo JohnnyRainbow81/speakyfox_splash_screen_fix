@@ -2,21 +2,23 @@
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/class.dart';
 import 'package:speakyfox/domain/models/image.dart';
+import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/models/lecture.dart';
 
 class Course extends BaseModel {
   String title;
   String description;
-  String languagePair;
+  LanguagePair languagePair;
   String fileId;
-  String isOnboarding;
+  bool isOnboarding;
   String languagePairId;
   Class classs;
-  String progress;
-  String lectures;
+  int progress;
+  List<Lecture> lectures;
   Image icon;  
-  String isLocked;
-  String isPublished;
-  String order;
+  bool isLocked;
+  bool isPublished;
+  int order;
   String classId;
   Course({
      required String id,

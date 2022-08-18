@@ -13,9 +13,9 @@ class Lecture extends BaseModel {
   LanguagePair languagePair;
   bool isPublished;
   bool isLocked;
-  num order;
+  int order;
   Course course;
-  num progress;
+  int progress;
   Offer offer;
   String offerId;
   String courseId;

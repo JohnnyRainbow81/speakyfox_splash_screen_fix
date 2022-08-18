@@ -2,7 +2,7 @@
 class Invoice {
   String periodStart;
   String periodEnd;
-  num total;
+  int total;
   String status;
   bool paid;
   String dueDate;

@@ -5,7 +5,7 @@ part 'base_response.g.dart';
 
 @JsonSerializable()
 class BaseResponse {
-  String? id;
+  String id;
   String? modified;
   String? modifiedBy;
   String? created;
@@ -13,7 +13,7 @@ class BaseResponse {
   String? deleted;
   String? deletedBy;
   BaseResponse({
-    this.id,
+    required this.id,
     this.modified,
     this.modifiedBy,
     this.created,

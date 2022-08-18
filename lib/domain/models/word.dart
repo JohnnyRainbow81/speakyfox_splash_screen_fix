@@ -4,7 +4,7 @@ import 'package:speakyfox/domain/models/sentence.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 
 class Word extends BaseModel {
-  num index;
+  int index;
   String entry;
   List<Map> metadata = [];
   TermType type;

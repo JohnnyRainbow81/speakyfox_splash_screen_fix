@@ -21,7 +21,7 @@ enum ScreenType {
 class Screen extends BaseModel {
   String title;
   String description;
-  num order;
+  int order;
   ScreenType type;
   String sequenceId;
   Sequence sequence;

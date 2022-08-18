@@ -4,7 +4,7 @@
 // class WordDto {
 //   String id;
 //   String content;
-//   num index;
+//   int index;
 //   FormGroup form;
 //   Word word;
 //   HighlightedPart highlightedPart;

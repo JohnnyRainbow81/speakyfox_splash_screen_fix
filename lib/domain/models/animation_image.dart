@@ -2,7 +2,7 @@
 import 'package:speakyfox/domain/models/image.dart';
 
 class AnimationImage {
-  num order;
+  int order;
   dynamic nativeElement;
   Image image;
   String url;

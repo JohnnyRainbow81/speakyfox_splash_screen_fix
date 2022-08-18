@@ -19,7 +19,7 @@ class Offer extends BaseModel {
   bool loginEnabled;
   String offerStart;
   String offerEnd;
-  num originalAmount;
+  int originalAmount;
   String loginTitle;
   String referer;
   bool isAllowedCoupon;

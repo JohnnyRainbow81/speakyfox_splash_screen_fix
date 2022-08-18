@@ -9,11 +9,11 @@ class Plan extends BaseModel {
   String displayTitle;
   bool isPublished;
   String interval;
-  num intervalCount;
+  int intervalCount;
   String currency;
-  num unitAmount;
-  num trialPeriodDays;
-  num taxPercent;
+  int unitAmount;
+  int trialPeriodDays;
+  int taxPercent;
   String productId;
   Product product;
 
