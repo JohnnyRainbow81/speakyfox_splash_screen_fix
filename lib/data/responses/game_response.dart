@@ -33,19 +33,8 @@ class GameResponse extends ScreenResponse {
   }) : super(description: description, gameType: gameType, id: id, order: order,  sentenceShells: sentenceShells, sentences: sentences ,sequence: sequence,sequenceId: sequenceId,title: title,type: type,vocabularies: vocabularies,vocabularyShells: vocabularyShells);
   
 
-  factory GameResponse extends BaseResponse.fromJson(Map<String, dynamic> json) => _$GameResponse extends BaseResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$GameResponse extends BaseResponseToJson(this);
+  factory GameResponse.fromJson(Map<String, dynamic> json) => _$GameResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$GameResponseToJson(this);
 }
 
 
-String title;
-  String description;
-  int order;
-  ScreenType type;
-  String sequenceId;
-  SequenceResponse sequence;
-  String gameType; //FIXME   only to Subclass?
-  List<VocabularyResponse> vocabularies;
-  List<VocabularyShellResponse> vocabularyShells;
-  List<SentenceResponse> sentences;
-  List<SentenceShellResponse> sentenceShells;

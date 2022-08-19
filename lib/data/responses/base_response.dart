@@ -6,12 +6,12 @@ part 'base_response.g.dart';
 @JsonSerializable()
 class BaseResponse {
   String id;
-  String? modified;
-  String? modifiedBy;
-  String? created;
-  String? createdBy;
-  String? deleted;
-  String? deletedBy;
+  String? modified = "";
+  String? modifiedBy = "";
+  String? created = "";
+  String? createdBy = "";
+  String? deleted = "";
+  String? deletedBy = "";
   BaseResponse({
     required this.id,
     this.modified,

@@ -47,6 +47,6 @@ class CourseResponse extends BaseResponse {
 
   
 
-  factory CourseResponse.fromJson(Map<String, dynamic> json) => _$CourseReponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CourseReponseToJson(this);
+  factory CourseResponse.fromJson(Map<String, dynamic> json) => _$CourseResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$CourseResponseToJson(this);
 }

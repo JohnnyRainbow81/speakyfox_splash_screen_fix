@@ -8,6 +8,12 @@ part of 'image_response.dart';
 
 ImageResponse _$ImageResponseFromJson(Map<String, dynamic> json) =>
     ImageResponse(
+      bucketName: json['bucketName'] as String,
+      name: json['name'] as String,
+      size: json['size'] as int,
+      contentType: json['contentType'] as String,
+      type: $enumDecode(_$DatabaseTypeEnumMap, json['type']),
+      metadata: json['metadata'] as List<dynamic>?,
       id: json['id'] as String,
       imageType: $enumDecode(_$ImageTypeEnumMap, json['imageType']),
       order: json['order'] as int,
@@ -30,10 +36,21 @@ Map<String, dynamic> _$ImageResponseToJson(ImageResponse instance) =>
       'createdBy': instance.createdBy,
       'deleted': instance.deleted,
       'deletedBy': instance.deletedBy,
+      'bucketName': instance.bucketName,
+      'name': instance.name,
+      'size': instance.size,
+      'contentType': instance.contentType,
+      'type': _$DatabaseTypeEnumMap[instance.type]!,
+      'metadata': instance.metadata,
       'imageType': _$ImageTypeEnumMap[instance.imageType]!,
       'order': instance.order,
       'coordinates': instance.coordinates,
     };
+
+const _$DatabaseTypeEnumMap = {
+  DatabaseType.image: 'image',
+  DatabaseType.audio: 'audio',
+};
 
 const _$ImageTypeEnumMap = {
   ImageType.whole: 'whole',

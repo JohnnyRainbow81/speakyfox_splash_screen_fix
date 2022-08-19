@@ -60,6 +60,6 @@ class OfferResponse extends BaseResponse {
     required this.planDescription,
   }):super(id: id);
 
-  factory OfferResponse .fromJson(Map<String, dynamic> json) => _$OfferResponse FromJson(json);
-  Map<String, dynamic> toJson() => _$OfferResponse ToJson(this);
+  factory OfferResponse.fromJson(Map<String, dynamic> json) => _$OfferResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$OfferResponseToJson(this);
 }

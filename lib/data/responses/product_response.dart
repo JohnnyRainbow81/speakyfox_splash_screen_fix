@@ -2,6 +2,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:speakyfox/data/responses/base_response.dart';
+import 'package:speakyfox/data/responses/plan_response.dart';
+import 'package:speakyfox/domain/models/plan.dart';
 
 part 'product_response.g.dart';
 
@@ -19,6 +21,7 @@ class ProductResponse extends BaseResponse {
   int taxPercent;
   String productId;
   ProductResponse product;
+  List<PlanResponse> plans;
 
   ProductResponse(
       {required String id,
@@ -33,7 +36,9 @@ class ProductResponse extends BaseResponse {
       required this.trialPeriodDays,
       required this.taxPercent,
       required this.productId,
-      required this.product})
+      required this.product,
+      required this.plans
+       })
       : super(id: id);
 
   factory ProductResponse.fromJson(Map<String, dynamic> json) => _$ProductResponseFromJson(json);

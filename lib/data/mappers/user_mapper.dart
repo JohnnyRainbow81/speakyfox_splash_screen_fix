@@ -3,13 +3,13 @@ import 'package:speakyfox/domain/models/role.dart';
 
 import '../../domain/models/user.dart';
 
-extension UserResponseMapper on UserResponse {
+extension UserMapper on UserResponse {
   User toUser() {
     return User(
       currentLanguagePairId: currentLanguagePairId ?? "",
       currentSourceLanguageId: currentSourceLanguageId ?? "",
       currentTargetLanguageId: currentTargetLanguageId ?? "",
-      email: email ?? "",
+      email: email,
       emailConfirmed: emailConfirmed ?? false,
       normalizedEmail: normalizedEmail ?? "",
       userName: userName ?? "",
@@ -21,7 +21,7 @@ extension UserResponseMapper on UserResponse {
       firstName: firstname ?? "",
       lastName: lastname ?? "",
       formOfAddress: formOfAddress ?? "",
-      id: id ?? "",
+      id: id,
       roles: roles?.map((roleStr) => Role.values.byName(roleStr.toLowerCase())).toList() ?? [],  //Convert uppercase String (like "User") to lowercase enum
       subscriptionIds: subscriptionIds?.toList() ?? [],
       accessFailedAccount: accessFailedAccount ?? 0,

@@ -4,12 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/responses/base_response.dart';
 import 'package:speakyfox/data/responses/product_response.dart';
 
+import '../../domain/models/plan.dart';
+
 part 'plan_response.g.dart';
 
 @JsonSerializable()
 class PlanResponse extends BaseResponse {
-
-   String title;
+  String title;
   String description;
   String displayTitle;
   bool isPublished;
@@ -36,9 +37,9 @@ class PlanResponse extends BaseResponse {
     required this.taxPercent,
     required this.productId,
     required this.product,
-  }): super(id: id);
 
+  }) : super(id: id);
 
-  factory PlanResponse extends BaseResponse.fromJson(Map<String, dynamic> json) => _$PlanResponse extends BaseResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$PlanResponse extends BaseResponseToJson(this);
+  factory PlanResponse.fromJson(Map<String, dynamic> json) => _$PlanResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$PlanResponseToJson(this);
 }

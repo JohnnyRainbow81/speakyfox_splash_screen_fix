@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_response.dart';
+part of 'plan_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
-    ProductResponse(
+PlanResponse _$PlanResponseFromJson(Map<String, dynamic> json) => PlanResponse(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
@@ -22,9 +21,6 @@ ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
       productId: json['productId'] as String,
       product:
           ProductResponse.fromJson(json['product'] as Map<String, dynamic>),
-      plans: (json['plans'] as List<dynamic>)
-          .map((e) => PlanResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
     )
       ..modified = json['modified'] as String?
       ..modifiedBy = json['modifiedBy'] as String?
@@ -33,7 +29,7 @@ ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
       ..deleted = json['deleted'] as String?
       ..deletedBy = json['deletedBy'] as String?;
 
-Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
+Map<String, dynamic> _$PlanResponseToJson(PlanResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
@@ -54,5 +50,4 @@ Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
       'taxPercent': instance.taxPercent,
       'productId': instance.productId,
       'product': instance.product,
-      'plans': instance.plans,
     };

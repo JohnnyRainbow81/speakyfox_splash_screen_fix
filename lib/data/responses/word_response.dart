@@ -12,7 +12,7 @@ part 'word_response.g.dart';
 class WordResponse extends BaseResponse {
 int index;
   String entry;
-  List<Map> metadata = [];
+  List<Map> metadata;
   TermType type;
   String vocabularyShellId;
   VocabularyShellResponse vocabularyShell;
@@ -27,6 +27,7 @@ int index;
     required this.vocabularyShell,
   }) : super(id: id);
 
-  factory WordResponse extends BaseResponse.fromJson(Map<String, dynamic> json) => _$WordResponse extends BaseResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$WordResponse extends BaseResponseToJson(this);
+  factory WordResponse.fromJson(Map<String, dynamic> json) => _$WordResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$WordResponseToJson(this);
 }
+
