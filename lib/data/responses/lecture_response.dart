@@ -28,6 +28,12 @@ class LectureResponse extends BaseResponse {
   List<SequenceResponse> sequences = [];
   LectureResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.languagePairId,
     required this.description,
@@ -42,7 +48,14 @@ class LectureResponse extends BaseResponse {
     required this.offerId,
     required this.courseId,
     required this.sequences,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory LectureResponse.fromJson(Map<String, dynamic> json) => _$LectureResponseFromJson(json);
   Map<String, dynamic> toJson() => _$LectureResponseToJson(this);

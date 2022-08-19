@@ -8,7 +8,12 @@ part of 'game_response.dart';
 
 GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
       id: json['id'] as String,
-      instructions: json['instructions'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       order: json['order'] as int,
@@ -30,13 +35,8 @@ GameResponse _$GameResponseFromJson(Map<String, dynamic> json) => GameResponse(
       sentenceShells: (json['sentenceShells'] as List<dynamic>)
           .map((e) => SentenceShellResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+      instructions: json['instructions'] as String,
+    );
 
 Map<String, dynamic> _$GameResponseToJson(GameResponse instance) =>
     <String, dynamic>{

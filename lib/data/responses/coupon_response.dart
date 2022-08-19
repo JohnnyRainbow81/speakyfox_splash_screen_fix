@@ -16,6 +16,12 @@ class CouponResponse extends BaseResponse {
 
   CouponResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.key,
     required this.name,
     required this.amountOff,
@@ -23,7 +29,14 @@ class CouponResponse extends BaseResponse {
     required this.planId,
     required this.duration,
     required this.durationInMonths,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory CouponResponse.fromJson(Map<String, dynamic> json) => _$CouponResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CouponResponseToJson(this);

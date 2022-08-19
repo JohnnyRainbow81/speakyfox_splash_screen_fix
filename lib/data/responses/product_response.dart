@@ -25,6 +25,12 @@ class ProductResponse extends BaseResponse {
 
   ProductResponse(
       {required String id,
+      required String modified,
+      required String modifiedBy,
+      required String created,
+      required String createdBy,
+      required String deleted,
+      required String deletedBy,
       required this.title,
       required this.description,
       required this.displayTitle,
@@ -37,9 +43,15 @@ class ProductResponse extends BaseResponse {
       required this.taxPercent,
       required this.productId,
       required this.product,
-      required this.plans
-       })
-      : super(id: id);
+      required this.plans})
+      : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory ProductResponse.fromJson(Map<String, dynamic> json) => _$ProductResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ProductResponseToJson(this);

@@ -15,11 +15,24 @@ class HighlightedPartResponse extends BaseResponse {
   List<WordResponse> words;
 
   HighlightedPartResponse({
-    required this.metadata,
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
+    required this.metadata,
     required this.type,
     required this.words,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory HighlightedPartResponse.fromJson(Map<String, dynamic> json) => _$HighlightedPartResponseFromJson(json);
   Map<String, dynamic> toJson() => _$HighlightedPartResponseToJson(this);

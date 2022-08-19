@@ -12,9 +12,22 @@ class OfferDescriptionContentResponse extends BaseResponse {
 
   OfferDescriptionContentResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.content,
     required this.bulletPoints,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory OfferDescriptionContentResponse.fromJson(Map<String, dynamic> json) =>
       _$OfferDescriptionContentResponseFromJson(json);

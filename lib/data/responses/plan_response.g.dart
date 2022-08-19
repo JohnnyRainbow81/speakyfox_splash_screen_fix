@@ -8,6 +8,12 @@ part of 'plan_response.dart';
 
 PlanResponse _$PlanResponseFromJson(Map<String, dynamic> json) => PlanResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       displayTitle: json['displayTitle'] as String,
@@ -21,13 +27,7 @@ PlanResponse _$PlanResponseFromJson(Map<String, dynamic> json) => PlanResponse(
       productId: json['productId'] as String,
       product:
           ProductResponse.fromJson(json['product'] as Map<String, dynamic>),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$PlanResponseToJson(PlanResponse instance) =>
     <String, dynamic>{

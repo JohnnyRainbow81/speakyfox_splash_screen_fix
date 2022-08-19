@@ -5,7 +5,7 @@ import 'package:speakyfox/data/responses/base_response.dart';
 part 'user_response.g.dart';
 
 @JsonSerializable()
-class UserResponse extends BaseResponse{
+class UserResponse extends BaseResponse {
   @override
   String id;
   String? formOfAddress;
@@ -28,6 +28,12 @@ class UserResponse extends BaseResponse{
   List<String>? subscriptionIds;
   UserResponse({
     required this.id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     this.formOfAddress,
     this.firstname,
     this.lastname,
@@ -46,7 +52,14 @@ class UserResponse extends BaseResponse{
     this.currentTargetLanguageId,
     this.roles,
     this.subscriptionIds,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) => _$UserResponseFromJson(json);
 

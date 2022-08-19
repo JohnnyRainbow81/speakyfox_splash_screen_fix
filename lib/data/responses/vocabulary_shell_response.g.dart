@@ -10,18 +10,18 @@ VocabularyShellResponse _$VocabularyShellResponseFromJson(
         Map<String, dynamic> json) =>
     VocabularyShellResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       vocabularies: (json['vocabularies'] as List<dynamic>)
           .map((e) => VocabularyResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$VocabularyShellResponseToJson(
         VocabularyShellResponse instance) =>

@@ -11,8 +11,7 @@ part 'course_response.g.dart';
 
 @JsonSerializable()
 class CourseResponse extends BaseResponse {
-
- String title;
+  String title;
   String description;
   LanguagePairResponse languagePair;
   String fileId;
@@ -21,7 +20,7 @@ class CourseResponse extends BaseResponse {
   ClassResponse classs;
   int? progress;
   List<LectureResponse>? lectures;
-  ImageResponse icon;  
+  ImageResponse icon;
   bool isLocked;
   bool isPublished;
   int order;
@@ -29,6 +28,12 @@ class CourseResponse extends BaseResponse {
 
   CourseResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.description,
     required this.languagePair,
@@ -43,9 +48,14 @@ class CourseResponse extends BaseResponse {
     required this.isPublished,
     required this.order,
     required this.classId,
-  }) : super(id: id);
-
-  
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory CourseResponse.fromJson(Map<String, dynamic> json) => _$CourseResponseFromJson(json);
   Map<String, dynamic> toJson() => _$CourseResponseToJson(this);

@@ -27,6 +27,12 @@ class SentenceResponse extends BaseResponse {
 
   SentenceResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.sentenceShellId,
     required this.sentenceShell,
     required this.isPublished,
@@ -38,7 +44,14 @@ class SentenceResponse extends BaseResponse {
     required this.targetHighlightedParts,
     required this.images,
     required this.audios,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory SentenceResponse.fromJson(Map<String, dynamic> json) => _$SentenceResponseFromJson(json);
   Map<String, dynamic> toJson() => _$SentenceResponseToJson(this);

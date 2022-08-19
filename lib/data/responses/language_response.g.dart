@@ -9,6 +9,12 @@ part of 'language_response.dart';
 LanguageResponse _$LanguageResponseFromJson(Map<String, dynamic> json) =>
     LanguageResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       key: json['key'] as String,
@@ -19,13 +25,7 @@ LanguageResponse _$LanguageResponseFromJson(Map<String, dynamic> json) =>
       buttonFileId: json['buttonFileId'] as String,
       languagePair: LanguagePairResponse.fromJson(
           json['languagePair'] as Map<String, dynamic>),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$LanguageResponseToJson(LanguageResponse instance) =>
     <String, dynamic>{

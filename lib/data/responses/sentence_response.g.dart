@@ -9,6 +9,12 @@ part of 'sentence_response.dart';
 SentenceResponse _$SentenceResponseFromJson(Map<String, dynamic> json) =>
     SentenceResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       sentenceShellId: json['sentenceShellId'] as String,
       sentenceShell: SentenceShellResponse.fromJson(
           json['sentenceShell'] as Map<String, dynamic>),
@@ -32,13 +38,7 @@ SentenceResponse _$SentenceResponseFromJson(Map<String, dynamic> json) =>
       audios: (json['audios'] as List<dynamic>)
           .map((e) => AudioResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$SentenceResponseToJson(SentenceResponse instance) =>
     <String, dynamic>{

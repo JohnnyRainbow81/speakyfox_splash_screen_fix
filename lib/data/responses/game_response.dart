@@ -14,12 +14,16 @@ part 'game_response.g.dart';
 
 @JsonSerializable()
 class GameResponse extends ScreenResponse {
-
-      String instructions;
+  String instructions;
   GameResponse({
     required String id,
-    required this.instructions,
-     required String title,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
+    required String title,
     required String description,
     required int order,
     required ScreenType type,
@@ -30,11 +34,27 @@ class GameResponse extends ScreenResponse {
     required List<VocabularyShellResponse> vocabularyShells,
     required List<SentenceResponse> sentences,
     required List<SentenceShellResponse> sentenceShells,
-  }) : super(description: description, gameType: gameType, id: id, order: order,  sentenceShells: sentenceShells, sentences: sentences ,sequence: sequence,sequenceId: sequenceId,title: title,type: type,vocabularies: vocabularies,vocabularyShells: vocabularyShells);
-  
+    required this.instructions,
+  }) : super(
+            description: description,
+            gameType: gameType,
+            id: id,
+            order: order,
+            sentenceShells: sentenceShells,
+            sentences: sentences,
+            sequence: sequence,
+            sequenceId: sequenceId,
+            title: title,
+            type: type,
+            vocabularies: vocabularies,
+            vocabularyShells: vocabularyShells,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory GameResponse.fromJson(Map<String, dynamic> json) => _$GameResponseFromJson(json);
   Map<String, dynamic> toJson() => _$GameResponseToJson(this);
 }
-
-

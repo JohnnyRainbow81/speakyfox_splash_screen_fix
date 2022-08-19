@@ -9,6 +9,12 @@ part of 'coupon_response.dart';
 CouponResponse _$CouponResponseFromJson(Map<String, dynamic> json) =>
     CouponResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       key: json['key'] as String,
       name: json['name'] as String?,
       amountOff: json['amountOff'] as int?,
@@ -16,13 +22,7 @@ CouponResponse _$CouponResponseFromJson(Map<String, dynamic> json) =>
       planId: json['planId'] as String,
       duration: json['duration'] as String,
       durationInMonths: json['durationInMonths'] as int?,
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$CouponResponseToJson(CouponResponse instance) =>
     <String, dynamic>{

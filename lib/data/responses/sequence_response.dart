@@ -18,12 +18,25 @@ class SequenceResponse extends BaseResponse {
 
   SequenceResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.description,
     required this.progressType,
     required this.games,
     required this.parent,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory SequenceResponse.fromJson(Map<String, dynamic> json) => _$SequenceResponseFromJson(json);
   Map<String, dynamic> toJson() => _$SequenceResponseToJson(this);

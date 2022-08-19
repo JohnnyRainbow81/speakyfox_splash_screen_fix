@@ -15,11 +15,24 @@ class FileResponse extends BaseResponse {
 
   FileResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.size,
     required this.contentType,
     required this.name,
     required this.type,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory FileResponse.fromJson(Map<String, dynamic> json) => _$FileResponseFromJson(json);
   Map<String, dynamic> toJson() => _$FileResponseToJson(this);

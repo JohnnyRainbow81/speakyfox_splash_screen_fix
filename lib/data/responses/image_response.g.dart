@@ -8,24 +8,24 @@ part of 'image_response.dart';
 
 ImageResponse _$ImageResponseFromJson(Map<String, dynamic> json) =>
     ImageResponse(
+      id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       bucketName: json['bucketName'] as String,
       name: json['name'] as String,
       size: json['size'] as int,
       contentType: json['contentType'] as String,
       type: $enumDecode(_$DatabaseTypeEnumMap, json['type']),
       metadata: json['metadata'] as List<dynamic>?,
-      id: json['id'] as String,
       imageType: $enumDecode(_$ImageTypeEnumMap, json['imageType']),
       order: json['order'] as int,
       coordinates: CoordinatesResponse.fromJson(
           json['coordinates'] as Map<String, dynamic>),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$ImageResponseToJson(ImageResponse instance) =>
     <String, dynamic>{

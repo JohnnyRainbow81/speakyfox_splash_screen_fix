@@ -14,14 +14,20 @@ class AudioResponse extends FileResponse {
   AudioType audioType;
   LanguageType languageType;
   AudioResponse({
+    required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required int size,
     required String contentType,
     required String name,
     required FileType type,
-    required String id,
     required this.audioType,
     required this.languageType,
-  }) : super(contentType: contentType, id: id, name: name, size: size, type: type);
+  }) : super(contentType: contentType, id: id, name: name, size: size, type: type,created: created,createdBy: createdBy,deleted: deleted,deletedBy: deletedBy,modified: modified,modifiedBy: modifiedBy);
 
   factory AudioResponse.fromJson(Map<String, dynamic> json) => _$AudioResponseFromJson(json);
   Map<String, dynamic> toJson() => _$AudioResponseToJson(this);

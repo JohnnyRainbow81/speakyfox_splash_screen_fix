@@ -9,6 +9,12 @@ part of 'course_response.dart';
 CourseResponse _$CourseResponseFromJson(Map<String, dynamic> json) =>
     CourseResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       languagePair: LanguagePairResponse.fromJson(
@@ -26,13 +32,7 @@ CourseResponse _$CourseResponseFromJson(Map<String, dynamic> json) =>
       isPublished: json['isPublished'] as bool,
       order: json['order'] as int,
       classId: json['classId'] as String,
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$CourseResponseToJson(CourseResponse instance) =>
     <String, dynamic>{

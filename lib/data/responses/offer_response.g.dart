@@ -9,6 +9,12 @@ part of 'offer_response.dart';
 OfferResponse _$OfferResponseFromJson(Map<String, dynamic> json) =>
     OfferResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       planId: json['planId'] as String,
       offerTitle: json['offerTitle'] as String,
       registrationTitle: json['registrationTitle'] as String,
@@ -36,13 +42,7 @@ OfferResponse _$OfferResponseFromJson(Map<String, dynamic> json) =>
       details: json['details'] as String,
       planTitle: json['planTitle'] as String,
       planDescription: json['planDescription'] as String,
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$OfferResponseToJson(OfferResponse instance) =>
     <String, dynamic>{

@@ -16,17 +16,35 @@ class ImageResponse extends DatabaseFileResponse {
   CoordinatesResponse coordinates;
 
   ImageResponse({
+    required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required String bucketName,
     required String name,
     required int size,
     required String contentType,
     required DatabaseType type,
     required List<dynamic>? metadata,
-    required String id,
     required this.imageType,
     required this.order,
     required this.coordinates,
-  }) : super(id: id, bucketName: bucketName, contentType: contentType, name: name, size: size, type: type);
+  }) : super(
+            id: id,
+            bucketName: bucketName,
+            contentType: contentType,
+            name: name,
+            size: size,
+            type: type,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory ImageResponse.fromJson(Map<String, dynamic> json) => _$ImageResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ImageResponseToJson(this);

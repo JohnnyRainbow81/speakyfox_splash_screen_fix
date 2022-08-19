@@ -27,6 +27,12 @@ class ScreenResponse extends BaseResponse {
   List<SentenceShellResponse> sentenceShells;
   ScreenResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.description,
     required this.order,
@@ -38,7 +44,14 @@ class ScreenResponse extends BaseResponse {
     required this.vocabularyShells,
     required this.sentences,
     required this.sentenceShells,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory ScreenResponse.fromJson(Map<String, dynamic> json) => _$ScreenResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ScreenResponseToJson(this);

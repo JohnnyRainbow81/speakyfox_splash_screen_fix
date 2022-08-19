@@ -23,6 +23,12 @@ class ClassResponse extends BaseResponse {
   List<CourseResponse> courses;
   ClassResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.description,
     required this.isPublished,
@@ -35,7 +41,14 @@ class ClassResponse extends BaseResponse {
     required this.isLocked,
     required this.languagePair,
     required this.courses,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory ClassResponse.fromJson(Map<String, dynamic> json) => _$ClassResponseFromJson(json);
   Map<String, dynamic> toJson() => _$ClassResponseToJson(this);

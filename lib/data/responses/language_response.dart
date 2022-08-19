@@ -9,7 +9,6 @@ part 'language_response.g.dart';
 
 @JsonSerializable()
 class LanguageResponse extends BaseResponse {
-
   String title;
   String description;
   String key;
@@ -21,6 +20,12 @@ class LanguageResponse extends BaseResponse {
 
   LanguageResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.title,
     required this.description,
     required this.key,
@@ -29,7 +34,14 @@ class LanguageResponse extends BaseResponse {
     required this.isPublished,
     required this.buttonFileId,
     required this.languagePair,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory LanguageResponse.fromJson(Map<String, dynamic> json) => _$LanguageResponseFromJson(json);
   Map<String, dynamic> toJson() => _$LanguageResponseToJson(this);

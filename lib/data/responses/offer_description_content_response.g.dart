@@ -10,17 +10,17 @@ OfferDescriptionContentResponse _$OfferDescriptionContentResponseFromJson(
         Map<String, dynamic> json) =>
     OfferDescriptionContentResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       content: json['content'] as String,
       bulletPoints: (json['bulletPoints'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$OfferDescriptionContentResponseToJson(
         OfferDescriptionContentResponse instance) =>

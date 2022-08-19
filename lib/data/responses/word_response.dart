@@ -10,7 +10,7 @@ part 'word_response.g.dart';
 
 @JsonSerializable()
 class WordResponse extends BaseResponse {
-int index;
+  int index;
   String entry;
   List<Map> metadata;
   TermType type;
@@ -19,15 +19,27 @@ int index;
 
   WordResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.index,
     required this.entry,
     required this.metadata,
     required this.type,
     required this.vocabularyShellId,
     required this.vocabularyShell,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory WordResponse.fromJson(Map<String, dynamic> json) => _$WordResponseFromJson(json);
   Map<String, dynamic> toJson() => _$WordResponseToJson(this);
 }
-

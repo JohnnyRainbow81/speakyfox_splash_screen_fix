@@ -8,6 +8,12 @@ part of 'user_response.dart';
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       formOfAddress: json['formOfAddress'] as String?,
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
@@ -31,13 +37,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       subscriptionIds: (json['subscriptionIds'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
     <String, dynamic>{

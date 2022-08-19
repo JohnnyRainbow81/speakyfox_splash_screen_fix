@@ -28,9 +28,15 @@ class VocabularyResponse extends BaseResponse {
   List<AnswerResponse> answers;
   List<ImageResponse> images;
   List<AudioResponse> audios;
-  
+
   VocabularyResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.sourceWord,
     required this.targetWord,
     required this.mnemonic,
@@ -46,7 +52,14 @@ class VocabularyResponse extends BaseResponse {
     required this.answers,
     required this.images,
     required this.audios,
-  }) : super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory VocabularyResponse.fromJson(Map<String, dynamic> json) => _$VocabularyResponseFromJson(json);
   Map<String, dynamic> toJson() => _$VocabularyResponseToJson(this);

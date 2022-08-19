@@ -10,7 +10,6 @@ part 'offer_response.g.dart';
 
 @JsonSerializable()
 class OfferResponse extends BaseResponse {
-
   String planId;
   String offerTitle;
   String registrationTitle;
@@ -36,6 +35,12 @@ class OfferResponse extends BaseResponse {
 
   OfferResponse({
     required String id,
+    required String modified,
+    required String modifiedBy,
+    required String created,
+    required String createdBy,
+    required String deleted,
+    required String deletedBy,
     required this.planId,
     required this.offerTitle,
     required this.registrationTitle,
@@ -58,7 +63,14 @@ class OfferResponse extends BaseResponse {
     required this.details,
     required this.planTitle,
     required this.planDescription,
-  }):super(id: id);
+  }) : super(
+            id: id,
+            created: created,
+            createdBy: createdBy,
+            deleted: deleted,
+            deletedBy: deletedBy,
+            modified: modified,
+            modifiedBy: modifiedBy);
 
   factory OfferResponse.fromJson(Map<String, dynamic> json) => _$OfferResponseFromJson(json);
   Map<String, dynamic> toJson() => _$OfferResponseToJson(this);

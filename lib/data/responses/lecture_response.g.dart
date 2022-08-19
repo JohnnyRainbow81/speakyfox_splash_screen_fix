@@ -9,6 +9,12 @@ part of 'lecture_response.dart';
 LectureResponse _$LectureResponseFromJson(Map<String, dynamic> json) =>
     LectureResponse(
       id: json['id'] as String,
+      modified: json['modified'] as String,
+      modifiedBy: json['modifiedBy'] as String,
+      created: json['created'] as String,
+      createdBy: json['createdBy'] as String,
+      deleted: json['deleted'] as String,
+      deletedBy: json['deletedBy'] as String,
       title: json['title'] as String,
       languagePairId: json['languagePairId'] as String,
       description: json['description'] as String,
@@ -26,13 +32,7 @@ LectureResponse _$LectureResponseFromJson(Map<String, dynamic> json) =>
       sequences: (json['sequences'] as List<dynamic>)
           .map((e) => SequenceResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )
-      ..modified = json['modified'] as String?
-      ..modifiedBy = json['modifiedBy'] as String?
-      ..created = json['created'] as String?
-      ..createdBy = json['createdBy'] as String?
-      ..deleted = json['deleted'] as String?
-      ..deletedBy = json['deletedBy'] as String?;
+    );
 
 Map<String, dynamic> _$LectureResponseToJson(LectureResponse instance) =>
     <String, dynamic>{
