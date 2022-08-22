@@ -16,6 +16,8 @@ extension AudioMapper on AudioResponse {
         name: name,
         type: type,
         languageType: languageType,
-        audioType: audioType);
+        audioType: audioType,
+        bucketName: bucketName,
+        metadata: metadata ?? []);
   }
 }
