@@ -8,12 +8,12 @@ part of 'word_response.dart';
 
 WordResponse _$WordResponseFromJson(Map<String, dynamic> json) => WordResponse(
       id: json['id'] as String,
-      modified: json['modified'] as String,
-      modifiedBy: json['modifiedBy'] as String,
-      created: json['created'] as String,
-      createdBy: json['createdBy'] as String,
-      deleted: json['deleted'] as String,
-      deletedBy: json['deletedBy'] as String,
+      modified: json['modified'] as String?,
+      modifiedBy: json['modifiedBy'] as String?,
+      created: json['created'] as String?,
+      createdBy: json['createdBy'] as String?,
+      deleted: json['deleted'] as String?,
+      deletedBy: json['deletedBy'] as String?,
       index: json['index'] as int,
       entry: json['entry'] as String,
       metadata: (json['metadata'] as List<dynamic>)

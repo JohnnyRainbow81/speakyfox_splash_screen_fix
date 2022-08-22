@@ -1,9 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/data/responses/user_payment_method_response.dart';
+// import 'package:json_annotation/json_annotation.dart';
+// import 'package:speakyfox/data/responses/user_payment_method_response.dart';
 
-import '../../domain/models/payment_method.dart';
+// import '../../domain/models/payment_method.dart';
 
-part 'user_credit_card_response.g.dart';
+// part 'user_credit_card_response.g.dart';
 
 // @JsonSerializable()
 // class UserCreditCardResponse extends UserPaymentMethodResponse{

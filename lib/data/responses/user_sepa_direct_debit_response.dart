@@ -1,9 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/data/responses/user_payment_method_response.dart';
+// import 'package:json_annotation/json_annotation.dart';
+// import 'package:speakyfox/data/responses/user_payment_method_response.dart';
 
-import '../../domain/models/payment_method.dart';
+// import '../../domain/models/payment_method.dart';
 
-part 'user_sepa_direct_debit_response.g.dart';
+// part 'user_sepa_direct_debit_response.g.dart';
 
 // @JsonSerializable()
 // class UserSepaDirectDebitResponse extends UserPaymentMethodResponse {

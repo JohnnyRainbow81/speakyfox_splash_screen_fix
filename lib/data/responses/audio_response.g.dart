@@ -9,12 +9,12 @@ part of 'audio_response.dart';
 AudioResponse _$AudioResponseFromJson(Map<String, dynamic> json) =>
     AudioResponse(
       id: json['id'] as String,
-      modified: json['modified'] as String,
-      modifiedBy: json['modifiedBy'] as String,
-      created: json['created'] as String,
-      createdBy: json['createdBy'] as String,
-      deleted: json['deleted'] as String,
-      deletedBy: json['deletedBy'] as String,
+      modified: json['modified'] as String?,
+      modifiedBy: json['modifiedBy'] as String?,
+      created: json['created'] as String?,
+      createdBy: json['createdBy'] as String?,
+      deleted: json['deleted'] as String?,
+      deletedBy: json['deletedBy'] as String?,
       size: json['size'] as int,
       contentType: json['contentType'] as String,
       name: json['name'] as String,

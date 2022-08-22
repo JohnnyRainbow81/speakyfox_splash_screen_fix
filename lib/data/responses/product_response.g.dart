@@ -9,12 +9,12 @@ part of 'product_response.dart';
 ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
     ProductResponse(
       id: json['id'] as String,
-      modified: json['modified'] as String,
-      modifiedBy: json['modifiedBy'] as String,
-      created: json['created'] as String,
-      createdBy: json['createdBy'] as String,
-      deleted: json['deleted'] as String,
-      deletedBy: json['deletedBy'] as String,
+      modified: json['modified'] as String?,
+      modifiedBy: json['modifiedBy'] as String?,
+      created: json['created'] as String?,
+      createdBy: json['createdBy'] as String?,
+      deleted: json['deleted'] as String?,
+      deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
       displayTitle: json['displayTitle'] as String,

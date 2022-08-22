@@ -10,12 +10,12 @@ PaymentMethodResponse _$PaymentMethodResponseFromJson(
         Map<String, dynamic> json) =>
     PaymentMethodResponse(
       id: json['id'] as String,
-      modified: json['modified'] as String,
-      modifiedBy: json['modifiedBy'] as String,
-      created: json['created'] as String,
-      createdBy: json['createdBy'] as String,
-      deleted: json['deleted'] as String,
-      deletedBy: json['deletedBy'] as String,
+      modified: json['modified'] as String?,
+      modifiedBy: json['modifiedBy'] as String?,
+      created: json['created'] as String?,
+      createdBy: json['createdBy'] as String?,
+      deleted: json['deleted'] as String?,
+      deletedBy: json['deletedBy'] as String?,
       name: json['name'] as String,
       description: json['description'] as String,
       additionalInformation: json['additionalInformation'] as String,

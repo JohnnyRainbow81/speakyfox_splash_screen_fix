@@ -9,12 +9,12 @@ part of 'vocabulary_response.dart';
 VocabularyResponse _$VocabularyResponseFromJson(Map<String, dynamic> json) =>
     VocabularyResponse(
       id: json['id'] as String,
-      modified: json['modified'] as String,
-      modifiedBy: json['modifiedBy'] as String,
-      created: json['created'] as String,
-      createdBy: json['createdBy'] as String,
-      deleted: json['deleted'] as String,
-      deletedBy: json['deletedBy'] as String,
+      modified: json['modified'] as String?,
+      modifiedBy: json['modifiedBy'] as String?,
+      created: json['created'] as String?,
+      createdBy: json['createdBy'] as String?,
+      deleted: json['deleted'] as String?,
+      deletedBy: json['deletedBy'] as String?,
       sourceWord: json['sourceWord'] as String,
       targetWord: json['targetWord'] as String,
       mnemonic: json['mnemonic'] as String,
