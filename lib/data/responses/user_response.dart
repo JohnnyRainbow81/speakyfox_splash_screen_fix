@@ -28,12 +28,12 @@ class UserResponse extends BaseResponse {
   List<String>? subscriptionIds;
   UserResponse({
     required this.id,
-    required String modified,
-    required String modifiedBy,
-    required String created,
-    required String createdBy,
-    required String deleted,
-    required String deletedBy,
+    String? modified,
+    String? modifiedBy,
+    String? created,
+    String? createdBy,
+    String? deleted,
+    String? deletedBy,
     this.formOfAddress,
     this.firstname,
     this.lastname,

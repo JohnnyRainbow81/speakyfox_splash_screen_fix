@@ -28,12 +28,12 @@ class CourseResponse extends BaseResponse {
 
   CourseResponse({
     required String id,
-    required String modified,
-    required String modifiedBy,
-    required String created,
-    required String createdBy,
-    required String deleted,
-    required String deletedBy,
+    String? modified,
+    String? modifiedBy,
+    String? created,
+    String? createdBy,
+    String? deleted,
+    String? deletedBy,
     required this.title,
     required this.description,
     required this.languagePair,

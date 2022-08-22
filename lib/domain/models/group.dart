@@ -12,12 +12,12 @@ class Group extends BaseModel {
 
   Group(
       {required String id,
-      required String modified,
-      required String modifiedBy,
-      required String created,
-      required String createdBy,
-      required String deleted,
-      required String deletedBy,
+      String? modified,
+      String? modifiedBy,
+      String? created,
+      String? createdBy,
+      String? deleted,
+      String? deletedBy,
       required this.name,
       required this.description,
       required this.identifier,

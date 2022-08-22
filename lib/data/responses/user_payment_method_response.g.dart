@@ -16,8 +16,15 @@ UserPaymentMethodResponse _$UserPaymentMethodResponseFromJson(
       createdBy: json['createdBy'] as String,
       deleted: json['deleted'] as String,
       deletedBy: json['deletedBy'] as String,
+      lastFourDigits: json['lastFourDigits'] as String?,
+      brand: json['brand'] as String?,
+      expiryMonth: json['expiryMonth'] as int?,
+      externalId: json['externalId'] as String?,
+      expiryYear: json['expiryYear'] as int?,
+      bankName: json['bankName'] as String?,
+      email: json['email'] as String?,
+      name: json['name'] as String?,
       type: $enumDecode(_$PaymentMethodTypeEnumMap, json['type']),
-      externalId: json['externalId'] as String,
     );
 
 Map<String, dynamic> _$UserPaymentMethodResponseToJson(
@@ -30,8 +37,15 @@ Map<String, dynamic> _$UserPaymentMethodResponseToJson(
       'createdBy': instance.createdBy,
       'deleted': instance.deleted,
       'deletedBy': instance.deletedBy,
-      'type': _$PaymentMethodTypeEnumMap[instance.type]!,
+      'lastFourDigits': instance.lastFourDigits,
+      'brand': instance.brand,
+      'expiryMonth': instance.expiryMonth,
+      'expiryYear': instance.expiryYear,
       'externalId': instance.externalId,
+      'bankName': instance.bankName,
+      'email': instance.email,
+      'name': instance.name,
+      'type': _$PaymentMethodTypeEnumMap[instance.type]!,
     };
 
 const _$PaymentMethodTypeEnumMap = {

@@ -15,12 +15,12 @@ class AudioResponse extends FileResponse {
   LanguageType languageType;
   AudioResponse({
     required String id,
-    required String modified,
-    required String modifiedBy,
-    required String created,
-    required String createdBy,
-    required String deleted,
-    required String deletedBy,
+    String? modified,
+    String? modifiedBy,
+    String? created,
+    String? createdBy,
+    String? deleted,
+    String? deletedBy,
     required int size,
     required String contentType,
     required String name,

@@ -12,12 +12,12 @@ class OfferDescriptionContentResponse extends BaseResponse {
 
   OfferDescriptionContentResponse({
     required String id,
-    required String modified,
-    required String modifiedBy,
-    required String created,
-    required String createdBy,
-    required String deleted,
-    required String deletedBy,
+    String? modified,
+    String? modifiedBy,
+    String? created,
+    String? createdBy,
+    String? deleted,
+    String? deletedBy,
     required this.content,
     required this.bulletPoints,
   }) : super(
