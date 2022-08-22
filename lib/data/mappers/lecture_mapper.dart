@@ -2,10 +2,10 @@ import 'package:speakyfox/data/mappers/course_mapper.dart';
 import 'package:speakyfox/data/mappers/language_pair_mapper.dart';
 import 'package:speakyfox/data/mappers/offer_mapper.dart';
 import 'package:speakyfox/data/mappers/sequence_mapper.dart';
-import 'package:speakyfox/data/responses/lecture_response.dart';
+import 'package:speakyfox/data/dtos/lecture_dto.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 
-extension LectureMapper on LectureResponse {
+extension LectureMapper on LectureDto {
   Lecture toLecture() {
     return Lecture(
         id: id,

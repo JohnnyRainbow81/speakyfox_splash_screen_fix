@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/sentence_mapper.dart';
-import 'package:speakyfox/data/responses/sentence_shell_response.dart';
+import 'package:speakyfox/data/dtos/sentence_shell_dto.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
 
-extension SentenceShellMapper on SentenceShellResponse {
+extension SentenceShellMapper on SentenceShellDto {
   SentenceShell toSentenceShell() {
     return SentenceShell(
         id: id,

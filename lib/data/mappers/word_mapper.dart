@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/vocabulary_shell_mapper.dart';
-import 'package:speakyfox/data/responses/word_response.dart';
+import 'package:speakyfox/data/dtos/word_dto.dart';
 import 'package:speakyfox/domain/models/word.dart';
 
-extension WordMapper on WordResponse {
+extension WordMapper on WordDto {
   Word toWord() {
     return Word(
         id: id,

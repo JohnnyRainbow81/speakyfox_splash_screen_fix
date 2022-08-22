@@ -1,7 +1,7 @@
-import 'package:speakyfox/data/responses/answer_response.dart';
+import 'package:speakyfox/data/dtos/answer_dto.dart';
 import 'package:speakyfox/domain/models/answer.dart';
 
-extension AnswerMapper on AnswerResponse {
+extension AnswerMapper on AnswerDto {
   Answer toAnswer() {
     return Answer(
         id: id,

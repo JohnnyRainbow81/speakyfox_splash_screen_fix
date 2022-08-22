@@ -1,9 +1,9 @@
 import 'package:speakyfox/data/mappers/game_mapper.dart';
 import 'package:speakyfox/data/mappers/lecture_mapper.dart';
-import 'package:speakyfox/data/responses/sequence_response.dart';
+import 'package:speakyfox/data/dtos/sequence_dto.dart';
 import 'package:speakyfox/domain/models/sequence.dart';
 
-extension SequenceMapper on SequenceResponse {
+extension SequenceMapper on SequenceDto {
   Sequence toSequence() {
     return Sequence(
         id: id,

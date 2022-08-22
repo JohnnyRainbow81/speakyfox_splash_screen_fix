@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
-import 'package:speakyfox/data/responses/ticket_response.dart';
-import 'package:speakyfox/data/responses/user_response.dart';
+import 'package:speakyfox/data/dtos/ticket_dto.dart';
+import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
 import '../../domain/models/ticket.dart';
@@ -16,7 +16,7 @@ class AuthenticationLocalSource {
   final SharedPreferences _sharedPreferences;
   AuthenticationLocalSource(this._sharedPreferences);
 
-  Future<bool> saveTicket(TicketResponse ticket) async {
+  Future<bool> saveTicket(TicketDto ticket) async {
     return await _sharedPreferences.setString(Keys.user.name, ticket.toJson().toString());
   }
 
@@ -24,13 +24,13 @@ class AuthenticationLocalSource {
     if (_sharedPreferences.containsKey(Keys.ticket.name)) {
       String str = _sharedPreferences.getString(Keys.ticket.name)!;
       Map<String, dynamic> map = json.decode(str);
-      TicketResponse ticketResponse = TicketResponse.fromJson(map);
-      return ticketResponse.toTicket();
+      TicketDto ticketDto = TicketDto.fromJson(map);
+      return ticketDto.toTicket();
     }
     throw CacheException();
   }
 
-  Future<bool> saveUser(UserResponse user) async {
+  Future<bool> saveUser(UserDto user) async {
     return await _sharedPreferences.setString(Keys.user.name, user.toJson().toString());
   }
 
@@ -38,10 +38,9 @@ class AuthenticationLocalSource {
     if (_sharedPreferences.containsKey(Keys.user.name)) {
       String str = _sharedPreferences.getString(Keys.user.name)!;
       Map<String, dynamic> map = json.decode(str);
-      UserResponse userResponse = UserResponse.fromJson(map);
-      return userResponse.toUser();
+      UserDto userDto = UserDto.fromJson(map);
+      return userDto.toUser();
     }
     throw CacheException();
-
   }
 }

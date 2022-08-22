@@ -1,24 +1,25 @@
 import 'package:speakyfox/data/mappers/coupon_mapper.dart';
 import 'package:speakyfox/data/mappers/offer_description_content_mapper.dart';
 import 'package:speakyfox/data/mappers/plan_mapper.dart';
-import 'package:speakyfox/data/responses/offer_response.dart';
+import 'package:speakyfox/data/dtos/offer_dto.dart';
 import 'package:speakyfox/domain/models/offer.dart';
 
-extension OfferMapper on OfferResponse {
+extension OfferMapper on OfferDto {
   Offer toOffer() {
     return Offer(
         id: id,
         modified: modified ?? "",
-        modifiedBy: modifiedBy ??"",
-        created: created ??"",
-        createdBy: createdBy ??"",
-        deleted: deleted ??"",
-        deletedBy: deletedBy ??"",
+        modifiedBy: modifiedBy ?? "",
+        created: created ?? "",
+        createdBy: createdBy ?? "",
+        deleted: deleted ?? "",
+        deletedBy: deletedBy ?? "",
         planId: planId,
         offerTitle: offerTitle,
         registrationTitle: registrationTitle,
         descriptionTitle: descriptionTitle,
-        descriptionContents: descriptionContents.map((descriptionContent) => descriptionContent.toOfferDescriptionContent()).toList(),
+        descriptionContents:
+            descriptionContents.map((descriptionContent) => descriptionContent.toOfferDescriptionContent()).toList(),
         offerContent: offerContent,
         thankYouContent: thankYouContent,
         coupons: coupons.map((coupon) => coupon.toCoupon()).toList(),

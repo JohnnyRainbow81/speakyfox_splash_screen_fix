@@ -1,18 +1,18 @@
 import 'package:speakyfox/data/mappers/course_mapper.dart';
 import 'package:speakyfox/data/mappers/image_mapper.dart';
-import 'package:speakyfox/data/responses/class_response.dart';
+import 'package:speakyfox/data/dtos/class_dto.dart';
 import 'package:speakyfox/domain/models/class.dart';
 
-extension ClassMapper on ClassResponse {
+extension ClassMapper on ClassDto {
   Class toClass() {
     return Class(
         id: id,
         modified: modified ?? "",
         modifiedBy: modifiedBy ?? "",
         created: created ?? "",
-        createdBy: createdBy ??"",
-        deleted: deleted ??"",
-        deletedBy: deletedBy ??"",
+        createdBy: createdBy ?? "",
+        deleted: deleted ?? "",
+        deletedBy: deletedBy ?? "",
         title: title,
         description: description,
         isPublished: isPublished,

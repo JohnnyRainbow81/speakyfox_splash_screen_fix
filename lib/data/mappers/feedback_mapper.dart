@@ -3,11 +3,11 @@ import 'package:speakyfox/data/mappers/sentence_shell_mapper.dart';
 import 'package:speakyfox/data/mappers/sequence_mapper.dart';
 import 'package:speakyfox/data/mappers/vocabulary_mapper.dart';
 import 'package:speakyfox/data/mappers/vocabulary_shell_mapper.dart';
-import 'package:speakyfox/data/responses/feedback_response.dart';
+import 'package:speakyfox/data/dtos/feedback_dto.dart';
 import 'package:speakyfox/domain/models/feedback.dart';
 import 'package:speakyfox/domain/models/game.dart';
 
-extension FeedbackMapper on FeedbackResponse {
+extension FeedbackMapper on FeedbackDto {
   Feedback toFeedback() {
     return Feedback(
         id: id,
@@ -15,7 +15,7 @@ extension FeedbackMapper on FeedbackResponse {
         modifiedBy: modifiedBy ?? "",
         created: created ?? "",
         createdBy: createdBy ?? "",
-        deleted: deleted ??"",
+        deleted: deleted ?? "",
         deletedBy: deletedBy ?? "",
         title: title,
         description: description,

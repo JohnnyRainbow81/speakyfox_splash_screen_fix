@@ -3,10 +3,10 @@ import 'package:speakyfox/data/mappers/sentence_shell_mapper.dart';
 import 'package:speakyfox/data/mappers/sequence_mapper.dart';
 import 'package:speakyfox/data/mappers/vocabulary_mapper.dart';
 import 'package:speakyfox/data/mappers/vocabulary_shell_mapper.dart';
-import 'package:speakyfox/data/responses/game_response.dart';
+import 'package:speakyfox/data/dtos/game_dto.dart';
 import 'package:speakyfox/domain/models/game.dart';
 
-extension GameMapper on GameResponse {
+extension GameMapper on GameDto {
   Game toGame() {
     return Game(
         id: id,

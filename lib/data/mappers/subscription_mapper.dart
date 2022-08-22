@@ -1,10 +1,10 @@
 import 'package:speakyfox/data/mappers/invoice_mapper.dart';
 import 'package:speakyfox/data/mappers/language_mapper.dart';
 import 'package:speakyfox/data/mappers/user_payment_method_mapper.dart';
-import 'package:speakyfox/data/responses/subscription_response.dart';
+import 'package:speakyfox/data/dtos/subscription_dto.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
 
-extension SubscriptionMapper on SubscriptionResponse {
+extension SubscriptionMapper on SubscriptionDto {
   Subscription toSubscription() {
     return Subscription(
         id: id,
@@ -23,7 +23,7 @@ extension SubscriptionMapper on SubscriptionResponse {
         languages: languages.map((language) => language.toLanguage()).toList(),
         interval: interval,
         intervalCount: intervalCount,
-        paymentMethod:  paymentMethod.toUserPaymentMethod(),
+        paymentMethod: paymentMethod.toUserPaymentMethod(),
         nextBillingAmount: nextBillingAmount,
         invoices: invoices.map((invoice) => invoice.toInvoice()).toList());
   }

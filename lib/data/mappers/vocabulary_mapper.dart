@@ -4,10 +4,10 @@ import 'package:speakyfox/data/mappers/audio_mapper.dart';
 import 'package:speakyfox/data/mappers/image_mapper.dart';
 import 'package:speakyfox/data/mappers/language_pair_mapper.dart';
 import 'package:speakyfox/data/mappers/sentence_mapper.dart';
-import 'package:speakyfox/data/responses/vocabulary_response.dart';
+import 'package:speakyfox/data/dtos/vocabulary_dto.dart';
 import 'package:speakyfox/domain/models/vocabulary.dart';
 
-extension VocabularyMapper on VocabularyResponse {
+extension VocabularyMapper on VocabularyDto {
   Vocabulary toVocabulary() {
     return Vocabulary(
         id: id,

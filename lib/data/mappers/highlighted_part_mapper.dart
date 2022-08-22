@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/word_mapper.dart';
-import 'package:speakyfox/data/responses/highlighted_part_response.dart';
+import 'package:speakyfox/data/dtos/highlighted_part_dto.dart';
 import 'package:speakyfox/domain/models/highlighted_part.dart';
 
-extension HighlightedPartMapper on HighlightedPartResponse {
+extension HighlightedPartMapper on HighlightedPartDto {
   HighlightedPart toHighlightedPart() {
     return HighlightedPart(
         id: id,

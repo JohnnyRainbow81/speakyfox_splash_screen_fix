@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/image_mapper.dart';
-import 'package:speakyfox/data/responses/animation_image_response.dart';
+import 'package:speakyfox/data/dtos/animation_image_dto.dart';
 import 'package:speakyfox/domain/models/animation_image.dart';
 
-extension AnimationImageMapper on AnimationImageResponse {
+extension AnimationImageMapper on AnimationImageDto {
   AnimationImage toAnimationImage() {
     return AnimationImage(
         order: order,

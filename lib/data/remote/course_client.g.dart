@@ -16,28 +16,25 @@ class _CourseClient implements CourseClient {
   String? baseUrl;
 
   @override
-  Future<Response<CourseResponse>> getByIdDetailed(id, detailed) async {
+  Future<Response<CourseDto>> getByIdDetailed(id, detailed) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'detailed': detailed};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<CourseResponse>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/courses/${id}',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<CourseResponse>.fromJson(
+    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response<CourseDto>>(
+        Options(method: 'GET', headers: _headers, extra: _extra)
+            .compose(_dio.options, '/courses/${id}', queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<CourseDto>.fromJson(
       _result.data!,
-      (json) => CourseResponse.fromJson(json as Map<String, dynamic>),
+      (json) => CourseDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

@@ -1,10 +1,9 @@
-import 'package:speakyfox/data/responses/ticket_response.dart';
+import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 
-extension TicketMapper on TicketResponse {
+extension TicketMapper on TicketDto {
   Ticket toTicket() {
     return Ticket(
         accessToken: accessToken, expiresIn: expiresIn, refreshToken: refreshToken, scope: scope, tokenType: tokenType);
   }
 }
-

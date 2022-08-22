@@ -18,11 +18,10 @@ void main() async {
   });
 
   test('fetch user', (() async {
-    final response =
-        await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
+    final response = await authenticationClient.accessToken("stefan_anders@gmx.net", "Kuchen1981!", "password");
     Ticket ticket = response.toTicket();
-    final userResponse = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
-    user = userResponse.data.toUser();
+    final userDto = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
+    user = userDto.data.toUser();
     print(user);
   }));
 

@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/vocabulary_mapper.dart';
-import 'package:speakyfox/data/responses/vocabulary_shell_response.dart';
+import 'package:speakyfox/data/dtos/vocabulary_shell_dto.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 
-extension VocabularyShellMapper on VocabularyShellResponse {
+extension VocabularyShellMapper on VocabularyShellDto {
   VocabularyShell toVocabularyShell() {
     return VocabularyShell(
         id: id,

@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/image_mapper.dart';
-import 'package:speakyfox/data/responses/payment_method_response.dart';
+import 'package:speakyfox/data/dtos/payment_method_dto.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
 
-extension PaymentMethodMapper on PaymentMethodResponse {
+extension PaymentMethodMapper on PaymentMethodDto {
   PaymentMethod toPaymentMethod() {
     return PaymentMethod(
         id: id,
@@ -11,7 +11,7 @@ extension PaymentMethodMapper on PaymentMethodResponse {
         created: created ?? "",
         createdBy: createdBy ?? "",
         deleted: deleted ?? "",
-        deletedBy: deletedBy ??"",
+        deletedBy: deletedBy ?? "",
         name: name,
         description: description,
         additionalInformation: additionalInformation,

@@ -1,9 +1,9 @@
 import 'package:speakyfox/data/mappers/image_mapper.dart';
 import 'package:speakyfox/data/mappers/language_mapper.dart';
-import 'package:speakyfox/data/responses/language_pair_response.dart';
+import 'package:speakyfox/data/dtos/language_pair_dto.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 
-extension LanguagePairMapper on LanguagePairResponse {
+extension LanguagePairMapper on LanguagePairDto {
   LanguagePair toLanguagePair() {
     return LanguagePair(
         id: id,

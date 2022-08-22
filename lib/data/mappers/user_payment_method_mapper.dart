@@ -1,5 +1,5 @@
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/responses/user_payment_method_response.dart';
+import 'package:speakyfox/data/dtos/user_payment_method_dto.dart';
 import 'package:speakyfox/domain/models/user_credit_card.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 import 'package:speakyfox/domain/models/user_paypal.dart';
@@ -7,7 +7,7 @@ import 'package:speakyfox/domain/models/user_sepa_direct_debit.dart';
 
 import '../../domain/models/payment_method.dart';
 
-extension UserPaymentMethodMapper on UserPaymentMethodResponse {
+extension UserPaymentMethodMapper on UserPaymentMethodDto {
   UserPaymentMethod toUserPaymentMethod() {
     switch (type) {
       case PaymentMethodType.sepaDirectDebit:

@@ -1,7 +1,7 @@
-import 'package:speakyfox/data/responses/audio_response.dart';
+import 'package:speakyfox/data/dtos/audio_dto.dart';
 import 'package:speakyfox/domain/models/audio.dart';
 
-extension AudioMapper on AudioResponse {
+extension AudioMapper on AudioDto {
   Audio toAudio() {
     return Audio(
         id: id,

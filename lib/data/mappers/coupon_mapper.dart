@@ -1,7 +1,7 @@
-import 'package:speakyfox/data/responses/coupon_response.dart';
+import 'package:speakyfox/data/dtos/coupon_dto.dart';
 import 'package:speakyfox/domain/models/coupon.dart';
 
-extension CouponMapper on CouponResponse {
+extension CouponMapper on CouponDto {
   Coupon toCoupon() {
     return Coupon(
         id: id ?? "",

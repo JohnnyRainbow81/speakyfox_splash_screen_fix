@@ -1,8 +1,8 @@
 import 'package:speakyfox/data/mappers/product_mapper.dart';
-import 'package:speakyfox/data/responses/plan_response.dart';
+import 'package:speakyfox/data/dtos/plan_dto.dart';
 import 'package:speakyfox/domain/models/plan.dart';
 
-extension PlanMapper on PlanResponse {
+extension PlanMapper on PlanDto {
   Plan toPlan() {
     return Plan(
         title: title,
