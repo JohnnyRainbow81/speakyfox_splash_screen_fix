@@ -1,0 +1,3 @@
+class SimilarityService {
+  //Ask Julien
+}

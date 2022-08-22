@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:speakyfox/data/responses/base_response.dart';
 import 'package:speakyfox/data/responses/screen_response.dart';
 import 'package:speakyfox/data/responses/sentence_response.dart';
 import 'package:speakyfox/data/responses/sentence_shell_response.dart';
