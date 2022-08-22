@@ -206,5 +206,14 @@ class CacheException extends UIException {
         );
 }
 
+class PaymentException extends UIException {
+   PaymentException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Payment error",
+          description: description ?? "Something went wrong with your payment option.",
+        );
+}
+
 
 

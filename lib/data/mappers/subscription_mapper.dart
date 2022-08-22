@@ -1,5 +1,6 @@
 import 'package:speakyfox/data/mappers/invoice_mapper.dart';
 import 'package:speakyfox/data/mappers/language_mapper.dart';
+import 'package:speakyfox/data/mappers/user_payment_method_mapper.dart';
 import 'package:speakyfox/data/responses/subscription_response.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
 
