@@ -4,6 +4,7 @@ import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
+import 'package:speakyfox/data/remote/coupon_client.dart';
 import 'package:speakyfox/data/repositories_impls/authentication_repository_impl.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
@@ -40,6 +41,43 @@ Future<void> initializeServiceLocator() async {
   locator.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
+
+  //CouponService
+  locator.registerLazySingleton<CouponClient>(() => CouponClient(dioV1,baseUrl: "${env.serverUrl}coupons"));
+
+  //CourseService
+
+  //FileService
+
+  //AudioService
+
+  //GameSequenceService
+
+  //LanguagePairsService
+
+  //LectureService
+
+  //OffersService
+
+  //OrdersService
+
+  //PlanService
+
+  //ProductService
+
+  //ProgressService
+
+  //SubscriptionsService
+
+  //TokenService
+
+  //UserService
+
+  //VocabularyService
+
+  //VocabularyShellService
+
+  //WordPoolService
 
   //////////////////////////////////////
   ////////////ViewModels//////////////
