@@ -48,8 +48,8 @@ main() async {
       );
     }).sendPort);
 
-    //dependency injection
-    await initializeServiceLocator();
+    //dependency injection of authentication stuff until we have an authToken
+    await initializeAuthenticationDependencies();
 
     runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {

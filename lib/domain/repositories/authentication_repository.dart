@@ -4,8 +4,6 @@ import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
-//We don't have concrete Types in these interfaces where we have 2 different types in the flow like Lecture / LectureDto
-//We have concrete types when the type in the flow doesn't change, like ResetPasswordRequest
 abstract class AuthenticationRepository {
   Future<Ticket> accessToken(
     String username,

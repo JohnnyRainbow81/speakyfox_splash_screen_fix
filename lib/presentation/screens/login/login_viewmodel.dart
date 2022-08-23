@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -42,6 +43,10 @@ class LoginViewModel extends BaseViewModel {
   Future<bool> login() async {
     _isLoggedIn = await runBusyFuture(_authenticationService.login(_username, _password));
     notifyListeners();
+    if (_isLoggedIn) {
+      //call top level method to initialize HTTP/REST lib with token
+      await initializeDependencies(_authenticationService.credentials!.accessToken);
+    }
     return _isLoggedIn;
   }
 }

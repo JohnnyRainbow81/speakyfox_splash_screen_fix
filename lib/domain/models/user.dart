@@ -57,6 +57,11 @@ class User extends BaseModel {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'User(formOfAddress: $formOfAddress, firstName: $firstName, lastName: $lastName, email: $email, normalizedEmail: $normalizedEmail, emailConfirmed: $emailConfirmed, userName: $userName, normalizedUserName: $normalizedUserName, accessFailedAccount: $accessFailedAccount, lockoutEnabled: $lockoutEnabled, password: $password, lockoutEnd: $lockoutEnd, roles: $roles, policies: $policies, currentLanguagePairId: $currentLanguagePairId, currentSourceLanguageId: $currentSourceLanguageId, currentTargetLanguageId: $currentTargetLanguageId, subscriptionIds: $subscriptionIds)';
+  }
 }
 
 

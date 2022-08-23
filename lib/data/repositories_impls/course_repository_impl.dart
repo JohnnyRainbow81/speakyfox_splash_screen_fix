@@ -7,8 +7,8 @@ import 'package:speakyfox/domain/models/course.dart';
 import 'package:speakyfox/domain/repositories/course_repository.dart';
 
 class CourseRepositoryImpl implements CourseRepository {
-  final CourseClient _courseClient;
   final ConnectivityService _connectivityService;
+  final CourseClient _courseClient;
 
   CourseRepositoryImpl(this._courseClient, this._connectivityService);
 
@@ -31,5 +31,35 @@ class CourseRepositoryImpl implements CourseRepository {
       }
     }
     throw LoginNotSuccessfulException();
+  }
+
+  @override
+  Future<List<Course>> getAll(String param) {
+    // TODO: implement getAll
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Course> getById(String id) {
+    // TODO: implement getById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Course> patchById(String id, entity) {
+    // TODO: implement patchById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Course> post(entity) {
+    // TODO: implement post
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> removeById(String id) {
+    // TODO: implement removeById
+    throw UnimplementedError();
   }
 }

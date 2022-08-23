@@ -1,9 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/data/dtos/user_credit_card_dto.dart';
-import 'package:speakyfox/data/dtos/user_payment_method_dto.dart';
-import 'package:speakyfox/domain/models/payment_method.dart';
+// import 'package:json_annotation/json_annotation.dart';
+// import 'package:speakyfox/data/dtos/user_credit_card_dto.dart';
+// import 'package:speakyfox/data/dtos/user_payment_method_dto.dart';
+// import 'package:speakyfox/domain/models/payment_method.dart';
 
-part 'user_paypal_dto.g.dart';
+//part 'user_paypal_dto.g.dart';
 
 // @JsonSerializable()
 // class UserPaypalDto extends UserPaymentMethodDto {

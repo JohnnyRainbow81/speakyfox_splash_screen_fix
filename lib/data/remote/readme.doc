@@ -1,0 +1,8 @@
+The remote clients here unfortunately cannot use the same repository-interface like the repositoryImpls. 
+Because for example:
+
+CourseService uses: Future<Course> getById(String id) 
+
+RepositoryImpl uses: Future<Response<CourseDto>> getById(String id)
+
+Cannot figure out how you can make these compatible through 

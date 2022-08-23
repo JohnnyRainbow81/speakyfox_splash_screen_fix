@@ -41,9 +41,8 @@ const String TEXT_PLAIN = "text/plain";
 //     return dio;
 //   }
 // }
-
-class DioV1 {
-  DioV1._();
+class DioAuth {
+  DioAuth._();
 
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
@@ -67,9 +66,35 @@ class DioV1 {
   }
 }
 
+class DioV1 {
+  DioV1._();
+
+  static Future<Dio> initialize(String baseUrl, String token) async {
+    Dio dio = Dio();
+    int timeOut = 60 * 1000; // 1 min
+    Map<String, String> headers = {
+      CONTENT_TYPE: X_WWW_FORM_URLENCODED,
+      ACCEPT: APPLICATION_JSON,
+      AUTHORIZATION: "Bearer $token"
+    };
+
+    dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
+    dio.options.baseUrl = baseUrl;
+
+    if (kReleaseMode) {
+      print("release mode no logs");
+    } else {
+      dio.interceptors.add(
+          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+    }
+
+    return dio;
+  }
+}
+
 class DioDocuments {
   DioDocuments._();
-  
+
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
     int timeOut = 60 * 1000; // 1 min

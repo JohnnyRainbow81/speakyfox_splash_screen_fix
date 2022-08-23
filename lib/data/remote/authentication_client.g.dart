@@ -40,11 +40,17 @@ class _AuthenticationClient implements AuthenticationClient {
   Future<Response<TicketDto>> refreshToken(refreshToken, grantType) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Content-type': 'application/x-www-form-urlencoded'
+    };
+    _headers.removeWhere((k, v) => v == null);
     final _data = {'refresh_token': refreshToken, 'grant_type': grantType};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<TicketDto>>(Options(
-                method: 'POST', headers: _headers, extra: _extra)
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/x-www-form-urlencoded')
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)

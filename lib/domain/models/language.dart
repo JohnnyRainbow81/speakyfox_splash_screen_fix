@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:speakyfox/domain/models/base_model.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
@@ -44,4 +46,9 @@ class Language extends BaseModel {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Language(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId)';
+  }
 }

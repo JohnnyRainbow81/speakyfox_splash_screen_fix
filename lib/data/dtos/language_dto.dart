@@ -45,4 +45,10 @@ class LanguageDto extends BaseDto {
 
   factory LanguageDto.fromJson(Map<String, dynamic> json) => _$LanguageDtoFromJson(json);
   Map<String, dynamic> toJson() => _$LanguageDtoToJson(this);
+
+
+  @override
+  String toString() {
+    return 'LanguageDto(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId, languagePair: $languagePair)';
+  }
 }

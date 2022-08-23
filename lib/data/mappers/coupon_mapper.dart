@@ -4,7 +4,7 @@ import 'package:speakyfox/domain/models/coupon.dart';
 extension CouponMapper on CouponDto {
   Coupon toCoupon() {
     return Coupon(
-        id: id ?? "",
+        id: id,
         modified: modified ?? "",
         modifiedBy: modifiedBy ?? "",
         created: created ?? "",
@@ -18,5 +18,19 @@ extension CouponMapper on CouponDto {
         planId: planId,
         duration: duration,
         durationInMonths: durationInMonths ?? 0);
+  }
+}
+
+extension CouponDtoMapper on Coupon {
+  CouponDto toDto() {
+    return CouponDto(
+        id: id ?? "",
+        key: key,
+        name: name,
+        amountOff: amountOff,
+        percentOff: percentOff,
+        planId: planId,
+        duration: duration,
+        durationInMonths: durationInMonths);
   }
 }

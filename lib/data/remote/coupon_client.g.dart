@@ -16,100 +16,118 @@ class _CouponClient implements CouponClient {
   String? baseUrl;
 
   @override
-  Future<CouponDto> getCouponByKeyAndPlanIdOrNull(key, planId) async {
+  Future<Response<CouponDto>> getCouponByKeyAndPlanIdOrNull(key, planId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'key': key, r'planId': planId};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CouponDto>(
+        _setStreamType<Response<CouponDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/coupons',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CouponDto.fromJson(_result.data!);
+    final value = Response<CouponDto>.fromJson(
+      _result.data!,
+      (json) => CouponDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<List<CouponDto>> getAll(param) async {
+  Future<Response<List<CouponDto>>> getAll(param) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'': param};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<CouponDto>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<List<CouponDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => CouponDto.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = Response<List<CouponDto>>.fromJson(
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<CouponDto>((i) => CouponDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
   @override
-  Future<CouponDto> getById(id) async {
+  Future<Response<CouponDto>> getById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CouponDto>(
+        _setStreamType<Response<CouponDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CouponDto.fromJson(_result.data!);
+    final value = Response<CouponDto>.fromJson(
+      _result.data!,
+      (json) => CouponDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<CouponDto> post(entity) async {
+  Future<Response<CouponDto>> post(entity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final _data = entity;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CouponDto>(
+        _setStreamType<Response<CouponDto>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CouponDto.fromJson(_result.data!);
+    final value = Response<CouponDto>.fromJson(
+      _result.data!,
+      (json) => CouponDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<CouponDto> patchById(id, entity) async {
+  Future<Response<CouponDto>> patchById(id, entity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(entity.toJson());
+    final _data = entity;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<CouponDto>(
+        _setStreamType<Response<CouponDto>>(
             Options(method: 'PATCH', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = CouponDto.fromJson(_result.data!);
+    final value = Response<CouponDto>.fromJson(
+      _result.data!,
+      (json) => CouponDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<bool> removeById(id) async {
+  Future<Response<bool>> removeById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<bool>(_setStreamType<bool>(
-        Options(method: 'DELETE', headers: _headers, extra: _extra)
-            .compose(_dio.options, '',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data!;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<bool>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, '',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<bool>.fromJson(
+      _result.data!,
+      (json) => json as bool,
+    );
     return value;
   }
 
