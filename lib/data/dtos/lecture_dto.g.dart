@@ -18,7 +18,8 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
       languagePairId: json['languagePairId'] as String,
       description: json['description'] as String,
       isOnboarding: json['isOnboarding'] as bool,
-      languagePair: LanguagePairDto.fromJson(json['languagePair'] as Map<String, dynamic>),
+      languagePair: LanguagePairDto.fromJson(
+          json['languagePair'] as Map<String, dynamic>),
       isPublished: json['isPublished'] as bool,
       isLocked: json['isLocked'] as bool,
       order: json['order'] as int,
@@ -27,11 +28,13 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
       offer: OfferDto.fromJson(json['offer'] as Map<String, dynamic>),
       offerId: json['offerId'] as String,
       courseId: json['courseId'] as String,
-      sequences:
-          (json['sequences'] as List<dynamic>).map((e) => SequenceDto.fromJson(e as Map<String, dynamic>)).toList(),
+      sequences: (json['sequences'] as List<dynamic>)
+          .map((e) => SequenceDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$LectureDtoToJson(LectureDto instance) => <String, dynamic>{
+Map<String, dynamic> _$LectureDtoToJson(LectureDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

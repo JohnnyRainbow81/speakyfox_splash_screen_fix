@@ -6,7 +6,9 @@ part of 'user_payment_method_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserPaymentMethodDto _$UserPaymentMethodDtoFromJson(Map<String, dynamic> json) => UserPaymentMethodDto(
+UserPaymentMethodDto _$UserPaymentMethodDtoFromJson(
+        Map<String, dynamic> json) =>
+    UserPaymentMethodDto(
       id: json['id'] as String,
       modified: json['modified'] as String,
       modifiedBy: json['modifiedBy'] as String,
@@ -25,7 +27,9 @@ UserPaymentMethodDto _$UserPaymentMethodDtoFromJson(Map<String, dynamic> json) =
       type: $enumDecode(_$PaymentMethodTypeEnumMap, json['type']),
     );
 
-Map<String, dynamic> _$UserPaymentMethodDtoToJson(UserPaymentMethodDto instance) => <String, dynamic>{
+Map<String, dynamic> _$UserPaymentMethodDtoToJson(
+        UserPaymentMethodDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

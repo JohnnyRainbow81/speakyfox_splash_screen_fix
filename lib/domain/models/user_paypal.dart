@@ -9,12 +9,12 @@ class UserPaypal extends UserPaymentMethod {
 
   UserPaypal({
     required String id,
-      String? modified,
-      String? modifiedBy,
-      String? created,
-      String? createdBy,
-      String? deleted,
-      String? deletedBy,
+      required String modified,
+      required String modifiedBy,
+      required String created,
+      required String createdBy,
+      required String deleted,
+      required String deletedBy,
       required PaymentMethodType type,
       required String externalId,
     required this.email,

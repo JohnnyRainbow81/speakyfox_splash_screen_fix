@@ -6,7 +6,8 @@ part of 'highlighted_part_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-HighlightedPartDto _$HighlightedPartDtoFromJson(Map<String, dynamic> json) => HighlightedPartDto(
+HighlightedPartDto _$HighlightedPartDtoFromJson(Map<String, dynamic> json) =>
+    HighlightedPartDto(
       id: json['id'] as String,
       modified: json['modified'] as String,
       modifiedBy: json['modifiedBy'] as String,
@@ -14,12 +15,17 @@ HighlightedPartDto _$HighlightedPartDtoFromJson(Map<String, dynamic> json) => Hi
       createdBy: json['createdBy'] as String,
       deleted: json['deleted'] as String,
       deletedBy: json['deletedBy'] as String,
-      metadata: (json['metadata'] as List<dynamic>).map((e) => e as Map<String, dynamic>).toList(),
+      metadata: (json['metadata'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       type: $enumDecode(_$TermTypeEnumMap, json['type']),
-      words: (json['words'] as List<dynamic>).map((e) => WordDto.fromJson(e as Map<String, dynamic>)).toList(),
+      words: (json['words'] as List<dynamic>)
+          .map((e) => WordDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$HighlightedPartDtoToJson(HighlightedPartDto instance) => <String, dynamic>{
+Map<String, dynamic> _$HighlightedPartDtoToJson(HighlightedPartDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

@@ -6,7 +6,8 @@ part of 'offer_description_content_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OfferDescriptionContentDto _$OfferDescriptionContentDtoFromJson(Map<String, dynamic> json) =>
+OfferDescriptionContentDto _$OfferDescriptionContentDtoFromJson(
+        Map<String, dynamic> json) =>
     OfferDescriptionContentDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
@@ -16,10 +17,14 @@ OfferDescriptionContentDto _$OfferDescriptionContentDtoFromJson(Map<String, dyna
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       content: json['content'] as String,
-      bulletPoints: (json['bulletPoints'] as List<dynamic>).map((e) => e as String).toList(),
+      bulletPoints: (json['bulletPoints'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
-Map<String, dynamic> _$OfferDescriptionContentDtoToJson(OfferDescriptionContentDto instance) => <String, dynamic>{
+Map<String, dynamic> _$OfferDescriptionContentDtoToJson(
+        OfferDescriptionContentDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

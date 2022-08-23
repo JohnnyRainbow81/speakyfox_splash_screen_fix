@@ -26,10 +26,13 @@ ProductDto _$ProductDtoFromJson(Map<String, dynamic> json) => ProductDto(
       taxPercent: json['taxPercent'] as int,
       productId: json['productId'] as String,
       product: ProductDto.fromJson(json['product'] as Map<String, dynamic>),
-      plans: (json['plans'] as List<dynamic>).map((e) => PlanDto.fromJson(e as Map<String, dynamic>)).toList(),
+      plans: (json['plans'] as List<dynamic>)
+          .map((e) => PlanDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$ProductDtoToJson(ProductDto instance) => <String, dynamic>{
+Map<String, dynamic> _$ProductDtoToJson(ProductDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

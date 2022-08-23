@@ -6,7 +6,8 @@ part of 'payment_method_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PaymentMethodDto _$PaymentMethodDtoFromJson(Map<String, dynamic> json) => PaymentMethodDto(
+PaymentMethodDto _$PaymentMethodDtoFromJson(Map<String, dynamic> json) =>
+    PaymentMethodDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -20,12 +21,14 @@ PaymentMethodDto _$PaymentMethodDtoFromJson(Map<String, dynamic> json) => Paymen
       fileName: json['fileName'] as String,
       fileId: json['fileId'] as String,
       image: ImageDto.fromJson(json['image'] as Map<String, dynamic>),
-      paymentProvider: $enumDecode(_$PaymentProviderEnumMap, json['paymentProvider']),
+      paymentProvider:
+          $enumDecode(_$PaymentProviderEnumMap, json['paymentProvider']),
       type: $enumDecode(_$PaymentMethodTypeEnumMap, json['type']),
       externalId: json['externalId'] as String,
     );
 
-Map<String, dynamic> _$PaymentMethodDtoToJson(PaymentMethodDto instance) => <String, dynamic>{
+Map<String, dynamic> _$PaymentMethodDtoToJson(PaymentMethodDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

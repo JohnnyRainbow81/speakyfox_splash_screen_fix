@@ -6,7 +6,8 @@ part of 'vocabulary_shell_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-VocabularyShellDto _$VocabularyShellDtoFromJson(Map<String, dynamic> json) => VocabularyShellDto(
+VocabularyShellDto _$VocabularyShellDtoFromJson(Map<String, dynamic> json) =>
+    VocabularyShellDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -21,7 +22,8 @@ VocabularyShellDto _$VocabularyShellDtoFromJson(Map<String, dynamic> json) => Vo
           .toList(),
     );
 
-Map<String, dynamic> _$VocabularyShellDtoToJson(VocabularyShellDto instance) => <String, dynamic>{
+Map<String, dynamic> _$VocabularyShellDtoToJson(VocabularyShellDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

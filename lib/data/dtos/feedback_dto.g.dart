@@ -27,15 +27,17 @@ FeedbackDto _$FeedbackDtoFromJson(Map<String, dynamic> json) => FeedbackDto(
       vocabularyShells: (json['vocabularyShells'] as List<dynamic>)
           .map((e) => VocabularyShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      sentences:
-          (json['sentences'] as List<dynamic>).map((e) => SentenceDto.fromJson(e as Map<String, dynamic>)).toList(),
+      sentences: (json['sentences'] as List<dynamic>)
+          .map((e) => SentenceDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       sentenceShells: (json['sentenceShells'] as List<dynamic>)
           .map((e) => SentenceShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       feedbackType: json['feedbackType'] as String,
     );
 
-Map<String, dynamic> _$FeedbackDtoToJson(FeedbackDto instance) => <String, dynamic>{
+Map<String, dynamic> _$FeedbackDtoToJson(FeedbackDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

@@ -22,7 +22,8 @@ ImageDto _$ImageDtoFromJson(Map<String, dynamic> json) => ImageDto(
       metadata: json['metadata'] as List<dynamic>?,
       imageType: $enumDecode(_$ImageTypeEnumMap, json['imageType']),
       order: json['order'] as int,
-      coordinates: CoordinatesDto.fromJson(json['coordinates'] as Map<String, dynamic>),
+      coordinates:
+          CoordinatesDto.fromJson(json['coordinates'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ImageDtoToJson(ImageDto instance) => <String, dynamic>{

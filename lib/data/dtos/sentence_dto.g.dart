@@ -15,10 +15,12 @@ SentenceDto _$SentenceDtoFromJson(Map<String, dynamic> json) => SentenceDto(
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       sentenceShellId: json['sentenceShellId'] as String,
-      sentenceShell: SentenceShellDto.fromJson(json['sentenceShell'] as Map<String, dynamic>),
+      sentenceShell: SentenceShellDto.fromJson(
+          json['sentenceShell'] as Map<String, dynamic>),
       isPublished: json['isPublished'] as bool,
       languagePairId: json['languagePairId'] as String,
-      languagePair: LanguagePairDto.fromJson(json['languagePair'] as Map<String, dynamic>),
+      languagePair: LanguagePairDto.fromJson(
+          json['languagePair'] as Map<String, dynamic>),
       sourceNormalized: json['sourceNormalized'] as String,
       targetNormalized: json['targetNormalized'] as String,
       sourceHighlightedParts: (json['sourceHighlightedParts'] as List<dynamic>)
@@ -27,11 +29,16 @@ SentenceDto _$SentenceDtoFromJson(Map<String, dynamic> json) => SentenceDto(
       targetHighlightedParts: (json['targetHighlightedParts'] as List<dynamic>)
           .map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      images: (json['images'] as List<dynamic>).map((e) => ImageDto.fromJson(e as Map<String, dynamic>)).toList(),
-      audios: (json['audios'] as List<dynamic>).map((e) => AudioDto.fromJson(e as Map<String, dynamic>)).toList(),
+      images: (json['images'] as List<dynamic>)
+          .map((e) => ImageDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      audios: (json['audios'] as List<dynamic>)
+          .map((e) => AudioDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$SentenceDtoToJson(SentenceDto instance) => <String, dynamic>{
+Map<String, dynamic> _$SentenceDtoToJson(SentenceDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

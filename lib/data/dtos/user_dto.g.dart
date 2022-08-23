@@ -26,12 +26,17 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       lockoutEnabled: json['lockoutEnabled'] as bool?,
       password: json['password'] as String?,
       lockoutEnd: json['lockoutEnd'] as String?,
-      policies: (json['policies'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      policies: (json['policies'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       currentLanguagePairId: json['currentLanguagePairId'] as String?,
       currentSourceLanguageId: json['currentSourceLanguageId'] as String?,
       currentTargetLanguageId: json['currentTargetLanguageId'] as String?,
-      roles: (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      subscriptionIds: (json['subscriptionIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      roles:
+          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      subscriptionIds: (json['subscriptionIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{

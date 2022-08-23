@@ -6,7 +6,8 @@ part of 'sentence_shell_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SentenceShellDto _$SentenceShellDtoFromJson(Map<String, dynamic> json) => SentenceShellDto(
+SentenceShellDto _$SentenceShellDtoFromJson(Map<String, dynamic> json) =>
+    SentenceShellDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -16,11 +17,13 @@ SentenceShellDto _$SentenceShellDtoFromJson(Map<String, dynamic> json) => Senten
       deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
-      sentences:
-          (json['sentences'] as List<dynamic>).map((e) => SentenceDto.fromJson(e as Map<String, dynamic>)).toList(),
+      sentences: (json['sentences'] as List<dynamic>)
+          .map((e) => SentenceDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$SentenceShellDtoToJson(SentenceShellDto instance) => <String, dynamic>{
+Map<String, dynamic> _$SentenceShellDtoToJson(SentenceShellDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

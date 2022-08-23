@@ -6,7 +6,8 @@ part of 'animation_image_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AnimationImageDto _$AnimationImageDtoFromJson(Map<String, dynamic> json) => AnimationImageDto(
+AnimationImageDto _$AnimationImageDtoFromJson(Map<String, dynamic> json) =>
+    AnimationImageDto(
       order: json['order'] as int,
       nativeElement: json['nativeElement'],
       image: ImageDto.fromJson(json['image'] as Map<String, dynamic>),
@@ -16,7 +17,8 @@ AnimationImageDto _$AnimationImageDtoFromJson(Map<String, dynamic> json) => Anim
       isVisible: json['isVisible'] as bool,
     );
 
-Map<String, dynamic> _$AnimationImageDtoToJson(AnimationImageDto instance) => <String, dynamic>{
+Map<String, dynamic> _$AnimationImageDtoToJson(AnimationImageDto instance) =>
+    <String, dynamic>{
       'order': instance.order,
       'nativeElement': instance.nativeElement,
       'image': instance.image,

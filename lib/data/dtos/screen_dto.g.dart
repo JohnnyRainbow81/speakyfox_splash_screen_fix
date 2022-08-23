@@ -27,8 +27,9 @@ ScreenDto _$ScreenDtoFromJson(Map<String, dynamic> json) => ScreenDto(
       vocabularyShells: (json['vocabularyShells'] as List<dynamic>)
           .map((e) => VocabularyShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      sentences:
-          (json['sentences'] as List<dynamic>).map((e) => SentenceDto.fromJson(e as Map<String, dynamic>)).toList(),
+      sentences: (json['sentences'] as List<dynamic>)
+          .map((e) => SentenceDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       sentenceShells: (json['sentenceShells'] as List<dynamic>)
           .map((e) => SentenceShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),

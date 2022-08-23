@@ -11,7 +11,8 @@ SpeedRateDto _$SpeedRateDtoFromJson(Map<String, dynamic> json) => SpeedRateDto(
       value: (json['value'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$SpeedRateDtoToJson(SpeedRateDto instance) => <String, dynamic>{
+Map<String, dynamic> _$SpeedRateDtoToJson(SpeedRateDto instance) =>
+    <String, dynamic>{
       'speed': _$RateEnumMap[instance.speed]!,
       'value': instance.value,
     };

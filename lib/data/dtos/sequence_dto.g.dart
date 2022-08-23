@@ -17,11 +17,14 @@ SequenceDto _$SequenceDtoFromJson(Map<String, dynamic> json) => SequenceDto(
       title: json['title'] as String,
       description: json['description'] as String,
       progressType: $enumDecode(_$ProgressTypeEnumMap, json['progressType']),
-      games: (json['games'] as List<dynamic>).map((e) => GameDto.fromJson(e as Map<String, dynamic>)).toList(),
+      games: (json['games'] as List<dynamic>)
+          .map((e) => GameDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       parent: LectureDto.fromJson(json['parent'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) => <String, dynamic>{
+Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

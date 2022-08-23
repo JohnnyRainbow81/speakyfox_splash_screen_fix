@@ -6,7 +6,8 @@ part of 'database_file_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DatabaseFileDto _$DatabaseFileDtoFromJson(Map<String, dynamic> json) => DatabaseFileDto(
+DatabaseFileDto _$DatabaseFileDtoFromJson(Map<String, dynamic> json) =>
+    DatabaseFileDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -22,7 +23,8 @@ DatabaseFileDto _$DatabaseFileDtoFromJson(Map<String, dynamic> json) => Database
       metadata: json['metadata'] as List<dynamic>?,
     );
 
-Map<String, dynamic> _$DatabaseFileDtoToJson(DatabaseFileDto instance) => <String, dynamic>{
+Map<String, dynamic> _$DatabaseFileDtoToJson(DatabaseFileDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

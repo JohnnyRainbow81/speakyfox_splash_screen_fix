@@ -25,7 +25,9 @@ ClassDto _$ClassDtoFromJson(Map<String, dynamic> json) => ClassDto(
       languagePairId: json['languagePairId'] as String,
       isLocked: json['isLocked'] as bool,
       languagePair: json['languagePair'] as String,
-      courses: (json['courses'] as List<dynamic>).map((e) => CourseDto.fromJson(e as Map<String, dynamic>)).toList(),
+      courses: (json['courses'] as List<dynamic>)
+          .map((e) => CourseDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ClassDtoToJson(ClassDto instance) => <String, dynamic>{

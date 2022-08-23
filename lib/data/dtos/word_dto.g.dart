@@ -16,10 +16,13 @@ WordDto _$WordDtoFromJson(Map<String, dynamic> json) => WordDto(
       deletedBy: json['deletedBy'] as String?,
       index: json['index'] as int,
       entry: json['entry'] as String,
-      metadata: (json['metadata'] as List<dynamic>).map((e) => e as Map<String, dynamic>).toList(),
+      metadata: (json['metadata'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       type: $enumDecode(_$TermTypeEnumMap, json['type']),
       vocabularyShellId: json['vocabularyShellId'] as String,
-      vocabularyShell: VocabularyShellDto.fromJson(json['vocabularyShell'] as Map<String, dynamic>),
+      vocabularyShell: VocabularyShellDto.fromJson(
+          json['vocabularyShell'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WordDtoToJson(WordDto instance) => <String, dynamic>{

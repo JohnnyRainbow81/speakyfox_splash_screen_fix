@@ -16,14 +16,16 @@ CourseDto _$CourseDtoFromJson(Map<String, dynamic> json) => CourseDto(
       deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
-      languagePair: LanguagePairDto.fromJson(json['languagePair'] as Map<String, dynamic>),
+      languagePair: LanguagePairDto.fromJson(
+          json['languagePair'] as Map<String, dynamic>),
       fileId: json['fileId'] as String,
       isOnboarding: json['isOnboarding'] as bool?,
       languagePairId: json['languagePairId'] as String,
       classs: ClassDto.fromJson(json['classs'] as Map<String, dynamic>),
       progress: json['progress'] as int?,
-      lectures:
-          (json['lectures'] as List<dynamic>?)?.map((e) => LectureDto.fromJson(e as Map<String, dynamic>)).toList(),
+      lectures: (json['lectures'] as List<dynamic>?)
+          ?.map((e) => LectureDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       icon: ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
       isLocked: json['isLocked'] as bool,
       isPublished: json['isPublished'] as bool,

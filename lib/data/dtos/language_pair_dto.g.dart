@@ -6,7 +6,8 @@ part of 'language_pair_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-LanguagePairDto _$LanguagePairDtoFromJson(Map<String, dynamic> json) => LanguagePairDto(
+LanguagePairDto _$LanguagePairDtoFromJson(Map<String, dynamic> json) =>
+    LanguagePairDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -19,16 +20,19 @@ LanguagePairDto _$LanguagePairDtoFromJson(Map<String, dynamic> json) => Language
       key: json['key'] as String,
       subscriptions: json['subscriptions'] as List<dynamic>,
       icon: ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
-      sourceLanguage: LanguageDto.fromJson(json['sourceLanguage'] as Map<String, dynamic>),
+      sourceLanguage:
+          LanguageDto.fromJson(json['sourceLanguage'] as Map<String, dynamic>),
       sourceLanguageId: json['sourceLanguageId'] as String,
       isPublished: json['isPublished'] as bool,
-      targetLanguage: LanguageDto.fromJson(json['targetLanguage'] as Map<String, dynamic>),
+      targetLanguage:
+          LanguageDto.fromJson(json['targetLanguage'] as Map<String, dynamic>),
       targetLanguageId: json['targetLanguageId'] as String,
       webAppProductId: json['webAppProductId'] as String,
       appStoreProductId: json['appStoreProductId'] as String,
     );
 
-Map<String, dynamic> _$LanguagePairDtoToJson(LanguagePairDto instance) => <String, dynamic>{
+Map<String, dynamic> _$LanguagePairDtoToJson(LanguagePairDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

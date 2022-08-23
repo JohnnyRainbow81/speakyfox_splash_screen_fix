@@ -17,7 +17,8 @@ InvoiceDto _$InvoiceDtoFromJson(Map<String, dynamic> json) => InvoiceDto(
       paymentMethod: json['paymentMethod'],
     );
 
-Map<String, dynamic> _$InvoiceDtoToJson(InvoiceDto instance) => <String, dynamic>{
+Map<String, dynamic> _$InvoiceDtoToJson(InvoiceDto instance) =>
+    <String, dynamic>{
       'periodStart': instance.periodStart,
       'periodEnd': instance.periodEnd,
       'total': instance.total,

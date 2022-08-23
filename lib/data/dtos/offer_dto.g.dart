@@ -19,11 +19,14 @@ OfferDto _$OfferDtoFromJson(Map<String, dynamic> json) => OfferDto(
       registrationTitle: json['registrationTitle'] as String,
       descriptionTitle: json['descriptionTitle'] as String,
       descriptionContents: (json['descriptionContents'] as List<dynamic>)
-          .map((e) => OfferDescriptionContentDto.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              OfferDescriptionContentDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       offerContent: json['offerContent'] as String,
       thankYouContent: json['thankYouContent'] as String,
-      coupons: (json['coupons'] as List<dynamic>).map((e) => CouponDto.fromJson(e as Map<String, dynamic>)).toList(),
+      coupons: (json['coupons'] as List<dynamic>)
+          .map((e) => CouponDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       thankYouPageEnabled: json['thankYouPageEnabled'] as bool,
       registrationEnabled: json['registrationEnabled'] as bool,
       loginEnabled: json['loginEnabled'] as bool,

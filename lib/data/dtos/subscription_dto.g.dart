@@ -6,7 +6,8 @@ part of 'subscription_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SubscriptionDto _$SubscriptionDtoFromJson(Map<String, dynamic> json) => SubscriptionDto(
+SubscriptionDto _$SubscriptionDtoFromJson(Map<String, dynamic> json) =>
+    SubscriptionDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -20,16 +21,21 @@ SubscriptionDto _$SubscriptionDtoFromJson(Map<String, dynamic> json) => Subscrip
       currentPeriodStart: json['currentPeriodStart'] as String,
       currentPeriodEnd: json['currentPeriodEnd'] as String,
       couponKey: json['couponKey'] as String,
-      languages:
-          (json['languages'] as List<dynamic>).map((e) => LanguageDto.fromJson(e as Map<String, dynamic>)).toList(),
+      languages: (json['languages'] as List<dynamic>)
+          .map((e) => LanguageDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       interval: json['interval'] as String,
       intervalCount: json['intervalCount'] as int,
-      paymentMethod: UserPaymentMethodDto.fromJson(json['paymentMethod'] as Map<String, dynamic>),
+      paymentMethod: UserPaymentMethodDto.fromJson(
+          json['paymentMethod'] as Map<String, dynamic>),
       nextBillingAmount: json['nextBillingAmount'] as int,
-      invoices: (json['invoices'] as List<dynamic>).map((e) => InvoiceDto.fromJson(e as Map<String, dynamic>)).toList(),
+      invoices: (json['invoices'] as List<dynamic>)
+          .map((e) => InvoiceDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$SubscriptionDtoToJson(SubscriptionDto instance) => <String, dynamic>{
+Map<String, dynamic> _$SubscriptionDtoToJson(SubscriptionDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,

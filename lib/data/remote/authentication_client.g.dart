@@ -20,10 +20,16 @@ class _AuthenticationClient implements AuthenticationClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = {'username': username, 'password': password, 'grant_type': grantType};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<TicketDto>(
-        Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'https://speakyfox-api-production.herokuapp.com/connect/token',
+    final _data = {
+      'username': username,
+      'password': password,
+      'grant_type': grantType
+    };
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<TicketDto>(Options(
+                method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options,
+                'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TicketDto.fromJson(_result.data!);
@@ -36,9 +42,11 @@ class _AuthenticationClient implements AuthenticationClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {'refresh_token': refreshToken, 'grant_type': grantType};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response<TicketDto>>(
-        Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'https://speakyfox-api-production.herokuapp.com/connect/token',
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<TicketDto>>(Options(
+                method: 'POST', headers: _headers, extra: _extra)
+            .compose(_dio.options,
+                'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<TicketDto>.fromJson(
@@ -55,10 +63,12 @@ class _AuthenticationClient implements AuthenticationClient {
     final _headers = <String, dynamic>{r'authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response<UserDto>>(
-        Options(method: 'GET', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/users/me', queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<UserDto>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/me',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<UserDto>.fromJson(
       _result.data!,
       (json) => UserDto.fromJson(json as Map<String, dynamic>),
@@ -73,10 +83,12 @@ class _AuthenticationClient implements AuthenticationClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response<bool>>(
-        Options(method: 'PATCH', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/users/${userId}/password-reset', queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<bool>>(
+            Options(method: 'PATCH', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/${userId}/password-reset',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
       _result.data!,
       (json) => json as bool,
@@ -91,10 +103,12 @@ class _AuthenticationClient implements AuthenticationClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<Response<bool>>(
-        Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, '/users/password-reset', queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<bool>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, '/users/password-reset',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
       _result.data!,
       (json) => json as bool,
@@ -104,7 +118,8 @@ class _AuthenticationClient implements AuthenticationClient {
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

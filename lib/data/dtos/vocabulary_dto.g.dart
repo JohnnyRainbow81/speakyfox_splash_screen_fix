@@ -6,7 +6,8 @@ part of 'vocabulary_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-VocabularyDto _$VocabularyDtoFromJson(Map<String, dynamic> json) => VocabularyDto(
+VocabularyDto _$VocabularyDtoFromJson(Map<String, dynamic> json) =>
+    VocabularyDto(
       id: json['id'] as String,
       modified: json['modified'] as String?,
       modifiedBy: json['modifiedBy'] as String?,
@@ -23,17 +24,26 @@ VocabularyDto _$VocabularyDtoFromJson(Map<String, dynamic> json) => VocabularyDt
       question: json['question'] as String,
       imageNumber: json['imageNumber'] as String,
       languagePairId: json['languagePairId'] as String,
-      languagePair: LanguagePairDto.fromJson(json['languagePair'] as Map<String, dynamic>),
+      languagePair: LanguagePairDto.fromJson(
+          json['languagePair'] as Map<String, dynamic>),
       vocabularyShellId: json['vocabularyShellId'] as String,
       imageGroups: (json['imageGroups'] as List<dynamic>)
-          .map((e) => AnimationImageGroupDto.fromJson(e as Map<String, dynamic>))
+          .map(
+              (e) => AnimationImageGroupDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      answers: (json['answers'] as List<dynamic>).map((e) => AnswerDto.fromJson(e as Map<String, dynamic>)).toList(),
-      images: (json['images'] as List<dynamic>).map((e) => ImageDto.fromJson(e as Map<String, dynamic>)).toList(),
-      audios: (json['audios'] as List<dynamic>).map((e) => AudioDto.fromJson(e as Map<String, dynamic>)).toList(),
+      answers: (json['answers'] as List<dynamic>)
+          .map((e) => AnswerDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      images: (json['images'] as List<dynamic>)
+          .map((e) => ImageDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      audios: (json['audios'] as List<dynamic>)
+          .map((e) => AudioDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$VocabularyDtoToJson(VocabularyDto instance) => <String, dynamic>{
+Map<String, dynamic> _$VocabularyDtoToJson(VocabularyDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'modified': instance.modified,
       'modifiedBy': instance.modifiedBy,
