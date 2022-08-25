@@ -27,7 +27,7 @@ dependencies:
   connectivity_plus: ^2.3.6+1 # check if device has connection to WLAN/mobile net
   retrofit: ^3.0.1+1 # easy HTTP method generator
   dio: ^4.0.6 # underlying HTTP API used by retrofit
-  json_serializable: ^6.1.6
+  json_serializable: ^6.3.1
   json_annotation: ^4.6.0
   pretty_dio_logger: ^1.1.1
 

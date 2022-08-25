@@ -17,7 +17,7 @@ extension AudioMapper on AudioDto {
         type: type,
         languageType: languageType,
         audioType: audioType,
-        bucketName: bucketName,
+        bucketName: bucketName ?? "",
         metadata: metadata ?? []);
   }
 }

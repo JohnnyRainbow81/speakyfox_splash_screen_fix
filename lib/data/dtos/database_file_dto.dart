@@ -8,12 +8,12 @@ part 'database_file_dto.g.dart';
 
 @JsonSerializable()
 class DatabaseFileDto extends BaseDto {
-  String bucketName;
+  String? bucketName;
   String name;
   int size;
   String contentType;
   DatabaseType type;
-  List<dynamic>? metadata;
+  dynamic metadata;
 
   DatabaseFileDto({
     required String id,

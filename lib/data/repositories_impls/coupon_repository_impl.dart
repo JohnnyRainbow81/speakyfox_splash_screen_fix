@@ -52,11 +52,11 @@ class CouponRepositoryImpl implements CouponRepository {
   }
 
   @override
-  Future<Coupon> getById(String id) async {
+  Future<List<Coupon>> getById(String id) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _couponClient.getById(id);
-        return response.data.toCoupon();
+        return response.data.map((couponDTO) => couponDTO.toCoupon()).toList();
       } catch (error) {
         ErrorHandler.handleError(error);
       }

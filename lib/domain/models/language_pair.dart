@@ -8,12 +8,12 @@ class LanguagePair extends BaseModel {
   String description;
   String key;
   List<dynamic> subscriptions = [];
-  Image icon;
-  Language sourceLanguage;
-  String sourceLanguageId;
-  bool isPublished;
-  Language targetLanguage;
-  String targetLanguageId;
+  Image? icon;
+  Language? sourceLanguage;
+  String? sourceLanguageId;
+  bool? isPublished;
+  Language? targetLanguage;
+  String? targetLanguageId;
   String webAppProductId;
   String appStoreProductId;
 

@@ -15,15 +15,15 @@ extension LanguagePairMapper on LanguagePairDto {
         deletedBy: deletedBy ?? "",
         title: title,
         description: description,
-        key: key,
-        subscriptions: subscriptions,
-        icon: icon.toImage(),
-        sourceLanguage: sourceLanguage.toLanguage(),
+        key: key ?? "",
+        subscriptions: subscriptions ?? [],
+        icon: icon?.toImage(),
+        sourceLanguage: sourceLanguage?.toLanguage(),
         sourceLanguageId: sourceLanguageId,
-        appStoreProductId: appStoreProductId,
-        isPublished: isPublished,
-        targetLanguage: targetLanguage.toLanguage(),
-        webAppProductId: webAppProductId,
+        appStoreProductId: appStoreProductId ?? "",
+        isPublished: isPublished ,
+        targetLanguage: targetLanguage?.toLanguage(),
+        webAppProductId: webAppProductId ?? "",
         targetLanguageId: targetLanguageId);
   }
 }

@@ -41,20 +41,102 @@ class _LanguageClient implements LanguageClient {
   }
 
   @override
-  Future<Response<LanguageDto>> getLanguageById(id) async {
+  Future<Response<List<LanguageDto>>> getLanguageById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<LanguageDto>>(
+        _setStreamType<Response<List<LanguageDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<LanguageDto>.fromJson(
+    final value = Response<List<LanguageDto>>.fromJson(
       _result.data!,
-      (json) => LanguageDto.fromJson(json as Map<String, dynamic>),
+      (json) => (json as List<dynamic>)
+          .map<LanguageDto>(
+              (i) => LanguageDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
+    return value;
+  }
+
+  @override
+  Future<Response<List<LanguageDto>>> getTargetLanguagesBySourceLanguageId(
+      languageId,
+      {isTargetLanguage = true}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'sourceLanguageId': languageId,
+      r'isTargetLanguage': isTargetLanguage
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<List<LanguageDto>>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<List<LanguageDto>>.fromJson(
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<LanguageDto>(
+              (i) => LanguageDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
+    return value;
+  }
+
+  @override
+  Future<Response<List<LanguageDto>>> getSourceLanguages(
+      {isSourceLanguage = true}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'isSourceLanguage': isSourceLanguage
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<List<LanguageDto>>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<List<LanguageDto>>.fromJson(
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<LanguageDto>(
+              (i) => LanguageDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
+    return value;
+  }
+
+  @override
+  Future<Response<List<LanguageDto>>> getSourceLanguagesByTargetLanguageId(
+      languageId,
+      {isSourceLanguage = true}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'targetLanguageId': languageId,
+      r'isSourceLanguage': isSourceLanguage
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<List<LanguageDto>>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, '',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<List<LanguageDto>>.fromJson(
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<LanguageDto>(
+              (i) => LanguageDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
     );
     return value;
   }
@@ -82,20 +164,23 @@ class _LanguageClient implements LanguageClient {
   }
 
   @override
-  Future<Response<LanguageDto>> getById(id) async {
+  Future<Response<List<LanguageDto>>> getById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<LanguageDto>>(
+        _setStreamType<Response<List<LanguageDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<LanguageDto>.fromJson(
+    final value = Response<List<LanguageDto>>.fromJson(
       _result.data!,
-      (json) => LanguageDto.fromJson(json as Map<String, dynamic>),
+      (json) => (json as List<dynamic>)
+          .map<LanguageDto>(
+              (i) => LanguageDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
     );
     return value;
   }

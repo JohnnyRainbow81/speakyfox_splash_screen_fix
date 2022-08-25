@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/database_file.dart';
-import 'package:speakyfox/domain/models/file.dart';
 
 import 'language.dart';
 

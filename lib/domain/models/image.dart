@@ -1,21 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:speakyfox/domain/models/coordinates.dart';
 import 'package:speakyfox/domain/models/database_file.dart';
 
 enum ImageType {
-  @JsonValue("whole")
+  @JsonValue(0)
+  none, //FIXME 0 is necessary because backend sends sometimes imageType = 0 here
+  @JsonValue("Whole")
   whole,
-  @JsonValue("focus")
+  @JsonValue("Focus")
   focus,
-  @JsonValue("part")
+  @JsonValue("Part")
   part
 }
 
 class Image extends DatabaseFile {
-  ImageType imageType;
+  ImageType? imageType;
   int order;
-  Coordinates coordinates;
+  Coordinates? coordinates;
 
   Image(
       {required String id,
@@ -49,4 +52,9 @@ class Image extends DatabaseFile {
           deleted: deleted,
           deletedBy: deletedBy,
         );
+
+  @override
+  String toString() {
+    return 'Image(order: $order, coordinates: $coordinates)${super.toString()}';
+  }
 }

@@ -9,7 +9,7 @@ part of 'ticket_dto.dart';
 TicketDto _$TicketDtoFromJson(Map<String, dynamic> json) => TicketDto(
       accessToken: json['access_token'] as String,
       expiresIn: json['expires_in'] as int,
-      refreshToken: json['refresh_token'] as String,
+      refreshToken: json['refresh_token'] as String?,
       scope: json['scope'] as String,
       tokenType: json['token_type'] as String,
     );

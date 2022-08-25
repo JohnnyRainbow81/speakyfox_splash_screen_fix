@@ -16,18 +16,21 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<TicketDto> accessToken(username, password, grantType) async {
+  Future<TicketDto> accessToken(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = {
-      'username': username,
-      'password': password,
-      'grant_type': grantType
+    final _headers = <String, dynamic>{
+      r'Content-type': 'application/x-www-form-urlencoded'
     };
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TicketDto>(Options(
-                method: 'POST', headers: _headers, extra: _extra)
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/x-www-form-urlencoded')
             .compose(_dio.options,
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
@@ -37,16 +40,17 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<Response<TicketDto>> refreshToken(refreshToken, grantType) async {
+  Future<TicketDto> refreshToken(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Content-type': 'application/x-www-form-urlencoded'
     };
     _headers.removeWhere((k, v) => v == null);
-    final _data = {'refresh_token': refreshToken, 'grant_type': grantType};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<TicketDto>>(Options(
+        _setStreamType<TicketDto>(Options(
                 method: 'POST',
                 headers: _headers,
                 extra: _extra,
@@ -55,10 +59,7 @@ class _AuthenticationClient implements AuthenticationClient {
                 'https://speakyfox-api-production.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<TicketDto>.fromJson(
-      _result.data!,
-      (json) => TicketDto.fromJson(json as Map<String, dynamic>),
-    );
+    final value = TicketDto.fromJson(_result.data!);
     return value;
   }
 

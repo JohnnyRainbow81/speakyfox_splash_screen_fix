@@ -17,18 +17,24 @@ LanguagePairDto _$LanguagePairDtoFromJson(Map<String, dynamic> json) =>
       deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
       description: json['description'] as String,
-      key: json['key'] as String,
-      subscriptions: json['subscriptions'] as List<dynamic>,
-      icon: ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
-      sourceLanguage:
-          LanguageDto.fromJson(json['sourceLanguage'] as Map<String, dynamic>),
-      sourceLanguageId: json['sourceLanguageId'] as String,
-      isPublished: json['isPublished'] as bool,
-      targetLanguage:
-          LanguageDto.fromJson(json['targetLanguage'] as Map<String, dynamic>),
-      targetLanguageId: json['targetLanguageId'] as String,
-      webAppProductId: json['webAppProductId'] as String,
-      appStoreProductId: json['appStoreProductId'] as String,
+      key: json['key'] as String?,
+      subscriptions: json['subscriptions'] as List<dynamic>?,
+      icon: json['icon'] == null
+          ? null
+          : ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
+      sourceLanguage: json['sourceLanguage'] == null
+          ? null
+          : LanguageDto.fromJson(
+              json['sourceLanguage'] as Map<String, dynamic>),
+      sourceLanguageId: json['sourceLanguageId'] as String?,
+      isPublished: json['isPublished'] as bool?,
+      targetLanguage: json['targetLanguage'] == null
+          ? null
+          : LanguageDto.fromJson(
+              json['targetLanguage'] as Map<String, dynamic>),
+      targetLanguageId: json['targetLanguageId'] as String?,
+      webAppProductId: json['webAppProductId'] as String?,
+      appStoreProductId: json['appStoreProductId'] as String?,
     );
 
 Map<String, dynamic> _$LanguagePairDtoToJson(LanguagePairDto instance) =>

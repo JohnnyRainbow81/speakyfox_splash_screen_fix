@@ -2,17 +2,22 @@
 class Ticket {
   String accessToken;
   int expiresIn;
-  String refreshToken;
+  String? refreshToken;
   String scope;
   String tokenType;
   
   Ticket({
     required this.accessToken,
     required this.expiresIn,
-    required this.refreshToken,
+    this.refreshToken,
     required this.scope,
     required this.tokenType,
   });
+
+  @override
+  String toString() {
+    return 'Ticket(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
+  }
 }
 
 //redundant?

@@ -8,6 +8,8 @@ import 'package:speakyfox/data/local/authentication_local_source.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
+import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
@@ -27,7 +29,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   );
 
   @override
-  Future<Ticket> accessToken(String username, String password, String grantType) async {
+  Future<Ticket> accessToken(AuthenticationRequestBody body/* String username, String password, String grantType */) async {
     //Try to load from local source
     try {
       Ticket ticket = await _authenticationLocalSource.loadTicket();
@@ -36,7 +38,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       //Not stored locally? get from backend
       if (await _connectivityService.hasConnection()) {
         try {
-          final response = await _authenticationClient.accessToken(username, password, grantType);
+          final response = await _authenticationClient.accessToken(body/* username, password, grantType */);
           _authenticationLocalSource.saveTicket(response); //store locally
           return response.toTicket();
         } catch (error) {
@@ -50,17 +52,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Ticket> refreshToken(String refreshToken, String grantType) async {
+  Future<Ticket> refreshToken(RefreshTokenBody body) async {
     //more logic here
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _authenticationClient.refreshToken(refreshToken, grantType);
-        if (response.code.statusCode == HttpStatus.ok) {
-          return response.data.toTicket();
-        } else {
-          throw LoginNotSuccessfulException(
-              description: "Sorry, we couldn't refresh your Login. Please try to Login again.");
-        }
+        final response = await _authenticationClient.refreshToken(body);
+        return response.toTicket();
+        
       } catch (error) {
         ErrorHandler.handleError(error);
       }

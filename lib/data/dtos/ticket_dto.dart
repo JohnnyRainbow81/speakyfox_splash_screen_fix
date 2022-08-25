@@ -11,7 +11,7 @@ class TicketDto {
   @JsonKey(name: "expires_in")
   int expiresIn;
   @JsonKey(name: "refresh_token")
-  String refreshToken;
+  String? refreshToken;
   String scope;
   @JsonKey(name: "token_type")
   String tokenType;
@@ -19,7 +19,7 @@ class TicketDto {
   TicketDto({
     required this.accessToken,
     required this.expiresIn,
-    required this.refreshToken,
+    this.refreshToken,
     required this.scope,
     required this.tokenType,
   });

@@ -1,14 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-const String X_WWW_FORM_URLENCODED = "application/x-www-form-urlencoded";
-const String APPLICATION_JSON = "application/json";
-const String CONTENT_TYPE = "content-type";
-const String ACCEPT = "accept";
-const String AUTHORIZATION = "authorization";
-const String DEFAULT_LANGUAGE = "language";
-const String TEXT_PLAIN = "text/plain";
 
 //Different Dio classes with different base urls are needed because we have different backend urls throughout the app.
 //And because the dio classes are setup together by dependency injection at the start of the app.
@@ -48,8 +42,8 @@ class DioAuth {
     Dio dio = Dio();
     int timeOut = 60 * 1000; // 1 min
     Map<String, String> headers = {
-      CONTENT_TYPE: X_WWW_FORM_URLENCODED,
-      ACCEPT: APPLICATION_JSON,
+      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType, 
+      HttpHeaders.acceptHeader: Headers.jsonContentType,
     };
 
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
@@ -71,11 +65,11 @@ class DioV1 {
 
   static Future<Dio> initialize(String baseUrl, String token) async {
     Dio dio = Dio();
-    int timeOut = 60 * 1000; // 1 min
+    int timeOut = 10 * 1000; // 10sec
     Map<String, String> headers = {
-      CONTENT_TYPE: X_WWW_FORM_URLENCODED,
-      ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: "Bearer $token"
+      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType, 
+      HttpHeaders.acceptHeader: Headers.jsonContentType,
+      HttpHeaders.authorizationHeader: "Bearer $token"
     };
 
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
@@ -84,8 +78,24 @@ class DioV1 {
     if (kReleaseMode) {
       print("release mode no logs");
     } else {
+      //check this:
+      //https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
+      //https://pub.dev/packages/dio#interceptors
+      //use AuthenticationService here??
       dio.interceptors.add(
           PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+
+      dio.interceptors.add(InterceptorsWrapper(
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onRequest: (options, handler) {
+          return handler.next(options);
+        },
+        onError: (error, handler) {
+          return handler.next(error);
+        },
+      ));
     }
 
     return dio;
@@ -99,8 +109,8 @@ class DioDocuments {
     Dio dio = Dio();
     int timeOut = 60 * 1000; // 1 min
     Map<String, String> headers = {
-      CONTENT_TYPE: X_WWW_FORM_URLENCODED,
-      ACCEPT: APPLICATION_JSON,
+      Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
+      Headers.acceptHeader: Headers.jsonContentType,
     };
 
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);

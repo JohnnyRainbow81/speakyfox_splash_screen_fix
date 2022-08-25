@@ -12,8 +12,8 @@ part 'image_dto.g.dart';
 @JsonSerializable()
 class ImageDto extends DatabaseFileDto {
   ImageType imageType;
-  int order;
-  CoordinatesDto coordinates;
+  int? order;
+  CoordinatesDto? coordinates;
 
   ImageDto({
     required String id,
@@ -23,14 +23,14 @@ class ImageDto extends DatabaseFileDto {
     String? createdBy,
     String? deleted,
     String? deletedBy,
-    required String bucketName,
+    String? bucketName,
     required String name,
     required int size,
     required String contentType,
     required DatabaseType type,
-    required List<dynamic>? metadata,
+    required dynamic metadata,
     required this.imageType,
-    required this.order,
+    this.order,
     required this.coordinates,
   }) : super(
             id: id,

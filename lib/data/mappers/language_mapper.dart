@@ -16,10 +16,10 @@ extension LanguageMapper on LanguageDto {
         title: title,
         description: description,
         key: key,
-        icon: icon.toImage(),
+        icon: icon?.toImage(),  //TODO standard Image? ask Julien
         buttonImage: buttonImage.toImage(),
         buttonFileId: buttonFileId,
         isPublished: isPublished,
-        languagePair: languagePair.toLanguagePair());
+        languagePair: languagePair.isNotEmpty ?  languagePair.first.toLanguagePair() : null); //TODO should be a List or single value? WebApp has a single value..
   }
 }

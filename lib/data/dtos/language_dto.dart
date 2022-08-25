@@ -10,13 +10,13 @@ part 'language_dto.g.dart';
 @JsonSerializable()
 class LanguageDto extends BaseDto {
   String title;
-  String description;
-  String key;
-  ImageDto icon;
-  ImageDto buttonImage;
-  bool isPublished;
-  String buttonFileId;
-  LanguagePairDto languagePair;
+  String description;//OK
+  String key;//OK
+  ImageDto? icon;
+  ImageDto buttonImage;//OK
+  bool isPublished;//OK
+  String buttonFileId; //OK
+  List<LanguagePairDto> languagePair;
 
   LanguageDto({
     required String id,

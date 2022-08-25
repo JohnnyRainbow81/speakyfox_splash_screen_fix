@@ -15,12 +15,12 @@ DatabaseFileDto _$DatabaseFileDtoFromJson(Map<String, dynamic> json) =>
       createdBy: json['createdBy'] as String?,
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
-      bucketName: json['bucketName'] as String,
+      bucketName: json['bucketName'] as String?,
       name: json['name'] as String,
       size: json['size'] as int,
       contentType: json['contentType'] as String,
       type: $enumDecode(_$DatabaseTypeEnumMap, json['type']),
-      metadata: json['metadata'] as List<dynamic>?,
+      metadata: json['metadata'],
     );
 
 Map<String, dynamic> _$DatabaseFileDtoToJson(DatabaseFileDto instance) =>
@@ -41,6 +41,6 @@ Map<String, dynamic> _$DatabaseFileDtoToJson(DatabaseFileDto instance) =>
     };
 
 const _$DatabaseTypeEnumMap = {
-  DatabaseType.image: 'image',
-  DatabaseType.audio: 'audio',
+  DatabaseType.image: 'Image',
+  DatabaseType.audio: 'Audio',
 };

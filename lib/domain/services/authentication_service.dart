@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/app/environment.dart';
+import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/models/identity_token.dart';
@@ -13,7 +15,7 @@ enum GrantType {
   @JsonValue("password")
   password,
   @JsonValue("refresh_token")
-  refreshToken
+  refresh_token
 }
 
 //Only class to communicate with Auth Server
@@ -34,11 +36,12 @@ class AuthenticationService {
   }
 
   Future<bool> login(String username, String password) async {
-    Ticket ticket = await _authenticationRepository.accessToken(username, password, GrantType.refreshToken.name);
+    Ticket ticket = await _authenticationRepository.accessToken(
+        AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.refresh_token.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
 
     IdentityToken identityToken = IdentityToken(
-        expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken, user: me);
+        expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken!, user: me);
 
     _credentials = identityToken;
     _expirationTimestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor() + ticket.expiresIn;
@@ -121,12 +124,12 @@ class AuthenticationService {
   }
 
   Future<void> refreshToken() async {
-    Ticket ticket =
-        await _authenticationRepository.refreshToken(_credentials!.refreshToken, GrantType.refreshToken.name);
+    Ticket ticket = await _authenticationRepository.refreshToken(
+        RefreshTokenBody(refreshToken: _credentials!.refreshToken, grantType: GrantType.refresh_token.name));
     IdentityToken identityToken = IdentityToken(
         expires: ticket.expiresIn,
         accessToken: ticket.accessToken,
-        refreshToken: ticket.refreshToken,
+        refreshToken: _credentials!.refreshToken,
         user: _credentials!.user);
     _credentials = identityToken;
   }

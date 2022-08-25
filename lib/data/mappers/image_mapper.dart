@@ -12,14 +12,14 @@ extension ImageMapper on ImageDto {
         createdBy: createdBy ?? "",
         deleted: deleted ?? "",
         deletedBy: deletedBy ?? "",
-        bucketName: bucketName,
+        bucketName: bucketName ?? "",
         name: name,
         size: size,
         contentType: contentType,
         type: type,
         metadata: metadata ?? [],
-        order: order,
-        coordinates: coordinates.toCoordinates(),
+        order: order ?? 0,
+        coordinates: coordinates?.toCoordinates(),
         imageType: imageType);
   }
 }

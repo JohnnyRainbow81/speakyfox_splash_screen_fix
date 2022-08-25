@@ -15,7 +15,7 @@ AudioDto _$AudioDtoFromJson(Map<String, dynamic> json) => AudioDto(
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       bucketName: json['bucketName'] as String,
-      metadata: json['metadata'] as List<dynamic>,
+      metadata: json['metadata'],
       size: json['size'] as int,
       contentType: json['contentType'] as String,
       name: json['name'] as String,
@@ -43,8 +43,8 @@ Map<String, dynamic> _$AudioDtoToJson(AudioDto instance) => <String, dynamic>{
     };
 
 const _$DatabaseTypeEnumMap = {
-  DatabaseType.image: 'image',
-  DatabaseType.audio: 'audio',
+  DatabaseType.image: 'Image',
+  DatabaseType.audio: 'Audio',
 };
 
 const _$AudioTypeEnumMap = {

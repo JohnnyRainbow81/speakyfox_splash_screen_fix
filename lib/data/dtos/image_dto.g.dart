@@ -14,16 +14,18 @@ ImageDto _$ImageDtoFromJson(Map<String, dynamic> json) => ImageDto(
       createdBy: json['createdBy'] as String?,
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
-      bucketName: json['bucketName'] as String,
+      bucketName: json['bucketName'] as String?,
       name: json['name'] as String,
       size: json['size'] as int,
       contentType: json['contentType'] as String,
       type: $enumDecode(_$DatabaseTypeEnumMap, json['type']),
-      metadata: json['metadata'] as List<dynamic>?,
+      metadata: json['metadata'],
       imageType: $enumDecode(_$ImageTypeEnumMap, json['imageType']),
-      order: json['order'] as int,
-      coordinates:
-          CoordinatesDto.fromJson(json['coordinates'] as Map<String, dynamic>),
+      order: json['order'] as int?,
+      coordinates: json['coordinates'] == null
+          ? null
+          : CoordinatesDto.fromJson(
+              json['coordinates'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ImageDtoToJson(ImageDto instance) => <String, dynamic>{
@@ -46,12 +48,13 @@ Map<String, dynamic> _$ImageDtoToJson(ImageDto instance) => <String, dynamic>{
     };
 
 const _$DatabaseTypeEnumMap = {
-  DatabaseType.image: 'image',
-  DatabaseType.audio: 'audio',
+  DatabaseType.image: 'Image',
+  DatabaseType.audio: 'Audio',
 };
 
 const _$ImageTypeEnumMap = {
-  ImageType.whole: 'whole',
-  ImageType.focus: 'focus',
-  ImageType.part: 'part',
+  ImageType.none: 0,
+  ImageType.whole: 'Whole',
+  ImageType.focus: 'Focus',
+  ImageType.part: 'Part',
 };

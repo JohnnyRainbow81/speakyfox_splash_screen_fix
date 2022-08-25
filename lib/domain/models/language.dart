@@ -16,11 +16,11 @@ class Language extends BaseModel {
   String title;
   String description;
   String key;
-  Image icon;
+  Image? icon;
   Image buttonImage;
   bool isPublished;
   String buttonFileId;
-  LanguagePair languagePair;
+  LanguagePair? languagePair;
 
   Language(
       {required String id,
@@ -49,6 +49,6 @@ class Language extends BaseModel {
 
   @override
   String toString() {
-    return 'Language(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId)';
+    return 'Language(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId)\n${super.toString()}';
   }
 }

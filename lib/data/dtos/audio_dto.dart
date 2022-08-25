@@ -24,7 +24,7 @@ class AudioDto extends DatabaseFileDto {
     String? deleted,
     String? deletedBy,
     required String bucketName,
-    required List<dynamic> metadata,
+    required dynamic metadata,
     required int size,
     required String contentType,
     required String name,

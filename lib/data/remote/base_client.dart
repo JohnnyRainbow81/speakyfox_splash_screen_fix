@@ -9,7 +9,7 @@ abstract class BaseClient<T>{
   Future<Response<List<T>>> getAll(@Query("") String param);
 
   @GET("")
-  Future<Response<T>> getById(@Query("id") String id);
+  Future<Response<List<T>>> getById(@Query("id") String id);
 
   @POST("")
   Future<Response<T>> post(@Body()dynamic entity);

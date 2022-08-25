@@ -10,16 +10,16 @@ part 'language_pair_dto.g.dart';
 class LanguagePairDto extends BaseDto {
   String title;
   String description;
-  String key;
-  List<dynamic> subscriptions = [];
-  ImageDto icon;
-  LanguageDto sourceLanguage;
-  String sourceLanguageId;
-  bool isPublished;
-  LanguageDto targetLanguage;
-  String targetLanguageId;
-  String webAppProductId;
-  String appStoreProductId;
+  String? key;
+  List<dynamic>? subscriptions = [];
+  ImageDto? icon;
+  LanguageDto? sourceLanguage;
+  String? sourceLanguageId;
+  bool? isPublished;
+  LanguageDto? targetLanguage;
+  String? targetLanguageId;
+  String? webAppProductId;
+  String? appStoreProductId;
 
   LanguagePairDto({
     required String id,
@@ -31,7 +31,7 @@ class LanguagePairDto extends BaseDto {
     String? deletedBy,
     required this.title,
     required this.description,
-    required this.key,
+    this.key,
     required this.subscriptions,
     required this.icon,
     required this.sourceLanguage,

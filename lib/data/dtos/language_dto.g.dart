@@ -17,13 +17,16 @@ LanguageDto _$LanguageDtoFromJson(Map<String, dynamic> json) => LanguageDto(
       title: json['title'] as String,
       description: json['description'] as String,
       key: json['key'] as String,
-      icon: ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
+      icon: json['icon'] == null
+          ? null
+          : ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
       buttonImage:
           ImageDto.fromJson(json['buttonImage'] as Map<String, dynamic>),
       isPublished: json['isPublished'] as bool,
       buttonFileId: json['buttonFileId'] as String,
-      languagePair: LanguagePairDto.fromJson(
-          json['languagePair'] as Map<String, dynamic>),
+      languagePair: (json['languagePair'] as List<dynamic>)
+          .map((e) => LanguagePairDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$LanguageDtoToJson(LanguageDto instance) =>

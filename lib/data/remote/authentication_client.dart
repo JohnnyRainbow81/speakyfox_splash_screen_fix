@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart' hide Response, Headers;
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/data/dtos/response.dart';
@@ -16,17 +18,18 @@ abstract class AuthenticationClient {
 
   //Overwrites base url because the token-requests go to auth server and NOT to v1 server
   @POST("${Constants.baseUrlAuth}connect/token")
-  Future<TicketDto> accessToken(
-    @Field("username") String username,
-    @Field("password") String password,
-    @Field("grant_type") String grantType,
+  @Headers(<String, dynamic>{"Content-type": "application/x-www-form-urlencoded"})
+  Future<TicketDto> accessToken( @Body() AuthenticationRequestBody body,
+    // @Field("username") String username,
+    // @Field("password") String password,
+    // @Field("grant_type") String grantType, 
   );
 
   //Overwrites base url because the token-requests go to auth server and NOT to v1 server
   @POST("${Constants.baseUrlAuth}connect/token")
-  @Headers(<String,dynamic>{"Content-type": "application/x-www-form-urlencoded"})
-  Future<Response<TicketDto>> refreshToken(
-      @Field("refresh_token") String refreshToken, @Field("grant_type") String grantType);
+  @Headers(<String, dynamic>{"Content-type": "application/x-www-form-urlencoded"})
+  Future<TicketDto> refreshToken(@Body() RefreshTokenBody body,
+     );
 
   @GET("/users/me")
   Future<Response<UserDto>> fetchUser(@Header(HttpHeaders.authorizationHeader) String token);
@@ -36,8 +39,6 @@ abstract class AuthenticationClient {
 
   @POST("/users/password-reset")
   Future<Response<bool>> sendPasswordResetEmail(@Body() SendPasswordResetBody body);
-
-  
 }
 
 
