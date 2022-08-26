@@ -1,6 +1,6 @@
 import 'dart:math';
 
-  //delete if you don't need
+//delete if you don't need
 
 class Uuid {
   final Random _random = Random();
@@ -21,4 +21,9 @@ class Uuid {
   int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
 
   String _printDigits(int value, int count) => value.toRadixString(16).padLeft(count, '0');
+}
+
+bool isValidEmail(String email) {
+  bool valid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+  return valid;
 }
