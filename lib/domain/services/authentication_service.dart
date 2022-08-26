@@ -33,13 +33,18 @@ class AuthenticationService {
     return _credentials;
   }
 
+  set setCredentials(IdentityToken token) {
+    _credentials = token;
+  }
+
   Future<bool> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(
-        AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.refresh_token.name));
+        AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.password.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
 
     IdentityToken identityToken = IdentityToken(
-        expires: DateTime.tryParse(ticket.expiresIn.toString())!.toIso8601String(),
+        expires: _calculateExpirationDate(
+            ticket.expiresIn), //DateTime.tryParse(ticket.expiresIn.toString())!.toIso8601String(),
         accessToken: ticket.accessToken,
         refreshToken: ticket.refreshToken!,
         user: me);
@@ -47,6 +52,10 @@ class AuthenticationService {
     _credentials = identityToken;
 
     return true;
+  }
+
+  String _calculateExpirationDate(int expiresIn) {
+    return DateTime.now().add(Duration(seconds: expiresIn)).toIso8601String();
   }
 
   bool isExpired() {
@@ -127,7 +136,7 @@ class AuthenticationService {
     Ticket ticket = await _authenticationRepository.refreshToken(
         RefreshTokenBody(refreshToken: _credentials!.refreshToken, grantType: GrantType.refresh_token.name));
     IdentityToken identityToken = IdentityToken(
-        expires: DateTime.tryParse(ticket.expiresIn.toString())!.toIso8601String(),
+        expires: _calculateExpirationDate(ticket.expiresIn),
         accessToken: ticket.accessToken,
         refreshToken: _credentials!.refreshToken,
         user: _credentials!.user);

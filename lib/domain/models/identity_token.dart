@@ -2,7 +2,7 @@
 import 'package:speakyfox/domain/models/user.dart';
 
 class IdentityToken {
- int expires;
+ String expires;
  String accessToken;
  String refreshToken;
   User user;
