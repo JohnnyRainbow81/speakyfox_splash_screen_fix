@@ -20,8 +20,6 @@ enum GrantType {
 
 //Only class to communicate with Auth Server
 class AuthenticationService {
-  int _expirationTimestamp = -1;
-
   IdentityToken? _credentials; //gets populated by accessToken-flow
 
   final AuthenticationRepository _authenticationRepository;
@@ -41,17 +39,19 @@ class AuthenticationService {
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
 
     IdentityToken identityToken = IdentityToken(
-        expires: ticket.expiresIn, accessToken: ticket.accessToken, refreshToken: ticket.refreshToken!, user: me);
+        expires: DateTime.tryParse(ticket.expiresIn.toString())!.toIso8601String(),
+        accessToken: ticket.accessToken,
+        refreshToken: ticket.refreshToken!,
+        user: me);
 
     _credentials = identityToken;
-    _expirationTimestamp = (DateTime.now().millisecondsSinceEpoch / 1000).floor() + ticket.expiresIn;
 
     return true;
   }
 
   bool isExpired() {
-    if (_expirationTimestamp < 0) return true;
-    if (_expirationTimestamp < DateTime.now().millisecondsSinceEpoch) return true;
+    DateTime expirationTime = DateTime.parse(_credentials!.expires);
+    if (expirationTime.isBefore(DateTime.now())) return true;
     return false;
   }
 
@@ -127,7 +127,7 @@ class AuthenticationService {
     Ticket ticket = await _authenticationRepository.refreshToken(
         RefreshTokenBody(refreshToken: _credentials!.refreshToken, grantType: GrantType.refresh_token.name));
     IdentityToken identityToken = IdentityToken(
-        expires: ticket.expiresIn,
+        expires: DateTime.tryParse(ticket.expiresIn.toString())!.toIso8601String(),
         accessToken: ticket.accessToken,
         refreshToken: _credentials!.refreshToken,
         user: _credentials!.user);
