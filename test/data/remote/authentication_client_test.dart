@@ -29,6 +29,7 @@ void main() async {
     Ticket ticket = response.toTicket();
     final userDto = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
     user = userDto.data.toUser();
+  
     debugPrint(user.firstName);
   }));
 

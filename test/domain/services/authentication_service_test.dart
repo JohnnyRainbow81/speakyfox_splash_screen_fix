@@ -56,7 +56,7 @@ void main() async {
     () async {
       when(mockAuthenticationRepository.sendPasswordResetEmail(any))
           .thenAnswer((realInvocation) async => true);
-
+      
       bool success = await authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: "bla"));
 
       expect(success, true);
