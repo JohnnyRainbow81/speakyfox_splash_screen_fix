@@ -1,7 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:speakyfox/domain/models/sentence.dart';
-import 'package:speakyfox/domain/models/vocabulary.dart';
-import 'package:speakyfox/presentation/common/resources/sound_assets.dart';
+import 'package:flutter/foundation.dart';
 
 class AudioService {
   final AudioPlayer _audioPlayer = AudioPlayer();
@@ -9,25 +9,32 @@ class AudioService {
   bool audioUnlocked = false;
   bool alreadyDisplayingUnlock = false;
 
-  void playSound(dynamic item) {
-    switch (item.runtimeType) {
-      case Vocabulary:
-        break;
-      case Sentence:
-        break;
+  AudioService() {
+    //Because setVolume doesn't work on my MacOs:
+    if (Platform.isAndroid || Platform.isIOS) {
+      _audioPlayer.setReleaseMode(ReleaseMode.stop);
+      _audioPlayer.setPlayerMode(PlayerMode.lowLatency);
+      _audioPlayer.setVolume(1);
+    }
+
+    if (kDebugMode) {
+      _audioPlayer.onPlayerComplete.listen((event) {
+        print("OnPlayerComplete");
+      });
     }
   }
 
-  void playSuccess() {
-    _audioPlayer.play(AssetSource(SoundAssets.success));
-  }
+  // void playSound(dynamic item) {
+  //   switch (item.runtimeType) {
+  //     case Vocabulary:
+  //       break;
+  //     case Sentence:
+  //       break;
+  //   }
+  // }
 
-  void playCorrect() {
-    _audioPlayer.play(AssetSource(SoundAssets.correct));
+  Future<void> play(String soundAsset) async {
+    await _audioPlayer.play(AssetSource(soundAsset), volume: 1);
+    debugPrint("Done playing sound");
   }
-
-  void playIncorrect() {
-    _audioPlayer.play(AssetSource(SoundAssets.incorrect));
-  }
-
 }

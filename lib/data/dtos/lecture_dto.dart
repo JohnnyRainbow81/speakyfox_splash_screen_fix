@@ -15,15 +15,15 @@ class LectureDto extends BaseDto {
   String title;
   String languagePairId;
   String description;
-  bool isOnboarding;
-  LanguagePairDto languagePair;
+  bool? isOnboarding;
+  LanguagePairDto? languagePair;
   bool isPublished;
   bool isLocked;
-  int order;
-  CourseDto course;
-  int progress;
-  OfferDto offer;
-  String offerId;
+  int? order;
+  CourseDto? course;
+  double progress;
+  OfferDto? offer;
+  String? offerId;
   String courseId;
   List<SequenceDto> sequences = [];
   LectureDto({
@@ -41,11 +41,11 @@ class LectureDto extends BaseDto {
     required this.languagePair,
     required this.isPublished,
     required this.isLocked,
-    required this.order,
-    required this.course,
+    this.order,
+    this.course,
     required this.progress,
-    required this.offer,
-    required this.offerId,
+    this.offer,
+    this.offerId,
     required this.courseId,
     required this.sequences,
   }) : super(

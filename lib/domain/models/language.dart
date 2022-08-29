@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 
@@ -12,7 +12,7 @@ enum LanguageType {
   targetLanguage
 }
 
-class Language extends BaseModel {
+class Language extends ModelBase {
   String title;
   String description;
   String key;

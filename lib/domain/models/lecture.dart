@@ -1,23 +1,23 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 
 import "course.dart" show Course;
 import 'sequence.dart' show Sequence;
 import 'offer.dart' show Offer;
 
-class Lecture extends BaseModel {
+class Lecture extends ModelBase {
   String title;
   String languagePairId;
   String description;
   bool isOnboarding;
-  LanguagePair languagePair;
+  LanguagePair? languagePair;
   bool isPublished;
   bool isLocked;
-  int order;
-  Course course;
-  int progress;
-  Offer offer;
-  String offerId;
+  int? order;
+  Course? course;
+  double progress;
+  Offer? offer;
+  String? offerId;
   String courseId;
   List<Sequence> sequences = [];
 
@@ -36,11 +36,11 @@ class Lecture extends BaseModel {
       required this.languagePair,
       required this.isPublished,
       required this.isLocked,
-      required this.order,
-      required this.course,
+      this.order,
+      this.course,
       required this.progress,
-      required this.offer,
-      required this.offerId,
+      this.offer,
+      this.offerId,
       required this.courseId,
       required this.sequences})
       : super(

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/game.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 import 'package:speakyfox/domain/models/sentence_shell.dart';
@@ -18,7 +18,7 @@ enum ScreenType {
   tip
 }
 
-class Screen extends BaseModel {
+class Screen extends ModelBase {
   String title;
   String description;
   int order;

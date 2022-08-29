@@ -1,11 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/coupon.dart';
 import 'package:speakyfox/domain/models/offer_description_content.dart';
 
 import 'plan.dart' show Plan;
 
-class Offer extends BaseModel {
+class Offer extends ModelBase {
   String planId;
   String offerTitle;
   String registrationTitle;

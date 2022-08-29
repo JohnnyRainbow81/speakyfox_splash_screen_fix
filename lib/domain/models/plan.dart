@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'product.dart' show Product;
 
-class Plan extends BaseModel {
+class Plan extends ModelBase {
   String title;
   String description;
   String displayTitle;
@@ -37,7 +37,7 @@ class Plan extends BaseModel {
     required String createdBy,
     required String deleted,
     required String deletedBy,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,

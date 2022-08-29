@@ -1,16 +1,16 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 import 'package:speakyfox/domain/models/vocabulary_shell.dart';
 
-class Word extends BaseModel {
+class Word extends ModelBase {
   int index;
   String entry;
   List<Map> metadata = [];
   TermType type;
   String vocabularyShellId;
   VocabularyShell vocabularyShell;
-  
+
   Word({
     required String id,
     required String modified,

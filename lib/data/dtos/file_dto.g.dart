@@ -37,4 +37,5 @@ Map<String, dynamic> _$FileDtoToJson(FileDto instance) => <String, dynamic>{
 const _$FileTypeEnumMap = {
   FileType.image: 'image',
   FileType.audio: 'audio',
+  FileType.file: 'file',
 };

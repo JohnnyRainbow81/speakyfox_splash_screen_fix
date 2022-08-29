@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 
 import 'invoice.dart' show Invoice;
 import 'language.dart' show Language;
 
-class Subscription extends BaseModel {
+class Subscription extends ModelBase {
   String productDisplayTitle;
   String planDisplayTitle;
   SubscriptionStatus status;

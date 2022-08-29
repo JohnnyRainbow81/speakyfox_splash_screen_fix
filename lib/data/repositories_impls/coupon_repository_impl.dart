@@ -7,7 +7,7 @@ import 'package:speakyfox/data/remote/coupon_client.dart';
 import 'package:speakyfox/domain/models/coupon.dart';
 import 'package:speakyfox/domain/repositories/coupon_repository.dart';
 
-class CouponRepositoryImpl implements CouponRepository {
+class CouponRepositoryImpl implements CouponRepository<Coupon> {
   final ConnectivityService _connectivityService;
   final CouponClient _couponClient;
 
@@ -35,8 +35,7 @@ class CouponRepositoryImpl implements CouponRepository {
   }
 
   @override
-  Future<List<Coupon>> getAll(String param) async{
-   
+  Future<List<Coupon>> getAll(String param) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _couponClient.getAll(param);
@@ -52,11 +51,11 @@ class CouponRepositoryImpl implements CouponRepository {
   }
 
   @override
-  Future<List<Coupon>> getById(String id) async {
+  Future<Coupon> getById(String id) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _couponClient.getById(id);
-        return response.data.map((couponDTO) => couponDTO.toCoupon()).toList();
+        return response.data.toCoupon();
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -68,7 +67,7 @@ class CouponRepositoryImpl implements CouponRepository {
   }
 
   @override
-  Future<Coupon> patchById(String id, entity) async{
+  Future<Coupon> patchById(String id, entity) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _couponClient.patchById(id, entity.toDto());

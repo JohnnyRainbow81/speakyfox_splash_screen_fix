@@ -1,6 +1,6 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
-class Order extends BaseModel {
+class Order extends ModelBase {
   String copy;
   String subscriptionId;
   String effectiveFromUtc;

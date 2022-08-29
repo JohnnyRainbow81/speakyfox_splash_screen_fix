@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
-import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
@@ -56,7 +55,7 @@ void main() async {
     () async {
       when(mockAuthenticationRepository.sendPasswordResetEmail(any))
           .thenAnswer((realInvocation) async => true);
-      
+
       bool success = await authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: "bla"));
 
       expect(success, true);

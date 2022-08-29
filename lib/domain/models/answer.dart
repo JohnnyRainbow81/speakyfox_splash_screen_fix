@@ -1,6 +1,6 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
-class Answer extends BaseModel {
+class Answer extends ModelBase {
   String title;
   bool isCorrect;
   Answer({

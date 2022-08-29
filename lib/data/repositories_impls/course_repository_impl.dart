@@ -6,7 +6,7 @@ import 'package:speakyfox/data/remote/course_client.dart';
 import 'package:speakyfox/domain/models/course.dart';
 import 'package:speakyfox/domain/repositories/course_repository.dart';
 
-class CourseRepositoryImpl implements CourseRepository {
+class CourseRepositoryImpl implements CourseRepository<Course> {
   final ConnectivityService _connectivityService;
   final CourseClient _courseClient;
 

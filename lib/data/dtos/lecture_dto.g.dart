@@ -17,16 +17,22 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
       title: json['title'] as String,
       languagePairId: json['languagePairId'] as String,
       description: json['description'] as String,
-      isOnboarding: json['isOnboarding'] as bool,
-      languagePair: LanguagePairDto.fromJson(
-          json['languagePair'] as Map<String, dynamic>),
+      isOnboarding: json['isOnboarding'] as bool?,
+      languagePair: json['languagePair'] == null
+          ? null
+          : LanguagePairDto.fromJson(
+              json['languagePair'] as Map<String, dynamic>),
       isPublished: json['isPublished'] as bool,
       isLocked: json['isLocked'] as bool,
-      order: json['order'] as int,
-      course: CourseDto.fromJson(json['course'] as Map<String, dynamic>),
-      progress: json['progress'] as int,
-      offer: OfferDto.fromJson(json['offer'] as Map<String, dynamic>),
-      offerId: json['offerId'] as String,
+      order: json['order'] as int?,
+      course: json['course'] == null
+          ? null
+          : CourseDto.fromJson(json['course'] as Map<String, dynamic>),
+      progress: (json['progress'] as num).toDouble(),
+      offer: json['offer'] == null
+          ? null
+          : OfferDto.fromJson(json['offer'] as Map<String, dynamic>),
+      offerId: json['offerId'] as String?,
       courseId: json['courseId'] as String,
       sequences: (json['sequences'] as List<dynamic>)
           .map((e) => SequenceDto.fromJson(e as Map<String, dynamic>))

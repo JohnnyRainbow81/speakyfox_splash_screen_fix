@@ -1,13 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 import 'package:speakyfox/domain/models/word.dart';
 
-class HighlightedPart extends BaseModel {
+class HighlightedPart extends ModelBase {
   List<Map> metadata = [];
   TermType type;
   List<Word> words = [];
-  
+
   HighlightedPart({
     required String id,
     required String modified,
@@ -19,7 +19,7 @@ class HighlightedPart extends BaseModel {
     required this.metadata,
     required this.type,
     required this.words,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,

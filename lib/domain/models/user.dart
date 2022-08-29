@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/role.dart';
 
-class User extends BaseModel {
+class User extends ModelBase {
   //String id;
   String formOfAddress;
   String firstName;

@@ -56,22 +56,20 @@ class _CouponClient implements CouponClient {
   }
 
   @override
-  Future<Response<List<CouponDto>>> getById(id) async {
+  Future<Response<CouponDto>> getById(id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<List<CouponDto>>>(
+        _setStreamType<Response<CouponDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
+                .compose(_dio.options, '${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<List<CouponDto>>.fromJson(
+    final value = Response<CouponDto>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<CouponDto>((i) => CouponDto.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => CouponDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

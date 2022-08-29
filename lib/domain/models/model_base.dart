@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-abstract class BaseModel {
+abstract class ModelBase {
   String? id;
   String? modified;
   String? modifiedBy;
@@ -8,7 +8,7 @@ abstract class BaseModel {
   String? deleted;
   String? deletedBy;
 
-  BaseModel({
+  ModelBase({
     required this.id,
     required this.modified,
     required this.modifiedBy,

@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^1.20.0 # core BaaS
   firebase_performance: ^0.8.2+1 # check performance
   flutter_native_splash: ^2.2.6 # helps to setup native splash screen before Flutter can take over
+  uuid: ^3.0.6
   
 
 dev_dependencies:

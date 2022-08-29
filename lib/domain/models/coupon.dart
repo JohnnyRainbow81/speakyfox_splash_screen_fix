@@ -1,6 +1,6 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
-class Coupon extends BaseModel {
+class Coupon extends ModelBase {
   String key;
   String name;
   int amountOff;

@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/course.dart';
 import 'package:speakyfox/domain/models/image.dart';
 
-class Class extends BaseModel {
+class Class extends ModelBase {
   String title;
   String description;
   bool isPublished;
@@ -14,10 +14,10 @@ class Class extends BaseModel {
   String fileId;
   String languagePairId;
   bool isLocked;
-  String languagePair;  //FIXME type!
-  List<Course> courses; 
+  String languagePair; //FIXME type!
+  List<Course> courses;
   Class({
-     required String id,
+    required String id,
     required String modified,
     required String modifiedBy,
     required String created,
@@ -36,7 +36,7 @@ class Class extends BaseModel {
     required this.isLocked,
     required this.languagePair,
     required this.courses,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,

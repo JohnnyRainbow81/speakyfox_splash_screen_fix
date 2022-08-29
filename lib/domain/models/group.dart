@@ -1,9 +1,9 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import "User.dart" show User;
 import 'permission.dart' show Permission;
 
-class Group extends BaseModel {
+class Group extends ModelBase {
   String name;
   String description;
   String identifier;

@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'vocabulary.dart' show Vocabulary;
 
-class VocabularyShell extends BaseModel {
+class VocabularyShell extends ModelBase {
   String title;
   String description;
   List<Vocabulary> vocabularies = [];

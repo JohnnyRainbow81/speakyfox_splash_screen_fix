@@ -13,14 +13,13 @@ part 'course_dto.g.dart';
 class CourseDto extends BaseDto {
   String title;
   String description;
-  LanguagePairDto languagePair;
-  String fileId;
+  String? fileId;
   bool? isOnboarding;
   String languagePairId;
-  ClassDto classs;
-  int? progress;
+  ClassDto? classs;
+  double? progress;
   List<LectureDto>? lectures;
-  ImageDto icon;
+  ImageDto? icon;
   bool isLocked;
   bool isPublished;
   int order;
@@ -36,14 +35,13 @@ class CourseDto extends BaseDto {
     String? deletedBy,
     required this.title,
     required this.description,
-    required this.languagePair,
     required this.fileId,
     this.isOnboarding,
     required this.languagePairId,
-    required this.classs,
+     this.classs,
     this.progress,
     this.lectures,
-    required this.icon,
+    this.icon,
     required this.isLocked,
     required this.isPublished,
     required this.order,

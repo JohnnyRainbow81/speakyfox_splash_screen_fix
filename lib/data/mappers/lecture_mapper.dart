@@ -18,14 +18,14 @@ extension LectureMapper on LectureDto {
         title: title,
         languagePairId: languagePairId,
         description: description,
-        isOnboarding: isOnboarding,
-        languagePair: languagePair.toLanguagePair(),
+        isOnboarding: isOnboarding ?? false, //If null then set to false or true?? > ask Julien
+        languagePair: languagePair?.toLanguagePair(),
         isPublished: isPublished,
         isLocked: isLocked,
         order: order,
-        course: course.toCourse(),
+        course: course?.toCourse(),
         progress: progress,
-        offer: offer.toOffer(),
+        offer: offer?.toOffer(),
         offerId: offerId,
         courseId: courseId,
         sequences: sequences.map((sequence) => sequence.toSequence()).toList());

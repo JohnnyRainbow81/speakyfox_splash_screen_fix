@@ -3,9 +3,9 @@ import 'dart:math';
 //delete if you don't need
 
 class Uuid {
-  final Random _random = Random();
+  static final Random _random = Random();
 
-  String generateV4() {
+  static String generateV4() {
     // Generate xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx / 8-4-4-4-12.
     final int special = 8 + _random.nextInt(4);
 
@@ -16,11 +16,11 @@ class Uuid {
         '${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}${_bitsDigits(16, 4)}';
   }
 
-  String _bitsDigits(int bitCount, int digitCount) => _printDigits(_generateBits(bitCount), digitCount);
+  static String _bitsDigits(int bitCount, int digitCount) => _printDigits(_generateBits(bitCount), digitCount);
 
-  int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
+  static int _generateBits(int bitCount) => _random.nextInt(1 << bitCount);
 
-  String _printDigits(int value, int count) => value.toRadixString(16).padLeft(count, '0');
+  static String _printDigits(int value, int count) => value.toRadixString(16).padLeft(count, '0');
 }
 
 bool isValidEmail(String email) {

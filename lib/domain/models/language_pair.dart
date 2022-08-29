@@ -1,9 +1,9 @@
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'image.dart';
 import 'language.dart' show Language;
 
-class LanguagePair extends BaseModel {
+class LanguagePair extends ModelBase {
   String title;
   String description;
   String key;

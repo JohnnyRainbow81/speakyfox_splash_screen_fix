@@ -1,15 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'sentence.dart' show Sentence;
 
-class SentenceShell extends BaseModel {
+class SentenceShell extends ModelBase {
   String title;
   String description;
   List<Sentence> sentences = [];
-  
+
   SentenceShell({
-     required String id,
+    required String id,
     required String modified,
     required String modifiedBy,
     required String created,
@@ -19,8 +19,7 @@ class SentenceShell extends BaseModel {
     required this.title,
     required this.description,
     required this.sentences,
-
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,

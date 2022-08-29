@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
 
-abstract class UserPaymentMethod extends BaseModel {
+abstract class UserPaymentMethod extends ModelBase {
   PaymentMethodType type;
 
   String externalId;
@@ -26,4 +26,3 @@ abstract class UserPaymentMethod extends BaseModel {
             deleted: deleted,
             deletedBy: deletedBy);
 }
-

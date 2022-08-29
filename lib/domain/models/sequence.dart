@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 
 import 'game.dart';
@@ -11,7 +11,7 @@ enum ProgressType {
   whole
 }
 
-class Sequence extends BaseModel {
+class Sequence extends ModelBase {
   String title;
   String description;
   ProgressType progressType;

@@ -2,13 +2,13 @@
 import 'package:speakyfox/domain/models/animation_image_group.dart';
 import 'package:speakyfox/domain/models/answer.dart';
 import 'package:speakyfox/domain/models/audio.dart';
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 
 import 'sentence.dart' show Sentence;
 
-class Vocabulary extends BaseModel {
+class Vocabulary extends ModelBase {
   String sourceWord;
   String targetWord;
   String mnemonic;
@@ -25,7 +25,7 @@ class Vocabulary extends BaseModel {
   List<Image> images = [];
   List<Audio> audios = [];
   Vocabulary({
-     required String id,
+    required String id,
     required String modified,
     required String modifiedBy,
     required String created,
@@ -47,7 +47,7 @@ class Vocabulary extends BaseModel {
     required this.answers,
     required this.images,
     required this.audios,
-  }): super(
+  }) : super(
             id: id,
             modified: modified,
             modifiedBy: modifiedBy,
@@ -55,6 +55,4 @@ class Vocabulary extends BaseModel {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
-
- 
 }

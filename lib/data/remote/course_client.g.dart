@@ -56,22 +56,20 @@ class _CourseClient implements CourseClient {
   }
 
   @override
-  Future<Response<List<CourseDto>>> getById(id) async {
+  Future<Response<CourseDto>> getById(id) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<List<CourseDto>>>(
+        _setStreamType<Response<CourseDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
+                .compose(_dio.options, '${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<List<CourseDto>>.fromJson(
+    final value = Response<CourseDto>.fromJson(
       _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<CourseDto>((i) => CourseDto.fromJson(i as Map<String, dynamic>))
-          .toList(),
+      (json) => CourseDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

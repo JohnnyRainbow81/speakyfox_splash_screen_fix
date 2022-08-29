@@ -7,7 +7,7 @@ import 'package:speakyfox/data/dtos/highlighted_part_dto.dart';
 import 'package:speakyfox/data/dtos/image_dto.dart';
 import 'package:speakyfox/data/dtos/language_pair_dto.dart';
 import 'package:speakyfox/data/dtos/sentence_shell_dto.dart';
-import 'package:speakyfox/domain/models/base_model.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 part 'sentence_dto.g.dart';
 
