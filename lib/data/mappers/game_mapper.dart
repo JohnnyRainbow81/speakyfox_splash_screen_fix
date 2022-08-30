@@ -30,3 +30,28 @@ extension GameMapper on GameDto {
         vocabularies: vocabularies.map((vocabulary) => vocabulary.toVocabulary()).toList());
   }
 }
+
+extension GameDtoMapper on Game {
+  GameDto toGameDto() {
+    return GameDto(
+        id: id ?? "",
+        modified: modified ?? "",
+        modifiedBy: modifiedBy ?? "",
+        created: created ?? "",
+        createdBy: createdBy ?? "",
+        deleted: deleted ?? "",
+        deletedBy: deletedBy ?? "",
+        title: title,
+        description: description,
+        order: order,
+        type: type,
+        sequenceId: sequenceId,
+        sequence: sequence.toSequenceDto(),
+        gameType: gameType,
+        vocabularies: vocabularies.map((e) => e.toVocabularyDto()).toList(),
+        vocabularyShells: vocabularyShells.map((e) => e.toVocabularyShellDto()).toList(),
+        sentences: sentences.map((e) => e.toSentenceDto()).toList(),
+        sentenceShells: sentenceShells.map((e) => e.toSentenceShellDto()).toList(),
+        instructions: instructions);
+  }
+}

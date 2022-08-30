@@ -14,3 +14,16 @@ extension AnimationImageMapper on AnimationImageDto {
         isVisible: isVisible);
   }
 }
+
+extension AnimationImageDtoMapper on AnimationImage {
+  AnimationImageDto toAnimationImageDto() {
+    return AnimationImageDto(
+        order: order,
+        nativeElement: nativeElement,
+        image: image.toImageDto(),
+        url: url,
+        animationClass: animationClass,
+        fromLeft: fromLeft,
+        isVisible: isVisible);
+  }
+}

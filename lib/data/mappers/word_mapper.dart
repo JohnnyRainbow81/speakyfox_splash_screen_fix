@@ -20,3 +20,16 @@ extension WordMapper on WordDto {
         vocabularyShell: vocabularyShell.toVocabularyShell());
   }
 }
+
+extension WordDtoMapper on Word {
+  WordDto toWordDto() {
+    return WordDto(
+        id: id ??"",
+        index: index,
+        entry: entry,
+        metadata: metadata,
+        type: type,
+        vocabularyShellId: vocabularyShellId,
+        vocabularyShell: vocabularyShell.toVocabularyShellDto());
+  }
+}

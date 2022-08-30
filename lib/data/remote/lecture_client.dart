@@ -24,11 +24,11 @@ abstract class LectureClient with BaseClient<LectureDto> {
       @Query("sourceLanguageId") sourceLanguageId, @Query("targetLanguageId") String targetLanguageId);
 
   @GET("")
-  Future<Response<List<LectureDto>>> getAllLecturesByCourseId(@Query("courseId") courseId);
+  Future<Response<List<LectureDto>>> getAllLecturesByCourseId(@Query("courseId") String courseId);
 
   @GET("")
-  Future<Response<dynamic>> updateProgress(@Query("lectureId") lectureId, @Body() Map<String, double> progress);
+  Future<Response<dynamic>> updateProgress(@Query("lectureId") String lectureId, @Body() Map<String, double> progress);
 
   @GET("")
-  Future<Response<dynamic>> patchSequences(@Query("lectureId") lectureId, @Body() List<SequenceDto> sequences);
+  Future<Response<dynamic>> patchSequences(@Query("lectureId") String lectureId, @Body() List<SequenceDto> sequences);
 }

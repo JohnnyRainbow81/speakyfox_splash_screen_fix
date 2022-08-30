@@ -20,3 +20,10 @@ extension SequenceMapper on SequenceDto {
         parent: parent.toLecture());
   }
 }
+
+extension SequenceDtoMapper on Sequence {
+  SequenceDto toSequenceDto() {
+    return SequenceDto(
+        id: id ?? "", title: title, description: description, progressType: progressType, games: games.map((e) => e.toGameDto()).toList(), parent: parent.toLectureDto());
+  }
+}

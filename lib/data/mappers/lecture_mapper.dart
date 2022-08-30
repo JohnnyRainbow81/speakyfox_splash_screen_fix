@@ -31,3 +31,20 @@ extension LectureMapper on LectureDto {
         sequences: sequences.map((sequence) => sequence.toSequence()).toList());
   }
 }
+
+extension LectureDtoMapper on Lecture {
+  LectureDto toLectureDto() {
+    return LectureDto(
+        id: id ?? "",
+        title: title,
+        languagePairId: languagePairId,
+        description: description,
+        isOnboarding: isOnboarding,
+        languagePair: languagePair?.toLanguagePairDto(),
+        isPublished: isPublished,
+        isLocked: isLocked,
+        progress: progress,
+        courseId: courseId,
+        sequences: sequences.map((e) => e.toSequenceDto()).toList());
+  }
+}

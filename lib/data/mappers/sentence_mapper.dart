@@ -31,3 +31,21 @@ extension SentenceMapper on SentenceDto {
         audios: audios.map((audio) => audio.toAudio()).toList());
   }
 }
+
+extension SentenceDtoMapper on Sentence {
+  SentenceDto toSentenceDto() {
+    return SentenceDto(
+        id: id ?? "",
+        sentenceShellId: sentenceShellId,
+        sentenceShell: sentenceShell.toSentenceShellDto(),
+        isPublished: isPublished,
+        languagePairId: languagePairId,
+        languagePair: languagePair.toLanguagePairDto(),
+        sourceNormalized: sourceNormalized,
+        targetNormalized: targetNormalized,
+        sourceHighlightedParts: sourceHighlightedParts.map((e) => e.toHighlightedPartDto()).toList(),
+        targetHighlightedParts: targetHighlightedParts.map((e) => e.toHighlightedPartDto()).toList(),
+        images: images.map((e) => e.toImageDto()).toList(),
+        audios: audios.map((e) => e.toAudioDto()).toList());
+  }
+}

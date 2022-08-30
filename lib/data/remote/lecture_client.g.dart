@@ -110,7 +110,7 @@ class _LectureClient implements LectureClient {
   @override
   Future<Response<List<LectureDto>>> getAllLecturesByCourseId(courseId) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'courseId': courseId.toJson()};
+    final queryParameters = <String, dynamic>{r'courseId': courseId};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -132,7 +132,7 @@ class _LectureClient implements LectureClient {
   @override
   Future<Response<dynamic>> updateProgress(lectureId, progress) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'lectureId': lectureId.toJson()};
+    final queryParameters = <String, dynamic>{r'lectureId': lectureId};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(progress);
@@ -152,7 +152,7 @@ class _LectureClient implements LectureClient {
   @override
   Future<Response<dynamic>> patchSequences(lectureId, sequences) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'lectureId': lectureId.toJson()};
+    final queryParameters = <String, dynamic>{r'lectureId': lectureId};
     final _headers = <String, dynamic>{};
     final _data = sequences.map((e) => e.toJson()).toList();
     final _result = await _dio.fetch<Map<String, dynamic>>(

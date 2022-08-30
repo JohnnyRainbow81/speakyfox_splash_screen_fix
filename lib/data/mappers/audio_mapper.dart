@@ -21,3 +21,18 @@ extension AudioMapper on AudioDto {
         metadata: metadata ?? []);
   }
 }
+
+extension AudioDtoMapper on Audio {
+  AudioDto toAudioDto() {
+    return AudioDto(
+        id: id ?? "",
+        bucketName: bucketName,
+        metadata: metadata,
+        size: size,
+        contentType: contentType,
+        name: name,
+        type: type,
+        audioType: audioType,
+        languageType: languageType);
+  }
+}

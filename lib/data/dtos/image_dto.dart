@@ -11,7 +11,7 @@ part 'image_dto.g.dart';
 
 @JsonSerializable()
 class ImageDto extends DatabaseFileDto {
-  ImageType imageType;
+  ImageType? imageType;
   int? order;
   CoordinatesDto? coordinates;
 

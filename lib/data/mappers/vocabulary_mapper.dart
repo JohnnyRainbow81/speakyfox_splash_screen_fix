@@ -34,3 +34,25 @@ extension VocabularyMapper on VocabularyDto {
         audios: audios.map((audio) => audio.toAudio()).toList());
   }
 }
+
+extension VocabularyDtoMapper on Vocabulary {
+  VocabularyDto toVocabularyDto() {
+    return VocabularyDto(
+        id: id ?? "",
+        sourceWord: sourceWord,
+        targetWord: targetWord,
+        mnemonic: mnemonic,
+        sourceSentence: sourceSentence,
+        targetSentence: targetSentence,
+        sentence: sentence.toSentenceDto(),
+        question: question,
+        imageNumber: imageNumber,
+        languagePairId: languagePairId,
+        languagePair: languagePair.toLanguagePairDto(),
+        vocabularyShellId: vocabularyShellId,
+        imageGroups: imageGroups.map((e) => e.toAnimationImageGroupDto()).toList(),
+        answers: answers.map((e) => e.toAnswerDto()).toList(),
+        images: images.map((e) => e.toImageDto()).toList(),
+        audios: audios.map((e) => e.toAudioDto()).toList());
+  }
+}

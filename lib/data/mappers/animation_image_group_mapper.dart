@@ -8,3 +8,9 @@ extension AnimationImageGroupMapper on AnimationImageGroupDto {
         order: order, images: images.map((animationImage) => animationImage.toAnimationImage()).toList());
   }
 }
+
+extension AnimationImageGroupDtoMapper on AnimationImageGroup {
+  AnimationImageGroupDto toAnimationImageGroupDto() {
+    return AnimationImageGroupDto(order: order, images: images.map((e) => e.toAnimationImageDto()).toList());
+  }
+}

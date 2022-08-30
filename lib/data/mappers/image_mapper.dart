@@ -23,3 +23,17 @@ extension ImageMapper on ImageDto {
         imageType: imageType);
   }
 }
+
+extension ImageDtoMapper on Image {
+  ImageDto toImageDto() {
+    return ImageDto(
+        id: id ??"",
+        name: name,
+        size: size,
+        contentType: contentType,
+        type: type,
+        metadata: metadata,
+        imageType: imageType,
+        coordinates: coordinates?.toCoordinatesDto());
+  }
+}

@@ -16,7 +16,7 @@ class LanguageDto extends BaseDto {
   ImageDto buttonImage;//OK
   bool isPublished;//OK
   String buttonFileId; //OK
-  List<LanguagePairDto> languagePair;
+  List<LanguagePairDto?>? languagePair;
 
   LanguageDto({
     required String id,
@@ -33,7 +33,7 @@ class LanguageDto extends BaseDto {
     required this.buttonImage,
     required this.isPublished,
     required this.buttonFileId,
-    required this.languagePair,
+     this.languagePair,
   }) : super(
             id: id,
             created: created,

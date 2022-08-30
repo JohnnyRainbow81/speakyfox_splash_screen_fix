@@ -17,3 +17,19 @@ extension HighlightedPartMapper on HighlightedPartDto {
         words: words.map((word) => word.toWord()).toList());
   }
 }
+
+extension HighLightedPartDtoMapper on HighlightedPart {
+  HighlightedPartDto toHighlightedPartDto() {
+    return HighlightedPartDto(
+        id: id ?? "",
+        modified: modified ??"",
+        modifiedBy: modifiedBy ??"",
+        created: created ??"",
+        createdBy: createdBy ??"",
+        deleted: deleted ??"",
+        deletedBy: deletedBy ??"",
+        metadata: metadata,
+        type: type,
+        words: words.map((e) => e.toWordDto()).toList());
+  }
+}
