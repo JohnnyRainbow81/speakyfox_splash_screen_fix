@@ -8,7 +8,7 @@ part of 'lecture_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _LectureClient<SequenceDto> implements LectureClient<SequenceDto> {
+class _LectureClient implements LectureClient {
   _LectureClient(this._dio, {this.baseUrl});
 
   final Dio _dio;
@@ -38,11 +38,9 @@ class _LectureClient<SequenceDto> implements LectureClient<SequenceDto> {
   }
 
   @override
-  Future<Response<List<LectureDto>>> getAllV2(queryParameters) async {
+  Future<Response<List<LectureDto>>> getAllV2(queryParams) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'queryParameters': queryParameters
-    };
+    final queryParameters = <String, dynamic>{r'queryParams': queryParams};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
