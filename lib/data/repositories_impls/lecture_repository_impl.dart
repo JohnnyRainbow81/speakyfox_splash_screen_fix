@@ -2,6 +2,7 @@ import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/lecture_mapper.dart';
+import 'package:speakyfox/data/mappers/sequence_mapper.dart';
 import 'package:speakyfox/data/remote/lecture_client.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/sequence.dart';
@@ -145,7 +146,8 @@ class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence> {
   Future patchSequences(String lectureId, List<Sequence> sequences) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _lectureClient.patchSequences(lectureId, sequences);
+        final response =
+            await _lectureClient.patchSequences(lectureId, sequences.map((e) => e.toSequenceDto()).toList());
         return response.data.map((lectureDto) => lectureDto.toLecture()).toList();
       } catch (error) {
         ErrorHandler.handleError(error);
@@ -154,24 +156,56 @@ class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence> {
       throw NoInternetConnectionUIException();
     }
 
-    throw UIException(message: "LectureRepositoryImpl.getOnboardingLecturesByLanguageIds()");
+    throw UIException(message: "LectureRepositoryImpl.patchSequences()");
   }
 
   @override
-  Future<Lecture> post(Lecture entity) {
-    // TODO: implement post
-    throw UnimplementedError();
+  Future<Lecture> post(Lecture entity) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _lectureClient.post(entity);
+        return response.data.toLecture();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "LectureRepositoryImpl.post()");
   }
 
   @override
-  Future<bool> removeById(String id) {
-    // TODO: implement removeById
-    throw UnimplementedError();
+  Future<bool> removeById(String id) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _lectureClient.removeById(id);
+        bool success = response.data;
+        return success;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "LectureRepositoryImpl.removeById()");
   }
 
   @override
-  Future updateProgress(String lectureId, double progress) {
-    // TODO: implement updateProgress
-    throw UnimplementedError();
+  Future updateProgress(String lectureId, double progress) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _lectureClient.updateProgress(lectureId, {"progress" : progress});
+        //FIXME get rid of dynamic
+        return response.data;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "LectureRepositoryImpl.updateProgress()");
   }
 }
