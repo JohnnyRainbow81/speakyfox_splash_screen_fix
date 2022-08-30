@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:speakyfox/data/dtos/base_dto.dart';
 import 'package:speakyfox/data/dtos/coordinates_dto.dart';
 import 'package:speakyfox/data/dtos/database_file_dto.dart';
 import 'package:speakyfox/domain/models/database_file.dart';

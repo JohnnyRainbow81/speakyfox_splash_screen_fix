@@ -25,6 +25,6 @@ class OfferRepositoryImpl implements OfferRepository<Offer> {
       throw NoInternetConnectionUIException();
     }
 
-    throw UIException(message: "LectureRepositoryImpl.patchById()");
+    throw UIException(message: "OfferRepositoryImpl.getOfferByRefOrNull()");
   }
 }
