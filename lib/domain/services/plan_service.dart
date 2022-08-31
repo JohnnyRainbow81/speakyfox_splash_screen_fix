@@ -1,5 +1,4 @@
 import 'package:speakyfox/domain/models/payment_method.dart';
-import 'package:speakyfox/domain/models/plan.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
 
 class PlanService {

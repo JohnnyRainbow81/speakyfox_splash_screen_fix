@@ -5,7 +5,7 @@ import 'package:speakyfox/data/dtos/user_details_dto.dart';
 part 'subscription_create.g.dart';
 
 @JsonSerializable()
-class SubscriptionCreateDto {
+class SubscriptionCreateRequest {
  String planId;
  String offerId;
  String affiliateId;
@@ -15,7 +15,7 @@ class SubscriptionCreateDto {
   String paymentMethodId;
   String coupon;
   
-  SubscriptionCreateDto({
+  SubscriptionCreateRequest({
     required this.planId,
     required this.offerId,
     required this.affiliateId,
@@ -26,6 +26,6 @@ class SubscriptionCreateDto {
     required this.coupon,
   });
 
-  factory SubscriptionCreateDto.fromJson(Map<String, dynamic> json) => _$SubscriptionCreateDtoFromJson(json);
-  Map<String, dynamic> toJson() => _$SubscriptionCreateDtoToJson(this);
+  factory SubscriptionCreateRequest.fromJson(Map<String, dynamic> json) => _$SubscriptionCreateRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$SubscriptionCreateRequestToJson(this);
 }

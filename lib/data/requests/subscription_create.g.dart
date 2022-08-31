@@ -6,9 +6,9 @@ part of 'subscription_create.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SubscriptionCreateDto _$SubscriptionCreateDtoFromJson(
+SubscriptionCreateRequest _$SubscriptionCreateRequestFromJson(
         Map<String, dynamic> json) =>
-    SubscriptionCreateDto(
+    SubscriptionCreateRequest(
       planId: json['planId'] as String,
       offerId: json['offerId'] as String,
       affiliateId: json['affiliateId'] as String,
@@ -20,8 +20,8 @@ SubscriptionCreateDto _$SubscriptionCreateDtoFromJson(
       coupon: json['coupon'] as String,
     );
 
-Map<String, dynamic> _$SubscriptionCreateDtoToJson(
-        SubscriptionCreateDto instance) =>
+Map<String, dynamic> _$SubscriptionCreateRequestToJson(
+        SubscriptionCreateRequest instance) =>
     <String, dynamic>{
       'planId': instance.planId,
       'offerId': instance.offerId,
