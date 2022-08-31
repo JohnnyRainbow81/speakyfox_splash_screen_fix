@@ -7,10 +7,9 @@ part 'user_dto.g.dart';
 @JsonSerializable()
 class UserDto extends BaseDto {
   @override
-  String id;
   String? formOfAddress;
-  String? firstname;
-  String? lastname;
+  String? firstName;
+  String? lastName;
   String? userName;
   String? normalizedUserName;
   String email;
@@ -27,7 +26,7 @@ class UserDto extends BaseDto {
   List<String>? roles;
   List<String>? subscriptionIds;
   UserDto({
-    required this.id,
+    required String id,
     String? modified,
     String? modifiedBy,
     String? created,
@@ -35,8 +34,8 @@ class UserDto extends BaseDto {
     String? deleted,
     String? deletedBy,
     this.formOfAddress,
-    this.firstname,
-    this.lastname,
+    this.firstName,
+    this.lastName,
     this.userName,
     this.normalizedUserName,
     required this.email,

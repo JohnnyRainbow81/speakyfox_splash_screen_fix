@@ -18,8 +18,8 @@ extension UserMapper on UserDto {
       policies: policies ?? [],
       lockoutEnabled: lockoutEnabled ?? false,
       lockoutEnd: lockoutEnd ?? "",
-      firstName: firstname ?? "",
-      lastName: lastname ?? "",
+      firstName: firstName ?? "",
+      lastName: lastName ?? "",
       formOfAddress: formOfAddress ?? "",
       id: id,
       roles: roles?.map((roleStr) => Role.values.byName(roleStr.toLowerCase())).toList() ??
@@ -33,5 +33,36 @@ extension UserMapper on UserDto {
       deleted: deleted ?? "",
       deletedBy: deletedBy ?? "",
     );
+  }
+}
+
+extension UserDtoMapper on User {
+  UserDto toUserDto() {
+    return UserDto(
+        id: id ?? "",
+        modified: modified ?? "",
+        modifiedBy: modifiedBy ?? "",
+        created: created ?? "",
+        createdBy: createdBy ?? "",
+        deleted: deleted ?? "",
+        deletedBy: deletedBy ?? "",
+        formOfAddress: formOfAddress,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        normalizedEmail: normalizedEmail,
+        emailConfirmed: emailConfirmed,
+        userName: userName,
+        normalizedUserName: normalizedUserName,
+        accessFailedAccount: accessFailedAccount,
+        lockoutEnabled: lockoutEnabled,
+        password: password,
+        lockoutEnd: lockoutEnd,
+        roles: roles.map((role) => role.name).toList(),
+        policies: policies,
+        currentLanguagePairId: currentLanguagePairId,
+        currentSourceLanguageId: currentSourceLanguageId,
+        currentTargetLanguageId: currentTargetLanguageId,
+        subscriptionIds: subscriptionIds);
   }
 }

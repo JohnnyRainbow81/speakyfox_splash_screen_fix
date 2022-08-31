@@ -12,6 +12,11 @@ class SubscriptionService implements SubscriptionRepository {
   }
 
   @override
+  Future<bool> cancel(String id) {
+    return _subscriptionRepository.cancel(id);
+  }
+
+  @override
   Future<List> getAll(String param) {
     return _subscriptionRepository.getAll(param);
   }

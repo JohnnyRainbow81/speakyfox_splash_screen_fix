@@ -29,7 +29,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   );
 
   @override
-  Future<Ticket> accessToken(AuthenticationRequestBody body/* String username, String password, String grantType */) async {
+  Future<Ticket> accessToken(
+      AuthenticationRequestBody body /* String username, String password, String grantType */) async {
     //Try to load from local source
     try {
       Ticket ticket = await _authenticationLocalSource.loadTicket();
@@ -38,7 +39,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       //Not stored locally? get from backend
       if (await _connectivityService.hasConnection()) {
         try {
-          final response = await _authenticationClient.accessToken(body/* username, password, grantType */);
+          final response = await _authenticationClient.accessToken(body /* username, password, grantType */);
           _authenticationLocalSource.saveTicket(response); //store locally
           return response.toTicket();
         } catch (error) {
@@ -58,7 +59,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       try {
         final response = await _authenticationClient.refreshToken(body);
         return response.toTicket();
-        
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -143,5 +143,25 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Lecture> setLastLecture(String lectureId) {
     // TODO: implement setLastLecture
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> validateToken(String userId, String token) async {
+    
+      if (await _connectivityService.hasConnection()) {
+        try {
+          final response = await _authenticationClient.validateToken(userId, token);
+           bool success = response.data;
+          return success;
+        } catch (error) {
+          ErrorHandler.handleError(error);
+        }
+      } else {
+        //No internet
+        //get from Cache?
+        throw NoInternetConnectionUIException();
+      }
+    
+    throw UIException(message: "AuthenticationRepositoryImpl.validateToken()");
   }
 }

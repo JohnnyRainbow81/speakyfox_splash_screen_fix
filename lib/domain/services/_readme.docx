@@ -1,8 +1,13 @@
-In some cases, I found it to be practical to let the services also implement the repository interface (not just the repository impls), where the services 
-add no further functionality but only forward the answers from the repository impls 1:1 to the calling client (= to the viewmodels mostly)
+In some cases, I found it to be practical to let the services also implement the repository interface (which were planned to be implemented
+ solely by the repository impls), where the services add no further functionality but only forward the answers from the 
+ repository impls 1:1 to the calling client (= to the viewmodels mostly). I did this just for practical development reasons 
+ and to present a consistent API to the calling client. 
 
-Yes, in such a case a service is an unnecessary class layer, but on the other side we stay consistent with this call flow:
+Yes, in such a case the service layer is unnecessary, but on the other side we stay consistent with this call flow:
 
 viewmodel > service > repository interface > repository_impl > client 
 
 And I think consistency is more important than shortcuts in the long term, regarding to code maintenance and understandability.
+
+Also: 
+ If the API of the Services for the calling client will change in future, then we can throw out the repository interface implementation and freely change the Service APIs.

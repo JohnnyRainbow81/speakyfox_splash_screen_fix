@@ -142,4 +142,8 @@ class AuthenticationService {
         user: _credentials!.user);
     _credentials = identityToken;
   }
+
+  Future<bool> validateToken(String userId, String token) {
+    return _authenticationRepository.validateToken(userId, token);
+  }
 }

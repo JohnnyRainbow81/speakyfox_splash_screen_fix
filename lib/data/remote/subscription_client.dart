@@ -12,4 +12,7 @@ abstract class SubscriptionClient with BaseClient<SubscriptionDto> {
 
   @POST("users/{id}/subscriptions")
   Future<Response<SubscriptionDto>> createSubscription(@Path("id") String id, @Body() Map<String, dynamic> subscription);
+
+  @DELETE("subscriptions/{id}")
+  Future<Response<bool>> cancel(String id);
 }

@@ -19,17 +19,19 @@ abstract class AuthenticationClient {
   //Overwrites base url because the token-requests go to auth server and NOT to v1 server
   @POST("${Constants.baseUrlAuth}connect/token")
   @Headers(<String, dynamic>{"Content-type": "application/x-www-form-urlencoded"})
-  Future<TicketDto> accessToken( @Body() AuthenticationRequestBody body,
+  Future<TicketDto> accessToken(
+    @Body() AuthenticationRequestBody body,
     // @Field("username") String username,
     // @Field("password") String password,
-    // @Field("grant_type") String grantType, 
+    // @Field("grant_type") String grantType,
   );
 
   //Overwrites base url because the token-requests go to auth server and NOT to v1 server
   @POST("${Constants.baseUrlAuth}connect/token")
   @Headers(<String, dynamic>{"Content-type": "application/x-www-form-urlencoded"})
-  Future<TicketDto> refreshToken(@Body() RefreshTokenBody body,
-     );
+  Future<TicketDto> refreshToken(
+    @Body() RefreshTokenBody body,
+  );
 
   @GET("/users/me")
   Future<Response<UserDto>> fetchUser(@Header(HttpHeaders.authorizationHeader) String token);
@@ -39,8 +41,10 @@ abstract class AuthenticationClient {
 
   @POST("/users/password-reset")
   Future<Response<bool>> sendPasswordResetEmail(@Body() SendPasswordResetBody body);
-}
 
+  @POST("/users/{userId}/confirm-email")
+  Future<Response<bool>> validateToken(@Path("userId") String userId, @Body() token);
+}
 
 // Future<T> accessToken(
 //     String username,

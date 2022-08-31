@@ -7,9 +7,7 @@ import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
 abstract class AuthenticationRepository {
-  Future<Ticket> accessToken(
-    AuthenticationRequestBody body
-  );
+  Future<Ticket> accessToken(AuthenticationRequestBody body);
   Future<Ticket> refreshToken(RefreshTokenBody body);
 
   Future<User> fetchUser(String authToken);
@@ -19,4 +17,6 @@ abstract class AuthenticationRepository {
 
   Future<Lecture> getLastLecture(String lectureId);
   Future<Lecture> setLastLecture(String lectureId);
+
+  Future<bool> validateToken(String userId, String token);
 }

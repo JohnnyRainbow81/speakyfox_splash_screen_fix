@@ -91,6 +91,10 @@ class MockAuthenticationRepository extends _i1.Mock
               returnValue: _i6.Future<_i4.Lecture>.value(_FakeLecture_2(
                   this, Invocation.method(#setLastLecture, [lectureId]))))
           as _i6.Future<_i4.Lecture>);
+  @override
+  _i6.Future<bool> validateToken(String? userId, String? token) =>
+      (super.noSuchMethod(Invocation.method(#validateToken, [userId, token]),
+          returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
 }
 
 /// A class which mocks [AuthenticationRequestBody].
