@@ -16,6 +16,7 @@ import 'package:speakyfox/data/remote/order_client.dart';
 import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/data/remote/product_client.dart';
 import 'package:speakyfox/data/remote/progress_client.dart';
+import 'package:speakyfox/data/remote/subscription_client.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/remote/vocabulary_client.dart';
 import 'package:speakyfox/data/repositories_impls/authentication_repository_impl.dart';
@@ -28,6 +29,7 @@ import 'package:speakyfox/data/repositories_impls/order_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/plan_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/product_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/progress_repository_impl.dart';
+import 'package:speakyfox/data/repositories_impls/subscription_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/vocabulary_repository_impl.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
@@ -40,6 +42,7 @@ import 'package:speakyfox/domain/repositories/order_repository.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
 import 'package:speakyfox/domain/repositories/product_repository.dart';
 import 'package:speakyfox/domain/repositories/progress_repository.dart';
+import 'package:speakyfox/domain/repositories/subscription_repository.dart';
 import 'package:speakyfox/domain/repositories/user_repository.dart';
 import 'package:speakyfox/domain/repositories/vocabulary_repository.dart';
 import 'package:speakyfox/domain/services/audio_service.dart';
@@ -53,6 +56,7 @@ import 'package:speakyfox/domain/services/order_service.dart';
 import 'package:speakyfox/domain/services/plan_service.dart';
 import 'package:speakyfox/domain/services/product_service.dart';
 import 'package:speakyfox/domain/services/progress_service.dart';
+import 'package:speakyfox/domain/services/subscription_service.dart';
 import 'package:speakyfox/domain/services/user_service.dart';
 import 'package:speakyfox/domain/services/vocabulary_service.dart';
 import 'package:speakyfox/main.dart';
@@ -158,12 +162,10 @@ Future<void> initializeDependencies(String token) async {
       ));
 
   //SubscriptionsService
-  locator.registerLazySingleton<ProgressClient>(
-      () => ProgressClient(dioV1, baseUrl: "${dioV1.options.baseUrl}orders")); //yea, "orders", not "subscriptions"
-  locator.registerLazySingleton<ProgressRepository>(() => ProgressRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<ProgressService>(() => ProgressService(
-        locator(),
-      ));
+  locator.registerLazySingleton<SubscriptionClient>(
+      () => SubscriptionClient(dioV1, baseUrl: "${dioV1.options.baseUrl}orders")); //yea, "orders", not "subscriptions"
+  locator.registerLazySingleton<SubscriptionRepository>(() => SubscriptionRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<SubscriptionService>(() => SubscriptionService(locator(), locator()));
 
   //UserService
   locator.registerLazySingleton<UserClient>(() => UserClient(dioV1, baseUrl: "${dioV1.options.baseUrl}users"));
