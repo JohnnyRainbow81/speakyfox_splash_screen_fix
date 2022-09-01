@@ -21,7 +21,7 @@ void main() async {
   final connectivityService = ConnectivityService();
   PlanClient client = PlanClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/plans");
   Firebase.initializeApp();
-  PlanRepository planRepository = PlanRepositoryImpl(connectivityService, client);
+  PlanRepositoryImpl planRepository = PlanRepositoryImpl(connectivityService, client);
   test('getAll()', () async {
     final response = await planRepository.getAll("");
     debugPrint(response.toString());

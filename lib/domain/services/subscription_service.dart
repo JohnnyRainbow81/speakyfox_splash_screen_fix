@@ -1,43 +1,21 @@
 import 'package:speakyfox/data/requests/subscription_create.dart';
+import 'package:speakyfox/domain/models/subscription.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/subscription_repository.dart';
+import 'package:speakyfox/domain/services/base_service.dart';
 
-class SubscriptionService implements SubscriptionRepository {
+class SubscriptionService extends BaseService<Subscription> {
   final SubscriptionRepository _subscriptionRepository;
 
-  SubscriptionService(this._subscriptionRepository);
+  SubscriptionService(BaseRepository<Subscription> baseRepository, this._subscriptionRepository)
+      : super(baseRepository);
 
-  @override
   Future createSubscription(String userId, SubscriptionCreateRequest subscription) {
     return _subscriptionRepository.createSubscription(userId, subscription);
   }
 
-  @override
   Future<bool> cancel(String id) {
     return _subscriptionRepository.cancel(id);
   }
 
-  @override
-  Future<List> getAll(String param) {
-    return _subscriptionRepository.getAll(param);
-  }
-
-  @override
-  Future getById(String id) {
-    return _subscriptionRepository.getById(id);
-  }
-
-  @override
-  Future patchById(String id, entity) {
-    return _subscriptionRepository.patchById(id, entity);
-  }
-
-  @override
-  Future post(entity) {
-    return _subscriptionRepository.post(entity);
-  }
-
-  @override
-  Future<bool> removeById(String id) {
-    return _subscriptionRepository.removeById(id);
-  }
 }

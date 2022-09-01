@@ -8,7 +8,7 @@ import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 
-abstract class UserRepository extends BaseRepository<User> {
+abstract class UserRepository {
   Future<User> createUser(CreateProfileUserRequest user);
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId);
   Future<Order> getOrdersOfCurrentUser();

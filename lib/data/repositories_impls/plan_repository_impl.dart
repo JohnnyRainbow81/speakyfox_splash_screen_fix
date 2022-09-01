@@ -4,10 +4,11 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/payment_method_mapper.dart';
 import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
 
 
-class PlanRepositoryImpl implements PlanRepository<PaymentMethod> {
+class PlanRepositoryImpl implements PlanRepository<PaymentMethod>, BaseRepository<PaymentMethod> {
   final ConnectivityService _connectivityService;
   final PlanClient _planClient;
 

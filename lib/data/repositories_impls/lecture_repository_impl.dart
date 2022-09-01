@@ -6,9 +6,10 @@ import 'package:speakyfox/data/mappers/sequence_mapper.dart';
 import 'package:speakyfox/data/remote/lecture_client.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/sequence.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/lecture_repository.dart';
 
-class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence> {
+class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence>, BaseRepository<Lecture> {
   final ConnectivityService _connectivityService;
   final LectureClient _lectureClient;
 

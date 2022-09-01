@@ -8,8 +8,8 @@ part 'language_pair_dto.g.dart';
 
 @JsonSerializable()
 class LanguagePairDto extends BaseDto {
-  String title;
-  String description;
+  String? title;
+  String? description;
   String? key;
   List<dynamic>? subscriptions = [];
   ImageDto? icon;
@@ -22,15 +22,15 @@ class LanguagePairDto extends BaseDto {
   String? appStoreProductId;
 
   LanguagePairDto({
-    required String id,
+     String ?id,
     String? modified,
     String? modifiedBy,
     String? created,
     String? createdBy,
     String? deleted,
     String? deletedBy,
-    required this.title,
-    required this.description,
+    this.title,
+    this.description,
     this.key,
     required this.subscriptions,
     required this.icon,
@@ -42,7 +42,7 @@ class LanguagePairDto extends BaseDto {
     required this.webAppProductId,
     required this.appStoreProductId,
   }) : super(
-            id: id,
+            id: id ?? "",
             created: created,
             createdBy: createdBy,
             deleted: deleted,

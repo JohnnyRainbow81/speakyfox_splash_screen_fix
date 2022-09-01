@@ -1,18 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/data/repositories_impls/language_repository_impl.dart';
 import 'package:speakyfox/domain/models/language.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/language_repository.dart';
+import 'package:speakyfox/domain/services/base_service.dart';
 
-class LanguageService {
+class LanguageService extends BaseService<Language> {
   final LanguageRepository<Language> _languageRepository;
 
-  LanguageService(
-    this._languageRepository,
-  );
-
-  Future<List<Language>> getAll() {
-    return _languageRepository.getAll("");
-  }
+  LanguageService(BaseRepository<Language> baseRepository, this._languageRepository) : super(baseRepository);
 
   Future<Language> getLanguageById(String id) {
     return _languageRepository.getLanguageById(id);

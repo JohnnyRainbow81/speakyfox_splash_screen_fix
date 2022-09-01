@@ -4,9 +4,10 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/course_mapper.dart';
 import 'package:speakyfox/data/remote/course_client.dart';
 import 'package:speakyfox/domain/models/course.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/course_repository.dart';
 
-class CourseRepositoryImpl implements CourseRepository<Course> {
+class CourseRepositoryImpl implements CourseRepository<Course>, BaseRepository<Course> {
   final ConnectivityService _connectivityService;
   final CourseClient _courseClient;
 

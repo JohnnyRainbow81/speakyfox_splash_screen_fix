@@ -1,6 +1,6 @@
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 
-abstract class LectureRepository<T, S> extends BaseRepository<T> {
+abstract class LectureRepository<T, S> {
   Future<T> getByIdDetailed(String id, [bool detailed = false]);
   Future<List<T>> getAllV2([String queryParameters = ""]);
   Future<T> getByIdDetailedV2(String id, [bool detailed = false]);

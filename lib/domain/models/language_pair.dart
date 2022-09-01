@@ -18,7 +18,7 @@ class LanguagePair extends ModelBase {
   String appStoreProductId;
 
   LanguagePair(
-      {required String id,
+      { String? id,
       String? modified,
       String? modifiedBy,
       String? created,

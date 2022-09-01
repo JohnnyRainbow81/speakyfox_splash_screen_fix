@@ -5,9 +5,10 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/coupon_mapper.dart';
 import 'package:speakyfox/data/remote/coupon_client.dart';
 import 'package:speakyfox/domain/models/coupon.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/coupon_repository.dart';
 
-class CouponRepositoryImpl implements CouponRepository<Coupon> {
+class CouponRepositoryImpl implements CouponRepository<Coupon>, BaseRepository<Coupon> {
   final ConnectivityService _connectivityService;
   final CouponClient _couponClient;
 

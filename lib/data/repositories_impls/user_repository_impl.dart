@@ -12,9 +12,10 @@ import 'package:speakyfox/domain/models/subscription.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
 import 'package:speakyfox/domain/models/order.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/user_repository.dart';
 
-class UserRepositoryImpl implements UserRepository {
+class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   final ConnectivityService _connectivityService;
   final UserClient _userClient;
 

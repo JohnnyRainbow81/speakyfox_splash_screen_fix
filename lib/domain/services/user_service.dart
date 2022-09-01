@@ -6,21 +6,25 @@ import 'package:speakyfox/domain/models/subscription.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
 import 'package:speakyfox/domain/models/order.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/user_repository.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/domain/services/base_service.dart';
 
-class UserService {
+class UserService extends BaseService<User> {
   final UserRepository _userRepository;
   final AuthenticationService _authenticationService;
 
-  UserService(this._userRepository, this._authenticationService);
+  UserService(BaseRepository<User> baseRepository, this._userRepository, this._authenticationService)
+      : super(baseRepository);
 
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
     return _userRepository.attachPaymentMethodToUser(type, externalPaymentMethodId);
   }
 
   Future<bool> changePassword(String currentPassword, String newPassword) {
-    return _userRepository.changePassword(ChangePasswordRequest(currentPassword: currentPassword, password: _authenticationService.credentials!.user.password));
+    return _userRepository.changePassword(ChangePasswordRequest(
+        currentPassword: currentPassword, password: _authenticationService.credentials!.user.password));
   }
 
   Future<String> createSetupIntent(PaymentMethodType paymentMethodType) {
@@ -30,14 +34,6 @@ class UserService {
 
   Future<User> createUser(CreateProfileUserRequest user) {
     return _userRepository.createUser(user);
-  }
-
-  Future<List<User>> getAll(String param) {
-    return _userRepository.getAll(param);
-  }
-
-  Future<User> getById(String id) {
-    return _userRepository.getById(id);
   }
 
   Future<Order> getOrdersOfCurrentUser() {
@@ -69,20 +65,8 @@ class UserService {
     return _userRepository.getSubscriptions();
   }
 
-  Future<User> patchById(String id, User entity) {
-    return _userRepository.patchById(id, entity);
-  }
-
   Future<LanguagePair> patchLanguagePairBySourceTargetLanguagesIds(String sourceLanguageId, String targetLanguageId) {
     return _userRepository.patchLanguagePairBySourceTargetLanguagesIds(sourceLanguageId, targetLanguageId);
-  }
-
-  Future<User> post(User entity) {
-    return _userRepository.post(entity);
-  }
-
-  Future<bool> removeById(String id) {
-    return _userRepository.removeById(id);
   }
 
   Future<bool> removePaymentMethod(PaymentMethodType paymentMethodType, String externalId) {

@@ -5,9 +5,10 @@ import 'package:speakyfox/data/mappers/subscription_mapper.dart';
 import 'package:speakyfox/data/remote/subscription_client.dart';
 import 'package:speakyfox/data/requests/subscription_create.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/subscription_repository.dart';
 
-class SubscriptionRepositoryImpl implements SubscriptionRepository<Subscription> {
+class SubscriptionRepositoryImpl implements SubscriptionRepository<Subscription>, BaseRepository<Subscription> {
   final ConnectivityService _connectivityService;
   final SubscriptionClient _subscriptionClient;
 

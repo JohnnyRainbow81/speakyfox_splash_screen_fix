@@ -1,20 +1,13 @@
 import 'package:speakyfox/domain/models/language.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/language_pairs_repository.dart';
 import 'package:speakyfox/domain/repositories/language_repository.dart';
+import 'package:speakyfox/domain/services/base_service.dart';
 
-class LanguagePairService  {
+class LanguagePairService extends BaseService<LanguagePair> {
   final LanguagePairRepository<LanguagePair> _languagePairRepository;
 
-  LanguagePairService(this._languagePairRepository);
-
-  Future<List<LanguagePair>> getAll(String param) async {
-    return _languagePairRepository.getAll(param);
-  }
-
-  Future<LanguagePair> getById(String id) {
-       return _languagePairRepository.getById(id);
-  }
-
-
+  LanguagePairService(BaseRepository<LanguagePair> baseRepository, this._languagePairRepository)
+      : super(baseRepository);
 }

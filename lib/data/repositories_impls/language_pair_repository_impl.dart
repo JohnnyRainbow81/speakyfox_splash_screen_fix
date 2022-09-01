@@ -5,9 +5,10 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/language_pair_mapper.dart';
 import 'package:speakyfox/data/remote/language_pair_client.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/language_pairs_repository.dart';
 
-class LanguagePairRepositoryImpl implements LanguagePairRepository<LanguagePair> {
+class LanguagePairRepositoryImpl implements LanguagePairRepository<LanguagePair>, BaseRepository<LanguagePair> {
   final ConnectivityService _connectivityService;
   final LanguagePairClient _languagePairsClient;
 
