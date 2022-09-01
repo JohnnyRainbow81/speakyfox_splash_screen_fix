@@ -12,7 +12,7 @@ void main() async {
 
   final dioV1 = await DioV1.initialize("", token);
   LanguageClient languageClient =
-      LanguageClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/languages/");
+      LanguageClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/languages");
 
   test('getLanguageById', () async {
     final response = await languageClient.getLanguageById("02c6e388-bcb1-427b-8b8d-d49704671c22");

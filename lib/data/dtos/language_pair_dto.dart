@@ -52,4 +52,5 @@ class LanguagePairDto extends BaseDto {
 
   factory LanguagePairDto.fromJson(Map<String, dynamic> json) => _$LanguagePairDtoFromJson(json);
   Map<String, dynamic> toJson() => _$LanguagePairDtoToJson(this);
+
 }

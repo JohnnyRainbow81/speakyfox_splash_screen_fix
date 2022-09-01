@@ -42,11 +42,7 @@ class LoginViewModel extends BaseViewModel {
 
   Future<bool> login() async {
     _isLoggedIn = await runBusyFuture(_authenticationService.login(_username, _password));
-    notifyListeners();
-    if (_isLoggedIn) {
-      //call top level method to initialize HTTP/REST lib with token
-      await initializeDependencies(_authenticationService.credentials!.accessToken);
-    }
+    //notifyListeners();
     return _isLoggedIn;
   }
 }

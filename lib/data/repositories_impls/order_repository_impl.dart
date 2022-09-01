@@ -1,7 +1,6 @@
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
-import 'package:speakyfox/data/mappers/offer_mapper.dart';
 import 'package:speakyfox/data/mappers/order_mapper.dart';
 import 'package:speakyfox/data/remote/order_client.dart';
 import 'package:speakyfox/data/requests/create_order_request.dart';

@@ -97,7 +97,7 @@ class DioV1 {
         },
       ));
     }
-
+    
     return dio;
   }
 }

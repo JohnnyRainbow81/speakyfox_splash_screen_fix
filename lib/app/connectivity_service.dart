@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:speakyfox/app/error_handling/error_handler.dart';
 
 class ConnectivityService {
   bool _isWIFI = false;
@@ -14,22 +15,26 @@ class ConnectivityService {
     _isMobile = false;
     _isWIFI = false;
     _isNone = false;
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    try {
+      var connectivityResult = await (Connectivity().checkConnectivity());
+      switch (connectivityResult) {
+        case ConnectivityResult.mobile:
+          _isMobile = true;
+          break;
+        case ConnectivityResult.wifi:
+          _isWIFI = true;
+          break;
+        case ConnectivityResult.none:
+          _isNone = true;
+          break;
+        default:
+          _isNone = true;
+      }
 
-    switch (connectivityResult) {
-      case ConnectivityResult.mobile:
-        _isMobile = true;
-        break;
-      case ConnectivityResult.wifi:
-        _isWIFI = true;
-        break;
-      case ConnectivityResult.none:
-        _isNone = true;
-        break;
-      default:
-        _isNone = true;
+      return _isMobile || _isWIFI;
+    } catch (e) {
+      ErrorHandler.handleError(e);
     }
-
-    return _isMobile || _isWIFI;
+    return false;
   }
 }

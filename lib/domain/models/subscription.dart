@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 
@@ -49,6 +50,11 @@ class Subscription extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Subscription(productDisplayTitle: $productDisplayTitle, planDisplayTitle: $planDisplayTitle, currentPeriodStart: $currentPeriodStart, currentPeriodEnd: $currentPeriodEnd, couponKey: $couponKey, languages: $languages, interval: $interval, intervalCount: $intervalCount, paymentMethod: $paymentMethod, nextBillingAmount: $nextBillingAmount, invoices: $invoices)';
+  }
 }
 
 enum SubscriptionType { oneTime, month, threeMonths, sixMonths, year }

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
+import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
@@ -50,6 +51,9 @@ class AuthenticationService {
         user: me);
 
     _credentials = identityToken;
+
+    //DI for authenticated HTTP calls
+    await initializeDependencies(ticket.accessToken);
 
     return true;
   }

@@ -16,12 +16,12 @@ class _UserClient implements UserClient {
   String? baseUrl;
 
   @override
-  Future<Response<UserDto>> createUser(user) async {
+  Future<Response<UserDto>> createUser(createUserRequest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(user);
+    _data.addAll(createUserRequest);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<UserDto>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
@@ -40,7 +40,8 @@ class _UserClient implements UserClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'POST', headers: _headers, extra: _extra)
             .compose(_dio.options, 'users/${userId}/payment-methods',
@@ -92,15 +93,19 @@ class _UserClient implements UserClient {
   Future<Response<bool>> changePassword(changePasswordRequest) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(changePasswordRequest);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<bool>>(
-            Options(method: 'PATCH', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'users/me/password',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<Response<bool>>(Options(
+                method: 'PATCH',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, 'me/password',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
       _result.data!,
       (json) => json as bool,
@@ -114,11 +119,12 @@ class _UserClient implements UserClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
+    final _data = <String, dynamic>{};
+    _data.addAll(body);
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<LanguagePairDto>>(
             Options(method: 'PATCH', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'users/${userId}/language-pair',
+                .compose(_dio.options, '${userId}/language-pair',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<LanguagePairDto>.fromJson(
@@ -133,14 +139,15 @@ class _UserClient implements UserClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = paymentMethodType;
+    final _data = <String, dynamic>{};
+    _data.addAll(paymentMethodType);
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<String>>(Options(
-                method: 'POST', headers: _headers, extra: _extra)
-            .compose(
-                _dio.options, 'users/${userId}/payment-methods/setup-intents',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<Response<String>>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(
+                    _dio.options, '${userId}/payment-methods/setup-intents',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<String>.fromJson(
       _result.data!,
       (json) => json as String,

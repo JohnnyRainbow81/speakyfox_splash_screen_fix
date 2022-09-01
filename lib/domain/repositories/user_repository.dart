@@ -1,3 +1,4 @@
+import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 import 'package:speakyfox/domain/models/order.dart';
@@ -12,7 +13,7 @@ abstract class UserRepository extends BaseRepository<User> {
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId);
   Future<Order> getOrdersOfCurrentUser();
   Future<Subscription> getSubscriptions();
-  Future<bool> changePassword(String currentPassword, String newPassword);
+  Future<bool> changePassword(ChangePasswordRequest request);
   Future<LanguagePair> patchLanguagePairBySourceTargetLanguagesIds(String sourceLanguageId, String targetLanguageId);
 
   Future<String> createSetupIntent(String userId, PaymentMethodType paymentMethodType);

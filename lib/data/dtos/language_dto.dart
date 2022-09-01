@@ -16,6 +16,7 @@ class LanguageDto extends BaseDto {
   ImageDto buttonImage;//OK
   bool isPublished;//OK
   String buttonFileId; //OK
+  @JsonKey(name: "languagesInPairs")
   List<LanguagePairDto?>? languagePair;
 
   LanguageDto({

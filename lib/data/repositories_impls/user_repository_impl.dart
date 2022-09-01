@@ -5,6 +5,7 @@ import 'package:speakyfox/data/mappers/order_mapper.dart';
 import 'package:speakyfox/data/mappers/subscription_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
+import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
@@ -28,11 +29,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<bool> changePassword(String currentPassword, String newPassword) async {
+  Future<bool> changePassword(ChangePasswordRequest request) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response =
-            await _userClient.changePassword({"currentPassword": currentPassword, "newPassword": newPassword});
+            await _userClient.changePassword(request.toMap());
         bool success = response.data;
         return success;
       } catch (error) {
@@ -48,7 +49,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<String> createSetupIntent(String userId, PaymentMethodType paymentMethodType) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _userClient.createSetupIntent(userId, paymentMethodType.name);
+        final response = await _userClient.createSetupIntent(userId, { "paymentMethodType" : paymentMethodType.name});
         return response.data;
       } catch (error) {
         ErrorHandler.handleError(error);

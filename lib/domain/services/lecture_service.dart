@@ -3,11 +3,11 @@ import 'package:speakyfox/domain/models/sequence.dart';
 import 'package:speakyfox/domain/repositories/lecture_repository.dart';
 
 //Only a passthrough-Service, see readme.docx
-class LecturesService implements LectureRepository<Lecture, Sequence> {
+class LectureService implements LectureRepository<Lecture, Sequence> {
   final LectureRepository<Lecture, Sequence> _lectureRepository;
   late Lecture lecture;
 
-  LecturesService(this._lectureRepository);
+  LectureService(this._lectureRepository);
 
   @override
   Future<List<Lecture>> getAll(String param) {

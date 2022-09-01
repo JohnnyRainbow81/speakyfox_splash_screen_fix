@@ -4,8 +4,8 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/payment_method_mapper.dart';
 import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
-import 'package:speakyfox/domain/models/plan.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
+
 
 class PlanRepositoryImpl implements PlanRepository<PaymentMethod> {
   final ConnectivityService _connectivityService;
@@ -30,15 +30,38 @@ class PlanRepositoryImpl implements PlanRepository<PaymentMethod> {
   }
 
   @override
-  Future<List<PaymentMethod>> getAll(String param) {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<List<PaymentMethod>> getAll(String param) async{
+     {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _planClient.getAll(param);
+        return response.data.map((e) => e.toPaymentMethod()).toList();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "PlanRepositoryImpl.getAll()");
+  }
+    
   }
 
   @override
-  Future<PaymentMethod> getById(String id) {
-    // TODO: implement getById
-    throw UnimplementedError();
+  Future<PaymentMethod> getById(String id) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _planClient.getById(id);
+        return response.data.toPaymentMethod();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "PlanRepositoryImpl.getById()");
   }
 
   @override

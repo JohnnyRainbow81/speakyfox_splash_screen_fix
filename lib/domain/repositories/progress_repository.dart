@@ -1,3 +1,3 @@
-abstract class ProgressRepository<T> {
+abstract class ProgressRepository {
   Future<bool> updateProgress(String lectureId, double progress);
 }

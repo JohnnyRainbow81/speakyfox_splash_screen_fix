@@ -11,7 +11,7 @@ abstract class BaseClient<T> {
   Future<Response<T>> getById(@Path("id") String id);
 
   @POST("")
-  Future<Response<T>> post(@Body() dynamic entity);//FIXME Linter wants "dynamic" instead of "T" here?!
+  Future<Response<T>> post(@Body() dynamic entity); //FIXME Linter wants "dynamic" instead of "T" here?!
 
   @PATCH("")
   Future<Response<T>> patchById(

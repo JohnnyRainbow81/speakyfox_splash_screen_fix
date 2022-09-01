@@ -1,4 +1,3 @@
-import 'package:speakyfox/domain/models/sequence.dart';
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 
 abstract class LectureRepository<T, S> extends BaseRepository<T> {

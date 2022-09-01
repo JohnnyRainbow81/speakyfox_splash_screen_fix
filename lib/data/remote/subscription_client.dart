@@ -3,7 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:speakyfox/data/dtos/response.dart';
 import 'package:speakyfox/data/dtos/subscription_dto.dart';
 import 'package:speakyfox/data/remote/base_client.dart';
-import 'package:speakyfox/domain/models/subscription.dart';
+
 part 'subscription_client.g.dart';
 
 @RestApi()

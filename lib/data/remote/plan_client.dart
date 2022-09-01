@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart' hide Response;
 import 'package:retrofit/retrofit.dart';
-import 'package:speakyfox/data/dtos/order_dto.dart';
 import 'package:speakyfox/data/dtos/payment_method_dto.dart';
-import 'package:speakyfox/data/dtos/plan_dto.dart';
 import 'package:speakyfox/data/dtos/response.dart';
 import 'package:speakyfox/data/remote/base_client.dart';
-    part 'plan_client.g.dart';
+
+part 'plan_client.g.dart';
 
 @RestApi()
 abstract class PlanClient with BaseClient<PaymentMethodDto> {

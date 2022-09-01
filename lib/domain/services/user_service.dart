@@ -1,3 +1,4 @@
+import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 import 'package:speakyfox/domain/models/user.dart';
@@ -19,7 +20,7 @@ class UserService {
   }
 
   Future<bool> changePassword(String currentPassword, String newPassword) {
-    return _userRepository.changePassword(currentPassword, newPassword);
+    return _userRepository.changePassword(ChangePasswordRequest(currentPassword: currentPassword, password: _authenticationService.credentials!.user.password));
   }
 
   Future<String> createSetupIntent(PaymentMethodType paymentMethodType) {

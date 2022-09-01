@@ -1,8 +1,13 @@
-The remote clients here unfortunately cannot use the same repository-interface like the repositoryImpls. 
-Because for example:
+1) The remote clients here unfortunately cannot use the same repository-interface like the repositoryImpls. 
+Caused by this:
 
-CourseService uses: Future<Course> getById(String id) 
+CourseService method: 
+Future<Course> getById(String id) 
 
-RepositoryImpl uses: Future<Response<CourseDto>> getById(String id)
+RepositoryImpl method: 
+Future<Response<CourseDto>> getById(String id)
 
-Cannot figure out how you can make these compatible through 
+The additional "Response"-type messes up a proper common interface between these layers. I cannot find a way how you can make these compatible.
+
+2) Sometimes we need to hide "Response"- and "Headers"-classes in the import of dio-library, because otherwise we get a naming-clash between 
+Dio, Retrofit and our own classes
