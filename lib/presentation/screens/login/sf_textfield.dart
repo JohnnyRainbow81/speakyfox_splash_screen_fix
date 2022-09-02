@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
+import 'package:stacked/stacked.dart';
 
-class SFTextField extends StatefulWidget {
+class SFTextField extends ViewModelWidget<LoginViewModel> {
   final IconData iconData;
   final String hintText;
   final TextEditingController controller;
-  const SFTextField({required this.iconData, required this.controller, required this.hintText, Key? key})
+  final String? error;
+
+  const SFTextField({required this.iconData, required this.controller, required this.hintText, Key? key, required this.error})
       : super(key: key);
 
   @override
-  State<SFTextField> createState() => _SFTextFieldState();
-}
-
-class _SFTextFieldState extends State<SFTextField> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, LoginViewModel model) {
+    debugPrint("build");
     return TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(widget.iconData),
-        hintText: widget.hintText,
-        suffixIcon: const Icon(Icons.check, color: ColorAssets.grGreenLight), /* errorText: "error text" */
-      ),
-      controller: widget.controller,
+          prefixIcon: Icon(iconData),
+          hintText: hintText,
+          suffixIcon: const Icon(Icons.check, color: ColorAssets.grGreenLight),
+          /* errorText: "error text" */
+          errorText: error),
+      controller: controller,
+      autovalidateMode: AutovalidateMode.always,
     );
   }
 }

@@ -170,7 +170,7 @@ SliderThemeData _getSliderThemeData() {
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
     alignLabelWithHint: false,
-    errorStyle: const TextStyle(fontSize: 20, color: ColorAssets.error, fontFamily: FontAssets.primary),
+    errorStyle: const TextStyle(fontSize: 13, color: ColorAssets.error, fontFamily: FontAssets.primary,height: 0.8),
     helperStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
     floatingLabelStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
     counterStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
@@ -186,12 +186,12 @@ InputDecorationTheme _getInputDecorationTheme() {
     fillColor: ColorAssets.lightest,
     filled: true,
     focusColor: ColorAssets.error, //error color = debug only! change!
-    iconColor: ColorAssets.bgBlueLight,
+    iconColor: ColorAssets.bgBlueLight,errorMaxLines: 2,
+    suffixIconColor: ColorAssets.bgBlueDark,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide.none,
     ),
-    suffixIconColor: ColorAssets.bgBlueDark,
     enabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(32)),
         borderSide: BorderSide(color: ColorAssets.primary, width: 1.6)),
@@ -199,7 +199,10 @@ InputDecorationTheme _getInputDecorationTheme() {
         borderRadius: BorderRadius.all(Radius.circular(32)),
         borderSide: BorderSide(color: ColorAssets.footerBlue, width: 2.4)),
     errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: ColorAssets.error)),
+        borderRadius: BorderRadius.all(Radius.circular(32)), borderSide: BorderSide(color: ColorAssets.error,width: 1.2)),
+    focusedErrorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32)),
+        borderSide: BorderSide(color: ColorAssets.error, width: 1.6)),
     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
   );
 }
