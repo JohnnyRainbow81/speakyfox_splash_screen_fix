@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/login/sf_textfield.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -60,37 +61,64 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return Scaffold(
           body: Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
               child: Form(
                   autovalidateMode: AutovalidateMode.disabled,
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Username"),
-                      TextFormField(
-                        decoration: InputDecoration(hintText: "username", errorText: usernameError),
-                        controller: _usernameController,
-                        //validator: (username) => _loginViewModel.validateUsername(username),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      const Text("Passwort"),
-                      _loginViewModel.isLoggedIn ? const Text("Login successful!") : Container(),
-                      TextFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: _passwordController,
-                        decoration: InputDecoration(hintText: "password", errorText: passwordError),
-                      ),
-                      ElevatedButton(
-                          onPressed: () async {
-                            if (_loginViewModel.isLoginFormValid()) {
-                              _loginViewModel.login();
-                            }
-                          },
-                          child: const Text("Login"))
-                    ],
-                  ))),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 24),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Image.asset("assets/images/logo_speakyfox.png"),
+                        ),
+                        const SizedBox(
+                          height: 48,
+                        ),
+                        Text("Log' dich ein",
+                            style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        SFTextField(iconData: Icons.person, controller: _usernameController, hintText: "Username"),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        SFTextField(iconData: Icons.key, controller: _passwordController, hintText: "Passwort"),
+
+                        //const Text("Passwort"),
+                        _loginViewModel.isLoggedIn ? const Text("Login successful!") : Container(),
+                        const SizedBox(
+                          height: 24,
+                        ),
+
+                        ElevatedButton(
+                            onPressed: () async {
+                              if (_loginViewModel.isLoginFormValid()) {
+                                _loginViewModel.login();
+                              }
+                            },
+                            child: const Text("Login")),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text("Neu hier?"),
+                            TextButton(onPressed: null, child: Text("Erstelle einen Account")),
+                          ],
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+          )),
         );
       },
     );

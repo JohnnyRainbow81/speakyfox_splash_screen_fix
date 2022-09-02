@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'color_assets.dart';
 import 'font_assets.dart';
@@ -14,12 +16,16 @@ ThemeData getApplicationTheme() {
     sliderTheme: _getSliderThemeData(),
     inputDecorationTheme: _getInputDecorationTheme(),
     buttonTheme: _getButtonThemeData(), //nearly empty yet
-    iconTheme: _getIconThemeData(), 
-    primaryIconTheme: _getIconThemeData(),
+    textButtonTheme: _getTextButtonTheme(),
+    iconTheme: _getIconThemeData(),
+    //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
+    errorColor: ColorAssets.error,
+    hintColor: ColorAssets.lightGrey,
+    indicatorColor: ColorAssets.primary,
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+      TargetPlatform.android: CupertinoPageTransitionsBuilder(), //Another one on Android?
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
     }),
   );
@@ -28,72 +34,108 @@ ThemeData getApplicationTheme() {
 TextTheme _getApplicationTextTheme() {
   return const TextTheme(
     headline1: TextStyle(
-        fontSize: 96, fontWeight: FontWeight.w300, color: ColorAssets.primary, fontFamily: FontAssets.primary,letterSpacing: -1.5, height: 1),
+        fontSize: 96,
+        fontWeight: FontWeight.w300,
+        color: ColorAssets.primary,
+        fontFamily: FontAssets.primary,
+        letterSpacing: -1.5,
+        height: 1),
     headline2: TextStyle(
-        fontSize: 60, fontWeight: FontWeight.w300, color: ColorAssets.primary, fontFamily: FontAssets.primary),  //r
+        fontSize: 54, fontWeight: FontWeight.w300, color: ColorAssets.primary, fontFamily: FontAssets.primary), //r
     headline3: TextStyle(
-        fontSize: 48, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+        fontSize: 42, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline4: TextStyle(
-        fontSize: 36, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
+        fontSize: 32, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline5: TextStyle(
-        fontSize: 28, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
+        fontSize: 24, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline6: TextStyle(
-        fontSize: 19, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
+        fontSize: 17, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     button: TextStyle(
-        fontSize: 14, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
-    bodyText1: TextStyle(fontSize: 15, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
-    bodyText2: TextStyle(fontSize: 13, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
+        fontSize: 14, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+    bodyText1: TextStyle(
+        fontSize: 15, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
+    bodyText2: TextStyle(
+        fontSize: 13, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
     caption: TextStyle(fontSize: 13, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
-    subtitle1: TextStyle(fontSize: 14, color: ColorAssets.primary, fontFamily: FontAssets.primary,fontWeight: FontWeight.w500),//r
-    subtitle2: TextStyle(fontSize: 12, color: ColorAssets.primary, fontFamily: FontAssets.primary),//b
-    labelMedium: TextStyle(fontSize: 13, color: ColorAssets.midGrey, fontFamily: FontAssets.primary,fontWeight: FontWeight.w500),//r
+    subtitle1: TextStyle(
+        //Used for TextInput, don't know why
+        fontSize: 16,
+        color: ColorAssets.primary,
+        fontFamily: FontAssets.primary,
+        fontWeight: FontWeight.w500), //r
+    subtitle2: TextStyle(fontSize: 12, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+    labelMedium: TextStyle(
+        fontSize: 13, color: ColorAssets.midGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
+        
   );
 }
 
 AppBarTheme _getAppBarTheme() {
   return const AppBarTheme(
-backgroundColor: ColorAssets.lightest,elevation: 0,
+    backgroundColor: ColorAssets.lightest,
+    elevation: 0,
   );
 }
 
-CardTheme _getCardTheme(){
+CardTheme _getCardTheme() {
   return const CardTheme(
-    elevation: 20,
-    color: ColorAssets.lightest,
-    shadowColor: ColorAssets.shadow,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20)))
-  );
+      elevation: 20,
+      color: ColorAssets.lightest,
+      shadowColor: ColorAssets.shadow,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))));
 }
 
 IconThemeData _getIconThemeData() {
   return const IconThemeData(
-    color: ColorAssets.primary,size: 24,
+    color: ColorAssets.error, //debug color!
+    size: 24,
   );
 }
 
 OutlinedButtonThemeData _getOutlinedButtonThemeData() {
-  return OutlinedButtonThemeData(style: ButtonStyle(
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all( 12)),
-    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    minimumSize: MaterialStateProperty.all<Size>(const Size(16, 16)),
-alignment: Alignment.center,
-    side: MaterialStateProperty.all<BorderSide>(const BorderSide(
-      width: 1,
-      color: ColorAssets.primary
-  ))));
+  return OutlinedButtonThemeData(
+      style: ButtonStyle(
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(12)),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          minimumSize: MaterialStateProperty.all<Size>(const Size(16, 16)),
+          alignment: Alignment.center,
+          side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 1, color: ColorAssets.primary))));
 }
 
 ButtonThemeData _getButtonThemeData() {
-  return const ButtonThemeData(); //TODO buttontheme definieren
+  return const ButtonThemeData(
+    buttonColor: ColorAssets.primary,
+  ); //TODO buttontheme definieren
+}
+
+TextButtonThemeData _getTextButtonTheme() => TextButtonThemeData(style: _getTextButtonStyle());
+
+ButtonStyle _getTextButtonStyle() {
+  return ButtonStyle(textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
+    foreground: Paint()..color = ColorAssets.primary,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.underline,
+    decorationColor: ColorAssets.primary,
+    
+  )));
+
 }
 
 ElevatedButtonThemeData _getElevatedButtonThemeData() {
   return ElevatedButtonThemeData(
       style: ButtonStyle(
     padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 24)),
-    backgroundColor: MaterialStateProperty.all<Color>(ColorAssets.buttonBackgroundActiveColor),
-    foregroundColor: MaterialStateProperty.all<Color>(ColorAssets.buttonBackgroundInactiveColor),
+    minimumSize: MaterialStateProperty.all<Size>(Size(200, 48)),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+        const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(32)))),
+    backgroundColor: MaterialStateProperty.all<Color>(ColorAssets.primary),
+    foregroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+      if (states.contains(MaterialState.disabled) || states.contains(MaterialState.error)) {
+        return ColorAssets.lightest.withOpacity(0.5);
+      }
+    }),
     overlayColor: MaterialStateProperty.resolveWith<Color?>(
       (Set<MaterialState> states) {
         if (states.contains(MaterialState.hovered)) return ColorAssets.buttonHoveredColor;
@@ -118,10 +160,6 @@ ButtonStyle _getButtonStyle() {
   );
 }
 
-TextStyle getHintTextStyle() {
-  return const TextStyle(color: ColorAssets.midGrey, fontWeight: FontWeight.bold, fontFamily: 'SourceSansProBold');
-}
-
 SliderThemeData _getSliderThemeData() {
   return const SliderThemeData(
       activeTrackColor: ColorAssets.sliderActiveTrack,
@@ -132,20 +170,36 @@ SliderThemeData _getSliderThemeData() {
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
     alignLabelWithHint: false,
-    // errorStyle: TextStyle(fontSize: 20, color: Colors.red, fontFamily: FontAssets.primary),
-    // helperStyle: TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary),
-    // floatingLabelStyle:TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary) ,
-    // counterStyle: TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary),
-    // suffixStyle: TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary),
-    // prefixStyle: TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary),
-    // labelStyle: TextStyle(fontSize: 20, color: ColorAssets.black, fontFamily: FontAssets.primary),
-    hintStyle: getHintTextStyle(),
+    errorStyle: const TextStyle(fontSize: 20, color: ColorAssets.error, fontFamily: FontAssets.primary),
+    helperStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
+    floatingLabelStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
+    counterStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
+    suffixStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
+    prefixStyle: const TextStyle(
+      fontSize: 15,
+      color: ColorAssets.copyTextGrey,
+      fontFamily: FontAssets.primary,
+    ),
+    labelStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
+    hintStyle: const TextStyle(fontSize: 15, color: ColorAssets.darkGrey, fontWeight: FontWeight.normal),
+    prefixIconColor: ColorAssets.primary,
+    fillColor: ColorAssets.lightest,
     filled: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-    fillColor: Colors.white,
+    focusColor: ColorAssets.error, //error color = debug only! change!
+    iconColor: ColorAssets.bgBlueLight,
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide.none,
     ),
+    suffixIconColor: ColorAssets.bgBlueDark,
+    enabledBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32)),
+        borderSide: BorderSide(color: ColorAssets.primary, width: 1.6)),
+    focusedBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(32)),
+        borderSide: BorderSide(color: ColorAssets.footerBlue, width: 2.4)),
+    errorBorder: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(4)), borderSide: BorderSide(color: ColorAssets.error)),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
   );
 }

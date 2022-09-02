@@ -92,7 +92,14 @@ class DioV1 {
         onRequest: (options, handler) {
           return handler.next(options);
         },
-        onError: (error, handler) {
+        onError: (error, handler) async{
+          if(error.response?.statusCode == 403 ||
+          error.response?.statusCode == 401) {
+            //How to avoid circular dependency to AuthentificationService here, which has the 
+            //identityToken containing the refreshToken which we need here? 
+            //Maybe save refreshToken to local storage and inject the local storage here? Seems unclean...
+
+          }
           return handler.next(error);
         },
       ));

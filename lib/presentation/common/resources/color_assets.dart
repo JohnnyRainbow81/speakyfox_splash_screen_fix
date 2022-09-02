@@ -14,6 +14,7 @@ class ColorAssets {
   static Color buttonPressedColor = Colors.blue.withOpacity(0.12);
 
   //Speakyfox
+  static const Color error = Color(0xFFDD0000);
   static const Color lightest = Colors.white;
   static const Color darkest = Colors.black;
   static const Color darkest55 = Color(0x88000000);
@@ -39,9 +40,11 @@ class ColorAssets {
 
   static const Color copyTextGrey = Color(0xFF454545);
   static const Color lightGrey = Color(0xFFC4C4C4);
+  static const Color midGrey = Color(0xFFA8A8A8);
+  static const Color darkGrey = Color.fromARGB(255, 126, 126, 126);
+
 
   static const Color mediumOrange = Color(0xFFFFB800);
-  static const Color midGrey = Color(0xFFA8A8A8);
 
   static const Color grLighterGreenLight = Color(0xFFB3E75F);
   static const Color grLighterGreenDark = Color(0xFF00BB29);

@@ -75,7 +75,8 @@ Future<void> initializeAuthenticationDependencies() async {
 
   Dio dioAuth = isQABackendAvailable
       ? await DioAuth.initialize(env.serverUrlAuth)
-      : await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/");
+      //as long as the QA backend doesn't work for authentication testing => take the production backend
+      : await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/"); 
 
   //ConnectivityService
   locator.registerLazySingleton(() => ConnectivityService());
