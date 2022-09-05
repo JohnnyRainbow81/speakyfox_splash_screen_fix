@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/routes.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
-import 'package:speakyfox/presentation/screens/login/sf_textfield.dart';
 import 'package:stacked/stacked.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -22,6 +20,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
+  final ScrollController _scrollController = ScrollController();
+
   final _formKey = GlobalKey<FormState>();
   String? usernameError;
   String? passwordError;
@@ -34,6 +34,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _usernameController.addListener(() => _loginViewModel.validateUsername(_usernameController.text));
     _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
     _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
+
+    _loginViewModel.allInputsAreValid = onAllInputsAreValid;
   }
 
   // void validateUsername() {
@@ -53,7 +55,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _usernameController.dispose();
     _passwordController.dispose();
     _emailController.dispose();
+
+    _scrollController.dispose();
+
+    _loginViewModel.allInputsAreValid = null;
     super.dispose();
+  }
+
+  void onAllInputsAreValid() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(_scrollController.initialScrollOffset,
+          duration: const Duration(seconds: 1), curve: Curves.ease);
+    }
   }
 
   @override
@@ -68,8 +81,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             _loginViewModel.clearErrors();
           });
         }
-        double height = MediaQuery.of(context).size.height * 0.9;
-
         return Scaffold(
           body: Center(
               child: Padding(
@@ -81,79 +92,77 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: SingleChildScrollView(
-                      child: SizedBox(
-                        height: height,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 36),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Image.asset("assets/images/logo_speakyfox.png"),
-                            ),
-                            const SizedBox(
-                              height: 32,
-                            ),
-                            Text("Erstelle deinen Zugang",
-                                style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "Name",
-                                  errorText: _loginViewModel.userNameError,
-                                  prefixIcon: const Icon(Icons.people)),
-                              controller: _usernameController,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "E-Mail",
-                                  errorText: _loginViewModel.emailError,
-                                  prefixIcon: const Icon(Icons.email)),
-                                  controller: _emailController,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: "Passwort",
-                                  errorText: _loginViewModel.passwordError,
-                                  errorMaxLines: 8,
-                                  prefixIcon: const Icon(Icons.key)),
-                              controller: _passwordController,
-                            ),
-                            _loginViewModel.isLoggedIn
-                                ? const Padding(
-                                    padding: EdgeInsets.only(top: 8.0),
-                                    child: Text("Login erfolgreich!"),
-                                  )
-                                : Container(),
-                            const SizedBox(
-                              height: 32,
-                            ),
-                            ElevatedButton(
-                                onPressed:
-                                    _loginViewModel.isRegisterFormValid ? () async => _loginViewModel.register() : null,
-                                child: const Text("Zugang erstellen")),
-                            const Spacer(flex: 2),
-                            
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Hast du bereits einen Account?"),
-                                TextButton(
-                                    onPressed: () => Navigator.of(context).pushNamed(Routes.login),
-                                    child: const Text("Zum Login")),
-                              ],
-                            )
-                          ],
-                        ),
+                      controller: _scrollController,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 36),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Image.asset("assets/images/logo_speakyfox.png"),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          Text("Erstelle deinen Zugang",
+                              style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "Name",
+                                errorText: _loginViewModel.userNameError,
+                                prefixIcon: const Icon(Icons.people)),
+                            controller: _usernameController,
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "E-Mail",
+                                errorText: _loginViewModel.emailError,
+                                prefixIcon: const Icon(Icons.email)),
+                            controller: _emailController,
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "Passwort",
+                                errorText: _loginViewModel.passwordError,
+                                errorMaxLines: 8,
+                                prefixIcon: const Icon(Icons.key)),
+                            controller: _passwordController,
+                          ),
+                          _loginViewModel.isLoggedIn
+                              ? const Padding(
+                                  padding: EdgeInsets.only(top: 8.0),
+                                  child: Text("Login erfolgreich!"),
+                                )
+                              : Container(),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          ElevatedButton(
+                              onPressed: _loginViewModel.isRegisterFormValid
+                                  ? () async => _loginViewModel.register()
+                                  : null,
+                              child: const Text("Zugang erstellen")),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Hast du bereits einen Account?"),
+                              TextButton(
+                                  onPressed: () => Navigator.of(context).pushNamed(Routes.login),
+                                  child: const Text("Zum Login")),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   )),

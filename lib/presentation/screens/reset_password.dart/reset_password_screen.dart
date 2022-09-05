@@ -22,6 +22,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   void initState() {
     super.initState();
+    _loginViewModel.resetAllFields();
     _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
   }
 

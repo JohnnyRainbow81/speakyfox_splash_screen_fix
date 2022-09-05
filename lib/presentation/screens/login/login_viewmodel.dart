@@ -22,9 +22,15 @@ class LoginViewModel extends BaseViewModel {
 
   bool _isLoggedIn = false;
 
+  Function? _allInputsAreValidCallback;
+
   LoginViewModel(
     this._authenticationService,
   );
+
+  set allInputsAreValid(Function? callback) {
+    _allInputsAreValidCallback = callback;
+  }
 
   bool get isLoggedIn => _isLoggedIn;
 
@@ -44,11 +50,10 @@ class LoginViewModel extends BaseViewModel {
     if (password == null || password.isEmpty) {
       _passwordError = 'Bitte gib ein gültiges Passwort ein';
       //TODO Validation logic
-    } else if(!isValidPassword(password)) {
-      _passwordError = 'Das Passwort muss mindestens \n einen Großbuchstaben,\n einen Kleinbuchstaben, \n eine Zahl, \n ein Sonderzeichen \n und mindestens 8 Zeichen enthalten';
-    } 
-    
-    else {
+    } else if (!isValidPassword(password)) {
+      _passwordError =
+          'Das Passwort muss mindestens \n einen Großbuchstaben,\n einen Kleinbuchstaben, \n eine Zahl, \n ein Sonderzeichen \n und mindestens 8 Zeichen enthalten';
+    } else {
       _passwordError = null;
       _password = password;
     }
@@ -73,12 +78,19 @@ class LoginViewModel extends BaseViewModel {
   }
 
   bool get isRegisterFormValid {
-    return _username.isNotEmpty &&
+    bool isAllValid = _username.isNotEmpty &&
         _password.isNotEmpty &&
         _email.isNotEmpty &&
         _usernameError == null &&
         _passwordError == null &&
         _emailError == null;
+    if (isAllValid) {
+      if(_allInputsAreValidCallback!= null) {
+        _allInputsAreValidCallback!();
+      }
+    }
+
+    return isAllValid;
   }
 
   bool get isEmailValid {
@@ -108,5 +120,14 @@ class LoginViewModel extends BaseViewModel {
 
   Future<bool> register() async {
     throw UnimplementedError();
+  }
+
+  void resetAllFields() {
+    _username = "";
+    _password = "";
+    _email = "";
+    _passwordError = null;
+    _usernameError = null;
+    _emailError = null;
   }
 }

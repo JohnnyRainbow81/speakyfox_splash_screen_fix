@@ -49,12 +49,15 @@ class _OnboardingPagerState extends State<OnboardingPager> {
   @override
   Widget build(BuildContext context) {
     //double maxPageViewHeight = MediaQuery.of(context).size.height * 0.9;
-    return Scaffold(
-      body: PageView(controller: _pageController, onPageChanged: (value) => _currentPage = value, children: [
-        ..._screenDatas.map((e) => _OnboardingScreen(e)).toList(),
-      ]),
-      bottomSheet: _getProgressWidget(_currentPage),
-      //extendBody: false,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).copyWith(scaffoldBackgroundColor: ColorAssets.lightest).scaffoldBackgroundColor,
+        body: PageView(controller: _pageController, onPageChanged: (value) => _currentPage = value, children: [
+          ..._screenDatas.map((e) => _OnboardingScreen(e)).toList(),
+        ]),
+        bottomSheet: _getProgressWidget(_currentPage),
+        //extendBody: false,
+      ),
     );
   }
 
@@ -109,7 +112,8 @@ class _OnboardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      //mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         screenData.imageAsset != null
             ? AspectRatio(aspectRatio: 4 / 5, child: Image.asset(screenData.imageAsset!))
