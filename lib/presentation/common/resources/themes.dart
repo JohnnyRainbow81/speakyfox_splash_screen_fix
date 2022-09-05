@@ -18,6 +18,7 @@ ThemeData getApplicationTheme() {
     buttonTheme: _getButtonThemeData(), //nearly empty yet
     textButtonTheme: _getTextButtonTheme(),
     iconTheme: _getIconThemeData(),
+    bottomSheetTheme: _getBottomSheetTheme(),
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
@@ -66,7 +67,6 @@ TextTheme _getApplicationTextTheme() {
     subtitle2: TextStyle(fontSize: 12, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     labelMedium: TextStyle(
         fontSize: 13, color: ColorAssets.midGrey, fontFamily: FontAssets.primary, fontWeight: FontWeight.w500), //r
-        
   );
 }
 
@@ -112,15 +112,14 @@ ButtonThemeData _getButtonThemeData() {
 TextButtonThemeData _getTextButtonTheme() => TextButtonThemeData(style: _getTextButtonStyle());
 
 ButtonStyle _getTextButtonStyle() {
-  return ButtonStyle(textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
+  return ButtonStyle(
+      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
     foreground: Paint()..color = ColorAssets.primary,
     fontSize: 13,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.underline,
     decorationColor: ColorAssets.primary,
-    
   )));
-
 }
 
 ElevatedButtonThemeData _getElevatedButtonThemeData() {
@@ -167,10 +166,14 @@ SliderThemeData _getSliderThemeData() {
       thumbColor: ColorAssets.sliderThumbColor);
 }
 
+BottomSheetThemeData _getBottomSheetTheme() {
+  return const BottomSheetThemeData(backgroundColor: Colors.transparent);
+}
+
 InputDecorationTheme _getInputDecorationTheme() {
   return InputDecorationTheme(
     alignLabelWithHint: false,
-    errorStyle: const TextStyle(fontSize: 13, color: ColorAssets.error, fontFamily: FontAssets.primary,height: 0.8),
+    errorStyle: const TextStyle(fontSize: 13, color: ColorAssets.error, fontFamily: FontAssets.primary, height: 1.0),
     helperStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
     floatingLabelStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
     counterStyle: const TextStyle(fontSize: 20, color: ColorAssets.copyTextGrey, fontFamily: FontAssets.primary),
@@ -186,7 +189,7 @@ InputDecorationTheme _getInputDecorationTheme() {
     fillColor: ColorAssets.lightest,
     filled: true,
     focusColor: ColorAssets.error, //error color = debug only! change!
-    iconColor: ColorAssets.bgBlueLight,errorMaxLines: 2,
+    iconColor: ColorAssets.bgBlueLight, errorMaxLines: 2,
     suffixIconColor: ColorAssets.bgBlueDark,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
@@ -199,7 +202,8 @@ InputDecorationTheme _getInputDecorationTheme() {
         borderRadius: BorderRadius.all(Radius.circular(32)),
         borderSide: BorderSide(color: ColorAssets.footerBlue, width: 2.4)),
     errorBorder: const OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(32)), borderSide: BorderSide(color: ColorAssets.error,width: 1.2)),
+        borderRadius: BorderRadius.all(Radius.circular(32)),
+        borderSide: BorderSide(color: ColorAssets.error, width: 1.2)),
     focusedErrorBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(32)),
         borderSide: BorderSide(color: ColorAssets.error, width: 1.6)),

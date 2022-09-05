@@ -31,7 +31,7 @@ class SpeakyFox extends StatelessWidget {
         if (widget != null) return widget;
         throw ('widget is null');
       },
-      initialRoute: Routes.test, //just for testing > remove
+      initialRoute: Routes.onboarding, //just for testing > remove
     );
   }
 }

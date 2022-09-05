@@ -8,22 +8,24 @@ import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/login/sf_textfield.dart';
 import 'package:stacked/stacked.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final LoginViewModel _loginViewModel = locator<LoginViewModel>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
   String? usernameError;
   String? passwordError;
+  String? emailError;
 
   @override
   void initState() {
@@ -31,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     _usernameController.addListener(() => _loginViewModel.validateUsername(_usernameController.text));
     _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
+    _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
   }
 
   // void validateUsername() {
@@ -45,14 +48,17 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _usernameController.removeListener(() => _loginViewModel.validateUsername);
     _passwordController.removeListener(() => _loginViewModel.validatePassword);
+    _emailController.removeListener(() => _loginViewModel.validateEmail);
+
     _usernameController.dispose();
     _passwordController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("LoginScreen.build() ");
+    debugPrint("RegistrationScreen.build() ");
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => _loginViewModel,
       builder: (context, _, child) {
@@ -89,17 +95,27 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(
                               height: 32,
                             ),
-                            Text("Log' dich ein",
+                            Text("Erstelle deinen Zugang",
                                 style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
                             const SizedBox(
                               height: 16,
                             ),
                             TextFormField(
                               decoration: InputDecoration(
-                                  hintText: "Username / E-Mail",
+                                  hintText: "Name",
                                   errorText: _loginViewModel.userNameError,
                                   prefixIcon: const Icon(Icons.people)),
                               controller: _usernameController,
+                            ),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: "E-Mail",
+                                  errorText: _loginViewModel.emailError,
+                                  prefixIcon: const Icon(Icons.email)),
+                                  controller: _emailController,
                             ),
                             const SizedBox(
                               height: 24,
@@ -123,19 +139,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             ElevatedButton(
                                 onPressed:
-                                    _loginViewModel.isLoginFormValid ? () async => _loginViewModel.login() : null,
-                                child: const Text("Login")),
+                                    _loginViewModel.isRegisterFormValid ? () async => _loginViewModel.register() : null,
+                                child: const Text("Zugang erstellen")),
                             const Spacer(flex: 2),
-                            TextButton(
-                                onPressed: () => Navigator.of(context).pushNamed(Routes.resetPassword),
-                                child: const Text("Passwort vergessen?")),
+                            
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text("Neu hier?"),
+                                const Text("Hast du bereits einen Account?"),
                                 TextButton(
-                                    onPressed: () => Navigator.of(context).pushNamed(Routes.register),
-                                    child: const Text("Erstelle einen Account")),
+                                    onPressed: () => Navigator.of(context).pushNamed(Routes.login),
+                                    child: const Text("Zum Login")),
                               ],
                             )
                           ],

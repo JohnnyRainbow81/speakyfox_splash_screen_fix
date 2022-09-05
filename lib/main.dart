@@ -10,7 +10,7 @@ import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
 
-bool isQABackendAvailable = false; //delete later
+bool isQABackendAvailable = true; //delete later
 //import 'firebase_options.dart';
 main() async {
   //Error handling setup
