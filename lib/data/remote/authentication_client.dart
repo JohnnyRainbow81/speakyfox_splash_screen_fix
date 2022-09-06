@@ -34,6 +34,7 @@ abstract class AuthenticationClient {
   );
 
   @GET("/users/me")
+  @Headers({"Content-Type" : "application/json"})
   Future<Response<UserDto>> fetchUser(@Header(HttpHeaders.authorizationHeader) String token);
 
   @PATCH("/users/{userId}/password-reset")

@@ -10,7 +10,7 @@ import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart'
 
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
 Future<void> showCommonErrorDialog(
-    {required BuildContext context, dynamic exception, Function? action, String? actionText, String? asset}) {
+    {required BuildContext context, dynamic exception, Function? action, String? actionText, String? animationAsset}) {
   //if no [exception] was handed over here, show a basic UIException
   if (exception == null) {
     UIException showInUIException = UIException();
@@ -28,7 +28,7 @@ Future<void> showCommonErrorDialog(
         //careful here! The app restarts, but the dependency injection(via Get_it lib) cannot be restarted,
         //because it's initialized outside of the Phoenix.rebirth-scope!
         action = () => Future.delayed(const Duration(seconds: 1), () => Phoenix.rebirth(context));
-        asset = AnimationAssets.failed;
+        animationAsset = AnimationAssets.failed;
         actionText = "Restart";
         break;
       //more later
@@ -36,7 +36,7 @@ Future<void> showCommonErrorDialog(
     return showDialog(
         context: context,
         builder: (context) => _CommonErrorDialog(
-              asset: asset,
+              animationAsset: animationAsset,
               headline: exception?.message,
               subline: exception?.description,
               action: action,
@@ -47,7 +47,7 @@ Future<void> showCommonErrorDialog(
     showDialog(
         context: context,
         builder: (context) => _CommonErrorDialog(
-              asset: asset,
+              animationAsset: animationAsset,
               headline: "Exception happened",
               subline:
                   "Something unexpected happened we need to dig into. If you experience strange behavior, please restart the app.",
@@ -71,7 +71,7 @@ Future<void> showCommonErrorDialog(
     return showDialog(
         context: context,
         builder: (context) => _CommonErrorDialog(
-              asset: AnimationAssets.failed,
+              animationAsset: AnimationAssets.failed,
               headline: "Oh no. It's bad.",
               subline: "Something unexpected happened which our app couldn't recover from.\nPlease restart the app.",
               action: () => Future.delayed(const Duration(seconds: 1), () => exit(1)),
@@ -84,14 +84,14 @@ Future<void> showCommonErrorDialog(
 }
 
 class _CommonErrorDialog extends StatefulWidget {
-  final String? asset;
+  final String? animationAsset;
   final String headline;
   final String subline;
   final String actionText;
   final Function? action;
 
   const _CommonErrorDialog(
-      {Key? key, this.asset, required this.actionText, required this.headline, required this.subline, this.action})
+      {Key? key, this.animationAsset, required this.actionText, required this.headline, required this.subline, this.action})
       : super(key: key);
 
   @override
@@ -137,7 +137,7 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AnimatedDialogIcon(asset: widget.asset),
+                        AnimatedDialogIcon(asset: widget.animationAsset),
                         Expanded(
                           child: Text(
                             widget.headline,
@@ -154,7 +154,7 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
                       widget.subline,
                       maxLines: 3,
                       style: Theme.of(context).textTheme.bodyText1,
-                      textAlign: TextAlign.left,
+                      textAlign: TextAlign.center,
                     ),
                     Align(
                       alignment: Alignment.centerRight,

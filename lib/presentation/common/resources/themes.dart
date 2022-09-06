@@ -48,9 +48,9 @@ TextTheme _getApplicationTextTheme() {
     headline4: TextStyle(
         fontSize: 32, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline5: TextStyle(
-        fontSize: 24, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+        fontSize: 23, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline6: TextStyle(
-        fontSize: 17, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+        fontSize: 18, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     button: TextStyle(
         fontSize: 14, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     bodyText1: TextStyle(
@@ -190,7 +190,7 @@ InputDecorationTheme _getInputDecorationTheme() {
     filled: true,
     focusColor: ColorAssets.error, //error color = debug only! change!
     iconColor: ColorAssets.bgBlueLight, errorMaxLines: 2,
-    suffixIconColor: ColorAssets.bgBlueDark,
+    suffixIconColor: ColorAssets.markupGreen, 
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide.none,

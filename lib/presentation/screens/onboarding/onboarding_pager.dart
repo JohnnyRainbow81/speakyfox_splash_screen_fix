@@ -49,15 +49,13 @@ class _OnboardingPagerState extends State<OnboardingPager> {
   @override
   Widget build(BuildContext context) {
     //double maxPageViewHeight = MediaQuery.of(context).size.height * 0.9;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).copyWith(scaffoldBackgroundColor: ColorAssets.lightest).scaffoldBackgroundColor,
-        body: PageView(controller: _pageController, onPageChanged: (value) => _currentPage = value, children: [
-          ..._screenDatas.map((e) => _OnboardingScreen(e)).toList(),
-        ]),
-        bottomSheet: _getProgressWidget(_currentPage),
-        //extendBody: false,
-      ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).copyWith(scaffoldBackgroundColor: ColorAssets.lightest).scaffoldBackgroundColor,
+      body: PageView(controller: _pageController, onPageChanged: (value) => _currentPage = value, children: [
+        ..._screenDatas.map((e) => _OnboardingScreen(e)).toList(),
+      ]),
+      bottomSheet: _getProgressWidget(_currentPage),
+      //extendBody: false,
     );
   }
 
@@ -94,7 +92,7 @@ class Circle extends StatelessWidget {
           shape: BoxShape.circle,
           border: filled
               ? Border.all(width: 0, color: ColorAssets.primary)
-              : Border.all(width: 2, color: ColorAssets.primary),
+              : Border.all(width: 1.6, color: ColorAssets.primary),
         ),
       ),
     );

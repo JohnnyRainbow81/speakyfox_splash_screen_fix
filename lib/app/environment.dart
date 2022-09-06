@@ -54,7 +54,7 @@ class BuildEnvironment {
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
-    if (kDebugMode || kProfileMode) {
+    if (kDebugMode || kProfileMode) { 
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);
     } else if (kReleaseMode) {

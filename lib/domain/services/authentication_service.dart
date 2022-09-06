@@ -88,9 +88,9 @@ class AuthenticationService {
 
     if (roles.isEmpty) return false;
     if (group.isEmpty) return true;
-    if (env.production && roles.contains(Role.developer)) return true;
+    if (env.production && roles.contains(Role.Developer)) return true;
     if (roles.isNotEmpty) {
-      if (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator)) return true;
+      if (roles.contains(Role.SystemAdministrator) || roles.contains(Role.Administrator)) return true;
     }
     return roles.any((role) => role.name == group);
   }
@@ -101,10 +101,10 @@ class AuthenticationService {
     if (roles.isEmpty) return false;
     if (groups.isEmpty) return true; //FIXME really?
     if (!env.production) {
-      if (roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.Developer)) return true;
     }
     if (roles.isNotEmpty) {
-      if (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator)) return true;
+      if (roles.contains(Role.SystemAdministrator) || roles.contains(Role.Administrator)) return true;
     }
     //Check if any role in roles == any group in groups
     return roles.any((role) => groups.any((group) => role.name == group));
@@ -115,9 +115,9 @@ class AuthenticationService {
 
     if (roles.isEmpty) return false;
     if (!env.production) {
-      if (roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.Developer)) return true;
     }
-    return (roles.contains(Role.systemAdministrator) || roles.contains(Role.administrator));
+    return (roles.contains(Role.SystemAdministrator) || roles.contains(Role.Administrator));
   }
 
   bool isCMSUser() {
@@ -125,15 +125,15 @@ class AuthenticationService {
 
     if (roles.isEmpty) return false;
     if (!env.production) {
-      if (roles.contains(Role.developer)) return true;
+      if (roles.contains(Role.Developer)) return true;
     }
-    return (roles.contains(Role.systemAdministrator) ||
-        roles.contains(Role.administrator) ||
-        roles.contains(Role.creator) ||
-        roles.contains(Role.contentManager) ||
-        roles.contains(Role.contentAssistent) ||
-        roles.contains(Role.marketingManager) ||
-        roles.contains(Role.marketingAssistent));
+    return (roles.contains(Role.SystemAdministrator) ||
+        roles.contains(Role.Administrator) ||
+        roles.contains(Role.Creator) ||
+        roles.contains(Role.ContentManager) ||
+        roles.contains(Role.ContentAssistent) ||
+        roles.contains(Role.MarketingManager) ||
+        roles.contains(Role.MarketingAssistent));
   }
 
   Future<void> refreshToken() async {

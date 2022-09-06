@@ -22,7 +22,7 @@ extension UserMapper on UserDto {
       lastName: lastName ?? "",
       formOfAddress: formOfAddress ?? "",
       id: id,
-      roles: roles?.map((roleStr) => Role.values.byName(roleStr.toLowerCase())).toList() ??
+      roles: roles?.map((roleStr) => Role.values.byName(roleStr)).toList() ??
           [], //Convert uppercase String (like "User") to lowercase enum
       subscriptionIds: subscriptionIds?.toList() ?? [],
       accessFailedAccount: accessFailedAccount ?? 0,

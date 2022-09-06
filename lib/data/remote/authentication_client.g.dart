@@ -32,7 +32,7 @@ class _AuthenticationClient implements AuthenticationClient {
                 extra: _extra,
                 contentType: 'application/x-www-form-urlencoded')
             .compose(_dio.options,
-                'https://speakyfox-api-production.herokuapp.com/connect/token',
+                'https://speakyfox-api-qa.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TicketDto.fromJson(_result.data!);
@@ -56,7 +56,7 @@ class _AuthenticationClient implements AuthenticationClient {
                 extra: _extra,
                 contentType: 'application/x-www-form-urlencoded')
             .compose(_dio.options,
-                'https://speakyfox-api-production.herokuapp.com/connect/token',
+                'https://speakyfox-api-qa.herokuapp.com/connect/token',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TicketDto.fromJson(_result.data!);
@@ -67,15 +67,21 @@ class _AuthenticationClient implements AuthenticationClient {
   Future<Response<UserDto>> fetchUser(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'authorization': token};
+    final _headers = <String, dynamic>{
+      r'Content-Type': 'application/json',
+      r'authorization': token
+    };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<UserDto>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/users/me',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<Response<UserDto>>(Options(
+                method: 'GET',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, '/users/me',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<UserDto>.fromJson(
       _result.data!,
       (json) => UserDto.fromJson(json as Map<String, dynamic>),

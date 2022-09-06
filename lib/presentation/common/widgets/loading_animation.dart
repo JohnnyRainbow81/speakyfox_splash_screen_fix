@@ -9,12 +9,12 @@ class LoadingAnimation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color? backgroundColor = Colors.transparent;
-    if (Platform.isIOS) backgroundColor = ColorAssets.primary;
+    if (Platform.isIOS) backgroundColor = ColorAssets.lightest;
     return RepaintBoundary(
       child: CircularProgressIndicator.adaptive(
         strokeWidth: 2,
         backgroundColor: backgroundColor,
-        valueColor: const AlwaysStoppedAnimation<Color>(ColorAssets.primary),
+        valueColor: const AlwaysStoppedAnimation<Color>(ColorAssets.footerBlue),
       ),
     );
   }

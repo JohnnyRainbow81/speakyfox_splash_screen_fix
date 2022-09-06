@@ -1,6 +1,6 @@
 {
   "production": false,
-  "serverUrl": "https://speakyfox-api-qa.herokuapp.com/", 
+  "serverUrl": "https://speakyfox-api-qa.herokuapp.com/api/v1/", 
   "serverUrlV2": "https://speakyfox-api-qa.herokuapp.com/api/v2/",
   "documentrApiUrl": "https://documentr-api-qa.herokuapp.com/",
   "documentrApiKey": "394hu0isf02ui4f",

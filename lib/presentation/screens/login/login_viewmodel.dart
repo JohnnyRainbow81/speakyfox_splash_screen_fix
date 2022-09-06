@@ -85,7 +85,7 @@ class LoginViewModel extends BaseViewModel {
         _passwordError == null &&
         _emailError == null;
     if (isAllValid) {
-      if(_allInputsAreValidCallback!= null) {
+      if (_allInputsAreValidCallback != null) {
         _allInputsAreValidCallback!();
       }
     }
@@ -101,16 +101,18 @@ class LoginViewModel extends BaseViewModel {
     // FIXME not elegant! I use try/catch here because the backend gives 400 in case of wrong credentials instead of 403
     //  Fix: Go to AuthRepo-Impl and throw manually a LoginNotSuccessfullException
     try {
+      setBusy(true);
       _isLoggedIn = await _authenticationService.login(_username, _password);
+      setBusy(false);
       if (isLoggedIn) {
-        notifyListeners();
+        notifyListeners(); //eventually redundant
       }
     } catch (e) {
       _isLoggedIn = false;
       setError(LoginNotSuccessfulException());
+    } finally {
+      setBusy(false);
     }
-
-    //notifyListeners();
     return _isLoggedIn;
   }
 

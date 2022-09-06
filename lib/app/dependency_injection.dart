@@ -60,6 +60,7 @@ import 'package:speakyfox/domain/services/subscription_service.dart';
 import 'package:speakyfox/domain/services/user_service.dart';
 import 'package:speakyfox/domain/services/vocabulary_service.dart';
 import 'package:speakyfox/main.dart';
+import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 
 import 'connectivity_service.dart';
@@ -76,7 +77,7 @@ Future<void> initializeAuthenticationDependencies() async {
   Dio dioAuth = isQABackendAvailable
       ? await DioAuth.initialize(env.serverUrl)
       //as long as the QA backend doesn't work for authentication testing => take the production backend
-      : await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/"); 
+      : await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
 
   //ConnectivityService
   locator.registerLazySingleton(() => ConnectivityService());
@@ -187,4 +188,6 @@ Future<void> initializeDependencies(String token) async {
 
   //////////////////////////////////////
   ////////////ViewModels//////////////
+
+  locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
 }
