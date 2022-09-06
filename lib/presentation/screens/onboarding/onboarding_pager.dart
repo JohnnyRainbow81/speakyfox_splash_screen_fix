@@ -117,7 +117,7 @@ class _OnboardingScreen extends StatelessWidget {
       children: [
         screenData.imageAsset != null
             ? AspectRatio(aspectRatio: 4 / 5, child: Image.asset(screenData.imageAsset!))
-            : AspectRatio(aspectRatio: 4 / 5, child: const Placeholder()),
+            : const AspectRatio(aspectRatio: 4 / 5, child: Placeholder()),
         const SizedBox(
           height: 16,
         ),
