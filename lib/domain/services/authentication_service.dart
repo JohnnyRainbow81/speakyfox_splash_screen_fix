@@ -50,6 +50,7 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
+    _authenticationRepository.saveCredentials(identityToken);
     _credentials = identityToken;
 
     //DI for authenticated HTTP calls
@@ -68,8 +69,22 @@ class AuthenticationService {
     return false;
   }
 
+  Future<bool> tryInitializingAuthenticationFromCache() async {
+    //if credentials are already set in authenticationService => check if valid
+    bool authenticated = _credentials != null && _credentials?.user != null && !isExpired();
+    if (authenticated == false) {
+      //no credentials? => try to load any from local cache
+      IdentityToken? identityToken = await _authenticationRepository.loadCredentials();
+      if (identityToken != null) {
+        _credentials = identityToken;
+        authenticated = isExpired();
+      }
+    }
+    return authenticated;
+  }
+
   bool isAuthenticated() {
-    return _credentials != null && _credentials?.user != null;
+    return _credentials != null && _credentials?.user != null && !isExpired();
   }
 
   Future<bool> sendPasswordResetEmail(SendPasswordResetBody body) async {
@@ -144,6 +159,8 @@ class AuthenticationService {
         accessToken: ticket.accessToken,
         refreshToken: _credentials!.refreshToken,
         user: _credentials!.user);
+        
+    _authenticationRepository.saveCredentials(identityToken);
     _credentials = identityToken;
   }
 

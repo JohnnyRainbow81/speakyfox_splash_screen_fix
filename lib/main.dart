@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:speakyfox/app/environment.dart';
+import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
@@ -50,6 +51,10 @@ main() async {
 
     //dependency injection of authentication stuff until we have an authToken
     await initializeAuthenticationDependencies();
+
+//Is this clean? > ask Julien
+    //Check if User has already valid credentials on her device
+    await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
 
     runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {

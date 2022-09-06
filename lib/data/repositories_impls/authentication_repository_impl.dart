@@ -4,7 +4,11 @@ import 'dart:io';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/data/dtos/identity_token_dto.dart';
+import 'package:speakyfox/data/dtos/ticket_dto.dart';
+import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
+import 'package:speakyfox/data/mappers/identity_token_mapper.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
@@ -12,6 +16,7 @@ import 'package:speakyfox/data/requests/authentication_body.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
+import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
@@ -33,8 +38,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       AuthenticationRequestBody body /* String username, String password, String grantType */) async {
     //Try to load from local source
     try {
-      Ticket ticket = await _authenticationLocalSource.loadTicket();
-      return ticket;
+      TicketDto ticket = await _authenticationLocalSource.loadTicket();
+      return ticket.toTicket();
     } catch (cacheError) {
       //Not stored locally? get from backend
       if (await _connectivityService.hasConnection()) {
@@ -113,8 +118,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<User> fetchUser(String authToken) async {
     try {
-      final User user = await _authenticationLocalSource.loadUser();
-      return user;
+      final UserDto user = await _authenticationLocalSource.loadUser();
+      return user.toUser();
     } catch (cacheError) {
       if (await _connectivityService.hasConnection()) {
         try {
@@ -147,21 +152,36 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<bool> validateToken(String userId, String token) async {
-    
-      if (await _connectivityService.hasConnection()) {
-        try {
-          final response = await _authenticationClient.validateToken(userId, token);
-           bool success = response.data;
-          return success;
-        } catch (error) {
-          ErrorHandler.handleError(error);
-        }
-      } else {
-        //No internet
-        //get from Cache?
-        throw NoInternetConnectionUIException();
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _authenticationClient.validateToken(userId, token);
+        bool success = response.data;
+        return success;
+      } catch (error) {
+        ErrorHandler.handleError(error);
       }
-    
+    } else {
+      //No internet
+      //get from Cache?
+      throw NoInternetConnectionUIException();
+    }
+
     throw UIException(message: "AuthenticationRepositoryImpl.validateToken()");
+  }
+
+  @override
+  Future<IdentityToken?> loadCredentials() async {
+    try {
+      IdentityTokenDto identityTokenDto = await _authenticationLocalSource.loadCredentials();
+      return identityTokenDto.toIdentityToken();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<bool> saveCredentials(IdentityToken identityToken) async {
+    bool saved = await _authenticationLocalSource.saveCredentials(identityToken.toIdentityTokenDto());
+    return saved;
   }
 }

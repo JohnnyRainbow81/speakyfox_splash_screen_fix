@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:speakyfox/app/dependency_injection.dart';
+import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_widget.dart';
 import '../presentation/common/resources/themes.dart';
 import '../presentation/common/routes.dart';
@@ -31,7 +33,7 @@ class SpeakyFox extends StatelessWidget {
         if (widget != null) return widget;
         throw ('widget is null');
       },
-      initialRoute: Routes.onboarding, //just for testing > remove
+      initialRoute: locator<AuthenticationService>().isAuthenticated() ? Routes.home : Routes.onboarding, //just for testing > remove
     );
   }
 }
