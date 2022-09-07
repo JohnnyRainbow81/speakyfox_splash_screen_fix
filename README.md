@@ -1,21 +1,10 @@
-# SpeakyFox Multiplatform App
+# Speakyfox App
+This is the repository for the multi plattfom app for [Speakyfox](https://speakyfox.com) written in Flutter.
 
-///////////////////////
-Clean Architecture
+## Installation
 
-Layer-structure:
+## Usage
 
-Presentation(V -> VM -)--> Domain(Services, Models-)--> Data(Repositories(remote, local)) 
+## Test
 
-plus 
-
-App(global configs & functionalities, helpers, ...) 
-
-
-State-Management-lib: stacked
-
-////////////////////////
-
-To generate JSON-Mappings type in CMD:
-
-flutter pub run build_runner build --delete-conflicting-outputs
+## Deploy
