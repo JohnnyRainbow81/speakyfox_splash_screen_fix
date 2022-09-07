@@ -14,10 +14,6 @@ class Ticket {
     required this.tokenType,
   });
 
-  @override
-  String toString() {
-    return 'Ticket(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
-  }
 }
 
 //redundant?

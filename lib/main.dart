@@ -33,7 +33,7 @@ main() async {
     //TODO Specify anonymous user hash for identification in Crashlytics
     FirebaseCrashlytics.instance.setUserIdentifier("some_hashed_user_identifier"); //Specify user later
 
-    //Called whenever Flutter framework catches an error. By default, this calles [FlutterError.presentError]
+    //Called whenever Flutter framework catches an error. By default, this calls [FlutterError.presentError]
     FlutterError.onError = (details) {
       FirebaseCrashlytics.instance.recordFlutterFatalError(details);
       FirebaseCrashlytics.instance.recordFlutterError(details);
@@ -52,11 +52,14 @@ main() async {
     //dependency injection of authentication stuff until we have an authToken
     await initializeAuthenticationDependencies();
 
-//Is this clean? > ask Julien
+    //Is this clean? > ask Julien
     //Check if User has already valid credentials on her device
-    await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
+    await locator<AuthenticationService>()
+        .tryInitializingAuthenticationFromCache()
+        .then((authToken) => authToken != null ? initializeDependencies(authToken) : null);
 
     runApp(Phoenix(child: SpeakyFox()));
+    
   }, (Object error, StackTrace stack) {
     //Error that aren't caught by Flutter
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);

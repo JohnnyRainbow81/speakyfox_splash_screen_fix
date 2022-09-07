@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:speakyfox/app/dependency_injection.dart';
+import 'package:speakyfox/app/error_handling/error_handler.dart';
+import 'package:speakyfox/domain/services/authentication_service.dart';
 
 //Different Dio classes with different base urls are needed because we have different backend urls throughout the app.
 //And because the dio classes are setup together by dependency injection at the start of the app.
@@ -42,7 +45,7 @@ class DioAuth {
     Dio dio = Dio();
     int timeOut = 60 * 1000; // 1 min
     Map<String, String> headers = {
-      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType, 
+      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
       HttpHeaders.acceptHeader: Headers.jsonContentType,
     };
 
@@ -62,12 +65,13 @@ class DioAuth {
 
 class DioV1 {
   DioV1._();
+  static final AuthenticationService _authenticationService = locator<AuthenticationService>();
 
   static Future<Dio> initialize(String baseUrl, String token) async {
     Dio dio = Dio();
     int timeOut = 10 * 1000; // 10sec
     Map<String, String> headers = {
-      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType, 
+      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
       HttpHeaders.acceptHeader: Headers.jsonContentType,
       HttpHeaders.authorizationHeader: "Bearer $token"
     };
@@ -92,19 +96,31 @@ class DioV1 {
         onRequest: (options, handler) {
           return handler.next(options);
         },
-        onError: (error, handler) async{
-          if(error.response?.statusCode == 403 ||
-          error.response?.statusCode == 401) {
-            //How to avoid circular dependency to AuthentificationService here, which has the 
-            //identityToken containing the refreshToken which we need here? 
-            //Maybe save refreshToken to local storage and inject the local storage here? Seems unclean...
+        onError: (error, handler) async {
+          if (error.response?.statusCode == 401) {
+            try {
+              //fetch new accessToken by using refreshToken:
+              await _authenticationService.refreshToken();
 
+              //re-issue the failed request with new accessToken:
+              final options = Options(
+                method: error.requestOptions.method,
+                headers: error.requestOptions.headers..update(HttpHeaders.authorizationHeader,
+                    (_) => "Bearer ${_authenticationService.credentials!.accessToken}"),
+              );
+              dio.request<dynamic>(error.requestOptions.path,
+                  data: error.requestOptions.data,
+                  queryParameters: error.requestOptions.queryParameters,
+                  options: options);
+            } catch (e) {
+              debugPrint("Error in Dio.onErrorInterceptor: $e");
+              ErrorHandler.handleError(e);
+            }
           }
           return handler.next(error);
         },
       ));
     }
-    
     return dio;
   }
 }

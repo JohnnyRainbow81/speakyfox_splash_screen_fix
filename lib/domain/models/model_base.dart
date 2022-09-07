@@ -17,9 +17,4 @@ abstract class ModelBase {
     required this.deleted,
     required this.deletedBy,
   });
-
-  @override
-  String toString() {
-    return 'BaseModel(id: $id, modified: $modified, modifiedBy: $modifiedBy, created: $created, createdBy: $createdBy, deleted: $deleted, deletedBy: $deletedBy)';
-  }
 }

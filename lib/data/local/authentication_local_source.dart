@@ -20,7 +20,8 @@ class AuthenticationLocalSource {
 
   Future<bool> saveTicket(TicketDto ticket) async {
     try {
-      return await _sharedPreferences.setString(Keys.user.name, ticket.toJson().toString());
+      String jsonStr = json.encode(ticket.toJson());
+      return await _sharedPreferences.setString(Keys.user.name, jsonStr);
     } catch (e) {
       throw CacheSavingException();
     }
@@ -38,7 +39,8 @@ class AuthenticationLocalSource {
 
   Future<bool> saveUser(UserDto user) async {
     try {
-      return await _sharedPreferences.setString(Keys.user.name, user.toJson().toString());
+      String jsonStr = json.encode(user.toJson());
+      return await _sharedPreferences.setString(Keys.user.name, jsonStr);
     } catch (e) {
       throw CacheSavingException();
     }
@@ -66,7 +68,8 @@ class AuthenticationLocalSource {
 
   Future<bool> saveCredentials(IdentityTokenDto identityTokenDto) async {
     try {
-      return await _sharedPreferences.setString(Keys.identityToken.name, identityTokenDto.toJson().toString());
+      String jsonStr = json.encode(identityTokenDto.toJson());
+      return await _sharedPreferences.setString(Keys.identityToken.name, jsonStr);
     } catch (e) {
       throw CacheSavingException();
     }

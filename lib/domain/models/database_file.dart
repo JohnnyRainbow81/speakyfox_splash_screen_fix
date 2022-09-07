@@ -40,8 +40,5 @@ class DatabaseFile extends ModelBase {
             deleted: deleted,
             deletedBy: deletedBy);
 
-  @override
-  String toString() {
-    return 'DatabaseFile(bucketName: $bucketName, name: $name, size: $size, contentType: $contentType, type: $type, metadata: $metadata)${super.toString()}';
-  }
+
 }

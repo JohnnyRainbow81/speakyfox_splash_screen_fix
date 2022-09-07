@@ -25,8 +25,4 @@ class BaseDto {
   factory BaseDto.fromJson(Map<String, dynamic> json) => _$BaseDtoFromJson(json);
   Map<String, dynamic> toJson() => _$BaseDtoToJson(this);
 
-  @override
-  String toString() {
-    return 'BaseDto(id: $id, modified: $modified, modifiedBy: $modifiedBy, created: $created, createdBy: $createdBy, deleted: $deleted, deletedBy: $deletedBy)';
-  }
 }

@@ -47,8 +47,5 @@ class Language extends ModelBase {
             deleted: deleted,
             deletedBy: deletedBy);
 
-  @override
-  String toString() {
-    return 'Language(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId)\n${super.toString()}';
-  }
+ 
 }

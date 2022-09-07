@@ -28,8 +28,4 @@ class TicketDto {
 
   Map<String, dynamic> toJson() => _$TicketDtoToJson(this);
 
-  @override
-  String toString() {
-    return 'TicketDto(accessToken: $accessToken, expiresIn: $expiresIn, refreshToken: $refreshToken, scope: $scope, tokenType: $tokenType)';
-  }
 }

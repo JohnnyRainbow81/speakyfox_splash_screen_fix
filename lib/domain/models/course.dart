@@ -49,8 +49,5 @@ class Course extends ModelBase {
             deleted: deleted,
             deletedBy: deletedBy);
 
-  @override
-  String toString() {
-    return 'Course(title: $title, description: $description, fileId: $fileId, isOnboarding: $isOnboarding, languagePairId: $languagePairId, classs: $classs, progress: $progress, lectures: $lectures, icon: $icon, isLocked: $isLocked, isPublished: $isPublished, order: $order, classId: $classId)';
-  }
+
 }

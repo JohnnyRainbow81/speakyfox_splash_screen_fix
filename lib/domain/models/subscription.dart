@@ -51,10 +51,6 @@ class Subscription extends ModelBase {
             deleted: deleted,
             deletedBy: deletedBy);
 
-  @override
-  String toString() {
-    return 'Subscription(productDisplayTitle: $productDisplayTitle, planDisplayTitle: $planDisplayTitle, currentPeriodStart: $currentPeriodStart, currentPeriodEnd: $currentPeriodEnd, couponKey: $couponKey, languages: $languages, interval: $interval, intervalCount: $intervalCount, paymentMethod: $paymentMethod, nextBillingAmount: $nextBillingAmount, invoices: $invoices)';
-  }
 }
 
 enum SubscriptionType { oneTime, month, threeMonths, sixMonths, year }

@@ -69,18 +69,21 @@ class AuthenticationService {
     return false;
   }
 
-  Future<bool> tryInitializingAuthenticationFromCache() async {
-    //if credentials are already set in authenticationService => check if valid
-    bool authenticated = _credentials != null && _credentials?.user != null && !isExpired();
-    if (authenticated == false) {
-      //no credentials? => try to load any from local cache
+  Future<String?> tryInitializingAuthenticationFromCache() async {
+    //check if valid credentials are already set in authenticationService
+    bool hasValidCredentials = _credentials != null && _credentials?.user != null && !isExpired();
+
+    if (hasValidCredentials == true) {
+      return _credentials!.accessToken;
+    } else {
+      //try to load any from local cache
       IdentityToken? identityToken = await _authenticationRepository.loadCredentials();
       if (identityToken != null) {
         _credentials = identityToken;
-        authenticated = isExpired();
+        return !isExpired() ? identityToken.accessToken : null;
       }
     }
-    return authenticated;
+    return null; //No valid authToken so return null
   }
 
   bool isAuthenticated() {
@@ -159,7 +162,7 @@ class AuthenticationService {
         accessToken: ticket.accessToken,
         refreshToken: _credentials!.refreshToken,
         user: _credentials!.user);
-        
+
     _authenticationRepository.saveCredentials(identityToken);
     _credentials = identityToken;
   }

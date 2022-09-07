@@ -48,8 +48,5 @@ class LanguageDto extends BaseDto {
   Map<String, dynamic> toJson() => _$LanguageDtoToJson(this);
 
 
-  @override
-  String toString() {
-    return 'LanguageDto(title: $title, description: $description, key: $key, icon: $icon, buttonImage: $buttonImage, isPublished: $isPublished, buttonFileId: $buttonFileId, languagePair: $languagePair)';
-  }
+
 }
