@@ -105,8 +105,9 @@ class DioV1 {
               //re-issue the failed request with new accessToken:
               final options = Options(
                 method: error.requestOptions.method,
-                headers: error.requestOptions.headers..update(HttpHeaders.authorizationHeader,
-                    (_) => "Bearer ${_authenticationService.credentials!.accessToken}"),
+                headers: error.requestOptions.headers
+                  ..update(HttpHeaders.authorizationHeader,
+                      (_) => "Bearer ${_authenticationService.credentials!.accessToken}"),
               );
               dio.request<dynamic>(error.requestOptions.path,
                   data: error.requestOptions.data,
@@ -116,6 +117,9 @@ class DioV1 {
               debugPrint("Error in Dio.onErrorInterceptor: $e");
               ErrorHandler.handleError(e);
             }
+          } else if (error.response?.statusCode == 403) {
+            //TODO
+            ErrorHandler.handleError(error);
           }
           return handler.next(error);
         },

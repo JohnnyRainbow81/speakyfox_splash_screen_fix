@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 
 class ErrorHandler {
@@ -13,8 +14,8 @@ class ErrorHandler {
     //-send Error/Exception for investigation to Crashlytics backend
     //-throw own UIExceptions to show to the users
 
-    print("****Caught by ErrorHandler*****");
-    print("ERROR: ${error.runtimeType}");
+    debugPrint("****Caught by ErrorHandler*****");
+    debugPrint("ERROR: ${error.runtimeType}");
 
     //Dio/-Retrofit errors
     if (error is DioError) {
@@ -58,7 +59,7 @@ class ErrorHandler {
   }
 
   static void _handleDioException(DioError dioError) {
-    switch (dioError.type) {
+    switch (dioError.type) { 
       case DioErrorType.connectTimeout:
         FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "connectTimeOut");
         throw ConnectTimeOutUIException();
