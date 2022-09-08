@@ -72,11 +72,6 @@ class MockAuthenticationRepository extends _i1.Mock
               _FakeUser_1(this, Invocation.method(#fetchUser, [authToken]))))
       as _i6.Future<_i3.User>);
   @override
-  _i6.Future<_i9.IdentityToken?> loadCredentials() =>
-      (super.noSuchMethod(Invocation.method(#loadCredentials, []),
-              returnValue: _i6.Future<_i9.IdentityToken?>.value())
-          as _i6.Future<_i9.IdentityToken?>);
-  @override
   _i6.Future<bool> saveCredentials(_i9.IdentityToken? identityToken) =>
       (super.noSuchMethod(Invocation.method(#saveCredentials, [identityToken]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);

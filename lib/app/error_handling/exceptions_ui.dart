@@ -152,6 +152,15 @@ class LoginNotSuccessfulException extends UIException {
         );
 }
 
+class LoggedOutException extends UIException {
+  LoggedOutException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Your session was logged out.",
+          description: description ?? "Please log in again with your username and password.",
+        );
+}
+
 class UserException extends UIException {
   UserException({int? code, String? message, String? description})
       : super(
@@ -212,6 +221,15 @@ class CacheSavingException extends UIException {
           code: code ?? 0,
           message: message ?? "Data storage error",
           description: description ?? "Couldn't save data in local storage",
+        );
+}
+
+class CacheClearingException extends UIException {
+  CacheClearingException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Data storage error",
+          description: description ?? "Couldn't clear data in local storage",
         );
 }
 

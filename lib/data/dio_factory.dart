@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
+import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 
 //Different Dio classes with different base urls are needed because we have different backend urls throughout the app.
@@ -19,13 +20,13 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 
 //   static Future<Dio> initialize(String baseUrl) async {
 //     Dio dio = Dio();
-//     int _timeOut = 60 * 1000; // 1 min
+//     int timeOut = 60 * 1000; // 1 min
 //     Map<String, String> headers = {
-//       CONTENT_TYPE: X_WWW_FORM_URLENCODED,
-//       ACCEPT: APPLICATION_JSON,
+//       HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
+//       HttpHeaders.acceptHeader: Headers.jsonContentType,
 //     };
 
-//     dio.options = BaseOptions(connectTimeout: _timeOut, receiveTimeout: _timeOut, headers: headers);
+//     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
 //     dio.options.baseUrl = baseUrl;
 
 //     if (kReleaseMode) {
@@ -38,93 +39,80 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 //     return dio;
 //   }
 // }
-class DioAuth {
-  DioAuth._();
-
-  static Future<Dio> initialize(String baseUrl) async {
-    Dio dio = Dio();
-    int timeOut = 60 * 1000; // 1 min
-    Map<String, String> headers = {
-      HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
-      HttpHeaders.acceptHeader: Headers.jsonContentType,
-    };
-
-    dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
-    dio.options.baseUrl = baseUrl;
-
-    if (kReleaseMode) {
-      print("release mode no logs");
-    } else {
-      dio.interceptors.add(
-          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-    }
-
-    return dio;
-  }
-}
 
 class DioV1 {
   DioV1._();
   static final AuthenticationService _authenticationService = locator<AuthenticationService>();
 
-  static Future<Dio> initialize(String baseUrl, String token) async {
+  static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
-    int timeOut = 10 * 1000; // 10sec
+    int timeOut = 60 * 1000; // 10sec
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
       HttpHeaders.acceptHeader: Headers.jsonContentType,
-      HttpHeaders.authorizationHeader: "Bearer $token"
     };
 
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
-    if (kReleaseMode) {
-      print("release mode no logs");
-    } else {
-      //check this:
-      //https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
-      //https://pub.dev/packages/dio#interceptors
-      //use AuthenticationService here??
-      dio.interceptors.add(
-          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+    //check this:
+    //https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
+    //https://pub.dev/packages/dio#interceptors
+    //use AuthenticationService here?? Because Dio <> AuthenticationService would be in a cyclic dependency then
+    dio.interceptors
+        .add(PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
 
-      dio.interceptors.add(InterceptorsWrapper(
-        onResponse: (response, handler) {
-          return handler.next(response);
-        },
-        onRequest: (options, handler) {
+    dio.interceptors.add(InterceptorsWrapper(
+      onResponse: (response, handler) {
+        return handler.next(response);
+      },
+      onRequest: (options, handler) {
+        //Request already has accessToken? > return
+        //FIXME REDUNDANT because there will never be a auth header until this point
+        if (options.headers.containsKey(HttpHeaders.authorizationHeader)) {
           return handler.next(options);
-        },
-        onError: (error, handler) async {
-          if (error.response?.statusCode == 401) {
-            try {
-              //fetch new accessToken by using refreshToken:
-              await _authenticationService.refreshToken();
+        }
+        IdentityToken? credentials = _authenticationService.getCredentials();
+        if (credentials != null) {
+          String accessToken = credentials.accessToken;
+          options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
+        }
+        //TODO check if OK
+        return handler.next(options);//handler.resolve(Response(requestOptions: options)); //handler.next(options);
+      },
+      onError: (error, handler) async {
+        if (error.response?.statusCode == 401) {
+          try {
+            //refresh accessToken by using refreshToken:
+            await _authenticationService.refreshToken();
 
-              //re-issue the failed request with new accessToken:
-              final options = Options(
-                method: error.requestOptions.method,
-                headers: error.requestOptions.headers
-                  ..update(HttpHeaders.authorizationHeader,
-                      (_) => "Bearer ${_authenticationService.credentials!.accessToken}"),
-              );
-              dio.request<dynamic>(error.requestOptions.path,
-                  data: error.requestOptions.data,
-                  queryParameters: error.requestOptions.queryParameters,
-                  options: options);
-            } catch (e) {
-              debugPrint("Error in Dio.onErrorInterceptor: $e");
-              ErrorHandler.handleError(e);
-            }
-          } else if (error.response?.statusCode == 403) {
-            //TODO
-            ErrorHandler.handleError(error);
+            //get new accessToken
+            String accessToken = _authenticationService.getCredentials()!.accessToken;
+
+            //re-issue the failed request with new accessToken:
+            final options = Options(
+              method: error.requestOptions.method,
+              headers: error.requestOptions.headers
+                ..update(HttpHeaders.authorizationHeader, (_) => "Bearer $accessToken"),
+            );
+            final response = await dio.request<dynamic>(error.requestOptions.path,
+                data: error.requestOptions.data,
+                queryParameters: error.requestOptions.queryParameters,
+                options: options);
+            handler.resolve(response);
+
+          } catch (e) {
+            debugPrint("Error in Dio.onErrorInterceptor: $e");
+            ErrorHandler.handleError(e);
           }
-          return handler.next(error);
-        },
-      ));
-    }
+        } else if (error.response?.statusCode == 403) {
+          //TODO
+          ErrorHandler.handleError(error);
+        }
+        return handler.next(error);
+      },
+    ));
+
     return dio;
   }
 }

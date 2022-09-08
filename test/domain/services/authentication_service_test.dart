@@ -30,15 +30,16 @@ void main() async {
 
       await authenticationService.login("test", "password123");
 
-      expect(authenticationService.credentials, isNotNull);
-      debugPrint("expires: ${authenticationService.credentials?.expires}");
-      expect(authenticationService.credentials?.accessToken, "123456");
-      expect(authenticationService.credentials?.refreshToken, "ABCDEF");
-      expect(authenticationService.credentials?.user, isA<User>());
-      expect(authenticationService.credentials?.user, isNotNull);
+      IdentityToken token = authenticationService.getCredentials()!;
+      expect(token, isNotNull);
+      debugPrint("expires: ${token.expires}");
+      expect(token.accessToken, "123456");
+      expect(token.refreshToken, "ABCDEF");
+      expect(token.user, isA<User>());
+      expect(token.user, isNotNull);
 
       expect(authenticationService.isAuthenticated(), true);
-      expect(authenticationService.isExpired(), false);
+      expect(authenticationService.isExpired(token), false);
     },
   );
 
@@ -53,8 +54,7 @@ void main() async {
   test(
     "sendPasswordResetEmail()",
     () async {
-      when(mockAuthenticationRepository.sendPasswordResetEmail(any))
-          .thenAnswer((realInvocation) async => true);
+      when(mockAuthenticationRepository.sendPasswordResetEmail(any)).thenAnswer((realInvocation) async => true);
 
       bool success = await authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: "bla"));
 
@@ -63,20 +63,22 @@ void main() async {
   );
 
   test("refreshToken()", (() async {
-    authenticationService.setCredentials =
-        IdentityToken(expires: "3600", accessToken: "old", refreshToken: "old", user: MockUser());
+    authenticationService
+        .setCredentials(IdentityToken(expires: "3600", accessToken: "old", refreshToken: "old", user: MockUser()));
 
     when(mockAuthenticationRepository.refreshToken(any)).thenAnswer(
         (_) async => Ticket(accessToken: "new", expiresIn: 3600, scope: "", tokenType: "", refreshToken: "new"));
 
     await authenticationService.refreshToken();
 
-    expect(authenticationService.credentials, isNotNull);
-    expect(authenticationService.credentials!.accessToken, "new");
-    expect(authenticationService.credentials!.refreshToken, "old");
-    expect(authenticationService.credentials!.user, isNotNull);
-    expect(authenticationService.isExpired(), false);
+    IdentityToken token = authenticationService.getCredentials()!;
+
+    expect(token, isNotNull);
+    expect(token.accessToken, "new");
+    expect(token.refreshToken, "old");
+    expect(token.user, isNotNull);
+    expect(authenticationService.isExpired(token), false);
     expect(authenticationService.isAuthenticated(), true);
-    debugPrint(authenticationService.credentials!.expires);
+    debugPrint(token.expires);
   }));
 }

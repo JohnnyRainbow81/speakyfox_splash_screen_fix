@@ -1,3 +1,4 @@
+import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
@@ -12,23 +13,24 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/domain/services/base_service.dart';
 
 class UserService extends BaseService<User> {
-  final UserRepository _userRepository;
+  late final UserRepository _userRepository;
   final AuthenticationService _authenticationService;
 
-  UserService(BaseRepository<User> baseRepository, this._userRepository, this._authenticationService)
-      : super(baseRepository);
+  UserService(UserRepositoryImpl userRepositoryImpl, this._authenticationService) : super(userRepositoryImpl) {
+    _userRepository = userRepositoryImpl;
+  }
 
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
     return _userRepository.attachPaymentMethodToUser(type, externalPaymentMethodId);
   }
 
-  Future<bool> changePassword(String currentPassword, String newPassword) {
+  Future<bool> changePassword(String currentPassword, String newPassword) async {
     return _userRepository.changePassword(ChangePasswordRequest(
-        currentPassword: currentPassword, password: _authenticationService.credentials!.user.password));
+        currentPassword: currentPassword, password: (await _authenticationService.getCredentials())!.user.password));
   }
 
-  Future<String> createSetupIntent(PaymentMethodType paymentMethodType) {
-    String userId = _authenticationService.credentials!.user.id!;
+  Future<String> createSetupIntent(PaymentMethodType paymentMethodType) async {
+    String userId = (await _authenticationService.getCredentials())!.user.id!;
     return _userRepository.createSetupIntent(userId, paymentMethodType);
   }
 

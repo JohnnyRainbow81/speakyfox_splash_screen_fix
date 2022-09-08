@@ -13,6 +13,6 @@ void main() async {
    TestWidgetsFlutterBinding.ensureInitialized();
    await BuildEnvironment.init();
    SharedPreferences.setMockInitialValues({});
-   await  initializeDependencies(token);
+   await  initializeDependencies();
   });
 }

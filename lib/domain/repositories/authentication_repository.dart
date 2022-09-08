@@ -12,8 +12,10 @@ abstract class AuthenticationRepository {
   Future<Ticket> refreshToken(RefreshTokenBody body);
 
   Future<User> fetchUser(String authToken);
-  Future<IdentityToken?> loadCredentials();
+
+  IdentityToken? loadCredentials();
   Future<bool> saveCredentials(IdentityToken identityToken);
+  Future<bool> clearCredentials();
 
   Future<bool> resetPassword(String userId, ResetPasswordBody body);
   Future<bool> sendPasswordResetEmail(SendPasswordResetBody body);

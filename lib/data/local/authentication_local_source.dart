@@ -1,16 +1,11 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/dtos/identity_token_dto.dart';
-import 'package:speakyfox/data/mappers/ticket_mapper.dart';
-import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
-import 'package:speakyfox/domain/models/identity_token.dart';
-import 'package:speakyfox/domain/models/user.dart';
-
-import '../../domain/models/ticket.dart';
 
 enum Keys { ticket, user, identityToken }
 
@@ -27,7 +22,7 @@ class AuthenticationLocalSource {
     }
   }
 
-  Future<TicketDto> loadTicket() async {
+  TicketDto loadTicket() {
     if (_sharedPreferences.containsKey(Keys.ticket.name)) {
       String str = _sharedPreferences.getString(Keys.ticket.name)!;
       Map<String, dynamic> map = json.decode(str);
@@ -46,7 +41,7 @@ class AuthenticationLocalSource {
     }
   }
 
-  Future<UserDto> loadUser() async {
+  UserDto loadUser() {
     if (_sharedPreferences.containsKey(Keys.user.name)) {
       String str = _sharedPreferences.getString(Keys.user.name)!;
       Map<String, dynamic> map = json.decode(str);
@@ -56,14 +51,14 @@ class AuthenticationLocalSource {
     throw CacheLoadingException();
   }
 
-  Future<IdentityTokenDto> loadCredentials() async {
+  IdentityTokenDto? loadCredentials() {
     if (_sharedPreferences.containsKey(Keys.identityToken.name)) {
       String str = _sharedPreferences.getString(Keys.identityToken.name)!;
       Map<String, dynamic> map = json.decode(str);
       IdentityTokenDto identityTokenDto = IdentityTokenDto.fromJson(map);
       return identityTokenDto;
     }
-    throw CacheLoadingException();
+    return null;
   }
 
   Future<bool> saveCredentials(IdentityTokenDto identityTokenDto) async {
@@ -72,6 +67,18 @@ class AuthenticationLocalSource {
       return await _sharedPreferences.setString(Keys.identityToken.name, jsonStr);
     } catch (e) {
       throw CacheSavingException();
+    }
+  }
+
+  Future<bool> clearCredentials() async {
+    try {
+      final clearIdentityToken = await _sharedPreferences.setString(Keys.identityToken.name, "");
+      final clearTicket = await _sharedPreferences.setString(Keys.ticket.name, "");
+      final clearUser = await _sharedPreferences.setString(Keys.user.name, "");
+
+      return clearIdentityToken && clearTicket && clearUser;
+    } catch (e) {
+      throw CacheClearingException();
     }
   }
 }

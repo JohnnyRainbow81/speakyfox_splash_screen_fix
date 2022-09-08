@@ -38,7 +38,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       AuthenticationRequestBody body /* String username, String password, String grantType */) async {
     //Try to load from local source
     try {
-      TicketDto ticket = await _authenticationLocalSource.loadTicket();
+      TicketDto ticket = _authenticationLocalSource.loadTicket();
       return ticket.toTicket();
     } catch (cacheError) {
       //Not stored locally? get from backend
@@ -170,10 +170,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<IdentityToken?> loadCredentials() async {
+  IdentityToken? loadCredentials() {
     try {
-      IdentityTokenDto identityTokenDto = await _authenticationLocalSource.loadCredentials();
-      return identityTokenDto.toIdentityToken();
+      IdentityTokenDto? identityTokenDto = _authenticationLocalSource.loadCredentials();
+      return identityTokenDto?.toIdentityToken();
     } catch (e) {
       return null;
     }
@@ -183,5 +183,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<bool> saveCredentials(IdentityToken identityToken) async {
     bool saved = await _authenticationLocalSource.saveCredentials(identityToken.toIdentityTokenDto());
     return saved;
+  }
+
+  @override
+  Future<bool> clearCredentials() async {
+    bool cleared = await _authenticationLocalSource.clearCredentials();
+    return cleared;
   }
 }

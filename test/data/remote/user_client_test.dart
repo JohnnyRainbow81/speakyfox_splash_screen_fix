@@ -8,7 +8,7 @@ import '../../test_get_access_token.dart';
 
 void main() async {
   String token = await getAuthTokenForTesting();
-  final dioV1 = await DioV1.initialize("", token);
+  final dioV1 = await DioV1.initialize("");
   UserClient userClient = UserClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/users/");
   test('createUser() throws 405', (() async {
     CreateProfileUserRequest request =

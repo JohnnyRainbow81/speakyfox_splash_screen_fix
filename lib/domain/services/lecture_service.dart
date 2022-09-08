@@ -1,15 +1,17 @@
+import 'package:speakyfox/data/repositories_impls/lecture_repository_impl.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
 import 'package:speakyfox/domain/models/sequence.dart';
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/lecture_repository.dart';
 import 'package:speakyfox/domain/services/base_service.dart';
 
-
 class LectureService extends BaseService<Lecture> {
-  final LectureRepository<Lecture, Sequence> _lectureRepository;
+  late final LectureRepository<Lecture, Sequence> _lectureRepository;
   late Lecture lecture;
 
-  LectureService(BaseRepository<Lecture> baseRepository, this._lectureRepository) : super(baseRepository);
+  LectureService(LectureRepositoryImpl lectureRepositoryImpl) : super(lectureRepositoryImpl) {
+    _lectureRepository = lectureRepositoryImpl;
+  }
 
   Future<List<Lecture>> getAllLecturesByCourseId(String courseId) {
     return _lectureRepository.getAllLecturesByCourseId(courseId);

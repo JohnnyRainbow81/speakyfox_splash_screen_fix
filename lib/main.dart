@@ -50,16 +50,13 @@ main() async {
     }).sendPort);
 
     //dependency injection of authentication stuff until we have an authToken
-    await initializeAuthenticationDependencies();
+    await initializeDependencies();
 
     //Is this clean? > ask Julien
     //Check if User has already valid credentials on her device
-    await locator<AuthenticationService>()
-        .tryInitializingAuthenticationFromCache()
-        .then((authToken) => authToken != null ? initializeDependencies(authToken) : null);
+    await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
 
     runApp(Phoenix(child: SpeakyFox()));
-    
   }, (Object error, StackTrace stack) {
     //Error that aren't caught by Flutter
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);

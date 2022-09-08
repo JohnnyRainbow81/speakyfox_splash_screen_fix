@@ -13,8 +13,8 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 void main() async {
   late User user;
   //Test on production server with real credentials! (because QA Server isn't up-to-date)
-  final authDio = await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
-  AuthenticationClient authenticationClient = AuthenticationClient(authDio);
+  final dio = await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
+  AuthenticationClient authenticationClient = AuthenticationClient(dio);
 
   test('accessToken()', () async {
     final response = await authenticationClient.accessToken(
@@ -29,7 +29,7 @@ void main() async {
     Ticket ticket = response.toTicket();
     final userDto = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
     user = userDto.data.toUser();
-  
+
     debugPrint(user.firstName);
   }));
 

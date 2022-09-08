@@ -5,8 +5,6 @@ import 'package:speakyfox/domain/models/order.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
 import 'package:speakyfox/domain/models/user.dart';
-import 'package:speakyfox/domain/models/user_payment_method.dart';
-import 'package:speakyfox/domain/repositories/base_repository.dart';
 
 abstract class UserRepository {
   Future<User> createUser(CreateProfileUserRequest user);

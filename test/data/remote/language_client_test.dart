@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/language_mapper.dart';
 import 'package:speakyfox/data/remote/language_client.dart';
@@ -8,9 +9,11 @@ import 'package:speakyfox/domain/models/language.dart';
 import '../../test_get_access_token.dart';
 
 void main() async {
-  String token = await getAuthTokenForTesting();
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await initializeDependencies();
 
-  final dioV1 = await DioV1.initialize("", token);
+  String token = await getAuthTokenForTesting();
+  final dioV1 = await DioV1.initialize("");
   LanguageClient languageClient =
       LanguageClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/languages");
 

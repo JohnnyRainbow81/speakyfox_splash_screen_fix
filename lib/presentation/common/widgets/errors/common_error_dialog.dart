@@ -6,6 +6,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/common/routes.dart';
 import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
 
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
@@ -17,8 +18,13 @@ Future<void> showCommonErrorDialog(
     exception = showInUIException;
   }
 
-  //We handle different exception/error-types differently. We try to funnel every Exception as a UIException into here, but there
-  //might also arrive other Exceptions and Errors we weren't able to convert upfront.
+  //We differentiate between UIException, Exception and Error. 
+  //We try to funnel every Exception as a UIException(for transparent/better UX) into here, but there
+  //might arrive other Exceptions we weren't able to catch & map into an UIException upfront. 
+  //
+  //If [Error]s arrive here (which could but shouldn't happen), we let the user exit from the app by pressing a button.
+  //This might be (at least) a better UX than just crashing the app.
+
   if (exception is UIException) {
     //Handle [UIException]-types
     switch (exception.runtimeType) {
@@ -31,8 +37,12 @@ Future<void> showCommonErrorDialog(
         animationAsset = AnimationAssets.failed;
         actionText = "Restart";
         break;
-      //more later
+      case LoggedOutException:
+        action = () => Navigator.of(context).pushReplacementNamed(Routes.login);
+        actionText = "To Login";
+        break;
     }
+
     return showDialog(
         context: context,
         builder: (context) => _CommonErrorDialog(
@@ -91,7 +101,12 @@ class _CommonErrorDialog extends StatefulWidget {
   final Function? action;
 
   const _CommonErrorDialog(
-      {Key? key, this.animationAsset, required this.actionText, required this.headline, required this.subline, this.action})
+      {Key? key,
+      this.animationAsset,
+      required this.actionText,
+      required this.headline,
+      required this.subline,
+      this.action})
       : super(key: key);
 
   @override
@@ -125,8 +140,7 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
                 shape: BoxShape.rectangle,
                 //border: Border.all(width: 1.5, color: ColorAssets.primary),
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 12, offset: Offset(0, 12))]
-                ),
+                boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 12, offset: Offset(0, 12))]),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

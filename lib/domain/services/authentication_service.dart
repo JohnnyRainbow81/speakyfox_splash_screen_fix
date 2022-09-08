@@ -21,7 +21,7 @@ enum GrantType {
 
 //Only class to communicate with Auth Server
 class AuthenticationService {
-  IdentityToken? _credentials; //gets populated by accessToken-flow
+  //IdentityToken? _credentials; //gets populated by accessToken-flow
 
   final AuthenticationRepository _authenticationRepository;
 
@@ -29,13 +29,16 @@ class AuthenticationService {
     this._authenticationRepository,
   );
 
-  IdentityToken? get credentials {
-    //check if valid here?
-    return _credentials;
+  IdentityToken? getCredentials() {
+    return _authenticationRepository.loadCredentials();
   }
 
-  set setCredentials(IdentityToken token) {
-    _credentials = token;
+  Future<bool> setCredentials(IdentityToken token) {
+    return _authenticationRepository.saveCredentials(token);
+  }
+
+  Future<bool> clearCredentials() {
+    return _authenticationRepository.clearCredentials();
   }
 
   Future<bool> login(String username, String password) async {
@@ -50,11 +53,10 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
-    _authenticationRepository.saveCredentials(identityToken);
-    _credentials = identityToken;
+    setCredentials(identityToken);
 
     //DI for authenticated HTTP calls
-    await initializeDependencies(ticket.accessToken);
+    //await initializeDependencies(ticket.accessToken);
 
     return true;
   }
@@ -63,31 +65,28 @@ class AuthenticationService {
     return DateTime.now().add(Duration(seconds: expiresIn)).toIso8601String();
   }
 
-  bool isExpired() {
-    DateTime expirationTime = DateTime.parse(_credentials!.expires);
+  bool isExpired(IdentityToken credentials) {
+    DateTime expirationTime = DateTime.parse(credentials.expires);
     if (expirationTime.isBefore(DateTime.now())) return true;
     return false;
   }
 
   Future<String?> tryInitializingAuthenticationFromCache() async {
-    //check if valid credentials are already set in authenticationService
-    bool hasValidCredentials = _credentials != null && _credentials?.user != null && !isExpired();
+    IdentityToken? credentials = getCredentials();
+
+    bool hasValidCredentials = credentials != null && !isExpired(credentials);
 
     if (hasValidCredentials == true) {
-      return _credentials!.accessToken;
+      return credentials!.accessToken;
     } else {
-      //try to load any from local cache
-      IdentityToken? identityToken = await _authenticationRepository.loadCredentials();
-      if (identityToken != null) {
-        _credentials = identityToken;
-        return !isExpired() ? identityToken.accessToken : null;
-      }
+      return null; //No valid authToken so return null
     }
-    return null; //No valid authToken so return null
   }
 
   bool isAuthenticated() {
-    return _credentials != null && _credentials?.user != null && !isExpired();
+    IdentityToken? credentials = getCredentials();
+
+    return credentials != null && !isExpired(credentials);
   }
 
   Future<bool> sendPasswordResetEmail(SendPasswordResetBody body) async {
@@ -102,7 +101,9 @@ class AuthenticationService {
   }
 
   bool hasRole(String group) {
-    List<Role> roles = _credentials?.user.roles ?? [];
+    IdentityToken? credentials = getCredentials();
+
+    List<Role> roles = credentials?.user.roles ?? [];
 
     if (roles.isEmpty) return false;
     if (group.isEmpty) return true;
@@ -114,7 +115,9 @@ class AuthenticationService {
   }
 
   bool hasAnyRole(List<String> groups) {
-    List<Role> roles = _credentials?.user.roles ?? [];
+    IdentityToken? credentials = getCredentials();
+
+    List<Role> roles = credentials?.user.roles ?? [];
 
     if (roles.isEmpty) return false;
     if (groups.isEmpty) return true; //FIXME really?
@@ -129,7 +132,9 @@ class AuthenticationService {
   }
 
   bool isAdministrator() {
-    List<Role> roles = _credentials?.user.roles ?? [];
+    IdentityToken? credentials = getCredentials();
+
+    List<Role> roles = credentials?.user.roles ?? [];
 
     if (roles.isEmpty) return false;
     if (!env.production) {
@@ -139,7 +144,9 @@ class AuthenticationService {
   }
 
   bool isCMSUser() {
-    List<Role> roles = _credentials?.user.roles ?? [];
+    IdentityToken? credentials = getCredentials();
+
+    List<Role> roles = credentials?.user.roles ?? [];
 
     if (roles.isEmpty) return false;
     if (!env.production) {
@@ -155,19 +162,25 @@ class AuthenticationService {
   }
 
   Future<void> refreshToken() async {
+    IdentityToken? credentials = getCredentials();
+
     Ticket ticket = await _authenticationRepository.refreshToken(
-        RefreshTokenBody(refreshToken: _credentials!.refreshToken, grantType: GrantType.refresh_token.name));
+        RefreshTokenBody(refreshToken: credentials!.refreshToken, grantType: GrantType.refresh_token.name));
     IdentityToken identityToken = IdentityToken(
         expires: _calculateExpirationDate(ticket.expiresIn),
         accessToken: ticket.accessToken,
-        refreshToken: _credentials!.refreshToken,
-        user: _credentials!.user);
+        refreshToken: credentials.refreshToken,
+        user: credentials.user);
 
-    _authenticationRepository.saveCredentials(identityToken);
-    _credentials = identityToken;
+    setCredentials(identityToken);
   }
 
   Future<bool> validateToken(String userId, String token) {
     return _authenticationRepository.validateToken(userId, token);
+  }
+
+  Future<bool> logout() async{
+    bool clearedCredentials = await _authenticationRepository.clearCredentials();
+    return clearedCredentials;
   }
 }

@@ -74,7 +74,7 @@ class LoginViewModel extends BaseViewModel {
 
   bool get isLoginFormValid {
     //TODO validation
-    return _username.isNotEmpty && _password.isNotEmpty && _usernameError == null && _passwordError == null;
+    return _email.isNotEmpty && _password.isNotEmpty && _emailError == null && _passwordError == null;
   }
 
   bool get isRegisterFormValid {
@@ -102,7 +102,7 @@ class LoginViewModel extends BaseViewModel {
     //  Fix: Go to AuthRepo-Impl and throw manually a LoginNotSuccessfullException
     try {
       setBusy(true);
-      _isLoggedIn = await _authenticationService.login(_username, _password);
+      _isLoggedIn = await _authenticationService.login(_email, _password);
       setBusy(false);
       if (isLoggedIn) {
         notifyListeners(); //eventually redundant
@@ -131,5 +131,6 @@ class LoginViewModel extends BaseViewModel {
     _passwordError = null;
     _usernameError = null;
     _emailError = null;
+    _isLoggedIn = false;
   }
 }

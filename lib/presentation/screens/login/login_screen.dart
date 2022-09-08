@@ -19,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final LoginViewModel _loginViewModel = locator<LoginViewModel>();
 
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   late final ScrollController _scrollController;
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _usernameController.addListener(() => _loginViewModel.validateUsername(_usernameController.text));
+    _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
     _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
 
     _scrollController = ScrollController();
@@ -50,9 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    _usernameController.removeListener(() => _loginViewModel.validateUsername);
+    _emailController.removeListener(() => _loginViewModel.validateEmail);
     _passwordController.removeListener(() => _loginViewModel.validatePassword);
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
 
     _scrollController.dispose();
@@ -67,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     debugPrint("LoginScreen.build() ");
     return ViewModelBuilder.reactive(
+      disposeViewModel: false,
       viewModelBuilder: () => _loginViewModel,
       builder: (context, _, child) {
         if (_loginViewModel.hasError) {
@@ -109,11 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextFormField(
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              hintText: "Username / E-Mail",
-                              errorText: _loginViewModel.userNameError,
-                              prefixIcon: const Icon(Icons.people),
+                              hintText: "E-Mail",
+                              errorText: _loginViewModel.emailError,
+                              prefixIcon: const Icon(Icons.email),
                             ),
-                            controller: _usernameController,
+                            controller: _emailController,
                           ),
                           const SizedBox(
                             height: 24,

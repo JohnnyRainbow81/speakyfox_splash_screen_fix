@@ -33,8 +33,9 @@ class _OnboardingPagerState extends State<OnboardingPager> {
     int previousPage = _currentPage;
     //if page is "half-turned", switch outlined/filled circle
     _currentPage = _pageController.page!.roundToDouble().toInt();
-    if (previousPage != _currentPage) {
-      debugPrint("Filled progress circle should switch now");
+    if (previousPage != _currentPage) { 
+      //=if page is half-flipped we round the currently flipping page value (like 2.542 for half flipped page) 
+      //to a full page (= to 3.0) so the following comparison won't be true after page is half flipped
       setState(() {});
     }
   }

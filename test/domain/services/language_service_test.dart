@@ -18,14 +18,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   String token = await getAuthTokenForTesting();
-  Dio dio = await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/languages/", token);
+  Dio dio = await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/languages/");
   LanguageClient languageClient = LanguageClient(dio);
 
   //Let's mock ConnectivityService because it cries about not finding the Method Channel. Hopefully it works on the target platforms...
   final mockConnectivityService = MockConnectivityService();
 
   LanguageRepositoryImpl languageRepository = LanguageRepositoryImpl(mockConnectivityService, languageClient);
-  LanguageService languageService = LanguageService(languageRepository, languageRepository);
+  LanguageService languageService = LanguageService(languageRepository);
 
   test('getLanguageById()', () async {
     when(mockConnectivityService.hasConnection()).thenAnswer((_) async => true);

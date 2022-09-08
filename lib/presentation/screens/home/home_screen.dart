@@ -3,14 +3,33 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
+import 'package:speakyfox/domain/models/language.dart';
+import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/domain/services/language_service.dart';
 import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
+import 'package:speakyfox/presentation/common/routes.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
 import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
-  HomeScreen({Key? key}) : super(key: key);
+
+  List<Language> languageList = [];
+
+//delete, test only
+  setLanguages(List<Language> list) {
+    setState(() {
+      languageList = list;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +46,33 @@ class HomeScreen extends StatelessWidget {
           // double height = MediaQuery.of(context).size.height;
 
           return Scaffold(
-            body: Center(child: Text("HomeScreen")),
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Center(
+                  child: Text("HomeScreen"),
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      await locator<AuthenticationService>().logout();
+                      if(mounted) {
+                        Navigator.of(context).pushReplacementNamed(Routes.login);
+                      }
+                    },
+                    child: const Text("logout")),
+                const SizedBox(
+                  height: 24,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      List<Language> langs = await locator<LanguageService>().getSourceLanguages();
+                      setLanguages(langs);
+                    },
+                    child: const Text("test call()")),
+                languageList.isNotEmpty ? Text(languageList.toString()) : Container()
+              ],
+            ),
           );
         });
   }

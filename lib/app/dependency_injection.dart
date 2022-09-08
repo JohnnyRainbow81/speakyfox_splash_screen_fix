@@ -20,7 +20,9 @@ import 'package:speakyfox/data/remote/subscription_client.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/remote/vocabulary_client.dart';
 import 'package:speakyfox/data/repositories_impls/authentication_repository_impl.dart';
+import 'package:speakyfox/data/repositories_impls/class_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/coupon_repository_impl.dart';
+import 'package:speakyfox/data/repositories_impls/course_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/language_pair_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/language_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/lecture_repository_impl.dart';
@@ -32,9 +34,11 @@ import 'package:speakyfox/data/repositories_impls/progress_repository_impl.dart'
 import 'package:speakyfox/data/repositories_impls/subscription_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/vocabulary_repository_impl.dart';
+import 'package:speakyfox/domain/models/language.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
+import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/coupon_repository.dart';
-import 'package:speakyfox/domain/repositories/language_pairs_repository.dart';
+import 'package:speakyfox/domain/repositories/language_pair_repository.dart';
 import 'package:speakyfox/domain/repositories/language_repository.dart';
 import 'package:speakyfox/domain/repositories/lecture_repository.dart';
 import 'package:speakyfox/domain/repositories/offer_repository.dart';
@@ -47,7 +51,10 @@ import 'package:speakyfox/domain/repositories/user_repository.dart';
 import 'package:speakyfox/domain/repositories/vocabulary_repository.dart';
 import 'package:speakyfox/domain/services/audio_service.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/domain/services/class_service.dart';
 import 'package:speakyfox/domain/services/coupon_service.dart';
+import 'package:speakyfox/domain/services/course_service.dart';
+import 'package:speakyfox/domain/services/file_service.dart';
 import 'package:speakyfox/domain/services/language_pair_service.dart';
 import 'package:speakyfox/domain/services/language_service.dart';
 import 'package:speakyfox/domain/services/lecture_service.dart';
@@ -71,47 +78,45 @@ final locator = GetIt.instance;
 
 //Only the dependencies necessary for authentication get initialized here, because we need to get an authToken first before
 //we can initialize other http clients, services etc with that token
-Future<void> initializeAuthenticationDependencies() async {
+Future<void> initializeDependencies() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
-  Dio dioAuth = isQABackendAvailable
-      ? await DioAuth.initialize(env.serverUrl)
+  locator.registerLazySingleton<SharedPreferences>(() => preferences);
+  Dio dio = isQABackendAvailable
+      ? await DioV1.initialize(env.serverUrl)
       //as long as the QA backend doesn't work for authentication testing => take the production backend
-      : await DioAuth.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
+      : await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
 
   //ConnectivityService
-  locator.registerLazySingleton(() => ConnectivityService());
+  locator.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
 
 //AuthenticationService
-  locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(dioAuth));
-  locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(preferences));
+  locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(dio));
+  locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 
   //LoginViewModel
   locator.registerLazySingleton<LoginViewModel>(() => LoginViewModel(locator()));
-}
-
-//this needs to be initialized when Authentication successfully happened and authToken is available
-Future<void> initializeDependencies(String token) async {
-  Dio dioV1 = isQABackendAvailable
-      ? await DioV1.initialize(env.serverUrl, token)
-      //QA backend is not available => take production backend for development
-      : await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/", token);
-
-  Dio dioDocuments = await DioDocuments.initialize(env.documentrApiUrl); //TODO needed? Not sure yet
 
   //CouponService
-  locator.registerLazySingleton<CouponClient>(() => CouponClient(dioV1, baseUrl: "${dioV1.options.baseUrl}coupons"));
-  locator.registerLazySingleton<CouponRepository>(() => CouponRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<CouponService>(() => CouponService(locator(), locator()));
+  locator.registerLazySingleton<CouponClient>(() => CouponClient(dio, baseUrl: "${dio.options.baseUrl}coupons"));
+  locator.registerLazySingleton<CouponRepositoryImpl>(() => CouponRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<CouponService>(() => CouponService(locator()));
 
   //CourseService
-  locator.registerLazySingleton<CourseClient>(() => CourseClient(dioV1, baseUrl: "${dioV1.options.baseUrl}courses"));
+  locator.registerLazySingleton<CourseClient>(() => CourseClient(dio, baseUrl: "${dio.options.baseUrl}courses"));
+  locator.registerLazySingleton<CourseRepositoryImpl>(() => CourseRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<CourseService>(() => CourseService(locator()));
+
   //ClassService
-  locator.registerLazySingleton<ClassClient>(() => ClassClient(dioV1, baseUrl: "${dioV1.options.baseUrl}classes"));
+  locator.registerLazySingleton<ClassClient>(() => ClassClient(dio, baseUrl: "${dio.options.baseUrl}classes"));
+  locator.registerLazySingleton<ClassRepositoryImpl>(() => ClassRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<ClassService>(() => ClassService(locator()));
+
   //FileService
+  locator.registerLazySingleton<FileService>(() => FileService());
 
   //AudioService
   locator.registerLazySingleton<AudioService>(() => AudioService());
@@ -119,66 +124,65 @@ Future<void> initializeDependencies(String token) async {
   //GameSequenceService - don't initialize here but individually make a new one depending on the lecture?
 
   //LanguageService
-  locator
-      .registerLazySingleton<LanguageClient>(() => LanguageClient(dioV1, baseUrl: "${dioV1.options.baseUrl}languages"));
-  locator.registerLazySingleton<LanguageRepository>(() => LanguageRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<LanguageService>(() => LanguageService(locator(), locator()));
+  locator.registerLazySingleton<LanguageClient>(() => LanguageClient(dio, baseUrl: "${dio.options.baseUrl}languages"));
+  locator.registerLazySingleton<LanguageRepositoryImpl>(() => LanguageRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<LanguageService>(() => LanguageService(locator()));
 
   //LanguagePairsService
   locator.registerLazySingleton<LanguagePairClient>(
-      () => LanguagePairClient(dioV1, baseUrl: "${dioV1.options.baseUrl}language-pairs"));
-  locator.registerLazySingleton<LanguagePairRepository>(() => LanguagePairRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<LanguagePairService>(() => LanguagePairService(locator(), locator()));
+      () => LanguagePairClient(dio, baseUrl: "${dio.options.baseUrl}language-pairs"));
+  locator.registerLazySingleton<LanguagePairRepositoryImpl>(() => LanguagePairRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<LanguagePairService>(() => LanguagePairService(locator()));
 
   //LectureService
-  locator.registerLazySingleton<LectureClient>(() => LectureClient(dioV1, baseUrl: "${dioV1.options.baseUrl}lectures"));
-  locator.registerLazySingleton<LectureRepository>(() => LectureRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<LectureService>(() => LectureService(locator(), locator()));
+  locator.registerLazySingleton<LectureClient>(() => LectureClient(dio, baseUrl: "${dio.options.baseUrl}lectures"));
+  locator.registerLazySingleton<LectureRepositoryImpl>(() => LectureRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<LectureService>(() => LectureService(locator()));
 
   //OffersService
-  locator.registerLazySingleton<OfferClient>(() => OfferClient(dioV1, baseUrl: "${dioV1.options.baseUrl}offers"));
-  locator.registerLazySingleton<OfferRepository>(() => OfferRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<OfferClient>(() => OfferClient(dio, baseUrl: "${dio.options.baseUrl}offers"));
+  locator.registerLazySingleton<OfferRepositoryImpl>(() => OfferRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<OfferService>(() => OfferService(locator()));
 
   //OrdersService
-  locator.registerLazySingleton<OrderClient>(() => OrderClient(dioV1, baseUrl: "${dioV1.options.baseUrl}orders"));
-  locator.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<OrderClient>(() => OrderClient(dio, baseUrl: "${dio.options.baseUrl}orders"));
+  locator.registerLazySingleton<OrderRepositoryImpl>(() => OrderRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<OrderService>(() => OrderService(locator(), locator()));
 
   //PlanService
-  locator.registerLazySingleton<PlanClient>(() => PlanClient(dioV1, baseUrl: "${dioV1.options.baseUrl}plans"));
-  locator.registerLazySingleton<PlanRepository>(() => PlanRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<PlanClient>(() => PlanClient(dio, baseUrl: "${dio.options.baseUrl}plans"));
+  locator.registerLazySingleton<PlanRepositoryImpl>(() => PlanRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<PlanService>(() => PlanService(locator()));
 
   //ProductService
-  locator.registerLazySingleton<ProductClient>(() => ProductClient(dioV1, baseUrl: "${dioV1.options.baseUrl}products"));
-  locator.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<ProductService>(() => ProductService(locator(), locator()));
+  locator.registerLazySingleton<ProductClient>(() => ProductClient(dio, baseUrl: "${dio.options.baseUrl}products"));
+  locator.registerLazySingleton<ProductRepositoryImpl>(() => ProductRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<ProductService>(() => ProductService(locator()));
 
   //ProgressService
   locator.registerLazySingleton<ProgressClient>(
-      () => ProgressClient(dioV1, baseUrl: "${dioV1.options.baseUrl}lectures")); //yea, "lectures", not "progress"
-  locator.registerLazySingleton<ProgressRepository>(() => ProgressRepositoryImpl(locator(), locator()));
+      () => ProgressClient(dio, baseUrl: "${dio.options.baseUrl}lectures")); //yea, "lectures", not "progress"
+  locator.registerLazySingleton<ProgressRepositoryImpl>(() => ProgressRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<ProgressService>(() => ProgressService(
         locator(),
       ));
 
   //SubscriptionsService
   locator.registerLazySingleton<SubscriptionClient>(
-      () => SubscriptionClient(dioV1, baseUrl: "${dioV1.options.baseUrl}orders")); //yea, "orders", not "subscriptions"
-  locator.registerLazySingleton<SubscriptionRepository>(() => SubscriptionRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<SubscriptionService>(() => SubscriptionService(locator(), locator()));
+      () => SubscriptionClient(dio, baseUrl: "${dio.options.baseUrl}orders")); //yea, "orders", not "subscriptions"
+  locator.registerLazySingleton<SubscriptionRepositoryImpl>(() => SubscriptionRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<SubscriptionService>(() => SubscriptionService(locator()));
 
   //UserService
-  locator.registerLazySingleton<UserClient>(() => UserClient(dioV1, baseUrl: "${dioV1.options.baseUrl}users"));
-  locator.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<UserService>(() => UserService(locator(), locator(), locator()));
+  locator.registerLazySingleton<UserClient>(() => UserClient(dio, baseUrl: "${dio.options.baseUrl}users"));
+  locator.registerLazySingleton<UserRepositoryImpl>(() => UserRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<UserService>(() => UserService(locator(), locator()));
 
   //VocabularyService
   locator.registerLazySingleton<VocabularyClient>(
-      () => VocabularyClient(dioV1, baseUrl: "${dioV1.options.baseUrl}vocabularies"));
-  locator.registerLazySingleton<VocabularyRepository>(() => VocabularyRepositoryImpl(locator(), locator()));
-  locator.registerLazySingleton<VocabularyService>(() => VocabularyService(locator(), locator()));
+      () => VocabularyClient(dio, baseUrl: "${dio.options.baseUrl}vocabularies"));
+  locator.registerLazySingleton<VocabularyRepositoryImpl>(() => VocabularyRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<VocabularyService>(() => VocabularyService(locator()));
 
   //VocabularyShellService
 

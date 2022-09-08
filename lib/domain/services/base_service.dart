@@ -1,7 +1,7 @@
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 
 //For general CRUD methods
-class BaseService<T> {
+abstract class BaseService<T> {
   final BaseRepository<T> _baseRepository;
 
   BaseService(this._baseRepository);
