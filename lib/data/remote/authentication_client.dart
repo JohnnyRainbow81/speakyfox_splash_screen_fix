@@ -34,13 +34,14 @@ abstract class AuthenticationClient {
   );
 
   @GET("/users/me")
-  @Headers({"Content-Type" : "application/json"})
+  @Headers({"Content-Type": "application/json"})
   Future<Response<UserDto>> fetchUser(@Header(HttpHeaders.authorizationHeader) String token);
 
   @PATCH("/users/{userId}/password-reset")
   Future<Response<bool>> resetPassword(@Path("userId") String userId, @Body() ResetPasswordBody body);
 
   @POST("/users/password-reset")
+  @Headers({"Content-Type": "application/json"})
   Future<Response<bool>> sendPasswordResetEmail(@Body() SendPasswordResetBody body);
 
   @POST("/users/{userId}/confirm-email")

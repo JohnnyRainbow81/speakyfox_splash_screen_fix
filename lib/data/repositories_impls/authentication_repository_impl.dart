@@ -78,13 +78,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationClient.sendPasswordResetEmail(body);
-        if (response.code.statusCode == HttpStatus.ok) {
           return response.data;
-        } else {
-          throw ResetPasswordException();
-        }
+       
       } catch (error) {
-        ErrorHandler.handleError(error);
+        ErrorHandler.handleError(Errors.emailNotFound);
       }
     } else {
       //No internet

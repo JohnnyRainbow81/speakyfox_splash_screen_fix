@@ -243,4 +243,30 @@ class PaymentException extends UIException {
 }
 
 
+class EmailNotFoundException extends UIException {
+   EmailNotFoundException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Email not found",
+          description: description ?? "We couldn't find your email address in our system",
+        );
+}
+
+class UserNotFoundException extends UIException {
+   UserNotFoundException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "User not found",
+          description: description ?? "We couldn't find any user with this name in our system",
+        );
+}
+
+class WrongPasswordException extends UIException {
+   WrongPasswordException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Password error",
+          description: description ?? "Password didn't match this E-mail address",
+        );
+}
 

@@ -18,24 +18,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  
 
   @override
   void initState() {
     super.initState();
-    _loginViewModel.resetAllFields();
+    _loginViewModel.reset();
     _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
   }
 
-  // void validateUsername() {
-  //   setState(() => usernameError = _loginViewModel.validateUsername(_usernameController.text) ?? "");
-  // }
-
-  // void validatePassword() {
-  //   setState(() => passwordError = _loginViewModel.validatePassword(_passwordController.text) ?? "");
-  // }
-
   @override
   void dispose() {
+    debugPrint("ResetPasswordScreen.dispose()");
+
     _emailController.removeListener(() => _loginViewModel.validateEmail);
     _emailController.dispose();
     super.dispose();
@@ -50,8 +45,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       builder: (context, _, child) {
         if (_loginViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-            showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
+            //Check if this screen is current screen(=shown to the user) because
+            //there are 3 other screens listening to the same viewModel
+            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
             _loginViewModel.clearErrors();
+            }
           });
         }
         return SafeArea(
@@ -98,7 +97,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             height: 24,
                           ),
                           ElevatedButton(
-                              onPressed: _loginViewModel.isEmailValid ? () => _loginViewModel.sendEmail() : null,
+                              onPressed:
+                                  _loginViewModel.isEmailFormValid ? () => _loginViewModel.sendResetEmail() : null,
                               child: const Text("Email versenden")),
                           const Spacer(),
                           TextButton(

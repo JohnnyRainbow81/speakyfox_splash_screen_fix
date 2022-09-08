@@ -74,9 +74,8 @@ class AuthenticationLocalSource {
     try {
       final clearIdentityToken = await _sharedPreferences.setString(Keys.identityToken.name, "");
       final clearTicket = await _sharedPreferences.setString(Keys.ticket.name, "");
-      final clearUser = await _sharedPreferences.setString(Keys.user.name, "");
 
-      return clearIdentityToken && clearTicket && clearUser;
+      return clearIdentityToken && clearTicket;
     } catch (e) {
       throw CacheClearingException();
     }

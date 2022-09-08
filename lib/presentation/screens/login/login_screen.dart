@@ -32,12 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _emailController.text = _loginViewModel.email;
+    _passwordController.text = _loginViewModel.password;
+
     _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
     _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
 
     _scrollController = ScrollController();
 
-    _loginViewModel.resetAllFields();
+    _loginViewModel.reset();
   }
 
   // void validateUsername() {
@@ -50,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    debugPrint("LoginScreen.dispose()");
     _emailController.removeListener(() => _loginViewModel.validateEmail);
     _passwordController.removeListener(() => _loginViewModel.validatePassword);
     _emailController.dispose();
@@ -70,15 +74,17 @@ class _LoginScreenState extends State<LoginScreen> {
       disposeViewModel: false,
       viewModelBuilder: () => _loginViewModel,
       builder: (context, _, child) {
-        if (_loginViewModel.hasError) {
+        if (_loginViewModel.hasError) { 
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-            showCommonErrorDialog(
-                context: context, exception: _loginViewModel.modelError, animationAsset: AnimationAssets.error);
+            //Check if this screen is current screen(=shown to the user) because
+            //there are 3 other screens listening to the same viewModel
+            if(ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showCommonErrorDialog(
+                context: context, exception: _loginViewModel.modelError);
             _loginViewModel.clearErrors();
+            }
           });
         }
-        // double height = MediaQuery.of(context).size.height;
-
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.only(top: 20, bottom: 8.0, right: 8.0, left: 8.0),

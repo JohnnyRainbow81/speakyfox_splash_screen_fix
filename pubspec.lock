@@ -986,14 +986,14 @@ packages:
       name: stacked
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.15"
+    version: "3.0.0"
   stacked_core:
     dependency: transitive
     description:
       name: stacked_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.4"
   stacked_services:
     dependency: "direct main"
     description:

@@ -89,7 +89,7 @@ class AuthenticationService {
     return credentials != null && !isExpired(credentials);
   }
 
-  Future<bool> sendPasswordResetEmail(SendPasswordResetBody body) async {
+  Future<bool?> sendPasswordResetEmail(SendPasswordResetBody body) async {
     final bool success = await _authenticationRepository.sendPasswordResetEmail(body);
     return success;
   }

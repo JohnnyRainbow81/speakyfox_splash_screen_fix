@@ -76,6 +76,10 @@ class MockAuthenticationRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#saveCredentials, [identityToken]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
   @override
+  _i6.Future<bool> clearCredentials() =>
+      (super.noSuchMethod(Invocation.method(#clearCredentials, []),
+          returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
+  @override
   _i6.Future<bool> resetPassword(
           String? userId, _i10.ResetPasswordBody? body) =>
       (super.noSuchMethod(Invocation.method(#resetPassword, [userId, body]),

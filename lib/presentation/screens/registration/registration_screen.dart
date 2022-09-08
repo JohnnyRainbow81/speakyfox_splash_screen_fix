@@ -48,6 +48,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   void dispose() {
+    debugPrint("RegistrationScreen.dispose()");
+
     _usernameController.removeListener(() => _loginViewModel.validateUsername);
     _passwordController.removeListener(() => _loginViewModel.validatePassword);
     _emailController.removeListener(() => _loginViewModel.validateEmail);
@@ -77,8 +79,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       builder: (context, _, child) {
         if (_loginViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-            showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
+            //Check if this screen is current screen(=shown to the user) because
+            //there are 3 other screens listening to the same viewModel
+            if(ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showCommonErrorDialog(
+                context: context, exception: _loginViewModel.modelError);
             _loginViewModel.clearErrors();
+            }
           });
         }
         return Scaffold(

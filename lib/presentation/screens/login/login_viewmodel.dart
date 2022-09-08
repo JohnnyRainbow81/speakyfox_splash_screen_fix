@@ -8,9 +8,9 @@ import 'package:stacked/stacked.dart';
 class LoginViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
 
-  String _username = "";
-  String _password = "";
-  String _email = "";
+  late String _username;
+  late String _password;
+  late String _email;
 
   String? _usernameError;
   String? _passwordError;
@@ -26,11 +26,19 @@ class LoginViewModel extends BaseViewModel {
 
   LoginViewModel(
     this._authenticationService,
-  );
+  ) {
+    _username = _authenticationService.getCredentials()?.user.firstName ?? "";
+    _password = _authenticationService.getCredentials()?.user.password ?? "";
+    _email = _authenticationService.getCredentials()?.user.email ?? "";
+  }
 
   set allInputsAreValid(Function? callback) {
     _allInputsAreValidCallback = callback;
   }
+
+  String get email => _email;
+  String get password => _password;
+  String get username => _username;
 
   bool get isLoggedIn => _isLoggedIn;
 
@@ -93,41 +101,32 @@ class LoginViewModel extends BaseViewModel {
     return isAllValid;
   }
 
-  bool get isEmailValid {
-    return _email.isNotEmpty;
+  bool get isEmailFormValid {
+    //validation is already done here
+    return email.isNotEmpty;
   }
 
   Future<bool> login() async {
-    // FIXME not elegant! I use try/catch here because the backend gives 400 in case of wrong credentials instead of 403
-    //  Fix: Go to AuthRepo-Impl and throw manually a LoginNotSuccessfullException
-    try {
-      setBusy(true);
-      _isLoggedIn = await _authenticationService.login(_email, _password);
-      setBusy(false);
-      if (isLoggedIn) {
-        notifyListeners(); //eventually redundant
-      }
-    } catch (e) {
+    _isLoggedIn = await runBusyFuture<bool>(_authenticationService.login(_email, _password));
+    if (isLoggedIn) { //redundant?
+      notifyListeners();
+    } else {
       _isLoggedIn = false;
-      setError(LoginNotSuccessfulException());
-    } finally {
-      setBusy(false);
     }
     return _isLoggedIn;
   }
 
-  Future<bool> sendEmail() async {
-    return _authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email));
+  Future<bool?> sendResetEmail() async {
+    //FIXME type 'Null' is not a subtype of type 'bool' in type cast    
+
+    return runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
   }
 
   Future<bool> register() async {
     throw UnimplementedError();
   }
 
-  void resetAllFields() {
-    _username = "";
-    _password = "";
-    _email = "";
+  void reset() {
     _passwordError = null;
     _usernameError = null;
     _emailError = null;
