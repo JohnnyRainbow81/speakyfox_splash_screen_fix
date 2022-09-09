@@ -5,7 +5,14 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 
-enum Errors { emailNotFound, userNotFound, wrongPassword, userPasswordCoupleInvalid }
+enum Errors {
+  emailNotFound,
+  userNotFound,
+  wrongPassword,
+  userPasswordCoupleInvalid,
+  notImplementedYet,
+  registrationFailed
+}
 
 //Main tasks:
 //-swallow Framework/library-Exceptions/own enum-defined Errors
@@ -58,6 +65,10 @@ class ErrorHandler {
           throw UserNotFoundException();
         case Errors.userPasswordCoupleInvalid:
           throw UserPasswordCoupleInvalidException();
+        case Errors.notImplementedYet:
+          throw NotImplementedYetException();
+        case Errors.registrationFailed:
+          throw RegistrationFailedException();
       }
     } else if (error is Error) {
       //Errors should crash the app, because the app possibly won't be in recoverable state afterwards,

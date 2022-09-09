@@ -64,6 +64,30 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
+  Future<Response<UserDto>> register(user) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(user.toJson());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<UserDto>>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, '/users',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<UserDto>.fromJson(
+      _result.data!,
+      (json) => UserDto.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
   Future<Response<UserDto>> fetchUser(token) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

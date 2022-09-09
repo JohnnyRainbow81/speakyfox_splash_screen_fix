@@ -13,6 +13,7 @@ import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -32,6 +33,24 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     this._authenticationLocalSource,
     this._connectivityService,
   );
+
+  @override
+  Future<User> register(CreateProfileUserRequest user) async{
+     //Not stored locally? get from backend
+      if (await _connectivityService.hasConnection()) {
+        try {
+          final response = await _authenticationClient.register(user /* username, password, grantType */);
+          return response.data.toUser();
+        } catch (error) {
+          ErrorHandler.handleError(Errors.registrationFailed);
+        }
+      } else {
+        throw NoInternetConnectionUIException();
+      }
+    
+    throw LoginNotSuccessfulException();
+  
+  }
 
   @override
   Future<Ticket> accessToken(
@@ -187,4 +206,5 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     bool cleared = await _authenticationLocalSource.clearCredentials();
     return cleared;
   }
+
 }

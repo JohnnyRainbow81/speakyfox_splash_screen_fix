@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -39,6 +40,11 @@ class AuthenticationService {
 
   Future<bool> clearCredentials() {
     return _authenticationRepository.clearCredentials();
+  }
+
+  Future<bool> register(CreateProfileUserRequest user) async {
+    await _authenticationRepository.register(user);
+    return true;
   }
 
   Future<bool?> login(String username, String password) async {
@@ -179,8 +185,9 @@ class AuthenticationService {
     return _authenticationRepository.validateToken(userId, token);
   }
 
-  Future<bool> logout() async{
-    bool clearedCredentials = await _authenticationRepository.clearCredentials();
-    return clearedCredentials;
+  Future<bool> logout() async {
+    //clear credentials here?
+    //bool clearedCredentials = await _authenticationRepository.clearCredentials();
+    return true;
   }
 }

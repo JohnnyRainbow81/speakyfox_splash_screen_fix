@@ -65,7 +65,7 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   Future<User> createUser(CreateProfileUserRequest createProfileUserRequest) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _userClient.createUser(createProfileUserRequest.toMap());
+        final response = await _userClient.createUser(createProfileUserRequest.toJson());
         return response.data.toUser();
       } catch (error) {
         ErrorHandler.handleError(error);

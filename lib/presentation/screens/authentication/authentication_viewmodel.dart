@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/utilities.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
+import 'package:speakyfox/data/requests/send_password_reset_body.dart';
+import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -137,9 +141,10 @@ class AuthenticationViewModel extends BaseViewModel {
   Future<bool> sendResetEmail() async {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = false;
-    //Mock for testing
-    //success = await runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
-    success = true; //delete
+    //Better mock this call for testing
+    success =
+        await runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
+
     _isResetEmailSent = success ?? false;
     if (_isResetEmailSent) {
       notifyListeners();
@@ -148,7 +153,10 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   Future<bool> register() async {
-    throw UnimplementedError();
+    //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
+    bool? success = await runBusyFuture<bool?>(_authenticationService.register(CreateProfileUserRequest(
+        firstname: "", lastname: _username, email: _email, password: _password, affiliateId: "")));
+    return success ?? false;
   }
 
   void reset() {

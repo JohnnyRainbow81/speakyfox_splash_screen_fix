@@ -279,3 +279,21 @@ class UserPasswordCoupleInvalidException extends UIException {
           description: description ?? "This E-Mail / Password combination does not exist",
         );
 }
+
+class NotImplementedYetException extends UIException {
+   NotImplementedYetException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Not implemented yet",
+          description: description ?? "...but will be available soon.",
+        );
+}
+
+class RegistrationFailedException extends UIException {
+   RegistrationFailedException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Registration failed",
+          description: description ?? "Unfortunately we couldn't create your accout",
+        );
+}

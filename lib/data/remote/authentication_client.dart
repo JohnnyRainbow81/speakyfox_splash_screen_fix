@@ -4,6 +4,7 @@ import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart' hide Response, Headers;
 import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -32,6 +33,10 @@ abstract class AuthenticationClient {
   Future<TicketDto> refreshToken(
     @Body() RefreshTokenBody body,
   );
+
+  @POST("/users")
+  @Headers(<String, dynamic>{"Content-type": "application/json"})
+  Future<Response<UserDto>> register(@Body() CreateProfileUserRequest user);
 
   @GET("/users/me")
   @Headers({"Content-Type": "application/json"})

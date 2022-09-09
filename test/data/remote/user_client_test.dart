@@ -15,7 +15,7 @@ void main() async {
         CreateProfileUserRequest(firstname: "Lea", lastname: "D", email: "email", password: "123pass", affiliateId: "");
 
     expectLater(
-        userClient.createUser(request.toMap()),
+        userClient.createUser(request.toJson()),
         throwsA(predicate(
             (f) => f is DioError && f.response?.statusCode == 405, "Forbidden to create User with this call")));
   }));
