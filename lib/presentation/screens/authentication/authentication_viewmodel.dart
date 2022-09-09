@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/app/utilities.dart';
-import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -20,9 +18,12 @@ class AuthenticationViewModel extends BaseViewModel {
   String? get passwordError => _passwordError;
   String? get emailError => _emailError;
 
-  bool? _isLoggedIn = false;
+  bool _isLoggedIn = false;
+  bool _isResetEmailSent = false;
+  bool _isAGB_accepted = false;
+  bool _isDataProtectionAccepted = false;
 
-  Function? _allInputsAreValidCallback;
+  Function? _allRegistrationInputsAreValidCallback;
 
   AuthenticationViewModel(
     this._authenticationService,
@@ -32,20 +33,23 @@ class AuthenticationViewModel extends BaseViewModel {
     _email = _authenticationService.getCredentials()?.user.email ?? "";
   }
 
-  set allInputsAreValid(Function? callback) {
-    _allInputsAreValidCallback = callback;
+  set allRegistrationInputsAreValid(Function? callback) {
+    _allRegistrationInputsAreValidCallback = callback;
   }
 
   String get email => _email;
   String get password => _password;
   String get username => _username;
 
-  bool get isLoggedIn => _isLoggedIn ?? false;
+  bool get isLoggedIn => _isLoggedIn;
+  bool get isResetEmailSent => _isResetEmailSent;
+  bool get isAGB_accepted => _isAGB_accepted;
+  bool get isDataProtectionAccepted => _isDataProtectionAccepted;
 
   void validateUsername(String? username) {
     if (username == null || username.isEmpty) {
       _usernameError = 'Bitte gib deinen Namen oder deine E-Mail Adresse ein';
-    } else if (username.length < 8) {
+    } else if (username.length < 3) {
       _usernameError = "Der Name ist zu kurz";
     } else {
       _usernameError = null;
@@ -80,8 +84,18 @@ class AuthenticationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void toggleAGB_accepted() {
+    _isAGB_accepted = !_isAGB_accepted;
+    notifyListeners();
+  }
+
+  void toggleDataProtectionAccepted() {
+    _isDataProtectionAccepted = !_isDataProtectionAccepted;
+    notifyListeners();
+  }
+
   bool get isLoginFormValid {
-    //TODO validation
+    //if one of these is not empty means, it has successfully passed validation
     return _email.isNotEmpty && _password.isNotEmpty && _emailError == null && _passwordError == null;
   }
 
@@ -91,10 +105,13 @@ class AuthenticationViewModel extends BaseViewModel {
         _email.isNotEmpty &&
         _usernameError == null &&
         _passwordError == null &&
-        _emailError == null;
+        _emailError == null &&
+        _isAGB_accepted == true &&
+        _isDataProtectionAccepted == true;
+
     if (isAllValid) {
-      if (_allInputsAreValidCallback != null) {
-        _allInputsAreValidCallback!();
+      if (_allRegistrationInputsAreValidCallback != null) {
+        _allRegistrationInputsAreValidCallback!();
       }
     }
 
@@ -107,20 +124,27 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   Future<bool> login() async {
-        //FIXME type 'Null' is not a subtype of type 'bool' in type cast > Error from stacked library so we need to make the result nullable   
-    _isLoggedIn = await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
-    if (isLoggedIn) { //redundant?
+    bool? success = false;
+    //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
+    success = await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
+    _isLoggedIn = success ?? false;
+    if (isLoggedIn) {
       notifyListeners();
-    } else {
-      _isLoggedIn = false;
     }
-    return _isLoggedIn ?? false;
+    return _isLoggedIn;
   }
 
-  Future<bool?> sendResetEmail() async {
-    //FIXME type 'Null' is not a subtype of type 'bool' in type cast > Error from stacked library so we need to make the result nullable    
-
-    return runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
+  Future<bool> sendResetEmail() async {
+    //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
+    bool? success = false;
+    //Mock for testing
+    //success = await runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
+    success = true; //delete
+    _isResetEmailSent = success ?? false;
+    if (_isResetEmailSent) {
+      notifyListeners();
+    }
+    return _isResetEmailSent;
   }
 
   Future<bool> register() async {

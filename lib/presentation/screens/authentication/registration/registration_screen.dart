@@ -14,7 +14,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final AuthenticationViewModel _loginViewModel = locator<AuthenticationViewModel>();
+  final AuthenticationViewModel _authenticationViewModel = locator<AuthenticationViewModel>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -31,28 +31,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _usernameController.addListener(() => _loginViewModel.validateUsername(_usernameController.text));
-    _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
-    _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
+    _usernameController.text = _authenticationViewModel.username;
+    _emailController.text = _authenticationViewModel.email;
+    _passwordController.text = _authenticationViewModel.password;
 
-    _loginViewModel.allInputsAreValid = onAllInputsAreValid;
+    _usernameController.addListener(() => _authenticationViewModel.validateUsername(_usernameController.text));
+    _passwordController.addListener(() => _authenticationViewModel.validatePassword(_passwordController.text));
+    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
+
+    _authenticationViewModel.allRegistrationInputsAreValid = onAllRegistrationInputsAreValid;
   }
 
   // void validateUsername() {
-  //   setState(() => usernameError = _loginViewModel.validateUsername(_usernameController.text) ?? "");
+  //   setState(() => usernameError = _authenticationViewModel.validateUsername(_usernameController.text) ?? "");
   // }
 
   // void validatePassword() {
-  //   setState(() => passwordError = _loginViewModel.validatePassword(_passwordController.text) ?? "");
+  //   setState(() => passwordError = _authenticationViewModel.validatePassword(_passwordController.text) ?? "");
   // }
 
   @override
   void dispose() {
     debugPrint("RegistrationScreen.dispose()");
 
-    _usernameController.removeListener(() => _loginViewModel.validateUsername);
-    _passwordController.removeListener(() => _loginViewModel.validatePassword);
-    _emailController.removeListener(() => _loginViewModel.validateEmail);
+    _usernameController.removeListener(() => _authenticationViewModel.validateUsername);
+    _passwordController.removeListener(() => _authenticationViewModel.validatePassword);
+    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
 
     _usernameController.dispose();
     _passwordController.dispose();
@@ -60,11 +64,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     _scrollController.dispose();
 
-    _loginViewModel.allInputsAreValid = null;
+    _authenticationViewModel.allRegistrationInputsAreValid = null;
     super.dispose();
   }
 
-  void onAllInputsAreValid() {
+  void onAllRegistrationInputsAreValid() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(_scrollController.initialScrollOffset,
           duration: const Duration(seconds: 1), curve: Curves.ease);
@@ -75,15 +79,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     debugPrint("RegistrationScreen.build() ");
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => _loginViewModel,
+      viewModelBuilder: () => _authenticationViewModel,
       builder: (context, _, child) {
-        if (_loginViewModel.hasError) {
+        if (_authenticationViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
             if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
-              _loginViewModel.clearErrors();
+              showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
+              _authenticationViewModel.clearErrors();
             }
           });
         }
@@ -103,13 +107,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 36),
+                          const SizedBox(height: 8),
                           Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Image.asset("assets/images/logo_speakyfox.png"),
+                            padding: const EdgeInsets.all(4.0),
+                            child: Image.asset("assets/images/logo_speakyfox.png", height: 32),
                           ),
                           const SizedBox(
-                            height: 32,
+                            height: 16,
                           ),
                           Text("Erstelle deinen Zugang",
                               style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
@@ -119,43 +123,77 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           TextFormField(
                             decoration: InputDecoration(
                                 hintText: "Name",
-                                errorText: _loginViewModel.userNameError,
+                                errorText: _authenticationViewModel.userNameError,
                                 prefixIcon: const Icon(Icons.people)),
                             controller: _usernameController,
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 16,
                           ),
                           TextFormField(
                             decoration: InputDecoration(
                                 hintText: "E-Mail",
-                                errorText: _loginViewModel.emailError,
+                                errorText: _authenticationViewModel.emailError,
                                 prefixIcon: const Icon(Icons.email)),
                             controller: _emailController,
                           ),
                           const SizedBox(
-                            height: 24,
+                            height: 16,
                           ),
                           TextFormField(
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
                             decoration: InputDecoration(
                                 hintText: "Passwort",
-                                errorText: _loginViewModel.passwordError,
+                                errorText: _authenticationViewModel.passwordError,
                                 errorMaxLines: 8,
                                 prefixIcon: const Icon(Icons.key)),
                             controller: _passwordController,
                           ),
-                          _loginViewModel.isLoggedIn
+                          _authenticationViewModel.isLoggedIn
                               ? const Padding(
                                   padding: EdgeInsets.only(top: 8.0),
                                   child: Text("Login erfolgreich!"),
                                 )
                               : Container(),
                           const SizedBox(
-                            height: 32,
+                            height: 16,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                value: _authenticationViewModel.isDataProtectionAccepted,
+                                onChanged: ((_) => _authenticationViewModel.toggleDataProtectionAccepted()),
+                              ),
+                              const Flexible(
+                                  child: Text(
+                                "Ich habe die Datenschutzbestimmung gelesen und bin damit einverstanden",
+                                maxLines: 3,
+                              ))
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Checkbox(
+                                value: _authenticationViewModel.isAGB_accepted,
+                                onChanged: ((_) => _authenticationViewModel.toggleAGB_accepted()),
+                              ),
+                              const Flexible(
+                                  child: Text(
+                                "Ich habe die AGB gelesen und bin mit diesen einverstanden",
+                                maxLines: 3,
+                              ))
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 16,
                           ),
                           ElevatedButton(
-                              onPressed:
-                                  _loginViewModel.isRegisterFormValid ? () async => _loginViewModel.register() : null,
+                              onPressed: _authenticationViewModel.isRegisterFormValid
+                                  ? () async => _authenticationViewModel.register()
+                                  : null,
                               child: const Text("Zugang erstellen")),
                           const SizedBox(height: 16),
                           Row(
@@ -166,7 +204,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   onPressed: () => Navigator.of(context).pushNamed(Routes.login),
                                   child: const Text("Zum Login")),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     ),

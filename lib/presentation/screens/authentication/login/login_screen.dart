@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthenticationViewModel _loginViewModel = locator<AuthenticationViewModel>();
+  final AuthenticationViewModel _authenticationViewModel = locator<AuthenticationViewModel>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -31,30 +31,30 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _emailController.text = _loginViewModel.email;
-    _passwordController.text = _loginViewModel.password;
+    _emailController.text = _authenticationViewModel.email;
+    _passwordController.text = _authenticationViewModel.password;
 
-    _emailController.addListener(() => _loginViewModel.validateEmail(_emailController.text));
-    _passwordController.addListener(() => _loginViewModel.validatePassword(_passwordController.text));
+    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
+    _passwordController.addListener(() => _authenticationViewModel.validatePassword(_passwordController.text));
 
     _scrollController = ScrollController();
 
-    _loginViewModel.reset();
+    _authenticationViewModel.reset();
   }
 
   // void validateUsername() {
-  //   setState(() => usernameError = _loginViewModel.validateUsername(_usernameController.text) ?? "");
+  //   setState(() => usernameError = _authenticationViewModel.validateUsername(_usernameController.text) ?? "");
   // }
 
   // void validatePassword() {
-  //   setState(() => passwordError = _loginViewModel.validatePassword(_passwordController.text) ?? "");
+  //   setState(() => passwordError = _authenticationViewModel.validatePassword(_passwordController.text) ?? "");
   // }
 
   @override
   void dispose() {
     debugPrint("LoginScreen.dispose()");
-    _emailController.removeListener(() => _loginViewModel.validateEmail);
-    _passwordController.removeListener(() => _loginViewModel.validatePassword);
+    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
+    _passwordController.removeListener(() => _authenticationViewModel.validatePassword);
     _emailController.dispose();
     _passwordController.dispose();
 
@@ -71,15 +71,15 @@ class _LoginScreenState extends State<LoginScreen> {
     debugPrint("LoginScreen.build() ");
     return ViewModelBuilder.reactive(
       disposeViewModel: false,
-      viewModelBuilder: () => _loginViewModel,
+      viewModelBuilder: () => _authenticationViewModel,
       builder: (context, _, child) {
-        if (_loginViewModel.hasError) {
+        if (_authenticationViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
             if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
-              _loginViewModel.clearErrors();
+              showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
+              _authenticationViewModel.clearErrors();
             }
           });
         }
@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               hintText: "E-Mail",
-                              errorText: _loginViewModel.emailError,
+                              errorText: _authenticationViewModel.emailError,
                               prefixIcon: const Icon(Icons.email),
                             ),
                             controller: _emailController,
@@ -128,12 +128,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             obscureText: true,
                             decoration: InputDecoration(
                                 hintText: "Passwort",
-                                errorText: _loginViewModel.passwordError,
+                                errorText: _authenticationViewModel.passwordError,
                                 errorMaxLines: 8,
                                 prefixIcon: const Icon(Icons.key)),
                             controller: _passwordController,
                           ),
-                          _loginViewModel.isLoggedIn
+                          _authenticationViewModel.isLoggedIn
                               ? const Padding(
                                   padding: EdgeInsets.only(top: 8.0),
                                   child: Text("Login erfolgreich!"),
@@ -143,11 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 32,
                           ),
                           ElevatedButton(
-                            onPressed: _loginViewModel.isLoginFormValid //if not valid, button text is inactive
+                            onPressed: _authenticationViewModel.isLoginFormValid //if not valid, button text is inactive
                                 ? () async =>
-                                    _loginViewModel.login().then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
+                                    _authenticationViewModel.login().then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
                                 : null,
-                            child: _loginViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
+                            child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
                           ),
                           const SizedBox(height: 24),
                           TextButton(
