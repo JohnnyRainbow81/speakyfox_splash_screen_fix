@@ -270,3 +270,12 @@ class WrongPasswordException extends UIException {
         );
 }
 
+
+class UserPasswordCoupleInvalidException extends UIException {
+   UserPasswordCoupleInvalidException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Login failed",
+          description: description ?? "This E-Mail / Password combination does not exist",
+        );
+}

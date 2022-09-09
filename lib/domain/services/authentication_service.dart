@@ -41,7 +41,7 @@ class AuthenticationService {
     return _authenticationRepository.clearCredentials();
   }
 
-  Future<bool> login(String username, String password) async {
+  Future<bool?> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(
         AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.password.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");

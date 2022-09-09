@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:speakyfox/app/dependency_injection.dart';
-import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
-import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
-import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../../app/dependency_injection.dart';
+import '../../../common/routes.dart';
+import '../../../common/widgets/errors/common_error_dialog.dart';
+import '../../../common/widgets/loading_animation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final LoginViewModel _loginViewModel = locator<LoginViewModel>();
+  final AuthenticationViewModel _loginViewModel = locator<AuthenticationViewModel>();
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -74,14 +73,13 @@ class _LoginScreenState extends State<LoginScreen> {
       disposeViewModel: false,
       viewModelBuilder: () => _loginViewModel,
       builder: (context, _, child) {
-        if (_loginViewModel.hasError) { 
+        if (_loginViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
-            if(ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(
-                context: context, exception: _loginViewModel.modelError);
-            _loginViewModel.clearErrors();
+            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
+              _loginViewModel.clearErrors();
             }
           });
         }

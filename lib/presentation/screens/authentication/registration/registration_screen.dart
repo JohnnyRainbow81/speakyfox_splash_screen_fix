@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:speakyfox/app/dependency_injection.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
-import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
+import '../../../../app/dependency_injection.dart';
+import '../../../common/routes.dart';
+import '../../../common/widgets/errors/common_error_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final LoginViewModel _loginViewModel = locator<LoginViewModel>();
+  final AuthenticationViewModel _loginViewModel = locator<AuthenticationViewModel>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -81,10 +81,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
-            if(ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(
-                context: context, exception: _loginViewModel.modelError);
-            _loginViewModel.clearErrors();
+            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
+              _loginViewModel.clearErrors();
             }
           });
         }
@@ -155,9 +154,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: 32,
                           ),
                           ElevatedButton(
-                              onPressed: _loginViewModel.isRegisterFormValid
-                                  ? () async => _loginViewModel.register()
-                                  : null,
+                              onPressed:
+                                  _loginViewModel.isRegisterFormValid ? () async => _loginViewModel.register() : null,
                               child: const Text("Zugang erstellen")),
                           const SizedBox(height: 16),
                           Row(

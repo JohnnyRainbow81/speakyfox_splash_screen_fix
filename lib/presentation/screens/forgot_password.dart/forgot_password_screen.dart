@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
-import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -13,7 +13,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<ForgotPasswordScreen> {
-  final LoginViewModel _loginViewModel = locator<LoginViewModel>();
+  final AuthenticationViewModel _loginViewModel = locator<AuthenticationViewModel>();
 
   final TextEditingController _emailController = TextEditingController();
 
@@ -50,7 +50,6 @@ class _LoginScreenState extends State<ForgotPasswordScreen> {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             showCommonErrorDialog(context: context, exception: _loginViewModel.modelError);
             _loginViewModel.clearErrors();
-            
           });
         }
         return SafeArea(
@@ -87,7 +86,6 @@ class _LoginScreenState extends State<ForgotPasswordScreen> {
                                 prefixIcon: const Icon(Icons.email)),
                             controller: _emailController,
                           ),
-                          
                           _loginViewModel.isLoggedIn
                               ? const Padding(
                                   padding: EdgeInsets.only(top: 8.0),
@@ -97,7 +95,6 @@ class _LoginScreenState extends State<ForgotPasswordScreen> {
                           const SizedBox(
                             height: 24,
                           ),
-
                           ElevatedButton(
                               onPressed: () async {
                                 if (_loginViewModel.isLoginFormValid) {
@@ -107,9 +104,8 @@ class _LoginScreenState extends State<ForgotPasswordScreen> {
                               child: const Text("Login")),
                           const Spacer(),
                           TextButton(
-                                  onPressed: () => null, //to Login Screen
-                                  child: const Text("Zurück zum Login")),
-                          
+                              onPressed: () => null, //to Login Screen
+                              child: const Text("Zurück zum Login")),
                         ],
                       ),
                     )),

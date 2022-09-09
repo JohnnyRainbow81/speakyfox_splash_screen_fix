@@ -48,7 +48,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
           _authenticationLocalSource.saveTicket(response); //store locally
           return response.toTicket();
         } catch (error) {
-          ErrorHandler.handleError(error);
+          ErrorHandler.handleError(Errors.userPasswordCoupleInvalid);
         }
       } else {
         throw NoInternetConnectionUIException();

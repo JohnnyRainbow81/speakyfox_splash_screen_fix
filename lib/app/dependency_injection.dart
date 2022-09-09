@@ -34,21 +34,7 @@ import 'package:speakyfox/data/repositories_impls/progress_repository_impl.dart'
 import 'package:speakyfox/data/repositories_impls/subscription_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/vocabulary_repository_impl.dart';
-import 'package:speakyfox/domain/models/language.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
-import 'package:speakyfox/domain/repositories/base_repository.dart';
-import 'package:speakyfox/domain/repositories/coupon_repository.dart';
-import 'package:speakyfox/domain/repositories/language_pair_repository.dart';
-import 'package:speakyfox/domain/repositories/language_repository.dart';
-import 'package:speakyfox/domain/repositories/lecture_repository.dart';
-import 'package:speakyfox/domain/repositories/offer_repository.dart';
-import 'package:speakyfox/domain/repositories/order_repository.dart';
-import 'package:speakyfox/domain/repositories/plan_repository.dart';
-import 'package:speakyfox/domain/repositories/product_repository.dart';
-import 'package:speakyfox/domain/repositories/progress_repository.dart';
-import 'package:speakyfox/domain/repositories/subscription_repository.dart';
-import 'package:speakyfox/domain/repositories/user_repository.dart';
-import 'package:speakyfox/domain/repositories/vocabulary_repository.dart';
 import 'package:speakyfox/domain/services/audio_service.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/domain/services/class_service.dart';
@@ -67,8 +53,8 @@ import 'package:speakyfox/domain/services/subscription_service.dart';
 import 'package:speakyfox/domain/services/user_service.dart';
 import 'package:speakyfox/domain/services/vocabulary_service.dart';
 import 'package:speakyfox/main.dart';
+import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
-import 'package:speakyfox/presentation/screens/login/login_viewmodel.dart';
 
 import 'connectivity_service.dart';
 
@@ -98,7 +84,7 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 
   //LoginViewModel
-  locator.registerLazySingleton<LoginViewModel>(() => LoginViewModel(locator()));
+  locator.registerLazySingleton<AuthenticationViewModel>(() => AuthenticationViewModel(locator()));
 
   //CouponService
   locator.registerLazySingleton<CouponClient>(() => CouponClient(dio, baseUrl: "${dio.options.baseUrl}coupons"));

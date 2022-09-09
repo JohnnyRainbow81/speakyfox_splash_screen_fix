@@ -5,7 +5,7 @@ import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
-class LoginViewModel extends BaseViewModel {
+class AuthenticationViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
 
   late String _username;
@@ -20,11 +20,11 @@ class LoginViewModel extends BaseViewModel {
   String? get passwordError => _passwordError;
   String? get emailError => _emailError;
 
-  bool _isLoggedIn = false;
+  bool? _isLoggedIn = false;
 
   Function? _allInputsAreValidCallback;
 
-  LoginViewModel(
+  AuthenticationViewModel(
     this._authenticationService,
   ) {
     _username = _authenticationService.getCredentials()?.user.firstName ?? "";
@@ -40,7 +40,7 @@ class LoginViewModel extends BaseViewModel {
   String get password => _password;
   String get username => _username;
 
-  bool get isLoggedIn => _isLoggedIn;
+  bool get isLoggedIn => _isLoggedIn ?? false;
 
   void validateUsername(String? username) {
     if (username == null || username.isEmpty) {
@@ -107,17 +107,18 @@ class LoginViewModel extends BaseViewModel {
   }
 
   Future<bool> login() async {
-    _isLoggedIn = await runBusyFuture<bool>(_authenticationService.login(_email, _password));
+        //FIXME type 'Null' is not a subtype of type 'bool' in type cast > Error from stacked library so we need to make the result nullable   
+    _isLoggedIn = await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
     if (isLoggedIn) { //redundant?
       notifyListeners();
     } else {
       _isLoggedIn = false;
     }
-    return _isLoggedIn;
+    return _isLoggedIn ?? false;
   }
 
   Future<bool?> sendResetEmail() async {
-    //FIXME type 'Null' is not a subtype of type 'bool' in type cast    
+    //FIXME type 'Null' is not a subtype of type 'bool' in type cast > Error from stacked library so we need to make the result nullable    
 
     return runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
   }

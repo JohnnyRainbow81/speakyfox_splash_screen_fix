@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:speakyfox/domain/models/ticket.dart';
+import 'package:speakyfox/presentation/screens/authentication/login/login_screen.dart';
+import 'package:speakyfox/presentation/screens/authentication/registration/registration_screen.dart';
+import 'package:speakyfox/presentation/screens/authentication/reset_password.dart/reset_password_screen.dart';
 import 'package:speakyfox/presentation/screens/home/home_screen.dart';
-import 'package:speakyfox/presentation/screens/login/login_screen.dart';
 import 'package:speakyfox/presentation/screens/onboarding/onboarding_pager.dart';
-import 'package:speakyfox/presentation/screens/registration/registration_screen.dart';
-import 'package:speakyfox/presentation/screens/reset_password.dart/reset_password_screen.dart';
 import 'package:speakyfox/presentation/screens/test_screen.dart';
 
 class Routes {
