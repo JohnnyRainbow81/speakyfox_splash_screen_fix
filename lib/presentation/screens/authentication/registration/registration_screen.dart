@@ -107,13 +107,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                        
                           const SizedBox(height: 8),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Image.asset("assets/images/logo_speakyfox.png", height: 32),
+                            child: Image.asset("assets/images/logo_speakyfox.png",/*  height: 32 */),
                           ),
                           const SizedBox(
-                            height: 16,
+                            height: 32,
                           ),
                           Text("Erstelle deinen Zugang",
                               style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
@@ -196,6 +197,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   : null,
                               child: const Text("Zugang erstellen")),
                           const SizedBox(height: 16),
+                          
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

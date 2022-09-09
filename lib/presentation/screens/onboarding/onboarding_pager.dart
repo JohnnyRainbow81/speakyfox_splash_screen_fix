@@ -112,7 +112,7 @@ class _OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         screenData.imageAsset != null
             ? AspectRatio(aspectRatio: 4 / 5, child: Image.asset(screenData.imageAsset!))

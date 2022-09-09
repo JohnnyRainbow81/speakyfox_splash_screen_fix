@@ -46,7 +46,7 @@ class DioV1 {
 
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
-    int timeOut = 60 * 1000; // 10sec
+    int timeOut = 30 * 1000; // 10sec
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
       HttpHeaders.acceptHeader: Headers.jsonContentType,

@@ -294,6 +294,6 @@ class RegistrationFailedException extends UIException {
       : super(
           code: code ?? 0,
           message: message ?? "Registration failed",
-          description: description ?? "Unfortunately we couldn't create your accout",
+          description: description ?? "Unfortunately we couldn't create your account.",
         );
 }
