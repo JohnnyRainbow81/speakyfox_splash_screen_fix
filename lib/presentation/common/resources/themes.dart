@@ -19,6 +19,7 @@ ThemeData getApplicationTheme() {
     textButtonTheme: _getTextButtonTheme(),
     iconTheme: _getIconThemeData(),
     bottomSheetTheme: _getBottomSheetTheme(),
+    checkboxTheme: _getCheckboxTheme(),
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
@@ -190,7 +191,7 @@ InputDecorationTheme _getInputDecorationTheme() {
     filled: true,
     focusColor: ColorAssets.error, //error color = debug only! change!
     iconColor: ColorAssets.bgBlueLight, errorMaxLines: 2,
-    suffixIconColor: ColorAssets.markupGreen, 
+    suffixIconColor: ColorAssets.markupGreen,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide.none,
@@ -209,4 +210,12 @@ InputDecorationTheme _getInputDecorationTheme() {
         borderSide: BorderSide(color: ColorAssets.error, width: 1.6)),
     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
   );
+}
+
+CheckboxThemeData _getCheckboxTheme() {
+  return  CheckboxThemeData(
+    side: MaterialStateBorderSide.resolveWith((states) => const BorderSide(width: 1.6, color: ColorAssets.primary)),
+    fillColor: MaterialStateProperty.resolveWith<Color>((states) => ColorAssets.primary),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(4)), side: BorderSide(width: 1, color: ColorAssets.primary)));
 }
