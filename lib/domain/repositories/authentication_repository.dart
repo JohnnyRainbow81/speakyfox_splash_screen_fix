@@ -15,7 +15,8 @@ abstract class AuthenticationRepository {
   Future<User> register(CreateProfileUserRequest user);
 
   Future<User> fetchUser(String authToken);
-
+  
+  User? loadUser();
   IdentityToken? loadCredentials();
   Future<bool> saveCredentials(IdentityToken identityToken);
   Future<bool> clearCredentials();

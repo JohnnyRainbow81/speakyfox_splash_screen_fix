@@ -35,21 +35,20 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   );
 
   @override
-  Future<User> register(CreateProfileUserRequest user) async{
-     //Not stored locally? get from backend
-      if (await _connectivityService.hasConnection()) {
-        try {
-          final response = await _authenticationClient.register(user /* username, password, grantType */);
-          return response.data.toUser();
-        } catch (error) {
-          ErrorHandler.handleError(Errors.registrationFailed);
-        }
-      } else {
-        throw NoInternetConnectionUIException();
+  Future<User> register(CreateProfileUserRequest user) async {
+    //Not stored locally? get from backend
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _authenticationClient.register(user /* username, password, grantType */);
+        return response.data.toUser();
+      } catch (error) {
+        ErrorHandler.handleError(Errors.registrationFailed);
       }
-    
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
     throw LoginNotSuccessfulException();
-  
   }
 
   @override
@@ -97,8 +96,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationClient.sendPasswordResetEmail(body);
-          return response.data;
-       
+        return response.data;
       } catch (error) {
         ErrorHandler.handleError(Errors.emailNotFound);
       }
@@ -207,4 +205,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     return cleared;
   }
 
+  @override
+  User? loadUser() {
+    try {
+      final UserDto user = _authenticationLocalSource.loadUser();
+      return user.toUser();
+    } catch (cacheError) {
+      return null;
+    }
+  }
 }

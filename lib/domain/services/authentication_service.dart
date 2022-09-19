@@ -42,6 +42,11 @@ class AuthenticationService {
     return _authenticationRepository.clearCredentials();
   }
 
+  User? getUser() {
+    //returns User if saved locally
+    return _authenticationRepository.loadUser();
+  }
+
   Future<bool> register(CreateProfileUserRequest user) async {
     await _authenticationRepository.register(user);
     return true;
@@ -59,7 +64,7 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
-    if(stayLoggedIn) {
+    if (stayLoggedIn) {
       setCredentials(identityToken);
     }
 
@@ -170,6 +175,7 @@ class AuthenticationService {
 
     setCredentials(identityToken);
   }
+
   //See "TokenService" in SpeakyFox WebApp. Not sure if needed..
   Future<bool> validateToken(String userId, String token) {
     return _authenticationRepository.validateToken(userId, token);

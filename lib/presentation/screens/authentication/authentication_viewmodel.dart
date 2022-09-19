@@ -5,6 +5,8 @@ import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../domain/models/user.dart';
+
 class AuthenticationViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
 
@@ -31,9 +33,12 @@ class AuthenticationViewModel extends BaseViewModel {
   AuthenticationViewModel(
     this._authenticationService,
   ) {
-    _username = _authenticationService.getCredentials()?.user.firstName ?? "";
-    _password = _authenticationService.getCredentials()?.user.password ?? "";
-    _email = _authenticationService.getCredentials()?.user.email ?? "";
+    User? user = _authenticationService.getUser();
+    
+    _username = user?.firstName ?? "";
+    _email = user?.email ?? "";
+    _password = "";
+    // _authenticationService.getCredentials()?.user.password ?? "";
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
