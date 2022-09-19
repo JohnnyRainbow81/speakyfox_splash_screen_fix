@@ -64,6 +64,6 @@ class DefaultFirebaseOptions {
     projectId: 'diggitize-starterkit',
     storageBucket: 'diggitize-starterkit.appspot.com',
     iosClientId: '555916548277-e65tgghal7io23aoi6ooavdiigvojrhn.apps.googleusercontent.com',
-    iosBundleId: 'com.example.starterkitFlutter',
+    iosBundleId: 'com.speakyfox',
   );
 }

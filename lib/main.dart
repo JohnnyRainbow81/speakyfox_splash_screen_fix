@@ -11,7 +11,7 @@ import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
 
-bool isQABackendAvailable = true; //delete later
+bool shouldUseQABackend = true; //delete later
 //import 'firebase_options.dart';
 main() async {
   //Error handling setup
@@ -54,7 +54,7 @@ main() async {
 
     //Is this clean? > ask Julien
     //Check if User has already valid credentials on her device
-    await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
+    //await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
 
     runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {

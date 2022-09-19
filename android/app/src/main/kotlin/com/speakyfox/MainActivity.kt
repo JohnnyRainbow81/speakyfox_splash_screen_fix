@@ -1,4 +1,4 @@
-package com.example.starterkit_flutter
+package com.speakyfox
 
 import io.flutter.embedding.android.FlutterActivity
 

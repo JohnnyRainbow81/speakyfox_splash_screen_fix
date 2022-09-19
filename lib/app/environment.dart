@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/main.dart';
 
 enum BuildFlavor { development, qa, production }
 
@@ -54,7 +55,12 @@ class BuildEnvironment {
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
-    if (kDebugMode || kProfileMode) { 
+    if (shouldUseQABackend) {
+      //Little 'hack': Use qa-backend even in release mode app for testing purposes
+      String str = await rootBundle.loadString("assets/environments/qa.json");
+      map = jsonDecode(str);
+      
+    } else if (kDebugMode || kProfileMode) {
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);
     } else if (kReleaseMode) {
@@ -74,8 +80,6 @@ class BuildEnvironment {
         hmr: map[_keyHmr],
         flavor: BuildFlavor.production);
   }
-
-  
 
   @override
   String toString() {
