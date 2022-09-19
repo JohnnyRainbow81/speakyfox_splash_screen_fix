@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
-import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
 
@@ -26,6 +24,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool _isResetEmailSent = false;
   bool _isAGB_accepted = false;
   bool _isDataProtectionAccepted = false;
+  bool _stayLoggedIn = false;
 
   Function? _allRegistrationInputsAreValidCallback;
 
@@ -49,6 +48,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool get isResetEmailSent => _isResetEmailSent;
   bool get isAGB_accepted => _isAGB_accepted;
   bool get isDataProtectionAccepted => _isDataProtectionAccepted;
+  bool get stayLoggedIn => _stayLoggedIn;
 
   void validateUsername(String? username) {
     if (username == null || username.isEmpty) {
@@ -98,6 +98,11 @@ class AuthenticationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void toggleStayLoggedIn() {
+    _stayLoggedIn = !_stayLoggedIn;
+    notifyListeners();
+  }
+
   bool get isLoginFormValid {
     //if one of these is not empty means, it has successfully passed validation
     return _email.isNotEmpty && _password.isNotEmpty && _emailError == null && _passwordError == null;
@@ -123,14 +128,15 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   bool get isEmailFormValid {
-    //validation is already done here
+    //email validation has already been done at this point. "valid" then means, that
+    //the email string has been assigned a valid value so it is not empty anymore
     return email.isNotEmpty;
   }
 
   Future<bool> login() async {
     bool? success = false;
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
-    success = await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
+    success = await runBusyFuture<bool?>(_authenticationService.login(_email, _password, _stayLoggedIn));
     _isLoggedIn = success ?? false;
     if (isLoggedIn) {
       notifyListeners();
@@ -164,5 +170,9 @@ class AuthenticationViewModel extends BaseViewModel {
     _usernameError = null;
     _emailError = null;
     _isLoggedIn = false;
+  }
+
+  bool isStillLoggedIn() {
+    return _authenticationService.isAuthenticated();
   }
 }

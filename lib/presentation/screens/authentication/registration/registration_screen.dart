@@ -80,6 +80,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     debugPrint("RegistrationScreen.build() ");
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => _authenticationViewModel,
+      disposeViewModel: false,
       builder: (context, _, child) {
         if (_authenticationViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {

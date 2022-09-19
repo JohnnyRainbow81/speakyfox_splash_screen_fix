@@ -47,7 +47,7 @@ class AuthenticationService {
     return true;
   }
 
-  Future<bool?> login(String username, String password) async {
+  Future<bool?> login(String username, String password, bool stayLoggedIn) async {
     Ticket ticket = await _authenticationRepository.accessToken(
         AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.password.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
@@ -59,7 +59,9 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
-    setCredentials(identityToken);
+    if(stayLoggedIn) {
+      setCredentials(identityToken);
+    }
 
     //DI for authenticated HTTP calls
     //await initializeDependencies(ticket.accessToken);
@@ -75,18 +77,6 @@ class AuthenticationService {
     DateTime expirationTime = DateTime.parse(credentials.expires);
     if (expirationTime.isBefore(DateTime.now())) return true;
     return false;
-  }
-
-  Future<String?> tryInitializingAuthenticationFromCache() async {
-    IdentityToken? credentials = getCredentials();
-
-    bool hasValidCredentials = credentials != null && !isExpired(credentials);
-
-    if (hasValidCredentials == true) {
-      return credentials!.accessToken;
-    } else {
-      return null; //No valid authToken so return null
-    }
   }
 
   bool isAuthenticated() {
@@ -180,14 +170,13 @@ class AuthenticationService {
 
     setCredentials(identityToken);
   }
-
+  //See "TokenService" in SpeakyFox WebApp. Not sure if needed..
   Future<bool> validateToken(String userId, String token) {
     return _authenticationRepository.validateToken(userId, token);
   }
 
   Future<bool> logout() async {
     //clear credentials here?
-    //bool clearedCredentials = await _authenticationRepository.clearCredentials();
-    return true;
+    return await _authenticationRepository.clearCredentials();
   }
 }

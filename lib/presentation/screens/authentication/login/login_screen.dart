@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -31,6 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      //If user chose "keep me logged in"
+      if (_authenticationViewModel.isStillLoggedIn()) {
+        goToNextScreen();
+      } 
+    });
+
     _emailController.text = _authenticationViewModel.email;
     _passwordController.text = _authenticationViewModel.password;
 
@@ -63,7 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void goToNextScreen() {
-    Navigator.of(context).pushReplacementNamed(Routes.home);
+    Future.delayed(const Duration(milliseconds: 500), (() {
+      if (mounted) {
+        Navigator.of(context).pushReplacementNamed(Routes.home);
+      }
+    }));
   }
 
   @override
@@ -134,20 +147,40 @@ class _LoginScreenState extends State<LoginScreen> {
                                   prefixIcon: const Icon(Icons.key)),
                               controller: _passwordController,
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Text("Eingeloggt bleiben"),
+                                Checkbox(
+                                    value: _authenticationViewModel.stayLoggedIn,
+                                    onChanged: (_) => _authenticationViewModel.toggleStayLoggedIn()),
+                              ],
+                            ),
                             _authenticationViewModel.isLoggedIn
-                                ? const Padding(
-                                    padding: EdgeInsets.only(top: 8.0),
-                                    child: Text("Login erfolgreich!"),
+                                ? Padding(
+                                    padding: EdgeInsets.only(top: 4.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Text("Login erfolgreich!"),
+                                        Icon(
+                                          Icons.check,
+                                          color: ColorAssets.markupGreen,
+                                        )
+                                      ],
+                                    ),
                                   )
                                 : Container(),
                             const SizedBox(
                               height: 32,
                             ),
                             ElevatedButton(
-                              onPressed: _authenticationViewModel.isLoginFormValid //if not valid, button text is inactive
-                                  ? () async =>
-                                      _authenticationViewModel.login().then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
-                                  : null,
+                              onPressed:
+                                  _authenticationViewModel.isLoginFormValid //if not valid, button text is inactive
+                                      ? () async => _authenticationViewModel
+                                          .login()
+                                          .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
+                                      : null,
                               child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
                             ),
                             const SizedBox(height: 24),

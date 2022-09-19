@@ -68,11 +68,12 @@ class DioV1 {
       },
       onRequest: (options, handler) {
         //Request already has accessToken? > return
-        //FIXME REDUNDANT because there will never be a auth header until this point
+        //FIXME REDUNDANT because there will never be an auth header until this point
         if (options.headers.containsKey(HttpHeaders.authorizationHeader)) {
           return handler.next(options);
         }
         IdentityToken? credentials = _authenticationService.getCredentials();
+        
         if (credentials != null) {
           String accessToken = credentials.accessToken;
           options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
