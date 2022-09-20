@@ -33,11 +33,12 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      //If user chose "keep me logged in"
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //If user initially chose "keep me logged in" she gets directly transfered to home screen after 
+      //restarting the app 
       if (_authenticationViewModel.isStillLoggedIn()) {
         goToNextScreen();
-      } 
+      }
     });
 
     _emailController.text = _authenticationViewModel.email;
@@ -47,17 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.addListener(() => _authenticationViewModel.validatePassword(_passwordController.text));
 
     _scrollController = ScrollController();
-
     _authenticationViewModel.reset();
   }
-
-  // void validateUsername() {
-  //   setState(() => usernameError = _authenticationViewModel.validateUsername(_usernameController.text) ?? "");
-  // }
-
-  // void validatePassword() {
-  //   setState(() => passwordError = _authenticationViewModel.validatePassword(_passwordController.text) ?? "");
-  // }
 
   @override
   void dispose() {
@@ -68,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
 
     _scrollController.dispose();
+
     super.dispose();
   }
 
@@ -158,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             _authenticationViewModel.isLoggedIn
                                 ? Padding(
-                                    padding: EdgeInsets.only(top: 4.0),
+                                    padding: const EdgeInsets.only(top: 4.0),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
@@ -175,12 +168,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 32,
                             ),
                             ElevatedButton(
-                              onPressed:
-                                  _authenticationViewModel.isLoginFormValid //if not valid, button text is inactive
-                                      ? () async => _authenticationViewModel
-                                          .login()
-                                          .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
-                                      : null,
+                              //if not valid or busy, button text is inactive
+                              onPressed: (!_authenticationViewModel.isLoggedIn &&
+                                      !_authenticationViewModel.isBusy &&
+                                      _authenticationViewModel.isLoginFormValid)
+                                  ? () async => _authenticationViewModel
+                                      .login()
+                                      .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
+                                  : null, //Needs to be null to show as a disabled button
                               child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
                             ),
                             const SizedBox(height: 24),

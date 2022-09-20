@@ -55,13 +55,15 @@ class DioV1 {
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
+    if (kDebugMode) {
+      dio.interceptors.add(
+          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+    }
+
     //check this:
     //https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
     //https://pub.dev/packages/dio#interceptors
     //use AuthenticationService here?? Because Dio <> AuthenticationService would be in a cyclic dependency then
-    dio.interceptors
-        .add(PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (response, handler) {
         return handler.next(response);
@@ -73,13 +75,13 @@ class DioV1 {
           return handler.next(options);
         }
         IdentityToken? credentials = _authenticationService.getCredentials();
-        
+
         if (credentials != null) {
           String accessToken = credentials.accessToken;
           options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
         }
         //TODO check if OK
-        return handler.next(options);//handler.resolve(Response(requestOptions: options)); //handler.next(options);
+        return handler.next(options); //handler.resolve(Response(requestOptions: options)); //handler.next(options);
       },
       onError: (error, handler) async {
         if (error.response?.statusCode == 401) {
@@ -101,7 +103,6 @@ class DioV1 {
                 queryParameters: error.requestOptions.queryParameters,
                 options: options);
             handler.resolve(response);
-
           } catch (e) {
             debugPrint("Error in Dio.onErrorInterceptor: $e");
             ErrorHandler.handleError(e);
@@ -132,13 +133,10 @@ class DioDocuments {
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
-    if (kReleaseMode) {
-      print("release mode no logs");
-    } else {
+    if (kDebugMode) {
       dio.interceptors.add(
           PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
     }
-
     return dio;
   }
 }

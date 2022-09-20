@@ -13,11 +13,11 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.speakyfox</string>
+	<string>com.speakyfox.multiplatform</string>
 	<key>PROJECT_ID</key>
-	<string>diggitize-starterkit</string>
+	<string>com.speakyfox.multiplatform</string>
 	<key>STORAGE_BUCKET</key>
-	<string>diggitize-starterkit.appspot.com</string>
+	<string>com.speakyfox.multiplatform.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
