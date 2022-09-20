@@ -25,6 +25,10 @@ class ColorAssets {
   static const Color bgBlueDark = Color(0xFF63B1D8);
   static const Color bgBlueLight = Color(0xFFE0EFF7);
   static const Color markupGreen = Color.fromARGB(255, 56, 195, 13);
+  static const Color markupGreenLight = Color.fromARGB(255, 94, 197, 63);
+  static const Color markupGreenDark = Color.fromARGB(255, 47, 176, 7);
+
+
 
   static const Color grGreenLight = Color(0xFF39D10C);
   static const Color grGreenDark = Color(0xFF1F8600);

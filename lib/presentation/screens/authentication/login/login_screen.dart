@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
+import 'package:speakyfox/presentation/common/resources/image_assets.dart';
+import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -25,6 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late final ScrollController _scrollController;
 
   final _formKey = GlobalKey<FormState>();
+  final FocusScopeNode _node = FocusScopeNode();
+
   String? usernameError;
   String? passwordError;
 
@@ -33,9 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //If user initially chose "keep me logged in" she gets directly transfered to home screen after 
-      //restarting the app 
+    WidgetsBinding.instance.addPostFrameCallback((_) { 
+      //If user initially chose "keep me logged in" she gets directly transfered to home screen after
+      //restarting the app
       if (_authenticationViewModel.isStillLoggedIn()) {
         goToNextScreen();
       }
@@ -56,10 +60,11 @@ class _LoginScreenState extends State<LoginScreen> {
     debugPrint("LoginScreen.dispose()");
     _emailController.removeListener(() => _authenticationViewModel.validateEmail);
     _passwordController.removeListener(() => _authenticationViewModel.validatePassword);
+
     _emailController.dispose();
     _passwordController.dispose();
-
     _scrollController.dispose();
+    _node.dispose();
 
     super.dispose();
   }
@@ -97,103 +102,97 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Form(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 36),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Image.asset("assets/images/logo_speakyfox.png"),
-                            ),
-                            const SizedBox(
-                              height: 32,
-                            ),
-                            Text("Log' dich ein",
-                                style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              autofillHints: const [AutofillHints.email],
-                              decoration: InputDecoration(
-                                hintText: "E-Mail",
-                                errorText: _authenticationViewModel.emailError,
-                                prefixIcon: const Icon(Icons.email),
+                    child: FocusScope(
+                      node: _node,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SingleChildScrollView(
+                          controller: _scrollController,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 36),
+                              Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Image.asset(ImageAssets.speakyfoxLogo),
                               ),
-                              controller: _emailController,
-                            ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            TextFormField(
-                              keyboardType: TextInputType.visiblePassword,
-                              obscureText: true,
-                              autofillHints: const [AutofillHints.password],
-                              decoration: InputDecoration(
-                                  hintText: "Passwort",
-                                  errorText: _authenticationViewModel.passwordError,
-                                  errorMaxLines: 8,
-                                  prefixIcon: const Icon(Icons.key)),
-                              controller: _passwordController,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                const Text("Eingeloggt bleiben"),
-                                Checkbox(
-                                    value: _authenticationViewModel.stayLoggedIn,
-                                    onChanged: (_) => _authenticationViewModel.toggleStayLoggedIn()),
-                              ],
-                            ),
-                            _authenticationViewModel.isLoggedIn
-                                ? Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const [
-                                        Text("Login erfolgreich!"),
-                                        Icon(
-                                          Icons.check,
-                                          color: ColorAssets.markupGreen,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : Container(),
-                            const SizedBox(
-                              height: 32,
-                            ),
-                            ElevatedButton(
-                              //if not valid or busy, button text is inactive
-                              onPressed: (!_authenticationViewModel.isLoggedIn &&
-                                      !_authenticationViewModel.isBusy &&
-                                      _authenticationViewModel.isLoginFormValid)
-                                  ? () async => _authenticationViewModel
-                                      .login()
-                                      .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
-                                  : null, //Needs to be null to show as a disabled button
-                              child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
-                            ),
-                            const SizedBox(height: 24),
-                            TextButton(
-                                onPressed: () => Navigator.of(context).pushNamed(Routes.resetPassword),
-                                child: const Text("Passwort vergessen?")),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Neu hier?"),
-                                TextButton(
-                                    onPressed: () => Navigator.of(context).pushNamed(Routes.register),
-                                    child: const Text("Erstelle einen Account")),
-                              ],
-                            )
-                          ],
+                              const SizedBox(
+                                height: 32,
+                              ),
+                              Text("Log' dich ein",
+                                  style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                autofillHints: const [AutofillHints.email],
+                                decoration: InputDecoration(
+                                  hintText: "E-Mail",
+                                  errorText: _authenticationViewModel.emailError,
+                                  prefixIcon: const Icon(Icons.email),
+                                ),
+                                controller: _emailController,
+                                textInputAction: TextInputAction.next,
+                                onEditingComplete: _node.nextFocus,
+                              ),
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              TextFormField(
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: true,
+                                autofillHints: const [AutofillHints.password],
+                                decoration: InputDecoration(
+                                    hintText: "Passwort",
+                                    errorText: _authenticationViewModel.passwordError,
+                                    errorMaxLines: 8,
+                                    prefixIcon: const Icon(Icons.key)),
+                                controller: _passwordController,
+                                onEditingComplete: _node.nextFocus,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  const Text("Eingeloggt bleiben"),
+                                  Checkbox(
+                                      value: _authenticationViewModel.stayLoggedIn,
+                                      onChanged: (_) => _authenticationViewModel.toggleStayLoggedIn()),
+                                ],
+                              ),
+                              _authenticationViewModel.isLoggedIn
+                                  ? const Hint("Login erfolgreich!")
+                                  : Container(),
+                              const SizedBox(
+                                height: 32,
+                              ),
+                              ElevatedButton(
+                                //if not valid or busy, button text is inactive
+                                onPressed: (!_authenticationViewModel.isLoggedIn &&
+                                        !_authenticationViewModel.isBusy &&
+                                        _authenticationViewModel.isLoginFormValid)
+                                    ? () async => _authenticationViewModel
+                                        .login()
+                                        .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
+                                    : null, //Needs to be null to show as a disabled button
+                                child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
+                              ),
+                              const SizedBox(height: 24),
+                              TextButton(
+                                  onPressed: () => Navigator.of(context).pushNamed(Routes.resetPassword),
+                                  child: const Text("Passwort vergessen?")),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text("Neu hier?"),
+                                  TextButton(
+                                      onPressed: () => Navigator.of(context).pushNamed(Routes.register),
+                                      child: const Text("Erstelle einen Account")),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )),

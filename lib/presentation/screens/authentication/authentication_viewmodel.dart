@@ -23,6 +23,7 @@ class AuthenticationViewModel extends BaseViewModel {
   String? get emailError => _emailError;
 
   bool _isLoggedIn = false;
+  bool _isRegistrationEmailSent = false;
   bool _isResetEmailSent = false;
   bool _isAGB_accepted = false;
   bool _isDataProtectionAccepted = false;
@@ -34,7 +35,7 @@ class AuthenticationViewModel extends BaseViewModel {
     this._authenticationService,
   ) {
     User? user = _authenticationService.getUser();
-    
+
     _username = user?.firstName ?? "";
     _email = user?.email ?? "";
     _password = "";
@@ -54,6 +55,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool get isAGB_accepted => _isAGB_accepted;
   bool get isDataProtectionAccepted => _isDataProtectionAccepted;
   bool get stayLoggedIn => _stayLoggedIn;
+  bool get isRegistrationEmailSent => _isRegistrationEmailSent;
 
   void validateUsername(String? username) {
     if (username == null || username.isEmpty) {
@@ -138,14 +140,16 @@ class AuthenticationViewModel extends BaseViewModel {
     return email.isNotEmpty;
   }
 
+  bool isStillLoggedIn() {
+    return _authenticationService.isAuthenticated();
+  }
+
   Future<bool> login() async {
     bool? success = false;
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     success = await runBusyFuture<bool?>(_authenticationService.login(_email, _password, _stayLoggedIn));
     _isLoggedIn = success ?? false;
-    if (isLoggedIn) {
-      notifyListeners();
-    }
+    if (isLoggedIn) notifyListeners();
     return _isLoggedIn;
   }
 
@@ -167,7 +171,9 @@ class AuthenticationViewModel extends BaseViewModel {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = await runBusyFuture<bool?>(_authenticationService.register(CreateProfileUserRequest(
         firstname: "", lastname: _username, email: _email, password: _password, affiliateId: "")));
-    return success ?? false;
+    _isRegistrationEmailSent = success ?? false;
+    if (_isRegistrationEmailSent) notifyListeners();
+    return _isRegistrationEmailSent;
   }
 
   void reset() {
@@ -175,9 +181,6 @@ class AuthenticationViewModel extends BaseViewModel {
     _usernameError = null;
     _emailError = null;
     _isLoggedIn = false;
-  }
-
-  bool isStillLoggedIn() {
-    return _authenticationService.isAuthenticated();
+    _isRegistrationEmailSent = false;
   }
 }
