@@ -123,6 +123,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: 16,
                           ),
                           TextFormField(
+                            autofillHints: const [AutofillHints.name],
                             decoration: InputDecoration(
                                 hintText: "Name",
                                 errorText: _authenticationViewModel.userNameError,
@@ -133,6 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: 16,
                           ),
                           TextFormField(
+                            autofillHints: const [AutofillHints.email],
                             decoration: InputDecoration(
                                 hintText: "E-Mail",
                                 errorText: _authenticationViewModel.emailError,
@@ -143,6 +145,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             height: 16,
                           ),
                           TextFormField(
+                            autofillHints: const [AutofillHints.password],
                             keyboardType: TextInputType.visiblePassword,
                             obscureText: true,
                             decoration: InputDecoration(

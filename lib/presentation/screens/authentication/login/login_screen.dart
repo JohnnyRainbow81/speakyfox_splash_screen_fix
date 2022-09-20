@@ -120,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             TextFormField(
                               keyboardType: TextInputType.emailAddress,
+                              autofillHints: const [AutofillHints.email],
                               decoration: InputDecoration(
                                 hintText: "E-Mail",
                                 errorText: _authenticationViewModel.emailError,
@@ -133,6 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             TextFormField(
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: true,
+                              autofillHints: const [AutofillHints.password],
                               decoration: InputDecoration(
                                   hintText: "Passwort",
                                   errorText: _authenticationViewModel.passwordError,

@@ -84,6 +84,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           height: 16,
                         ),
                         TextFormField(
+                          autofillHints: const [AutofillHints.email],
                           decoration: InputDecoration(
                               hintText: "E-Mail",
                               errorText: _authenticationViewModel.emailError,
