@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:555916548277:android:fe2305d3cb6013062dc6fc",
         "android_client_info": {
-          "package_name": "com.example.starterkit_flutter"
+          "package_name": "com.speakyfox.multiplatform"
         }
       },
       "oauth_client": [
