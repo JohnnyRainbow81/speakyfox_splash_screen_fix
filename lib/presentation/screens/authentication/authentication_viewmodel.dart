@@ -1,12 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/utilities.dart';
+import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/presentation/common/resources/text_assets.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../domain/models/user.dart';
@@ -17,6 +24,7 @@ class AuthenticationViewModel extends BaseViewModel {
   late String _username;
   late String _password;
   late String _email;
+  Map<String, dynamic>? _AGBs;
 
   String? _usernameError;
   String? _passwordError;
@@ -42,6 +50,8 @@ class AuthenticationViewModel extends BaseViewModel {
     _username = user?.firstName ?? "";
     _email = user?.email ?? "";
     _password = "";
+
+    getAGB();
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
@@ -70,6 +80,8 @@ class AuthenticationViewModel extends BaseViewModel {
   bool get canSendEmail => !isBusy && _canSendEmail;
 
   bool get hasTextFieldFocus => _hasTextFieldFocus;
+
+  Map<String, dynamic> get AGBs => _AGBs ?? {};
 
   String get waitTime => _waitTime.toString();
 
@@ -207,11 +219,19 @@ class AuthenticationViewModel extends BaseViewModel {
     }
   }
 
+  void getAGB() {
+    rootBundle.loadString(TextAssets.AGBs).then(
+      (string) {
+        _AGBs = jsonDecode(string);
+        notifyListeners();
+      },
+    );
+  }
+
   void reset() {
     _passwordError = null;
     _usernameError = null;
     _emailError = null;
     _isRegistrationEmailSent = false;
   }
-
 }

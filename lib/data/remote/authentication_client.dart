@@ -51,7 +51,12 @@ abstract class AuthenticationClient {
 
   @POST("/users/{userId}/confirm-email")
   Future<Response<bool>> validateToken(@Path("userId") String userId, @Body() token);
+
+  @GET("https://speakyfox.com/agb/")
+  @Headers({"Content-Type" : "text/html", "accept" : "text/html"})
+  Future<String> fetchAGBs();
 }
+
 
 // Future<T> accessToken(
 //     String username,

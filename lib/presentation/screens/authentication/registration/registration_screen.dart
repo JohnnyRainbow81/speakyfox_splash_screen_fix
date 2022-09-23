@@ -1,8 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
+import 'package:speakyfox/presentation/common/resources/themes.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
@@ -199,11 +202,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       value: _authenticationViewModel.isAGB_accepted,
                                       onChanged: ((_) => _authenticationViewModel.toggleAGB_accepted()),
                                     ),
-                                    const Flexible(
-                                        child: Text(
+                                    Flexible(
+                                        child: TextWithLinks(
+                                      textFirst: "Ich habe die ",
+                                      textLinked: "AGB gelesen ",
+                                      textSecond: "und bin mit diesen einverstanden",
+                                      widgetBehindLink: InformationSheet(data: _authenticationViewModel.AGBs),
+                                    ) /* Text(
                                       "Ich habe die AGB gelesen und bin mit diesen einverstanden",
                                       maxLines: 3,
-                                    ))
+                                    ) */
+                                        )
                                   ],
                                 ),
                                 const SizedBox(
@@ -238,5 +247,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         );
       },
     );
+  }
+}
+
+class TextWithLinks extends StatelessWidget {
+  final String? textFirst;
+  final String? textSecond;
+  final String textLinked;
+  final Widget widgetBehindLink;
+
+  const TextWithLinks(
+      {this.textFirst, required this.textLinked, this.textSecond, required this.widgetBehindLink, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(text: textFirst, style: Theme.of(context).textTheme.bodyText2, children: [
+        TextSpan(
+          text: textLinked,
+          style: getUnderlinedTextStyle(),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () => showModalBottomSheet(
+                isScrollControlled: true, context: context, builder: (context) => widgetBehindLink),
+        ),
+        TextSpan(text: textSecond)
+      ]),
+    );
+  }
+}
+
+class InformationSheet extends StatelessWidget {
+  Map<String, dynamic> data;
+  InformationSheet({required this.data, Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child: SingleChildScrollView(
+      child: Column(mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ...data.entries.map((e) => Padding(padding: EdgeInsets.all(16),
+            child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text(e.key, style: Theme.of(context).textTheme.headline6,), Flexible(child: Text(e.value,maxLines: 50,softWrap: true,))],
+                ),
+          ))
+        ],
+      ),
+    )));
   }
 }

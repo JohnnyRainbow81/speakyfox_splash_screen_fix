@@ -113,14 +113,17 @@ ButtonThemeData _getButtonThemeData() {
 TextButtonThemeData _getTextButtonTheme() => TextButtonThemeData(style: _getTextButtonStyle());
 
 ButtonStyle _getTextButtonStyle() {
-  return ButtonStyle(
-      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
+  return ButtonStyle(textStyle: MaterialStateProperty.all<TextStyle>(getUnderlinedTextStyle()));
+}
+
+TextStyle getUnderlinedTextStyle() {
+  return TextStyle(
     foreground: Paint()..color = ColorAssets.primary,
     fontSize: 13,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.underline,
     decorationColor: ColorAssets.primary,
-  )));
+  );
 }
 
 ElevatedButtonThemeData _getElevatedButtonThemeData() {
@@ -213,9 +216,9 @@ InputDecorationTheme _getInputDecorationTheme() {
 }
 
 CheckboxThemeData _getCheckboxTheme() {
-  return  CheckboxThemeData(
-    side: MaterialStateBorderSide.resolveWith((states) => const BorderSide(width: 1.6, color: ColorAssets.primary)),
-    fillColor: MaterialStateProperty.resolveWith<Color>((states) => ColorAssets.primary),
+  return CheckboxThemeData(
+      side: MaterialStateBorderSide.resolveWith((states) => const BorderSide(width: 1.6, color: ColorAssets.primary)),
+      fillColor: MaterialStateProperty.resolveWith<Color>((states) => ColorAssets.primary),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(4)), side: BorderSide(width: 1, color: ColorAssets.primary)));
 }
