@@ -46,6 +46,10 @@ class _OnboardingPagerState extends State<OnboardingPager> {
     _pageController.dispose();
     super.dispose();
   }
+  
+  void goToLoginScreen() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {

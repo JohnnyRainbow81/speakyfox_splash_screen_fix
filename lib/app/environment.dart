@@ -55,11 +55,10 @@ class BuildEnvironment {
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
-    if (shouldUseQABackend) {
+    if (isQA) {
       //Little 'hack': Use qa-backend even in release mode app for testing purposes
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);
-      
     } else if (kDebugMode || kProfileMode) {
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);

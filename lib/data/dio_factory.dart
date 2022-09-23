@@ -8,45 +8,13 @@ import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/domain/models/identity_token.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 
-//Different Dio classes with different base urls are needed because we have different backend urls throughout the app.
-//And because the dio classes are setup together by dependency injection at the start of the app.
-
-//If we had only 1 Dio class we would need to change this single dio instance to different urls, which means we would need to
-//touch the dependency injection layer, often while the user is on the same screen, using different functionalities.
-//So i decided to make 4 seperate Dio instances, for auth-server, v1 and v2 and documents
-
-// class DioAuth {
-//   DioAuth._();
-
-//   static Future<Dio> initialize(String baseUrl) async {
-//     Dio dio = Dio();
-//     int timeOut = 60 * 1000; // 1 min
-//     Map<String, String> headers = {
-//       HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
-//       HttpHeaders.acceptHeader: Headers.jsonContentType,
-//     };
-
-//     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
-//     dio.options.baseUrl = baseUrl;
-
-//     if (kReleaseMode) {
-//       print("release mode no logs");
-//     } else {
-//       dio.interceptors.add(
-//           PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-//     }
-
-//     return dio;
-//   }
-// }
-
 class DioV1 {
   DioV1._();
   static final AuthenticationService _authenticationService = locator<AuthenticationService>();
 
   static Future<Dio> initialize(String baseUrl) async {
     Dio dio = Dio();
-    int timeOut = 30 * 1000; // 10sec
+    int timeOut = 30 * 1000; // 30sec
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: Headers.formUrlEncodedContentType,
       HttpHeaders.acceptHeader: Headers.jsonContentType,
@@ -55,33 +23,25 @@ class DioV1 {
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
-    if (kDebugMode) {
-      dio.interceptors.add(
-          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-    }
+    dio.interceptors
+        .add(PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
 
-    //check this:
-    //https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
-    //https://pub.dev/packages/dio#interceptors
-    //use AuthenticationService here?? Because Dio <> AuthenticationService would be in a cyclic dependency then
+    // check this:
+    // https://stackoverflow.com/questions/56740793/using-interceptor-in-dio-for-flutter-to-refresh-token
+    // https://pub.dev/packages/dio#interceptors
+    // use AuthenticationService here?? Because Dio <> AuthenticationService would be in a cyclic dependency then
     dio.interceptors.add(InterceptorsWrapper(
       onResponse: (response, handler) {
         return handler.next(response);
       },
       onRequest: (options, handler) {
-        //Request already has accessToken? > return
-        //FIXME REDUNDANT because there will never be an auth header until this point
-        if (options.headers.containsKey(HttpHeaders.authorizationHeader)) {
-          return handler.next(options);
-        }
         IdentityToken? credentials = _authenticationService.getCredentials();
 
         if (credentials != null) {
           String accessToken = credentials.accessToken;
           options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
         }
-        //TODO check if OK
-        return handler.next(options); //handler.resolve(Response(requestOptions: options)); //handler.next(options);
+        return handler.next(options);
       },
       onError: (error, handler) async {
         if (error.response?.statusCode == 401) {
@@ -133,10 +93,9 @@ class DioDocuments {
     dio.options = BaseOptions(connectTimeout: timeOut, receiveTimeout: timeOut, headers: headers);
     dio.options.baseUrl = baseUrl;
 
-    if (kDebugMode) {
-      dio.interceptors.add(
-          PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
-    }
+    dio.interceptors
+        .add(PrettyDioLogger(error: true, request: true, requestHeader: true, requestBody: true, responseHeader: true));
+
     return dio;
   }
 }

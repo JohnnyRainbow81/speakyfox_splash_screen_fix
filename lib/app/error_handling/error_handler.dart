@@ -55,6 +55,9 @@ class ErrorHandler {
           FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "DefaultException");
           throw UIException();
       }
+      //In this place we tell the ErrorHandler *by ourselves* which specific Exception should be thrown. 
+      //This is useful in cases where we can be sure what the specific reason for an error might be 
+      //where the backend or a library only gives us a very broad error like "403"
     } else if (error is Errors) {
       switch (error) {
         case Errors.emailNotFound:

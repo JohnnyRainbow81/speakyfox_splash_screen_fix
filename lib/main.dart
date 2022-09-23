@@ -11,7 +11,7 @@ import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
 
-bool shouldUseQABackend = true; //delete later
+bool isQA = true; //delete later
 //import 'firebase_options.dart';
 main() async {
   //Error handling setup

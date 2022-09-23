@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
+import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import '../../../../app/dependency_injection.dart';
 import '../../../common/widgets/errors/common_error_dialog.dart';
@@ -22,7 +26,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   final _formKey = GlobalKey<FormState>();
 
-  double scale = 1.0;
+  double _scale = 1.0;
 
   @override
   void initState() {
@@ -85,6 +89,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           height: 16,
                         ),
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          enableInteractiveSelection: true,
                           autofillHints: const [AutofillHints.email],
                           decoration: InputDecoration(
                               hintText: "E-Mail",
@@ -98,29 +104,33 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 child: Text("Wir haben dir eine Email geschickt"),
                               )
                             : Container(),
-                            const SizedBox(height: 16,),
-                        _authenticationViewModel.isResetEmailSent
-                            ? AnimatedScale(
-                                duration: const Duration(milliseconds: 100),
-                                curve: Curves.ease,
-                                onEnd: () => setState(() => scale = 1.0),
-                                scale: scale,
-                                child: const Hint( "Email wurde verschickt!"))
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        _authenticationViewModel.isResetEmailSent && !_authenticationViewModel.canSendEmail
+                            ? const Hint("Email wurde verschickt!")
                             : Container(),
                         const SizedBox(
                           height: 24,
                         ),
                         ElevatedButton(
-                            onPressed: _authenticationViewModel.isEmailFormValid
-                                ? () {
-                                    setState(() => scale = 1.1);
-                                    _authenticationViewModel.sendResetEmail();
-                                  }
-                                : null,
-                            child: _authenticationViewModel.isResetEmailSent
-                                ? const Text("Nochmal senden")
-                                : const Text("Email versenden")),
+                            onPressed:
+                                _authenticationViewModel.canSendEmail ? _authenticationViewModel.sendResetEmail : null,
+                            child: _authenticationViewModel.isBusy
+                                ? const LoadingAnimation()
+                                : _authenticationViewModel.isResetEmailSent && _authenticationViewModel.canSendEmail
+                                    ? const Text("Nochmal senden")
+                                    : !_authenticationViewModel.canSendEmail
+                                        ? Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                                const Text("Bitte warten "),
+                                                Text(_authenticationViewModel.waitTime)
+                                              ])
+                                        : const Text("Email versenden")),
                         const Spacer(),
+                        //const SizedBox(height: 48,),
                         TextButton(
                             onPressed: () => Navigator.of(context).pop(), //to Login Screen
                             child: const Text("Zurück zum Login")),
@@ -134,32 +144,3 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     );
   }
 }
-
-// class Hint extends StatelessWidget {
-//   final String text;
-//   final IconData? iconData;
-//   final Color? color;
-//   const Hint({
-//     required this.text,
-//     this.iconData,
-//     this.color,
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(top: 8.0),
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Text(text),
-//           Icon(
-//             iconData ?? Icons.check,
-//             color: color ?? ColorAssets.markupGreen,
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }

@@ -28,7 +28,7 @@ void main() async {
 
       when(mockAuthenticationRepository.fetchUser(any)).thenAnswer((_) async => MockUser());
 
-      await authenticationService.login("test", "password123", true);
+      await authenticationService.login("test", "password123");
 
       IdentityToken token = authenticationService.getCredentials()!;
       expect(token, isNotNull);

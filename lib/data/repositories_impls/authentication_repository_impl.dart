@@ -36,7 +36,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<User> register(CreateProfileUserRequest user) async {
-    //Not stored locally? get from backend
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationClient.register(user /* username, password, grantType */);

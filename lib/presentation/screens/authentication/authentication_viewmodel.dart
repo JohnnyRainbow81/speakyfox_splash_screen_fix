@@ -1,4 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -18,16 +22,15 @@ class AuthenticationViewModel extends BaseViewModel {
   String? _passwordError;
   String? _emailError;
 
-  String? get userNameError => _usernameError;
-  String? get passwordError => _passwordError;
-  String? get emailError => _emailError;
-
-  bool _isLoggedIn = false;
   bool _isRegistrationEmailSent = false;
   bool _isResetEmailSent = false;
   bool _isAGB_accepted = false;
   bool _isDataProtectionAccepted = false;
   bool _stayLoggedIn = false;
+  bool _canSendEmail = true;
+  bool _hasTextFieldFocus = false;
+
+  int _waitTime = Constants.emailResendDelay;
 
   Function? _allRegistrationInputsAreValidCallback;
 
@@ -39,23 +42,36 @@ class AuthenticationViewModel extends BaseViewModel {
     _username = user?.firstName ?? "";
     _email = user?.email ?? "";
     _password = "";
-    // _authenticationService.getCredentials()?.user.password ?? "";
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
     _allRegistrationInputsAreValidCallback = callback;
   }
 
+  set hasTextFieldFocus(bool value) {
+    _hasTextFieldFocus = value;
+    notifyListeners();
+  }
+
   String get email => _email;
   String get password => _password;
   String get username => _username;
 
-  bool get isLoggedIn => _isLoggedIn;
+  String? get userNameError => _usernameError;
+  String? get passwordError => _passwordError;
+  String? get emailError => _emailError;
+
+  bool get isLoggedIn => _authenticationService.isAuthenticated();
   bool get isResetEmailSent => _isResetEmailSent;
   bool get isAGB_accepted => _isAGB_accepted;
   bool get isDataProtectionAccepted => _isDataProtectionAccepted;
   bool get stayLoggedIn => _stayLoggedIn;
   bool get isRegistrationEmailSent => _isRegistrationEmailSent;
+  bool get canSendEmail => !isBusy && _canSendEmail;
+
+  bool get hasTextFieldFocus => _hasTextFieldFocus;
+
+  String get waitTime => _waitTime.toString();
 
   void validateUsername(String? username) {
     if (username == null || username.isEmpty) {
@@ -72,7 +88,6 @@ class AuthenticationViewModel extends BaseViewModel {
   void validatePassword(String? password) {
     if (password == null || password.isEmpty) {
       _passwordError = 'Bitte gib ein gültiges Passwort ein';
-      //TODO Validation logic
     } else if (!isValidPassword(password)) {
       _passwordError =
           'Das Passwort muss mindestens \n einen Großbuchstaben,\n einen Kleinbuchstaben, \n eine Zahl, \n ein Sonderzeichen \n und mindestens 8 Zeichen enthalten';
@@ -136,51 +151,67 @@ class AuthenticationViewModel extends BaseViewModel {
 
   bool get isEmailFormValid {
     //email validation has already been done at this point. "valid" then means, that
-    //the email string has been assigned a valid value so it is not empty anymore
+    //the email string has been assigned a valid value that satisfies all email address criterias
     return email.isNotEmpty;
   }
 
-  bool isStillLoggedIn() {
+  bool isAlreadyLoggedIn() {
     return _authenticationService.isAuthenticated();
   }
 
-  Future<bool> login() async {
-    bool? success = false;
-    //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
-    success = await runBusyFuture<bool?>(_authenticationService.login(_email, _password, _stayLoggedIn));
-    _isLoggedIn = success ?? false;
-    if (isLoggedIn) notifyListeners();
-    return _isLoggedIn;
+  Future<void> login() async {
+    await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
+    if (_authenticationService.isAuthenticated()) {
+      _password = "";
+      notifyListeners();
+    }
   }
 
-  Future<bool> sendResetEmail() async {
+  Future<void> sendResetEmail() async {
+    _canSendEmail = false;
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = false;
     //Better mock this call for testing
     success =
         await runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
 
+    Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        _waitTime--;
+        if (_waitTime <= 0) {
+          timer.cancel();
+          _canSendEmail = true;
+          _waitTime = Constants.emailResendDelay;
+          _isResetEmailSent = false;
+        }
+        notifyListeners();
+      },
+    );
+
     _isResetEmailSent = success ?? false;
+
     if (_isResetEmailSent) {
       notifyListeners();
     }
-    return _isResetEmailSent;
   }
 
-  Future<bool> register() async {
+  Future<void> register() async {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = await runBusyFuture<bool?>(_authenticationService.register(CreateProfileUserRequest(
         firstname: "", lastname: _username, email: _email, password: _password, affiliateId: "")));
     _isRegistrationEmailSent = success ?? false;
-    if (_isRegistrationEmailSent) notifyListeners();
-    return _isRegistrationEmailSent;
+    if (_isRegistrationEmailSent) {
+      _password = "";
+      notifyListeners();
+    }
   }
 
   void reset() {
     _passwordError = null;
     _usernameError = null;
     _emailError = null;
-    _isLoggedIn = false;
     _isRegistrationEmailSent = false;
   }
+
 }

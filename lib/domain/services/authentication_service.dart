@@ -52,7 +52,7 @@ class AuthenticationService {
     return true;
   }
 
-  Future<bool?> login(String username, String password, bool stayLoggedIn) async {
+  Future<bool?> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(
         AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.password.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
@@ -64,9 +64,9 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
-    if (stayLoggedIn) {
+
       setCredentials(identityToken);
-    }
+    
 
     //DI for authenticated HTTP calls
     //await initializeDependencies(ticket.accessToken);

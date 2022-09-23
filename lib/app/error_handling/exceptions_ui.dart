@@ -247,8 +247,8 @@ class EmailNotFoundException extends UIException {
    EmailNotFoundException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Email not found",
-          description: description ?? "We couldn't find your email address in our system",
+          message: message ?? "Email nicht gefunden",
+          description: description ?? "Wir konnten deine E-Mail Adresse leider nicht in unserem System finden",
         );
 }
 
@@ -265,8 +265,8 @@ class WrongPasswordException extends UIException {
    WrongPasswordException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Password error",
-          description: description ?? "Password didn't match this E-mail address",
+          message: message ?? "Falsches Password?",
+          description: description ?? "Dieses Password passt nicht zur E-Mail-Adresse",
         );
 }
 
@@ -275,8 +275,8 @@ class UserPasswordCoupleInvalidException extends UIException {
    UserPasswordCoupleInvalidException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Login failed",
-          description: description ?? "This E-Mail / Password combination does not exist",
+          message: message ?? "Login fehlgeschlagen",
+          description: description ?? "Diese E-Mail/Password Kombination existiert leider nicht.",
         );
 }
 
@@ -293,7 +293,7 @@ class RegistrationFailedException extends UIException {
    RegistrationFailedException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Registration failed",
-          description: description ?? "Unfortunately we couldn't create your account.",
+          message: message ?? "Registrierung fehlgeschlagen",
+          description: description ?? "Leider konnten wir keinen Account für dich anlegen.",
         );
 }

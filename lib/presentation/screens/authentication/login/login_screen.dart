@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/authentication/common/logo.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/dependency_injection.dart';
@@ -34,14 +36,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) { 
-      //If user initially chose "keep me logged in" she gets directly transfered to home screen after
-      //restarting the app
-      if (_authenticationViewModel.isStillLoggedIn()) {
-        goToNextScreen();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //If user is logged in when starting the app she gets directly transfered to home screen
+      if (_authenticationViewModel.isLoggedIn) {
+        goToHomeScreen();
       }
     });
 
@@ -53,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     _scrollController = ScrollController();
     _authenticationViewModel.reset();
+
+    _node.addListener(onTextFieldFocus);
   }
 
   @override
@@ -64,26 +66,50 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _scrollController.dispose();
+    _node.removeListener(onTextFieldFocus);
     _node.dispose();
 
     super.dispose();
   }
 
-  void goToNextScreen() {
+  void goToHomeScreen() {
     Future.delayed(const Duration(milliseconds: 500), (() {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(Routes.home);
+        Navigator.of(context).pushNamedAndRemoveUntil(Routes.home, (route) => false);
       }
     }));
   }
 
+  void goToRegistrationScreen() {
+    Navigator.pushNamed(context, Routes.register);
+  }
+
+  void goToResetPasswordScreen() {
+    Navigator.of(context).pushNamed(Routes.resetPassword);
+  }
+
+// Strangely this needs to be in *this* class instead of putting this very same method 
+// into the viewModel-class to work properly. WhyTF??
+  bool isLoginEnabled() {
+    return (!_authenticationViewModel.isLoggedIn &&
+        !_authenticationViewModel.isBusy &&
+        _authenticationViewModel.isLoginFormValid);
+  }
+
+// Let the ViewModel know about focus changes to inform the 
+//Speakyfox Logo, which is seperate widget, about focus changes.
+  void onTextFieldFocus() {
+    _authenticationViewModel.hasTextFieldFocus = _node.hasFocus;
+  }
+
   @override
   Widget build(BuildContext context) {
-    debugPrint("LoginScreen.build() ");
     return ViewModelBuilder.reactive(
       disposeViewModel: false,
       viewModelBuilder: () => _authenticationViewModel,
       builder: (context, _, child) {
+        debugPrint("LoginScreen.builder() ");
+
         if (_authenticationViewModel.hasError) {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
@@ -105,20 +131,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: FocusScope(
                       node: _node,
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsets.only(top: 24.0, bottom: 12.0, left: 12.0, right: 12.0),
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 36),
-                              Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Image.asset(ImageAssets.speakyfoxLogo),
-                              ),
+                              // const SizedBox(height: 36),
+                              const Logo(key: Key("Logo")),
                               const SizedBox(
-                                height: 32,
+                                height: 24,
                               ),
                               Text("Log' dich ein",
                                   style: Theme.of(context).textTheme.headline6, textAlign: TextAlign.center),
@@ -126,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 16,
                               ),
                               TextFormField(
+                                enableInteractiveSelection: true,
                                 keyboardType: TextInputType.emailAddress,
                                 autofillHints: const [AutofillHints.email],
                                 decoration: InputDecoration(
@@ -141,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 24,
                               ),
                               TextFormField(
+                                enableInteractiveSelection: true,
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: true,
                                 autofillHints: const [AutofillHints.password],
@@ -150,44 +175,35 @@ class _LoginScreenState extends State<LoginScreen> {
                                     errorMaxLines: 8,
                                     prefixIcon: const Icon(Icons.key)),
                                 controller: _passwordController,
-                                onEditingComplete: _node.nextFocus,
+                                onEditingComplete: () {
+                                  _node.unfocus();
+                                },
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Text("Eingeloggt bleiben"),
-                                  Checkbox(
-                                      value: _authenticationViewModel.stayLoggedIn,
-                                      onChanged: (_) => _authenticationViewModel.toggleStayLoggedIn()),
-                                ],
-                              ),
+
                               _authenticationViewModel.isLoggedIn
                                   ? const Hint("Login erfolgreich!")
-                                  : Container(),
+                                  : const SizedBox.shrink(),
                               const SizedBox(
                                 height: 32,
                               ),
                               ElevatedButton(
                                 //if not valid or busy, button text is inactive
-                                onPressed: (!_authenticationViewModel.isLoggedIn &&
-                                        !_authenticationViewModel.isBusy &&
-                                        _authenticationViewModel.isLoginFormValid)
+                                onPressed: isLoginEnabled()
                                     ? () async => _authenticationViewModel
                                         .login()
-                                        .then((isLoggedIn) => isLoggedIn ? goToNextScreen() : null)
+                                        .then((_) => _authenticationViewModel.isLoggedIn ? goToHomeScreen() : null)
                                     : null, //Needs to be null to show as a disabled button
                                 child: _authenticationViewModel.isBusy ? const LoadingAnimation() : const Text("Login"),
                               ),
                               const SizedBox(height: 24),
                               TextButton(
-                                  onPressed: () => Navigator.of(context).pushNamed(Routes.resetPassword),
-                                  child: const Text("Passwort vergessen?")),
+                                  onPressed: () => goToResetPasswordScreen(), child: const Text("Passwort vergessen?")),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text("Neu hier?"),
                                   TextButton(
-                                      onPressed: () => Navigator.of(context).pushNamed(Routes.register),
+                                      onPressed: () => goToRegistrationScreen(),
                                       child: const Text("Erstelle einen Account")),
                                 ],
                               )
@@ -204,3 +220,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
