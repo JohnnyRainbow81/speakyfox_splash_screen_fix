@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
@@ -269,7 +270,11 @@ class TextWithLinks extends StatelessWidget {
           style: getUnderlinedTextStyle(),
           recognizer: TapGestureRecognizer()
             ..onTap = () => showModalBottomSheet(
-                isScrollControlled: true, context: context, builder: (context) => widgetBehindLink),
+                isDismissible: true,
+                enableDrag: true,
+                isScrollControlled: true,
+                context: context,
+                builder: (context) => widgetBehindLink),
         ),
         TextSpan(text: textSecond)
       ]),
@@ -283,18 +288,53 @@ class InformationSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-            child: SingleChildScrollView(
-      child: Column(mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ...data.entries.map((e) => Padding(padding: EdgeInsets.all(16),
-            child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text(e.key, style: Theme.of(context).textTheme.headline6,), Flexible(child: Text(e.value,maxLines: 50,softWrap: true,))],
-                ),
-          ))
-        ],
-      ),
-    )));
+    return SafeArea(
+      minimum: EdgeInsets.only(top: 24, bottom: 0),
+      child: Scaffold(
+          appBar: AppBar(
+              
+              title: Text(
+                "Unsere AGBs",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              bottomOpacity: 0.0,
+              toolbarOpacity: 1.0,
+              elevation: 2,
+              shadowColor: ColorAssets.primary.withOpacity(0.15),
+              backgroundColor: Theme.of(context).backgroundColor,
+              iconTheme: Theme.of(context).iconTheme.copyWith(color: ColorAssets.primary)),
+          body: Center(
+              child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ...data.entries.map((e) => Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            e.key,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Flexible(
+                              child: Text(
+                            e.value,
+                            maxLines: 50,
+                            softWrap: true,
+                          ))
+                        ],
+                      ),
+                    ))
+              ],
+            ),
+          ))),
+    );
   }
 }

@@ -49,7 +49,7 @@ TextTheme _getApplicationTextTheme() {
     headline4: TextStyle(
         fontSize: 32, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline5: TextStyle(
-        fontSize: 23, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+        fontSize: 21, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline6: TextStyle(
         fontSize: 18, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     button: TextStyle(
