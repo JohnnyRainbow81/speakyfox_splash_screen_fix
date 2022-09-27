@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
@@ -76,7 +75,7 @@ Future<void> initializeDependencies() async {
 
 //AuthenticationService
   locator.registerLazySingleton<TokenClient>(
-      () => TokenClient(locator(), baseUrl: env.production ? Constants.baseUrlAuthProd : Constants.baseUrlAuthQA));
+      () => TokenClient(locator(), baseUrl: env.serverUrlAuth));
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(locator()));
   locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:isolate';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -25,6 +26,8 @@ main() async {
     );
 
     await BuildEnvironment.init();
+
+    log(env.toString());
 
     //If [false], crashdata is only collected on the local device > [true] for sending errors to remote Crashlytics
     FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);

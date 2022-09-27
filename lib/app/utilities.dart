@@ -53,3 +53,7 @@ bool isKeyboardVisible(BuildContext context) {
   double inset = MediaQuery.of(context).viewInsets.bottom;
   return inset > 0;
 }
+
+void ensureKeyboardIsHidden(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
+}
