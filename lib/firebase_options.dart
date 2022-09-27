@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDADrvQgxYJu6UP3JT--q4gUBVtI-VBUEw',
-    appId: '1:555916548277:android:fe2305d3cb6013062dc6fc',
-    messagingSenderId: '555916548277',
-    projectId: 'diggitize-starterkit',
-    storageBucket: 'diggitize-starterkit.appspot.com',
+    apiKey: 'AIzaSyCOxekPsekcLvzmpe8sUrfZWGNs8Vu_RBY',
+    appId: '1:278018013804:android:5a7b682e5ec83a2003f649',
+    messagingSenderId: '278018013804',
+    projectId: 'speakyfox-6ab59',
+    storageBucket: 'speakyfox-6ab59.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAKGONSCeCo8xSuL3Dy_H88izslWR_18JM',
-    appId: '1:555916548277:ios:989a3f5b265655ee2dc6fc',
-    messagingSenderId: '555916548277',
-    projectId: 'diggitize-starterkit',
-    storageBucket: 'diggitize-starterkit.appspot.com',
-    iosClientId: '555916548277-e65tgghal7io23aoi6ooavdiigvojrhn.apps.googleusercontent.com',
-    iosBundleId: 'com.example.starterkitFlutter',
+    apiKey: 'AIzaSyAUkDoxhEY4SbVoIF7M7NfZu6RQ51oRAog',
+    appId: '1:278018013804:ios:5655e8e49f2f723803f649',
+    messagingSenderId: '278018013804',
+    projectId: 'speakyfox-6ab59',
+    storageBucket: 'speakyfox-6ab59.appspot.com',
+    iosClientId: '278018013804-ippness5v0ocq5p8g0o22v53t9kt3v6v.apps.googleusercontent.com',
+    iosBundleId: 'com.speakyfox.multiplatform',
   );
 }
