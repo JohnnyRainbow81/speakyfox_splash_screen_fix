@@ -12,6 +12,7 @@ import 'package:speakyfox/data/mappers/identity_token_mapper.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
+import 'package:speakyfox/data/remote/token_client.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
@@ -26,11 +27,13 @@ import 'package:speakyfox/domain/repositories/authentication_repository.dart';
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final ConnectivityService _connectivityService;
   final AuthenticationClient _authenticationClient;
+  final TokenClient _tokenClient;
   final AuthenticationLocalSource _authenticationLocalSource;
 
   AuthenticationRepositoryImpl(
     this._authenticationClient,
     this._authenticationLocalSource,
+    this._tokenClient,
     this._connectivityService,
   );
 
@@ -61,7 +64,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       //Not stored locally? get from backend
       if (await _connectivityService.hasConnection()) {
         try {
-          final response = await _authenticationClient.accessToken(body /* username, password, grantType */);
+          final response = await _tokenClient.accessToken(body /* username, password, grantType */);
           _authenticationLocalSource.saveTicket(response); //store locally
           return response.toTicket();
         } catch (error) {
@@ -79,7 +82,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     //more logic here
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _authenticationClient.refreshToken(body);
+        final response = await _tokenClient.refreshToken(body);
         return response.toTicket();
       } catch (error) {
         ErrorHandler.handleError(error);

@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
+import 'package:logging/logging.dart';
 
 enum Errors {
   emailNotFound,
@@ -11,7 +14,8 @@ enum Errors {
   wrongPassword,
   userPasswordCoupleInvalid,
   notImplementedYet,
-  registrationFailed
+  registrationFailed,
+  loginFailed
 }
 
 //Main tasks:
@@ -55,8 +59,8 @@ class ErrorHandler {
           FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "DefaultException");
           throw UIException();
       }
-      //In this place we tell the ErrorHandler *by ourselves* which specific Exception should be thrown. 
-      //This is useful in cases where we can be sure what the specific reason for an error might be 
+      //In this place we tell the ErrorHandler *by ourselves* which specific Exception should be thrown.
+      //This is useful in cases where we can be sure what the specific reason for an error might be
       //where the backend or a library only gives us a very broad error like "403"
     } else if (error is Errors) {
       switch (error) {
@@ -72,6 +76,8 @@ class ErrorHandler {
           throw NotImplementedYetException();
         case Errors.registrationFailed:
           throw RegistrationFailedException();
+        case Errors.loginFailed:
+          throw LoginNotSuccessfulException();
       }
     } else if (error is Error) {
       //Errors should crash the app, because the app possibly won't be in recoverable state afterwards,
@@ -79,8 +85,17 @@ class ErrorHandler {
       //and let the user restart the app by herself, by pressing a "restart" button or similar.
       //If it's no more possible the show a restart option, a black screen with an error message will
       //be shown. See the error handling widgets in presentation layer.
-      FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "Error", fatal: true);
-      throw Error();
+
+      log("Error happened!",
+          error: error,
+          level: Level.SHOUT.value,
+          time: DateTime.now(),
+          zone: Zone.current,
+          stackTrace: StackTrace.current);
+
+      FirebaseCrashlytics.instance
+          .recordError(error, StackTrace.current, reason: "Error", fatal: true, printDetails: true);
+      //throw Error();
     }
   }
 
@@ -105,8 +120,8 @@ class ErrorHandler {
             FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "forbidden");
             throw HttpUIException(code: dioError.response?.statusCode);
           case HttpStatus.unauthorized:
-            FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "unauthorized");
-            throw UnauthorizedUIException(code: dioError.response?.statusCode);
+            FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "unauthenticated");
+            throw UnauthenticateddUIException(code: dioError.response?.statusCode);
           case HttpStatus.notFound:
             FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "notFound");
             throw NotFoundUIException(code: dioError.response?.statusCode);

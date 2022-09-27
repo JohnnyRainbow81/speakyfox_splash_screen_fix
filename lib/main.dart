@@ -11,7 +11,6 @@ import 'package:speakyfox/firebase_options.dart';
 import 'app/app.dart';
 import 'app/dependency_injection.dart';
 
-bool isQA = true; //delete later
 //import 'firebase_options.dart';
 main() async {
   //Error handling setup
@@ -35,31 +34,24 @@ main() async {
 
     //Called whenever Flutter framework catches an error. By default, this calls [FlutterError.presentError]
     FlutterError.onError = (details) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+      //FirebaseCrashlytics.instance.recordFlutterFatalError(details);
       FirebaseCrashlytics.instance.recordFlutterError(details);
     };
 
     //For errors coming from outside of Flutter context
     Isolate.current.addErrorListener(RawReceivePort((pair) async {
       final List<dynamic> errorAndStacktrace = pair;
-      await FirebaseCrashlytics.instance.recordError(
-        errorAndStacktrace.first,
-        errorAndStacktrace.last,
-        fatal: true,
-      );
+      await FirebaseCrashlytics.instance
+          .recordError(errorAndStacktrace.first, errorAndStacktrace.last, fatal: true, printDetails: true);
     }).sendPort);
 
-    //dependency injection of authentication stuff until we have an authToken
+    //dependency injection
     await initializeDependencies();
-
-    //Is this clean? > ask Julien
-    //Check if User has already valid credentials on her device
-    //await locator<AuthenticationService>().tryInitializingAuthenticationFromCache();
 
     runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {
-    //Error that aren't caught by Flutter
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    //Error that aren't caught by Flutter. See docu/example code, these should be marked as fatal https://firebase.google.com/docs/crashlytics/get-started?platform=flutter
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true, printDetails: true);
   },
       //Errors normally should not crossed Zone boundaries, so this might be redundant..
       zoneSpecification: ZoneSpecification(
@@ -67,6 +59,8 @@ main() async {
       if (kDebugMode) {
         print("Caught uncaught Error outside of ErrorZone: Error: ${error.runtimeType}, Stacktrace: $stackTrace");
       }
+      FirebaseCrashlytics.instance
+          .recordError(error, stackTrace, reason: "outOfZone Error", fatal: true, printDetails: true);
     },
   ));
 }

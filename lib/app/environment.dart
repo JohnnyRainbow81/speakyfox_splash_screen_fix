@@ -3,9 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-
-import 'package:speakyfox/app/constants.dart';
-import 'package:speakyfox/main.dart';
+import 'constants.dart';
 
 enum BuildFlavor { development, qa, production }
 
@@ -26,8 +24,12 @@ class BuildEnvironment {
   static const String _keySupportedLanguages = "supportedLanguages";
   static const String _keyHmr = "hmr";
 
+  static const String dev = "dev";
+  static const String qa = "qa";
+  static const String prod = "prod";
+
   final bool production;
-  final String serverUrlAuth = Constants.baseUrlAuth;
+  late final String serverUrlAuth;
   final String serverUrl;
   final String serverUrlV2;
   final String documentrApiUrl;
@@ -55,17 +57,22 @@ class BuildEnvironment {
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
-    if (isQA) {
-      //Little 'hack': Use qa-backend even in release mode app for testing purposes
+    const String envString = String.fromEnvironment("env"); //delete later
+    print(
+      "environment : $envString",
+    );
+
+    if (envString == dev) {
+      String str = await rootBundle.loadString("assets/environments/dev.json");
+      map = jsonDecode(str);
+    } else if (envString == qa) {
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);
-    } else if (kDebugMode || kProfileMode) {
-      String str = await rootBundle.loadString("assets/environments/qa.json");
-      map = jsonDecode(str);
-    } else if (kReleaseMode) {
+    } else if (envString == prod) {
       String str = await rootBundle.loadString("assets/environments/prod.json");
       map = jsonDecode(str);
     }
+
     _env = BuildEnvironment._init(
         production: map[_keyProduction],
         serverUrl: map[_keyServerUrl],

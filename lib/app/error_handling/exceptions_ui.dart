@@ -134,12 +134,12 @@ class BadRequestUIException extends UIException {
         );
 }
 
-class UnauthorizedUIException extends UIException {
-  UnauthorizedUIException({int? code, String? message, String? description})
+class UnauthenticateddUIException extends UIException {
+  UnauthenticateddUIException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Unauthorized error",
-          description: description ?? "Authentication is necessary, says our server.",
+          message: message ?? "Fehler bei der Authentifizierung",
+          description: description ?? "Leider konnte unser Server dich nicht identifizieren.",
         );
 }
 

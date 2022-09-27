@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
@@ -17,6 +18,7 @@ import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/data/remote/product_client.dart';
 import 'package:speakyfox/data/remote/progress_client.dart';
 import 'package:speakyfox/data/remote/subscription_client.dart';
+import 'package:speakyfox/data/remote/token_client.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/remote/vocabulary_client.dart';
 import 'package:speakyfox/data/repositories_impls/authentication_repository_impl.dart';
@@ -73,10 +75,12 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
 
 //AuthenticationService
+  locator.registerLazySingleton<TokenClient>(
+      () => TokenClient(locator(), baseUrl: env.production ? Constants.baseUrlAuthProd : Constants.baseUrlAuthQA));
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(locator()));
   locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(
-      () => AuthenticationRepositoryImpl(locator(), locator(), locator()));
+      () => AuthenticationRepositoryImpl(locator(), locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 
   //CouponService
@@ -103,8 +107,7 @@ Future<void> initializeDependencies() async {
   //GameSequenceService - don't initialize here but individually make a new one depending on the lecture?
 
   //LanguageService
-  locator.registerLazySingleton<LanguageClient>(
-      () => LanguageClient(locator(), baseUrl: "${env.serverUrl}languages"));
+  locator.registerLazySingleton<LanguageClient>(() => LanguageClient(locator(), baseUrl: "${env.serverUrl}languages"));
   locator.registerLazySingleton<LanguageRepositoryImpl>(() => LanguageRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<LanguageService>(() => LanguageService(locator()));
 
@@ -115,8 +118,7 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<LanguagePairService>(() => LanguagePairService(locator()));
 
   //LectureService
-  locator
-      .registerLazySingleton<LectureClient>(() => LectureClient(locator(), baseUrl: "${env.serverUrl}lectures"));
+  locator.registerLazySingleton<LectureClient>(() => LectureClient(locator(), baseUrl: "${env.serverUrl}lectures"));
   locator.registerLazySingleton<LectureRepositoryImpl>(() => LectureRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<LectureService>(() => LectureService(locator()));
 
@@ -136,8 +138,7 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<PlanService>(() => PlanService(locator()));
 
   //ProductService
-  locator
-      .registerLazySingleton<ProductClient>(() => ProductClient(locator(), baseUrl: "${env.serverUrl}products"));
+  locator.registerLazySingleton<ProductClient>(() => ProductClient(locator(), baseUrl: "${env.serverUrl}products"));
   locator.registerLazySingleton<ProductRepositoryImpl>(() => ProductRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<ProductService>(() => ProductService(locator()));
 
@@ -150,8 +151,8 @@ Future<void> initializeDependencies() async {
       ));
 
   //SubscriptionsService
-  locator.registerLazySingleton<SubscriptionClient>(() =>
-      SubscriptionClient(locator(), baseUrl: "${env.serverUrl}orders")); //yea, "orders", not "subscriptions"
+  locator.registerLazySingleton<SubscriptionClient>(
+      () => SubscriptionClient(locator(), baseUrl: "${env.serverUrl}orders")); //yea, "orders", not "subscriptions"
   locator.registerLazySingleton<SubscriptionRepositoryImpl>(() => SubscriptionRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<SubscriptionService>(() => SubscriptionService(locator()));
 
