@@ -43,7 +43,8 @@ class AuthenticationService {
   }
 
   User? getUser() {
-    //returns User if saved locally
+    //returns User only if User already is saved locally. 
+    //A User exists locally from the point where he registered successfully.
     return _authenticationRepository.loadUser();
   }
 
@@ -64,9 +65,7 @@ class AuthenticationService {
         refreshToken: ticket.refreshToken!,
         user: me);
 
-
-      setCredentials(identityToken);
-    
+    setCredentials(identityToken);
 
     //DI for authenticated HTTP calls
     //await initializeDependencies(ticket.accessToken);
@@ -179,6 +178,14 @@ class AuthenticationService {
   //See "TokenService" in SpeakyFox WebApp. Not sure if needed..
   Future<bool> validateToken(String userId, String token) {
     return _authenticationRepository.validateToken(userId, token);
+  }
+
+  Future<String> fetchDataProtection() async {
+    return _authenticationRepository.fetchDataProtection();
+  }
+
+  Future<String> fetchAGBs() async {
+    return _authenticationRepository.fetchAGBs();
   }
 
   Future<bool> logout() async {

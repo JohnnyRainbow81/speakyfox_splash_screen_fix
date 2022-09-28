@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
@@ -44,6 +45,8 @@ class DioV1 {
         return handler.next(options);
       },
       onError: (error, handler) async {
+        FirebaseCrashlytics.instance.recordError(error, error.stackTrace, printDetails: true,reason: "Error caught via HTTP interceptor");
+
         if (error.response?.statusCode == 401) {
           try {
             //refresh accessToken by using refreshToken:

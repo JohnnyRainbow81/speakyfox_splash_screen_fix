@@ -187,11 +187,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       value: _authenticationViewModel.isDataProtectionAccepted,
                                       onChanged: ((_) => _authenticationViewModel.toggleDataProtectionAccepted()),
                                     ),
-                                    const Flexible(
-                                        child: Text(
-                                      "Ich habe die Datenschutzbestimmung gelesen und bin damit einverstanden",
-                                      maxLines: 3,
-                                    ))
+                                    Flexible(
+                                      child: TextLinks(
+                                          textFirst: "Ich habe die ",
+                                          textLinked: "Datenschutzbestimmung",
+                                          textSecond: " gelesen und bin damit einverstanden",
+                                          textLinkedWidget: InfoSheet(
+                                              headline: "Datenschutzbestimmungen",
+                                              child: InfoTexts(
+                                                data: _authenticationViewModel.dataProtection,
+                                              ))),
+                                    )
                                   ],
                                 ),
                                 Row(
@@ -206,7 +212,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             textFirst: "Ich habe die ",
                                             textLinked: "AGB gelesen ",
                                             textSecond: "und bin mit diesen einverstanden",
-                                            widgetBehindLink: InfoSheet(headline: "Unsere AGBs",
+                                            textLinkedWidget: InfoSheet(
+                                              headline: "Unsere AGBs",
                                               child: InfoTexts(data: _authenticationViewModel.AGBs),
                                             ) /* Text(
                                       "Ich habe die AGB gelesen und bin mit diesen einverstanden",

@@ -6,10 +6,10 @@ class TextLinks extends StatelessWidget {
   final String? textFirst;
   final String? textSecond;
   final String textLinked;
-  final Widget widgetBehindLink;
+  final Widget textLinkedWidget;
 
   const TextLinks(
-      {this.textFirst, required this.textLinked, this.textSecond, required this.widgetBehindLink, Key? key})
+      {this.textFirst, required this.textLinked, this.textSecond, required this.textLinkedWidget, Key? key})
       : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class TextLinks extends StatelessWidget {
                 enableDrag: true,
                 isScrollControlled: true,
                 context: context,
-                builder: (context) => widgetBehindLink),
+                builder: (context) => textLinkedWidget),
         ),
         TextSpan(text: textSecond)
       ]),

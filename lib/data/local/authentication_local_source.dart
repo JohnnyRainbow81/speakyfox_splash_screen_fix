@@ -13,24 +13,7 @@ class AuthenticationLocalSource {
   final SharedPreferences _sharedPreferences;
   AuthenticationLocalSource(this._sharedPreferences);
 
-  Future<bool> saveTicket(TicketDto ticket) async {
-    try {
-      String jsonStr = json.encode(ticket.toJson());
-      return await _sharedPreferences.setString(Keys.user.name, jsonStr);
-    } catch (e) {
-      throw CacheSavingException();
-    }
-  }
 
-  TicketDto loadTicket() {
-    if (_sharedPreferences.containsKey(Keys.ticket.name)) {
-      String str = _sharedPreferences.getString(Keys.ticket.name)!;
-      Map<String, dynamic> map = json.decode(str);
-      TicketDto ticketDto = TicketDto.fromJson(map);
-      return ticketDto;
-    }
-    throw CacheLoadingException();
-  }
 
   Future<bool> saveUser(UserDto user) async {
     try {

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart' hide Response, Headers;
 import 'package:retrofit/http.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dtos/response.dart';
 import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
@@ -13,7 +14,7 @@ part 'authentication_client.g.dart';
 @RestApi()
 abstract class AuthenticationClient {
   factory AuthenticationClient(Dio dio, {String baseUrl}) = _AuthenticationClient;
- 
+
   @POST("/users")
   @Headers(<String, dynamic>{"Content-type": "application/json"})
   Future<Response<UserDto>> register(@Body() CreateProfileUserRequest user);
@@ -31,6 +32,14 @@ abstract class AuthenticationClient {
 
   @POST("/users/{userId}/confirm-email")
   Future<Response<bool>> validateToken(@Path("userId") String userId, @Body() token);
+
+  @GET(Constants.urlAGBs)
+  @Headers(<String, dynamic>{"Content-type": "text/html"})
+  Future<Response<String>> fetchAGBs();
+
+  @GET(Constants.urlAGBs)
+  @Headers(<String, dynamic>{"Content-type": "text/html"})
+  Future<Response<String>> fetchDataProtection();
 }
 
 

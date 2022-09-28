@@ -41,7 +41,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<User> register(CreateProfileUserRequest user) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _authenticationClient.register(user /* username, password, grantType */);
+        final response = await _authenticationClient.register(user);
         return response.data.toUser();
       } catch (error) {
         ErrorHandler.handleError(Errors.registrationFailed);
@@ -55,24 +55,16 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<Ticket> accessToken(
-      AuthenticationRequestBody body /* String username, String password, String grantType */) async {
-    //Try to load from local source
-    try {
-      TicketDto ticket = _authenticationLocalSource.loadTicket();
-      return ticket.toTicket();
-    } catch (cacheError) {
-      //Not stored locally? get from backend
-      if (await _connectivityService.hasConnection()) {
-        try {
-          final response = await _tokenClient.accessToken(body /* username, password, grantType */);
-          _authenticationLocalSource.saveTicket(response); //store locally
-          return response.toTicket();
-        } catch (error) {
-          ErrorHandler.handleError(Errors.userPasswordCoupleInvalid);
-        }
-      } else {
-        throw NoInternetConnectionUIException();
+      AuthenticationRequestBody body) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _tokenClient.accessToken(body);
+        return response.toTicket();
+      } catch (error) {
+        ErrorHandler.handleError(Errors.userPasswordCoupleInvalid);
       }
+    } else {
+      throw NoInternetConnectionUIException();
     }
     throw LoginNotSuccessfulException();
   }
@@ -215,5 +207,39 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } catch (cacheError) {
       return null;
     }
+  }
+
+  @override
+  Future<String> fetchAGBs() async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _authenticationClient.fetchAGBs();
+        return response.data;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      //No internet
+      //get from Cache?
+      throw NoInternetConnectionUIException();
+    }
+    throw UIException(message: "AuthenticationRepositoryImpl.fetchAGBs()");
+  }
+
+  @override
+  Future<String> fetchDataProtection() async{
+   if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _authenticationClient.fetchDataProtection();
+        return response.data;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      //No internet
+      //get from Cache?
+      throw NoInternetConnectionUIException();
+    }
+    throw UIException(message: "AuthenticationRepositoryImpl.fetchDataProtection()");
   }
 }

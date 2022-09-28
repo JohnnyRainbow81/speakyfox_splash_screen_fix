@@ -42,19 +42,18 @@ class BuildEnvironment {
 
   static late BuildFlavor flavor;
 
-  BuildEnvironment._init({
-    required this.production,
-    required this.serverUrl,
-    required this.serverUrlV2,
-    required this.documentrApiUrl,
-    required this.documentrApiKey,
-    required this.defaultLanguage,
-    required this.payPalClientId,
-    required this.environmentName,
-    required this.supportedLanguages,
-    required this.hmr,
-    required this.serverUrlAuth
-  });
+  BuildEnvironment._init(
+      {required this.production,
+      required this.serverUrl,
+      required this.serverUrlV2,
+      required this.documentrApiUrl,
+      required this.documentrApiKey,
+      required this.defaultLanguage,
+      required this.payPalClientId,
+      required this.environmentName,
+      required this.supportedLanguages,
+      required this.hmr,
+      required this.serverUrlAuth});
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
@@ -77,6 +76,8 @@ class BuildEnvironment {
       String str = await rootBundle.loadString("assets/environments/prod.json");
       flavor = BuildFlavor.production;
       map = jsonDecode(str);
+    } else {
+      throw Exception("No environment could be loaded");
     }
 
     _env = BuildEnvironment._init(
@@ -104,8 +105,6 @@ class BuildEnvironment {
         return Constants.baseUrlAuthProd;
     }
   }
-
-  
 
   @override
   String toString() {

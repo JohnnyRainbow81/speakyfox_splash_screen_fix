@@ -111,6 +111,14 @@ class MockAuthenticationRepository extends _i1.Mock
   _i6.Future<bool> validateToken(String? userId, String? token) =>
       (super.noSuchMethod(Invocation.method(#validateToken, [userId, token]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
+  @override
+  _i6.Future<String> fetchDataProtection() =>
+      (super.noSuchMethod(Invocation.method(#fetchDataProtection, []),
+          returnValue: _i6.Future<String>.value('')) as _i6.Future<String>);
+  @override
+  _i6.Future<String> fetchAGBs() =>
+      (super.noSuchMethod(Invocation.method(#fetchAGBs, []),
+          returnValue: _i6.Future<String>.value('')) as _i6.Future<String>);
 }
 
 /// A class which mocks [AuthenticationRequestBody].

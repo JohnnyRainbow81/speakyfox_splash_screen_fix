@@ -15,6 +15,8 @@ import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/presentation/common/resources/text_assets.dart';
 import 'package:stacked/stacked.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as htmlparser;
 
 import '../../../domain/models/user.dart';
 
@@ -24,7 +26,8 @@ class AuthenticationViewModel extends BaseViewModel {
   late String _username;
   late String _password;
   late String _email;
-  Map<String, dynamic>? _AGBs;
+  Map<String, dynamic> _AGBs = {};
+  Map<String, dynamic> _dataProtection = {};
 
   String? _usernameError;
   String? _passwordError;
@@ -51,7 +54,9 @@ class AuthenticationViewModel extends BaseViewModel {
     _email = user?.email ?? "";
     _password = "";
 
-    getAGB();
+    _fetchAGBs();
+    // _loadJSON(TextAssets.AGBs, _AGBs);
+    // _loadJSON(TextAssets.dataProtection, _dataProtection);
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
@@ -82,6 +87,7 @@ class AuthenticationViewModel extends BaseViewModel {
   bool get hasTextFieldFocus => _hasTextFieldFocus;
 
   Map<String, dynamic> get AGBs => _AGBs ?? {};
+  Map<String, dynamic> get dataProtection => _dataProtection ?? {};
 
   String get waitTime => _waitTime.toString();
 
@@ -212,20 +218,27 @@ class AuthenticationViewModel extends BaseViewModel {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = await runBusyFuture<bool?>(_authenticationService.register(CreateProfileUserRequest(
         firstname: "", lastname: _username, email: _email, password: _password, affiliateId: "")));
+
     _isRegistrationEmailSent = success ?? false;
+
     if (_isRegistrationEmailSent) {
       _password = "";
       notifyListeners();
     }
   }
 
-  void getAGB() {
-    rootBundle.loadString(TextAssets.AGBs).then(
-      (string) {
-        _AGBs = jsonDecode(string);
-        notifyListeners();
-      },
-    );
+  void _loadJSON(String path, Map<String, dynamic> emptyData) {
+    setBusyForObject(emptyData, true);
+
+    rootBundle.loadString(path).then((loadedData) {
+      emptyData.addAll(jsonDecode(loadedData) as Map<String, dynamic>);
+
+      setBusyForObject(emptyData, false);
+    });
+  }
+
+  void _fetchAGBs() async {
+   String? rawHTML = await runBusyFuture<String?>(_authenticationService.fetchAGBs());
   }
 
   void reset() {
