@@ -1,20 +1,18 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:speakyfox/app/utilities.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/resources/image_assets.dart';
-import 'package:speakyfox/presentation/common/resources/themes.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
+import 'package:speakyfox/presentation/common/widgets/info_sheet.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
+import 'package:speakyfox/presentation/common/widgets/text_links.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/authentication/common/logo.dart';
+import 'package:speakyfox/presentation/common/widgets/info_texts.dart';
+import 'package:stacked/stacked.dart';
+
 import '../../../../app/dependency_injection.dart';
 import '../../../common/routes.dart';
 import '../../../common/widgets/errors/common_error_dialog.dart';
-import 'package:stacked/stacked.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -204,16 +202,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       onChanged: ((_) => _authenticationViewModel.toggleAGB_accepted()),
                                     ),
                                     Flexible(
-                                        child: TextWithLinks(
-                                      textFirst: "Ich habe die ",
-                                      textLinked: "AGB gelesen ",
-                                      textSecond: "und bin mit diesen einverstanden",
-                                      widgetBehindLink: InformationSheet(data: _authenticationViewModel.AGBs),
-                                    ) /* Text(
+                                        child: TextLinks(
+                                            textFirst: "Ich habe die ",
+                                            textLinked: "AGB gelesen ",
+                                            textSecond: "und bin mit diesen einverstanden",
+                                            widgetBehindLink: InfoSheet(headline: "Unsere AGBs",
+                                              child: InfoTexts(data: _authenticationViewModel.AGBs),
+                                            ) /* Text(
                                       "Ich habe die AGB gelesen und bin mit diesen einverstanden",
                                       maxLines: 3,
                                     ) */
-                                        )
+                                            ))
                                   ],
                                 ),
                                 const SizedBox(
@@ -247,94 +246,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         );
       },
-    );
-  }
-}
-
-class TextWithLinks extends StatelessWidget {
-  final String? textFirst;
-  final String? textSecond;
-  final String textLinked;
-  final Widget widgetBehindLink;
-
-  const TextWithLinks(
-      {this.textFirst, required this.textLinked, this.textSecond, required this.widgetBehindLink, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(text: textFirst, style: Theme.of(context).textTheme.bodyText2, children: [
-        TextSpan(
-          text: textLinked,
-          style: getUnderlinedTextStyle(),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => showModalBottomSheet(
-                isDismissible: true,
-                enableDrag: true,
-                isScrollControlled: true,
-                context: context,
-                builder: (context) => widgetBehindLink),
-        ),
-        TextSpan(text: textSecond)
-      ]),
-    );
-  }
-}
-
-class InformationSheet extends StatelessWidget {
-  Map<String, dynamic> data;
-  InformationSheet({required this.data, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      minimum: EdgeInsets.only(top: 24, bottom: 0),
-      child: Scaffold(
-          appBar: AppBar(
-              
-              title: Text(
-                "Unsere AGBs",
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              systemOverlayStyle: SystemUiOverlayStyle.dark,
-              bottomOpacity: 0.0,
-              toolbarOpacity: 1.0,
-              elevation: 2,
-              shadowColor: ColorAssets.primary.withOpacity(0.15),
-              backgroundColor: Theme.of(context).backgroundColor,
-              iconTheme: Theme.of(context).iconTheme.copyWith(color: ColorAssets.primary)),
-          body: Center(
-              child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                ...data.entries.map((e) => Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.key,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Flexible(
-                              child: Text(
-                            e.value,
-                            maxLines: 50,
-                            softWrap: true,
-                          ))
-                        ],
-                      ),
-                    ))
-              ],
-            ),
-          ))),
     );
   }
 }
