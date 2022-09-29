@@ -129,48 +129,40 @@ class _AuthenticationClient implements AuthenticationClient {
   }
 
   @override
-  Future<Response<String>> fetchAGBs() async {
+  Future<String> fetchAGBs() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-type': 'text/html'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(    Hier breakpoint setzen! Typ nicht OK!
-        _setStreamType<Response<String>>(Options(
-                method: 'GET',
-                headers: _headers,
-                extra: _extra,
-                contentType: 'text/html')
-            .compose(_dio.options, 'https://speakyfox.com/agb/',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<String>.fromJson(
-      _result.data!,
-      (json) => json as String,
-    );
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+            method: 'GET',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'text/html')
+        .compose(_dio.options, 'https://speakyfox.com/agb/',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 
   @override
-  Future<Response<String>> fetchDataProtection() async {
+  Future<String> fetchDataProtection() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Content-type': 'text/html'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<String>>(Options(
-                method: 'GET',
-                headers: _headers,
-                extra: _extra,
-                contentType: 'text/html')
-            .compose(_dio.options, 'https://speakyfox.com/agb/',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<String>.fromJson(
-      _result.data!,
-      (json) => json as String,
-    );
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+            method: 'GET',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'text/html')
+        .compose(_dio.options, 'https://speakyfox.com/datenschutzerklaerung/',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 

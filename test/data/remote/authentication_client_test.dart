@@ -18,7 +18,7 @@ void main() async {
     "get AGBs",
     () async {
       final response = await authenticationClient.fetchAGBs();
-      String rawHTML = response.data;
+      String rawHTML = response;
       debugPrint(rawHTML);
     },
   );

@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:dio/dio.dart' hide Response, Headers;
 import 'package:retrofit/http.dart';
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/data/dtos/agb_dto.dart';
+import 'package:speakyfox/data/dtos/data_protection_dto.dart';
 import 'package:speakyfox/data/dtos/response.dart';
-import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
@@ -33,27 +34,14 @@ abstract class AuthenticationClient {
   @POST("/users/{userId}/confirm-email")
   Future<Response<bool>> validateToken(@Path("userId") String userId, @Body() token);
 
+//Since these calls use the public speakyfox web url "https://www.speakyfox.com" we don't get our used-to custom [Response] type from backend 
+//so we need to use the generic Dio [Response]
   @GET(Constants.urlAGBs)
   @Headers(<String, dynamic>{"Content-type": "text/html"})
-  Future<Response<String>> fetchAGBs();
+  Future<String> fetchAGBs();
 
-  @GET(Constants.urlAGBs)
+  @GET(Constants.urlDataProtectionClauses)
   @Headers(<String, dynamic>{"Content-type": "text/html"})
-  Future<Response<String>> fetchDataProtection();
+  Future<String> fetchDataProtection();
 }
 
-
-// Future<T> accessToken(
-//     String username,
-//     String password,
-//     String grantType,
-//   );
-//   Future<RT> refreshToken(String refreshToken, String grantType);
-
-//   Future<RU> fetchUser(String authToken);
-
-//   Future<RR> resetPassword(String userId, ResetPasswordBody body);
-//   Future<RR> sendPasswordResetEmail(String body);
-
-//   Future<RL> getLastLecture(String lectureId);
-//   Future<RL> setLastLecture(String lectureId);

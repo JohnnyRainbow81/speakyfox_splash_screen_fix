@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
@@ -54,8 +55,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Ticket> accessToken(
-      AuthenticationRequestBody body) async {
+  Future<Ticket> accessToken(AuthenticationRequestBody body) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _tokenClient.accessToken(body);
@@ -214,7 +214,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationClient.fetchAGBs();
-        return response.data;
+        return response;
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -227,11 +227,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<String> fetchDataProtection() async{
-   if (await _connectivityService.hasConnection()) {
+  Future<String> fetchDataProtection() async {
+    if (await _connectivityService.hasConnection()) {
       try {
         final response = await _authenticationClient.fetchDataProtection();
-        return response.data;
+        return response;
       } catch (error) {
         ErrorHandler.handleError(error);
       }

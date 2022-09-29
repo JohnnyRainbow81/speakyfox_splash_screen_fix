@@ -2,21 +2,15 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:html/parser.dart' as htmlparser;
 import 'package:speakyfox/app/constants.dart';
-import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/utilities.dart';
-import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
-import 'package:speakyfox/presentation/common/resources/text_assets.dart';
 import 'package:stacked/stacked.dart';
-import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' as htmlparser;
 
 import '../../../domain/models/user.dart';
 
@@ -54,9 +48,9 @@ class AuthenticationViewModel extends BaseViewModel {
     _email = user?.email ?? "";
     _password = "";
 
-    _fetchAGBs();
-    // _loadJSON(TextAssets.AGBs, _AGBs);
-    // _loadJSON(TextAssets.dataProtection, _dataProtection);
+    fetchAGBs();
+    //_loadJSON(TextAssets.AGBs, _AGBs);
+    //_loadJSON(TextAssets.dataProtection, _dataProtection);
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
@@ -237,8 +231,12 @@ class AuthenticationViewModel extends BaseViewModel {
     });
   }
 
-  void _fetchAGBs() async {
-   String? rawHTML = await runBusyFuture<String?>(_authenticationService.fetchAGBs());
+  void fetchAGBs() async {
+    String? htmlRaw = await runBusyFuture<String?>(_authenticationService.fetchAGBs(), busyObject: _AGBs);
+    dom.Document htmlDoc = htmlparser.parse(htmlRaw);
+    
+      //TODO wait for Juliens answer
+  
   }
 
   void reset() {
