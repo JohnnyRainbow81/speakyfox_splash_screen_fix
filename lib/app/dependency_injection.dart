@@ -67,20 +67,22 @@ Future<void> initializeDependencies() async {
 
   locator.registerLazySingleton<SharedPreferences>(() => preferences);
 
-  Dio dio = await DioV1.initialize(env.serverUrl);
+  Dio dio = DioFactory.initialize(baseUrl: env.serverUrl);
   locator.registerLazySingleton<Dio>(() => dio);
 
   //ConnectivityService
   locator.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
 
 //AuthenticationService
-  locator.registerLazySingleton<TokenClient>(
-      () => TokenClient(locator(), baseUrl: env.serverUrlAuth));
+  locator.registerLazySingleton<TokenClient>(() => TokenClient(locator(), baseUrl: env.serverUrlAuth));
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(locator()));
   locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(locator(), locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
+
+//set custom Interceptor when AuthenticationService is ready //FIXME  circular dependency here, waiting for feedback from Julien. Fix via dependency inversion?
+  locator<Dio>().interceptors.add(CustomInterceptor(locator(), locator()));
 
   //CouponService
   locator.registerLazySingleton<CouponClient>(() => CouponClient(locator(), baseUrl: "${env.serverUrl}coupons"));
