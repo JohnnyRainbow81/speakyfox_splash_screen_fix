@@ -10,18 +10,21 @@ import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/presentation/common/resources/text_assets.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../domain/models/user.dart';
 
+//ONE Viewmodel for ALL authentication-screens to have a single source for repeating & related data and logic
 class AuthenticationViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
 
   late String _username;
   late String _password;
   late String _email;
-  Map<String, dynamic> _AGBs = {};
-  Map<String, dynamic> _dataProtection = {};
+
+  dom.Document? _AGBsHTML;
+  dom.Document? _dataProtectionHTML;
 
   String? _usernameError;
   String? _passwordError;
@@ -48,9 +51,11 @@ class AuthenticationViewModel extends BaseViewModel {
     _email = user?.email ?? "";
     _password = "";
 
-    fetchAGBs();
-    //_loadJSON(TextAssets.AGBs, _AGBs);
-    //_loadJSON(TextAssets.dataProtection, _dataProtection);
+    //_loadJSON(TextAssets.AGBsJson, _AGBs);
+    //_loadJSON(TextAssets.dataProtectionJson, _dataProtection);
+
+    loadAGBs();
+    loadDataProtection();
   }
 
   set allRegistrationInputsAreValid(Function? callback) {
@@ -80,8 +85,8 @@ class AuthenticationViewModel extends BaseViewModel {
 
   bool get hasTextFieldFocus => _hasTextFieldFocus;
 
-  Map<String, dynamic> get AGBs => _AGBs ?? {};
-  Map<String, dynamic> get dataProtection => _dataProtection ?? {};
+  dom.Document? get AGBsHTML => _AGBsHTML;
+  dom.Document? get dataProtectionHTML => _dataProtectionHTML;
 
   String get waitTime => _waitTime.toString();
 
@@ -221,22 +226,40 @@ class AuthenticationViewModel extends BaseViewModel {
     }
   }
 
-  void _loadJSON(String path, Map<String, dynamic> emptyData) {
-    setBusyForObject(emptyData, true);
+  //I know, code duplication is stupid, but since Dart references are passed-by-value,
+  //we cannot setBusyForObject(param), because param would be a copy of the _AGBsHTML or _dataProtectionHTML- param
+  //so this stupid "stacked" library method won't tell anymore if one of those objects has busy state.
+  //Because the lib seems to identify the busy object via its pointer. Damnit. (Also Dart lang is to blame here imho)
 
-    rootBundle.loadString(path).then((loadedData) {
-      emptyData.addAll(jsonDecode(loadedData) as Map<String, dynamic>);
+  // > We have to hard-code setBusyForObject(_AGBsHTML) and also for _dataProtectionHTML.
 
-      setBusyForObject(emptyData, false);
+  void loadAGBs() {
+    setBusyForObject(_AGBsHTML, true);
+
+    rootBundle.loadString(TextAssets.AGBsHtml).then((loadedData) {
+      _AGBsHTML = htmlparser.parse(loadedData);
+      setBusyForObject(_AGBsHTML, false);
+    });
+  }
+
+  void loadDataProtection() {
+    setBusyForObject(_dataProtectionHTML, true);
+
+    rootBundle.loadString(TextAssets.dataProtectionHtml).then((loadedData) {
+      _dataProtectionHTML = htmlparser.parse(loadedData);
+      setBusyForObject(_dataProtectionHTML, false);
     });
   }
 
   void fetchAGBs() async {
-    String? htmlRaw = await runBusyFuture<String?>(_authenticationService.fetchAGBs(), busyObject: _AGBs);
+    String? htmlRaw = await runBusyFuture<String?>(_authenticationService.fetchAGBs());
     dom.Document htmlDoc = htmlparser.parse(htmlRaw);
-    
-      //TODO wait for Juliens answer
-  
+
+    //TODO backend must offer AGB HTML data first
+  }
+
+  void fetchDataProtection() async {
+    //TODO backend must offer data Protection HTML data first
   }
 
   void reset() {

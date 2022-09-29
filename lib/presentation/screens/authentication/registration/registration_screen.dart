@@ -180,48 +180,48 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 _authenticationViewModel.isRegistrationEmailSent
                                     ? const Hint("Wir haben dir eine Mail geschickt!")
                                     : Container(),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Checkbox(
-                                      value: _authenticationViewModel.isDataProtectionAccepted,
-                                      onChanged: ((_) => _authenticationViewModel.toggleDataProtectionAccepted()),
-                                    ),
-                                    Flexible(
-                                      child: TextLinks(
-                                          textFirst: "Ich habe die ",
-                                          textLinked: "Datenschutzbestimmung",
-                                          textSecond: " gelesen und bin damit einverstanden",
-                                          textLinkedWidget: InfoSheet(
-                                              headline: "Datenschutzbestimmungen",
-                                              child: InfoTexts(
-                                                data: _authenticationViewModel.dataProtection,
-                                              ))),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Checkbox(
-                                      value: _authenticationViewModel.isAGB_accepted,
-                                      onChanged: ((_) => _authenticationViewModel.toggleAGB_accepted()),
-                                    ),
-                                    Flexible(
-                                        child: TextLinks(
-                                            textFirst: "Ich habe die ",
-                                            textLinked: "AGB gelesen ",
-                                            textSecond: "und bin mit diesen einverstanden",
-                                            textLinkedWidget: InfoSheet(
-                                              headline: "Unsere AGBs",
-                                              child: InfoTexts(data: _authenticationViewModel.AGBs),
-                                            ) /* Text(
-                                      "Ich habe die AGB gelesen und bin mit diesen einverstanden",
-                                      maxLines: 3,
-                                    ) */
-                                            ))
-                                  ],
-                                ),
+                                !_authenticationViewModel.busy(_authenticationViewModel.dataProtectionHTML)
+                                    ? Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Checkbox(
+                                            value: _authenticationViewModel.isDataProtectionAccepted,
+                                            onChanged: ((_) => _authenticationViewModel.toggleDataProtectionAccepted()),
+                                          ),
+                                          Flexible(
+                                            child: TextLinks(
+                                                textFirst: "Ich habe die ",
+                                                textLinked: "Datenschutzbestimmungen",
+                                                textSecond: " gelesen und bin damit einverstanden",
+                                                textLinkedWidget: InfoSheet(
+                                                    headline: "Datenschutzbestimmungen",
+                                                    child: InfoTexts(
+                                                        dataHTML: _authenticationViewModel.dataProtectionHTML 
+                                                        ))),
+                                          )
+                                        ],
+                                      )
+                                    : const LoadingAnimation(),
+                                !_authenticationViewModel.busy(_authenticationViewModel.AGBsHTML)
+                                    ? Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Checkbox(
+                                            value: _authenticationViewModel.isAGB_accepted,
+                                            onChanged: ((_) => _authenticationViewModel.toggleAGB_accepted()),
+                                          ),
+                                          Flexible(
+                                              child: TextLinks(
+                                                  textFirst: "Ich habe die ",
+                                                  textLinked: "AGB gelesen ",
+                                                  textSecond: "und bin mit diesen einverstanden",
+                                                  textLinkedWidget: InfoSheet(
+                                                    headline: "Unsere AGBs",
+                                                    child: InfoTexts(dataHTML: _authenticationViewModel.AGBsHTML),
+                                                  )))
+                                        ],
+                                      )
+                                    : const LoadingAnimation(),
                                 const SizedBox(
                                   height: 16,
                                 ),

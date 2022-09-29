@@ -1,45 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:speakyfox/presentation/common/resources/styles.dart';
 
 class InfoTexts extends StatelessWidget {
+  final dom.Document? dataHTML;
+
   const InfoTexts({
     Key? key,
-    required this.data,
+    this.dataHTML,
   }) : super(key: key);
-
-  final Map<String, dynamic> data;
 
   @override
   Widget build(BuildContext context) {
     return Center(
         child: SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ...data.entries.map((e) => Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      e.key,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Flexible(
-                        child: Text(
-                      e.value,
-                      maxLines: 50,
-                      softWrap: true,
-                    ))
-                  ],
-                ),
-              ))
-        ],
-      ),
+      child: dataHTML != null
+          ? Html.fromDom(
+              style: StyleAssets.getHTMLStyle(context),
+              document: dataHTML,
+            )
+          : const Text("Daten konnten nicht geladen werden"),
     ));
   }
 }

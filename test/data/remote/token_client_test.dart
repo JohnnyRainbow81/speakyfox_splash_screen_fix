@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
@@ -14,7 +15,8 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 void main() async {
   late User user;
   //Test on production server with real credentials! (because QA Server isn't up-to-date)
-  final dio = await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/");
+   final dio=  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+
   TokenClient tokenClient = TokenClient(dio);
   AuthenticationClient authenticationClient = AuthenticationClient(dio);
 

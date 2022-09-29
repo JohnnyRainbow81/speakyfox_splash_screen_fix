@@ -1,9 +1,8 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart' hide Response, Headers;
 import 'package:retrofit/http.dart';
 import 'package:speakyfox/app/constants.dart';
-import 'package:speakyfox/data/dtos/agb_dto.dart';
-import 'package:speakyfox/data/dtos/data_protection_dto.dart';
 import 'package:speakyfox/data/dtos/response.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
