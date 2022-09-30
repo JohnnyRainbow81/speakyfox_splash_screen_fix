@@ -10,7 +10,7 @@ import 'package:speakyfox/presentation/common/routing.dart';
 import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
 
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
-Future<void> showCommonErrorDialog(
+Future<void> showErrorCommonDialog(
     {required BuildContext context, dynamic exception, Function? action, String? actionText, String? animationAsset}) {
   //if no [exception] was handed over here, show a basic UIException
   if (exception == null) {
@@ -38,14 +38,14 @@ Future<void> showCommonErrorDialog(
         actionText = "Restart";
         break;
       case LoggedOutException:
-        action = () => GoRouter.of(context).goNamed(Routing.login);
+        action = () => GoRouter.of(context).go(Routing.login);
         actionText = "To Login";
         break;
     }
 
     return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: animationAsset,
               headline: exception?.message,
               subline: exception?.description,
@@ -56,7 +56,7 @@ Future<void> showCommonErrorDialog(
     //Handle more general [Exception]-types (other than [UIException])
     return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: animationAsset,
               headline: "Exception happened",
               subline:
@@ -80,7 +80,7 @@ Future<void> showCommonErrorDialog(
     //So if the following [CommonErrorDialog]-build() fails, the [CommonErrorWidget]-fallback shows up.
     return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: AnimationAssets.failed,
               headline: "Oh no. It's bad.",
               subline: "Something unexpected happened which our app couldn't recover from.\nPlease restart the app.",
@@ -90,14 +90,14 @@ Future<void> showCommonErrorDialog(
   }
 }
 
-class _CommonErrorDialog extends StatefulWidget {
+class _ErrorCommonDialog extends StatefulWidget {
   final String? animationAsset;
   final String headline;
   final String subline;
   final String actionText;
   final Function? action;
 
-  const _CommonErrorDialog(
+  const _ErrorCommonDialog(
       {Key? key,
       this.animationAsset,
       required this.actionText,
@@ -107,10 +107,10 @@ class _CommonErrorDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<_CommonErrorDialog> createState() => _CommonErrorDialogState();
+  State<_ErrorCommonDialog> createState() => _ErrorCommonDialogState();
 }
 
-class _CommonErrorDialogState extends State<_CommonErrorDialog> {
+class _ErrorCommonDialogState extends State<_ErrorCommonDialog> {
   double _scale = 1.0;
 
   void _triggerAnim() {

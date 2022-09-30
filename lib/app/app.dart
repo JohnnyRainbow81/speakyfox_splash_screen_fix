@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/common_error_widget.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/error_common_screen.dart';
 import '../presentation/common/resources/themes.dart';
 import '../presentation/common/routing.dart';
 
@@ -16,26 +16,21 @@ class SpeakyFox extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
-      //onGenerateRoute: Routes.getRoute,
       routerConfig: Routing.instance,
-      //routeInformationParser:  MyRouter.instance.routeInformationParser,
-      //routerDelegate: MyRouter.instance.routerDelegate,
-
-      builder: (ctx, widget) {
-        //Building an error widget to show to the user if a build()-method fails
-        Widget error = const CommonErrorWidget();
-        if (widget is Scaffold || widget is Navigator) {
-          error = const Scaffold(body: CommonErrorWidget());
-        }
-        ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
-          //widget that will be shown when building of a normal widget fails
-          //This widget has to be very basic
-          return error;
-        };
-        if (widget != null) return widget;
-        throw ('widget is null');
-      },
-      //initialRoute: locator<AuthenticationService>().isAuthenticated() ? Routes.home : Routes.onboarding, //just for testing > remove
+      // builder: (ctx, widget) {
+      //   //Building an error widget to show to the user if a build()-method fails
+      //   Widget error = const ErrorCommonScreen();
+      //   if (widget is Scaffold || widget is Navigator) {
+      //     error = const ErrorCommonScreen();
+      //   }
+      //   ErrorWidget.builder = (FlutterErrorDetails errorDetails) {
+      //     //widget that will be shown when building of a normal widget fails
+      //     //This widget has to be very basic
+      //     return error;
+      //   };
+      //   if (widget != null) return widget;
+      //   throw ('widget is null');
+      // },
     );
   }
 }

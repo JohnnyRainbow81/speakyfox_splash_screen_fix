@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/error_common_screen.dart';
 import 'package:speakyfox/presentation/screens/authentication/login/login_screen.dart';
 import 'package:speakyfox/presentation/screens/authentication/registration/registration_screen.dart';
 import 'package:speakyfox/presentation/screens/authentication/reset_password.dart/reset_password_screen.dart';
@@ -61,14 +62,16 @@ import 'package:speakyfox/presentation/screens/test_screen.dart';
 // }
 
 class Routing {
+  static GoRouter? _instance;
+
   static const String test = "/test";
-  static const String login = "/";
+  static const String login = "/login";
   static const String resetPassword = "/resetPassword";
   static const String register = "/register";
   static const String onboarding = "/onboarding";
-  static const String home = "/home";
+  static const String home = "/";
 
-  static GoRouter? _instance;
+  static bool _isAppStart = true;
 
   Routing._();
 
@@ -78,53 +81,64 @@ class Routing {
     _instance = GoRouter(
         redirect: (context, state) {
           bool loggedIn = locator<AuthenticationService>().isAuthenticated();
-          // if (loggedIn) {
-          //   return state.location;
-          // } else {
-          //   return state.namedLocation(login);
-          // }
+          bool goingToLogin = state.location == login || state.location == register || state.location == resetPassword;
+
+          //User is not logged in > go to the authentication screens
+          if (!loggedIn && !goingToLogin) return login;
+
+          //User started app and is still logged in > go to home screen
+          if (loggedIn && _isAppStart) {
+            _isAppStart = false;
+            return null; // no need to redirect
+          }
+          return null; // no need to redirect
         },
         routes: <GoRoute>[
           GoRoute(
-              name: login,
+              //name: login,
               path: login,
               pageBuilder: (context, state) => Platform.isIOS
                   ? const CupertinoPage(child: LoginScreen())
                   : const MaterialPage(child: LoginScreen())),
           GoRoute(
-            name: onboarding,
+            //name: onboarding,
             path: onboarding,
             pageBuilder: (context, state) => Platform.isIOS
                 ? const CupertinoPage(child: OnboardingPager())
                 : const MaterialPage(child: OnboardingPager()),
           ),
           GoRoute(
-            name: home,
+            // name: home,
             path: home,
-            pageBuilder: (context, state) => 
-                Platform.isIOS ?  const CupertinoPage(child: HomeScreen()) : const MaterialPage(child: HomeScreen()),
+            pageBuilder: (context, state) =>
+                Platform.isIOS ? const CupertinoPage(child: HomeScreen()) : const MaterialPage(child: HomeScreen()),
           ),
           GoRoute(
-            name: register,
+            // name: register,
             path: register,
             pageBuilder: (context, state) => Platform.isIOS
                 ? const CupertinoPage(child: RegistrationScreen())
                 : const MaterialPage(child: RegistrationScreen()),
           ),
           GoRoute(
-            name: resetPassword,
+            //name: resetPassword,
             path: resetPassword,
             pageBuilder: (context, state) => Platform.isIOS
                 ? const CupertinoPage(child: ResetPasswordScreen())
                 : const MaterialPage(child: ResetPasswordScreen()),
           ),
           GoRoute(
-            name: test,
+            // name: test,
             path: test,
             pageBuilder: (context, state) =>
                 Platform.isIOS ? const CupertinoPage(child: TestScreen()) : const MaterialPage(child: TestScreen()),
-          )
-        ]);
+          ),
+        ],
+        errorBuilder: (context, state) => ErrorCommonScreen(
+              exception: state.error,
+              path: state.fullpath,
+              details: state.name,
+            ));
     return _instance!;
   }
 }

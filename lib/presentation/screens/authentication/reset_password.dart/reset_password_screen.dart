@@ -10,7 +10,7 @@ import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import '../../../../app/dependency_injection.dart';
-import '../../../common/widgets/errors/common_error_dialog.dart';
+import '../../../common/widgets/errors/error_common_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
             if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
+              showErrorCommonDialog(context: context, exception: _authenticationViewModel.modelError);
               _authenticationViewModel.clearErrors();
             }
           });

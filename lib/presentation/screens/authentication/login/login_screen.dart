@@ -11,7 +11,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../../app/dependency_injection.dart';
 import '../../../common/routing.dart';
-import '../../../common/widgets/errors/common_error_dialog.dart';
+import '../../../common/widgets/errors/error_common_dialog.dart';
 import '../../../common/widgets/loading_animation.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void goToResetPasswordScreen() {
-    GoRouter.of(context).pushNamed(Routing.resetPassword);
+    GoRouter.of(context).push(Routing.resetPassword);
   }
 
 // Strangely this needs to be in *this* class instead of putting this very same method
@@ -115,8 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
-            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) { 
-              showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
+            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+              showErrorCommonDialog(context: context, exception: _authenticationViewModel.modelError);
               _authenticationViewModel.clearErrors();
             }
           });

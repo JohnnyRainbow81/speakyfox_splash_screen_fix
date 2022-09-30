@@ -76,7 +76,7 @@ class _OnboardingPagerState extends State<OnboardingPager> {
       Positioned(
         right: 20,
         bottom: -2.0,
-        child: TextButton(onPressed: () => GoRouter.of(context).goNamed(Routing.register), child: const Text("Skip")),
+        child: TextButton(onPressed: () => GoRouter.of(context).go(Routing.register), child: const Text("Skip")),
       )
     ]);
   }

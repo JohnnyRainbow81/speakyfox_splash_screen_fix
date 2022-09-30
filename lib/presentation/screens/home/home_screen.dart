@@ -9,7 +9,7 @@ import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/domain/services/language_service.dart';
 import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
 import 'package:speakyfox/presentation/common/routing.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/error_common_dialog.dart';
 import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, model, child) {
           if (_homeViewModel.hasError) {
             SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-              showCommonErrorDialog(
+              showErrorCommonDialog(
                   context: context, exception: _homeViewModel.modelError, animationAsset: AnimationAssets.error);
               _homeViewModel.clearErrors();
             });
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () async {
                       await locator<AuthenticationService>().logout();
                       if (mounted) {
-                        GoRouter.of(context).goNamed(Routing.login);
+                        GoRouter.of(context).go(Routing.login);
                       }
                     },
                     child: const Text("logout")),
