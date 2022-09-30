@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
@@ -132,7 +133,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         const Spacer(),
                         //const SizedBox(height: 48,),
                         TextButton(
-                            onPressed: () => Navigator.of(context).pop(), //to Login Screen
+                            onPressed: () => GoRouter.of(context).pop(), //to Login Screen
                             child: const Text("Zurück zum Login")),
                       ],
                     ),

@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/dtos/identity_token_dto.dart';
-import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 
 enum Keys { ticket, user, identityToken }

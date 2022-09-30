@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
+import 'package:speakyfox/presentation/common/routing.dart';
 
 class OnboardingPager extends StatefulWidget {
   const OnboardingPager({Key? key}) : super(key: key);
@@ -33,8 +34,8 @@ class _OnboardingPagerState extends State<OnboardingPager> {
     int previousPage = _currentPage;
     //if page is "half-turned", switch outlined/filled circle
     _currentPage = _pageController.page!.roundToDouble().toInt();
-    if (previousPage != _currentPage) { 
-      //=if page is half-flipped we round the currently flipping page value (like 2.542 for half flipped page) 
+    if (previousPage != _currentPage) {
+      //=if page is half-flipped we round the currently flipping page value (like 2.542 for half flipped page)
       //to a full page (= to 3.0) so the following comparison won't be true after page is half flipped
       setState(() {});
     }
@@ -46,16 +47,15 @@ class _OnboardingPagerState extends State<OnboardingPager> {
     _pageController.dispose();
     super.dispose();
   }
-  
-  void goToLoginScreen() {
-    
-  }
+
+  void goToLoginScreen() {}
 
   @override
   Widget build(BuildContext context) {
     //double maxPageViewHeight = MediaQuery.of(context).size.height * 0.9;
     return Scaffold(
-      backgroundColor: Theme.of(context).copyWith(scaffoldBackgroundColor: ColorAssets.lightest).scaffoldBackgroundColor,
+      backgroundColor:
+          Theme.of(context).copyWith(scaffoldBackgroundColor: ColorAssets.lightest).scaffoldBackgroundColor,
       body: PageView(controller: _pageController, onPageChanged: (value) => _currentPage = value, children: [
         ..._screenDatas.map((e) => _OnboardingScreen(e)).toList(),
       ]),
@@ -65,7 +65,7 @@ class _OnboardingPagerState extends State<OnboardingPager> {
   }
 
   Widget _getProgressWidget(int current) {
-    return Stack( children: [
+    return Stack(children: [
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -73,9 +73,10 @@ class _OnboardingPagerState extends State<OnboardingPager> {
             if (i == _currentPage) const Circle(filled: true) else const Circle(filled: false)
         ]),
       ),
-      Positioned(right: 20, bottom: -2.0,
-        child: TextButton(
-            onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.register), child: const Text("Skip")),
+      Positioned(
+        right: 20,
+        bottom: -2.0,
+        child: TextButton(onPressed: () => GoRouter.of(context).goNamed(Routing.register), child: const Text("Skip")),
       )
     ]);
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/common/widgets/info_sheet.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
@@ -11,7 +12,7 @@ import 'package:speakyfox/presentation/common/widgets/info_texts.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/dependency_injection.dart';
-import '../../../common/routes.dart';
+import '../../../common/routing.dart';
 import '../../../common/widgets/errors/common_error_dialog.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -83,7 +84,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void goToLoginScreen() {
-    Navigator.pushNamed(context, Routes.login);
+    GoRouter.of(context).goNamed(Routing.login);
   }
 
   @override
@@ -196,8 +197,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 textLinkedWidget: InfoSheet(
                                                     headline: "Datenschutzbestimmungen",
                                                     child: InfoTexts(
-                                                        dataHTML: _authenticationViewModel.dataProtectionHTML 
-                                                        ))),
+                                                        dataHTML: _authenticationViewModel.dataProtectionHTML))),
                                           )
                                         ],
                                       )

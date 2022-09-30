@@ -1,12 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/dtos/identity_token_dto.dart';
-import 'package:speakyfox/data/dtos/ticket_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
 import 'package:speakyfox/data/mappers/identity_token_mapper.dart';

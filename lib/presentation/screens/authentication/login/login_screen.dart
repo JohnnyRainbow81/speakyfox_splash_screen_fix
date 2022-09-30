@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
@@ -9,7 +10,7 @@ import 'package:speakyfox/presentation/screens/authentication/common/logo.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../app/dependency_injection.dart';
-import '../../../common/routes.dart';
+import '../../../common/routing.dart';
 import '../../../common/widgets/errors/common_error_dialog.dart';
 import '../../../common/widgets/loading_animation.dart';
 
@@ -75,20 +76,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void goToHomeScreen() {
     Future.delayed(const Duration(milliseconds: 500), (() {
       if (mounted) {
-        Navigator.of(context).pushNamedAndRemoveUntil(Routes.home, (route) => false);
+        GoRouter.of(context).go(Routing.home);
       }
     }));
   }
 
   void goToRegistrationScreen() {
-    Navigator.pushNamed(context, Routes.register);
+    GoRouter.of(context).go(Routing.register);
   }
 
   void goToResetPasswordScreen() {
-    Navigator.of(context).pushNamed(Routes.resetPassword);
+    GoRouter.of(context).pushNamed(Routing.resetPassword);
   }
 
-// Strangely this needs to be in *this* class instead of putting this very same method 
+// Strangely this needs to be in *this* class instead of putting this very same method
 // into the viewModel-class to work properly. WhyTF??
   bool isLoginEnabled() {
     return (!_authenticationViewModel.isLoggedIn &&
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _authenticationViewModel.isLoginFormValid);
   }
 
-// Let the ViewModel know about focus changes to inform the 
+// Let the ViewModel know about focus changes to inform the
 //Speakyfox Logo, which is seperate widget, about focus changes.
   void onTextFieldFocus() {
     _authenticationViewModel.hasTextFieldFocus = _node.hasFocus;
@@ -114,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
-            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
+            if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) { 
               showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
               _authenticationViewModel.clearErrors();
             }
@@ -220,4 +221,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-

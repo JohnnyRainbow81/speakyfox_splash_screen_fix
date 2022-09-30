@@ -2,10 +2,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/dtos/database_file_dto.dart';
 
-import 'package:speakyfox/data/dtos/file_dto.dart';
 import 'package:speakyfox/domain/models/audio.dart';
 import 'package:speakyfox/domain/models/database_file.dart';
-import 'package:speakyfox/domain/models/file.dart';
 
 import '../../domain/models/language.dart';
 

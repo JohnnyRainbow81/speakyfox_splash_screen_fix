@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PaymentAmountButton extends StatelessWidget {
   final String amount;
@@ -39,7 +40,7 @@ class PaymentAmountButton extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Navigator.of(context).pop();
+          GoRouter.of(context).pop();
         },
         child: Text(
           '$amount €',

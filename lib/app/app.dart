@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:speakyfox/app/dependency_injection.dart';
-import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/presentation/common/widgets/errors/common_error_widget.dart';
 import '../presentation/common/resources/themes.dart';
-import '../presentation/common/routes.dart';
+import '../presentation/common/routing.dart';
 
 class SpeakyFox extends StatelessWidget {
   const SpeakyFox._();
@@ -15,10 +13,14 @@ class SpeakyFox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
-      onGenerateRoute: Routes.getRoute,
+      //onGenerateRoute: Routes.getRoute,
+      routerConfig: Routing.instance,
+      //routeInformationParser:  MyRouter.instance.routeInformationParser,
+      //routerDelegate: MyRouter.instance.routerDelegate,
+
       builder: (ctx, widget) {
         //Building an error widget to show to the user if a build()-method fails
         Widget error = const CommonErrorWidget();
@@ -33,7 +35,7 @@ class SpeakyFox extends StatelessWidget {
         if (widget != null) return widget;
         throw ('widget is null');
       },
-      initialRoute: locator<AuthenticationService>().isAuthenticated() ? Routes.home : Routes.onboarding, //just for testing > remove
+      //initialRoute: locator<AuthenticationService>().isAuthenticated() ? Routes.home : Routes.onboarding, //just for testing > remove
     );
   }
 }

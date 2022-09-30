@@ -1,6 +1,5 @@
 import 'package:speakyfox/data/mappers/class_mapper.dart';
 import 'package:speakyfox/data/mappers/image_mapper.dart';
-import 'package:speakyfox/data/mappers/language_pair_mapper.dart';
 import 'package:speakyfox/data/mappers/lecture_mapper.dart';
 import 'package:speakyfox/data/dtos/course_dto.dart';
 import 'package:speakyfox/domain/models/course.dart';
