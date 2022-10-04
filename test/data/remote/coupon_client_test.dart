@@ -3,16 +3,14 @@ import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/remote/coupon_client.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 
 void main() async {
-  String token = await getAuthTokenForTesting();
-
-  final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+  final dio = await getAuthenticatedHTTPClientForTesting();
 
   final CouponClient couponClient =
-      CouponClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/coupons/");
-      
+      CouponClient(dio, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/coupons/");
+
   //TODO Enter valid key and planId
   test('getCouponByKeyAndPlanIdOrNull()', () async {
     try {

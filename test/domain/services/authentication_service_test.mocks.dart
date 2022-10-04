@@ -316,6 +316,9 @@ class MockUser extends _i1.Mock implements _i3.User {
       super.noSuchMethod(Invocation.setter(#subscriptionIds, _subscriptionIds),
           returnValueForMissingStub: null);
   @override
+  String get id =>
+      (super.noSuchMethod(Invocation.getter(#id), returnValue: '') as String);
+  @override
   set id(String? _id) => super.noSuchMethod(Invocation.setter(#id, _id),
       returnValueForMissingStub: null);
   @override

@@ -19,7 +19,7 @@ extension SubscriptionMapper on SubscriptionDto {
         status: status,
         currentPeriodStart: currentPeriodStart,
         currentPeriodEnd: currentPeriodEnd,
-        couponKey: couponKey,
+        couponKey: couponKey ?? "",
         languages: languages.map((language) => language.toLanguage()).toList(),
         interval: interval,
         intervalCount: intervalCount,

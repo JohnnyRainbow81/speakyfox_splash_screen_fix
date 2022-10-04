@@ -65,7 +65,7 @@ class _ProductClient implements ProductClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<ProductDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${id}',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<ProductDto>.fromJson(

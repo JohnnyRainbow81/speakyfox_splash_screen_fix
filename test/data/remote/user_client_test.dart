@@ -1,17 +1,21 @@
 import 'package:dio/dio.dart' hide Response;
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
+import 'package:speakyfox/data/mappers/subscription_mapper.dart';
+import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
+import 'package:speakyfox/domain/models/user.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 
 void main() async {
-  String token = await getAuthTokenForTesting();
-    final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+  final dio = await getAuthenticatedHTTPClientForTesting();
 
-  UserClient userClient = UserClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/users/");
+  UserClient userClient = UserClient(dio, baseUrl: "${TestConstants.baseUrlQA}users/");
+
   test('createUser() throws 405', (() async {
     CreateProfileUserRequest request =
         CreateProfileUserRequest(firstname: "Lea", lastname: "D", email: "email", password: "123pass", affiliateId: "");
@@ -22,27 +26,30 @@ void main() async {
             (f) => f is DioError && f.response?.statusCode == 405, "Forbidden to create User with this call")));
   }));
 
-  test("getById() throws 403", (() async {
-    //Should 403 be the answer here?? > ask Julien
-    expectLater(userClient.getById("1c796ae2-b521-4128-9875-59785ed932d2"),
-        throwsA(predicate((f) => f is DioError && f.response?.statusCode == 403, "Forbidden")));
+  test("getById", (() async {
+    final response = await userClient.getById("64c4813e-68bf-4552-b8d9-7f8ce798a9ed"); //Julien Id
+    User julien = response.data.toUser();
+    debugPrint(julien.toString());
   }));
 
   test(
     "getOrdersOfCurrentClient() throws 403",
     //Should 403 be the answer here?? > ask Julien
     () async {
-      expectLater(userClient.getOrdersOfCurrentUser(),
+      expectLater(userClient.getOrdersOfCurrentUser("64c4813e-68bf-4552-b8d9-7f8ce798a9ed"),
           throwsA(predicate((f) => f is DioError && f.response?.statusCode == 403)));
     },
   );
 
   test(
-    "getSubscriptions() throws 403",
-    //Should 403 be the answer here?? > ask Julien
+    "getSubscriptions()",
     () async {
-      expectLater(
-          userClient.getSubscriptions(), throwsA(predicate((f) => f is DioError && f.response?.statusCode == 403)));
+      final response = await userClient.getSubscriptions("64c4813e-68bf-4552-b8d9-7f8ce798a9ed");
+      final subscriptions = response.data.map((e) => e.toSubscription()).toList();
+      
+      for (final subscription in subscriptions) {
+        debugPrint(subscription.toString());
+      }
     },
   );
 

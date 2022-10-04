@@ -8,7 +8,7 @@ import 'package:speakyfox/domain/models/user_sepa_direct_debit.dart';
 import '../../domain/models/payment_method.dart';
 
 extension UserPaymentMethodMapper on UserPaymentMethodDto {
-  UserPaymentMethod toUserPaymentMethod() {
+  UserPaymentMethod? toUserPaymentMethod() {
     switch (type) {
       case PaymentMethodType.sepaDirectDebit:
         return UserSepaDirectDebit(
@@ -57,9 +57,11 @@ extension UserPaymentMethodMapper on UserPaymentMethodDto {
         // TODO: Handle this case.
         break;
       default:
-        throw PaymentException(
-            message: "Payment method error", description: "We couldn't deserialize your payment method");
+        return null;
+      // throw PaymentException(
+      //     message: "Payment method error", description: "We couldn't deserialize your payment method");
     }
-    throw PaymentException(message: "Payment method error", description: "We couldn't deserialize your payment method");
+    return null;
+    //throw PaymentException(message: "Payment method error", description: "We couldn't deserialize your payment method");
   }
 }

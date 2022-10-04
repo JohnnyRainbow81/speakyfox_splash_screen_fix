@@ -12,8 +12,8 @@ InvoiceDto _$InvoiceDtoFromJson(Map<String, dynamic> json) => InvoiceDto(
       total: json['total'] as int,
       status: json['status'] as String,
       paid: json['paid'] as bool,
-      dueDate: json['dueDate'] as String,
-      currency: json['currency'] as String,
+      dueDate: json['dueDate'] as String?,
+      currency: json['currency'] as String?,
       paymentMethod: json['paymentMethod'],
     );
 

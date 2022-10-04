@@ -11,15 +11,14 @@ import 'package:speakyfox/data/remote/language_client.dart';
 import 'package:speakyfox/data/repositories_impls/language_repository_impl.dart';
 import 'package:speakyfox/domain/services/language_service.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 import 'language_service_test.mocks.dart';
 
 @GenerateMocks([ConnectivityService])
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  String token = await getAuthTokenForTesting();
-    final dio =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+  final dio = await getAuthenticatedHTTPClientForTesting();
 
   LanguageClient languageClient = LanguageClient(dio);
 

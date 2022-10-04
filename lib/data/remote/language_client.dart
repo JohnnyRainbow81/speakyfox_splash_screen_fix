@@ -12,7 +12,7 @@ abstract class LanguageClient with BaseClient<LanguageDto> {
   @GET("")
   Future<Response<List<LanguageDto>>> getTargetLanguages({@Query("isTargetLanguage") bool isTargetLanguage = true});
 
-  @GET("{id}")
+  @GET("/{id}")
   Future<Response<LanguageDto>> getLanguageById(@Path() String id);
 
   @GET("")

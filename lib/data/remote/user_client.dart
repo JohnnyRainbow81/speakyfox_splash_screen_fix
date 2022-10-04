@@ -19,14 +19,14 @@ abstract class UserClient with BaseClient<UserDto> {
   @POST("users/{userId}/payment-methods")
   Future<String> attachPaymentMethodToUser(@Path("userId") String userId, @Body() Map<String, dynamic> body);
 
-  @GET("orders")
-  Future<Response<OrderDto>> getOrdersOfCurrentUser();
+  @GET("{userId}/orders")
+  Future<Response<OrderDto>> getOrdersOfCurrentUser(@Path("userId") String userId);
 
-  @GET("subscriptions")
-  Future<Response<SubscriptionDto>> getSubscriptions();
+  @GET("{userId}/subscriptions")
+  Future<Response<List<SubscriptionDto>>> getSubscriptions(@Path("userId") String userId);
 
   @PATCH("me/password")
-  @Headers({"Content-Type" : "application/json"})
+  @Headers({"Content-Type": "application/json"})
   Future<Response<bool>> changePassword(@Body() Map<String, dynamic> changePasswordRequest);
 
   @PATCH("{userId}/language-pair")
@@ -34,9 +34,10 @@ abstract class UserClient with BaseClient<UserDto> {
       @Path("userId") String userId, @Body() Map<String, dynamic> body);
 
   @POST("{userId}/payment-methods/setup-intents")
-  Future<Response<String>> createSetupIntent(@Path("userId") String userId, @Body() Map<String, dynamic> paymentMethodType);
+  Future<Response<String>> createSetupIntent(
+      @Path("userId") String userId, @Body() Map<String, dynamic> paymentMethodType);
 
-  @DELETE("payment-methods")
+  @DELETE("{userId}/payment-methods")
   Future<Response<bool>> removePaymentMethod(
-      @Query("paymentMethodType") String paymentMethodType, @Query("externalId") String externalId);
+    @Path("userId") String userId, @Query("paymentMethodType") String paymentMethodType, @Query("externalId") String externalId);
 }

@@ -17,7 +17,7 @@ class SubscriptionDto extends BaseDto {
   SubscriptionStatus status;
   String currentPeriodStart;
   String currentPeriodEnd;
-  String couponKey;
+  String? couponKey;
   List<LanguageDto> languages = [];
   String interval;
   int intervalCount;

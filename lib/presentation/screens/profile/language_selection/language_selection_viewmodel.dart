@@ -14,6 +14,6 @@ class LanguageSelectionViewModel extends BaseViewModel {
 
   void onInit() {
     //get users current source / target languages
-    _userService.getCurrentUser();
+    //_userService.getCurrentUser();
   }
 }

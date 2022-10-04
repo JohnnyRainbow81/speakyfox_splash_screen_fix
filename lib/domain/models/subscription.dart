@@ -18,7 +18,7 @@ class Subscription extends ModelBase {
   List<Language> languages = [];
   String interval;
   int intervalCount;
-  UserPaymentMethod paymentMethod;
+  UserPaymentMethod? paymentMethod;
   int nextBillingAmount;
   List<Invoice> invoices = [];
 
@@ -51,25 +51,32 @@ class Subscription extends ModelBase {
             deleted: deleted,
             deletedBy: deletedBy);
 
+
+  @override
+  String toString() {
+    return 'Subscription(productDisplayTitle: $productDisplayTitle, planDisplayTitle: $planDisplayTitle, currentPeriodStart: $currentPeriodStart, currentPeriodEnd: $currentPeriodEnd, couponKey: $couponKey, languages: $languages, interval: $interval, intervalCount: $intervalCount, paymentMethod: $paymentMethod, nextBillingAmount: $nextBillingAmount, invoices: $invoices)';
+  }
 }
 
 enum SubscriptionType { oneTime, month, threeMonths, sixMonths, year }
 
 enum SubscriptionStatus {
-  @JsonValue("incomplete")
+  @JsonValue("Incomplete")
   incomplete,
-  @JsonValue("incompleteExpired")
+  @JsonValue("IncompleteExpired")
   incompleteExpired,
-  @JsonValue("trialing")
+  @JsonValue("Trialing")
   trialing,
-  @JsonValue("active")
+  @JsonValue("Active")
   active,
-  @JsonValue("pastDue")
+  @JsonValue("PastDue")
   pastDue,
-  @JsonValue("canceled")
+  @JsonValue("Canceled")
   canceled,
-  @JsonValue("unpaid")
+  @JsonValue("Unpaid")
   unpaid,
-  @JsonValue("undefined")
-  undefined
+  @JsonValue("Undefined")
+  undefined,
+  @JsonValue("Processing")
+  processing
 }

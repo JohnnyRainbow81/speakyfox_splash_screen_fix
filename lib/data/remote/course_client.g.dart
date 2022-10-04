@@ -64,7 +64,7 @@ class _CourseClient implements CourseClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<CourseDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${id}',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<CourseDto>.fromJson(

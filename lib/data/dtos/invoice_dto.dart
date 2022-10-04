@@ -9,8 +9,8 @@ class InvoiceDto {
   int total;
   String status;
   bool paid;
-  String dueDate;
-  String currency;
+  String? dueDate;
+  String? currency;
   dynamic paymentMethod;
 
   InvoiceDto({

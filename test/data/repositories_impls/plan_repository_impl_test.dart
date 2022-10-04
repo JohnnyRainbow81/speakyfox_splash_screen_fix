@@ -9,23 +9,23 @@ import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/data/repositories_impls/plan_repository_impl.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 
 void main() async {
-
   //Connectivity plugin error here
 
-  String token = await getAuthTokenForTesting();
-
-    final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+  final dio = await getAuthenticatedHTTPClientForTesting();
 
   TestWidgetsFlutterBinding.ensureInitialized();
   final connectivityService = ConnectivityService();
-  PlanClient client = PlanClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/plans");
+  PlanClient client = PlanClient(dio, baseUrl: "${TestConstants.baseUrlQA}plans");
   Firebase.initializeApp();
   PlanRepositoryImpl planRepository = PlanRepositoryImpl(connectivityService, client);
-  test('getAll()', () async {
-    final response = await planRepository.getAll("");
-    debugPrint(response.toString());
-  }, );
+  test(
+    'getAll()',
+    () async {
+      final response = await planRepository.getAll("");
+      debugPrint(response.toString());
+    },
+  );
 }

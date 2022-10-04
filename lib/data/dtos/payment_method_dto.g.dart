@@ -56,9 +56,14 @@ const _$PaymentProviderEnumMap = {
 };
 
 const _$PaymentMethodTypeEnumMap = {
-  PaymentMethodType.sepaDirectDebit: 'sepaDirectDebit',
-  PaymentMethodType.creditCard: 'creditCard',
-  PaymentMethodType.payPal: 'paypal',
-  PaymentMethodType.appleId: 'appleId',
-  PaymentMethodType.internal: 'internal',
+  PaymentMethodType.sepaDirectDebit: 'SEPADirectDebit',
+  PaymentMethodType.creditCard: 'CreditCard',
+  PaymentMethodType.payPal: 'PayPal',
+  PaymentMethodType.appleId: 'AppleId',
+  PaymentMethodType.internal: 'Internal',
+  PaymentMethodType.ideal: 'iDEAL',
+  PaymentMethodType.klarna: 'Klarna',
+  PaymentMethodType.sofort: 'Sofort',
+  PaymentMethodType.eps: 'EPS',
+  PaymentMethodType.giroPay: 'GiroPay',
 };

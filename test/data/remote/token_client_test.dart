@@ -12,24 +12,27 @@ import 'package:speakyfox/domain/models/ticket.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 
+import '../../http_client_test_setup.dart';
+
 void main() async {
   late User user;
-  //Test on production server with real credentials! (because QA Server isn't up-to-date)
-   final dio=  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
 
-  TokenClient tokenClient = TokenClient(dio);
+  final tokenDio = DioFactory.initialize(baseUrl: Constants.baseUrlAuthQA);
+  TokenClient tokenClient = TokenClient(tokenDio);
+
+  final dio = DioFactory.initialize(baseUrl: TestConstants.baseUrlQA);
   AuthenticationClient authenticationClient = AuthenticationClient(dio);
 
   test('accessToken()', () async {
-    final response = await tokenClient.accessToken(
-        AuthenticationRequestBody(userName: "stefan_anders@gmx.net", password: "Kuchen1981!", grantType: "password"));
+    final response = await tokenClient.accessToken(AuthenticationRequestBody(
+        userName: "julien.ambos@ja-developer.de", password: "Peter123!", grantType: "password"));
     debugPrint("accessToken: ${response.accessToken}");
     debugPrint("refreshToken: ${response.refreshToken}");
   });
 
   test('fetchUser()', (() async {
-    final response = await tokenClient.accessToken(
-        AuthenticationRequestBody(userName: "stefan_anders@gmx.net", password: "Kuchen1981!", grantType: "password"));
+    final response = await tokenClient.accessToken(AuthenticationRequestBody(
+        userName: "julien.ambos@ja-developer.de", password: "Peter123!", grantType: "password"));
     Ticket ticket = response.toTicket();
     final userDto = await authenticationClient.fetchUser("Bearer ${ticket.accessToken}");
     user = userDto.data.toUser();

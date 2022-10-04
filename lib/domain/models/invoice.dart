@@ -5,8 +5,8 @@ class Invoice {
   int total;
   String status;
   bool paid;
-  String dueDate;
-  String currency;
+  String? dueDate;
+  String? currency;
   dynamic paymentMethod;
   
   Invoice({
@@ -19,4 +19,9 @@ class Invoice {
     required this.currency,
     required this.paymentMethod,
   });
+
+  @override
+  String toString() {
+    return 'Invoice(periodStart: $periodStart, periodEnd: $periodEnd, total: $total, status: $status, paid: $paid, dueDate: $dueDate, currency: $currency, paymentMethod: $paymentMethod)';
+  }
 }

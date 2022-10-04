@@ -3,15 +3,15 @@ import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/remote/class_client.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 
-void main() async{
-   String token = await getAuthTokenForTesting();
-  final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+void main() async {
+  final dio = await getAuthenticatedHTTPClientForTesting();
 
-  ClassClient courseClient = ClassClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/classes");
+  ClassClient courseClient =
+      ClassClient(dio, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/classes");
   test('getAll()', () async {
-     final response = await courseClient.getAll("");
+    final response = await courseClient.getAll("");
     print(response);
   });
 }

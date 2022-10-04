@@ -19,7 +19,7 @@ abstract class BaseClient<T> {
   @GET("")
   Future<Response<List<T>>> getAll(@Query("") String param);
 
-  @GET("{id}")
+  @GET("/{id}")
   Future<Response<T>> getById(@Path("id") String id);
 
   @POST("")

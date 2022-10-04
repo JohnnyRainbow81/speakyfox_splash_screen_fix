@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/data/dio_factory.dart';
@@ -7,16 +9,16 @@ import 'package:speakyfox/data/mappers/language_mapper.dart';
 import 'package:speakyfox/data/remote/language_client.dart';
 import 'package:speakyfox/domain/models/language.dart';
 
-import '../../test_get_access_token.dart';
+import '../../http_client_test_setup.dart';
 
 void main() async {
-  TestWidgetsFlutterBinding.ensureInitialized();
-  await initializeDependencies();
-
-  String token = await getAuthTokenForTesting();
-  final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+  //TestWidgetsFlutterBinding.ensureInitialized();
+  //await initializeDependencies();
+  
+  Dio dio = await getAuthenticatedHTTPClientForTesting();
+  
   LanguageClient languageClient =
-      LanguageClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/languages");
+      LanguageClient(dio, baseUrl: "${TestConstants.baseUrlQA}languages");
 
   test('getLanguageById', () async {
     final response = await languageClient.getLanguageById("02c6e388-bcb1-427b-8b8d-d49704671c22");

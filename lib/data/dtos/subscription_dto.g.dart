@@ -20,7 +20,7 @@ SubscriptionDto _$SubscriptionDtoFromJson(Map<String, dynamic> json) =>
       status: $enumDecode(_$SubscriptionStatusEnumMap, json['status']),
       currentPeriodStart: json['currentPeriodStart'] as String,
       currentPeriodEnd: json['currentPeriodEnd'] as String,
-      couponKey: json['couponKey'] as String,
+      couponKey: json['couponKey'] as String?,
       languages: (json['languages'] as List<dynamic>)
           .map((e) => LanguageDto.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -58,12 +58,13 @@ Map<String, dynamic> _$SubscriptionDtoToJson(SubscriptionDto instance) =>
     };
 
 const _$SubscriptionStatusEnumMap = {
-  SubscriptionStatus.incomplete: 'incomplete',
-  SubscriptionStatus.incompleteExpired: 'incompleteExpired',
-  SubscriptionStatus.trialing: 'trialing',
-  SubscriptionStatus.active: 'active',
-  SubscriptionStatus.pastDue: 'pastDue',
-  SubscriptionStatus.canceled: 'canceled',
-  SubscriptionStatus.unpaid: 'unpaid',
-  SubscriptionStatus.undefined: 'undefined',
+  SubscriptionStatus.incomplete: 'Incomplete',
+  SubscriptionStatus.incompleteExpired: 'IncompleteExpired',
+  SubscriptionStatus.trialing: 'Trialing',
+  SubscriptionStatus.active: 'Active',
+  SubscriptionStatus.pastDue: 'PastDue',
+  SubscriptionStatus.canceled: 'Canceled',
+  SubscriptionStatus.unpaid: 'Unpaid',
+  SubscriptionStatus.undefined: 'Undefined',
+  SubscriptionStatus.processing: 'Processing',
 };

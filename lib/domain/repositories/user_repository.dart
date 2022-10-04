@@ -10,11 +10,11 @@ abstract class UserRepository {
   Future<User> createUser(CreateProfileUserRequest user);
 
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId);
-  Future<Order> getOrdersOfCurrentUser();
-  Future<Subscription> getSubscriptions();
+  Future<Order> getOrdersOfCurrentUser(String id);
+  Future<List<Subscription>> getSubscriptions(String id);
   Future<bool> changePassword(ChangePasswordRequest request);
   Future<LanguagePair> patchLanguagePairBySourceTargetLanguagesIds(String sourceLanguageId, String targetLanguageId);
 
   Future<String> createSetupIntent(String userId, PaymentMethodType paymentMethodType);
-  Future<bool> removePaymentMethod(PaymentMethodType paymentMethodType, String externalId);
+  Future<bool> removePaymentMethod(String id, PaymentMethodType paymentMethodType, String externalId);
 }

@@ -18,16 +18,26 @@ enum PaymentProvider {
 }
 
 enum PaymentMethodType {
-  @JsonValue("sepaDirectDebit")
+  @JsonValue("SEPADirectDebit")
   sepaDirectDebit,
-  @JsonValue("creditCard")
+  @JsonValue("CreditCard")
   creditCard,
-  @JsonValue("paypal")
+  @JsonValue("PayPal")
   payPal,
-  @JsonValue("appleId")
+  @JsonValue("AppleId")
   appleId,
-  @JsonValue("internal")
-  internal
+  @JsonValue("Internal")
+  internal,
+  @JsonValue("iDEAL")
+  ideal,
+  @JsonValue("Klarna")
+  klarna,
+  @JsonValue("Sofort")
+  sofort,
+  @JsonValue("EPS")
+  eps,
+  @JsonValue("GiroPay")
+  giroPay,
 }
 
 class PaymentMethod extends ModelBase {

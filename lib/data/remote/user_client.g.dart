@@ -52,7 +52,7 @@ class _UserClient implements UserClient {
   }
 
   @override
-  Future<Response<OrderDto>> getOrdersOfCurrentUser() async {
+  Future<Response<OrderDto>> getOrdersOfCurrentUser(userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -60,7 +60,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<OrderDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'orders',
+                .compose(_dio.options, '${userId}/orders',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<OrderDto>.fromJson(
@@ -71,20 +71,23 @@ class _UserClient implements UserClient {
   }
 
   @override
-  Future<Response<SubscriptionDto>> getSubscriptions() async {
+  Future<Response<List<SubscriptionDto>>> getSubscriptions(userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<SubscriptionDto>>(
+        _setStreamType<Response<List<SubscriptionDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'subscriptions',
+                .compose(_dio.options, '${userId}/subscriptions',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<SubscriptionDto>.fromJson(
+    final value = Response<List<SubscriptionDto>>.fromJson(
       _result.data!,
-      (json) => SubscriptionDto.fromJson(json as Map<String, dynamic>),
+      (json) => (json as List<dynamic>)
+          .map<SubscriptionDto>(
+              (i) => SubscriptionDto.fromJson(i as Map<String, dynamic>))
+          .toList(),
     );
     return value;
   }
@@ -157,7 +160,7 @@ class _UserClient implements UserClient {
 
   @override
   Future<Response<bool>> removePaymentMethod(
-      paymentMethodType, externalId) async {
+      userId, paymentMethodType, externalId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'paymentMethodType': paymentMethodType,
@@ -168,7 +171,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<bool>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'payment-methods',
+                .compose(_dio.options, '${userId}/payment-methods',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
@@ -208,7 +211,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<UserDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${id}',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<UserDto>.fromJson(

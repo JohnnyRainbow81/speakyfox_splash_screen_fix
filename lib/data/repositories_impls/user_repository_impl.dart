@@ -24,8 +24,6 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
 
   UserRepositoryImpl(this._connectivityService, this._userClient, this._userLocalSource);
 
-
-
   @override
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
     // TODO: implement attachPaymentMethodToUser
@@ -111,10 +109,10 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   }
 
   @override
-  Future<Order> getOrdersOfCurrentUser() async {
+  Future<Order> getOrdersOfCurrentUser(String id) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _userClient.getOrdersOfCurrentUser();
+        final response = await _userClient.getOrdersOfCurrentUser(id);
         return response.data.toOrder();
       } catch (error) {
         ErrorHandler.handleError(error);
@@ -126,11 +124,12 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   }
 
   @override
-  Future<Subscription> getSubscriptions() async {
+  Future<List<Subscription>> getSubscriptions(String id) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _userClient.getSubscriptions();
-        return response.data.toSubscription();
+        final response = await _userClient.getSubscriptions(id);
+        List<Subscription> subscriptions = response.data.map((e) => e.toSubscription()).toList();
+        return subscriptions;
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -174,8 +173,18 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   }
 
   @override
-  Future<bool> removePaymentMethod(PaymentMethodType paymentMethodType, String externalId) {
-    // TODO: implement removePaymentMethod
-    throw UnimplementedError();
+  Future<bool> removePaymentMethod(String id, PaymentMethodType paymentMethodType, String externalId) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _userClient.removePaymentMethod(id, paymentMethodType.name, externalId);
+        bool success = response.data;
+        return success;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+    throw UIException(message: "UserRepositoryImpl.removePaymentMethod()");
   }
 }

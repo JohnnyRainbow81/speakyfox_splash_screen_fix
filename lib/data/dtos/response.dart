@@ -21,11 +21,10 @@ class Response<T> {
     required this.message,
   });
 
-   factory Response.fromJson(
+  factory Response.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
   ) =>
       _$ResponseFromJson(json, fromJsonT);
-  Map<String, dynamic> toJson(Object Function(T value) toJsonT) =>
-      _$ResponseToJson(this, toJsonT);
+  Map<String, dynamic> toJson(Object Function(T value) toJsonT) => _$ResponseToJson(this, toJsonT);
 }
