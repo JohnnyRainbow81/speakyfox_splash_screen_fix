@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';

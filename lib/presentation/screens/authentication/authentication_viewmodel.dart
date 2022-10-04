@@ -45,7 +45,7 @@ class AuthenticationViewModel extends BaseViewModel {
   AuthenticationViewModel(
     this._authenticationService,
   ) {
-    User? user = _authenticationService.getUser();
+    User? user = _authenticationService.getCurrentUser();
 
     _username = user?.firstName ?? "";
     _email = user?.email ?? "";

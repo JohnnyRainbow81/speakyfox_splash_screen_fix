@@ -20,6 +20,10 @@ class UserService extends BaseService<User> {
     _userRepository = userRepositoryImpl;
   }
 
+  Future<User> getCurrentUser() {
+    _userRepository.getCurrentUser();
+  }
+
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
     return _userRepository.attachPaymentMethodToUser(type, externalPaymentMethodId);
   }
@@ -34,6 +38,7 @@ class UserService extends BaseService<User> {
     return _userRepository.createSetupIntent(userId, paymentMethodType);
   }
 
+//Do we need this? > AuthenticationService already has "register" with same functionality
   Future<User> createUser(CreateProfileUserRequest user) {
     return _userRepository.createUser(user);
   }

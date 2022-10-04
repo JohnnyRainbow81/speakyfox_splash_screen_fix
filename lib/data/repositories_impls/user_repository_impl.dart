@@ -22,6 +22,11 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   UserRepositoryImpl(this._connectivityService, this._userClient);
 
   @override
+  Future<User> getCurrentUser() {
+    
+  }
+
+  @override
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
     // TODO: implement attachPaymentMethodToUser
 
@@ -174,4 +179,6 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
     // TODO: implement removePaymentMethod
     throw UnimplementedError();
   }
+  
+
 }

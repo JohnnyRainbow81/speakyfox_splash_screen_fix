@@ -55,6 +55,11 @@ import 'package:speakyfox/domain/services/user_service.dart';
 import 'package:speakyfox/domain/services/vocabulary_service.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/profile/language_selection/language_selection_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/profile/my_purchases/my_purchases_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/profile/profile_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/profile/settings/settings_viewmodel.dart';
+import 'package:speakyfox/presentation/screens/profile/unlock/unlock_viewmodel.dart';
 
 import 'connectivity_service.dart';
 
@@ -182,4 +187,14 @@ Future<void> initializeDependencies() async {
 
 //HomeViewModel
   locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
+
+  locator.registerLazySingleton<ProfileViewModel>(() => ProfileViewModel(locator()));
+
+  locator.registerLazySingleton<MyPurchasesViewModel>(() => MyPurchasesViewModel());
+
+  locator.registerLazySingleton<UnlockViewModel>(() => UnlockViewModel());
+
+  locator.registerLazySingleton<LanguageSelectionViewModel>(() => LanguageSelectionViewModel(locator(), locator()));
+
+  locator.registerLazySingleton<SettingsViewModel>(() => SettingsViewModel());
 }

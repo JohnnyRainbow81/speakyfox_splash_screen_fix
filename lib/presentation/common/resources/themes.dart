@@ -23,9 +23,11 @@ ThemeData getApplicationTheme() {
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
+    listTileTheme: _getListTileTheme(),
     errorColor: ColorAssets.error,
     hintColor: ColorAssets.lightGrey,
     indicatorColor: ColorAssets.primary,
+    splashColor: ColorAssets.bgBlueDark,
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: CupertinoPageTransitionsBuilder(), //Another one on Android?
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
@@ -88,7 +90,7 @@ CardTheme _getCardTheme() {
 
 IconThemeData _getIconThemeData() {
   return const IconThemeData(
-    color: ColorAssets.error, //debug color!
+    color: ColorAssets.primary, //debug color!
     size: 24,
   );
 }
@@ -221,4 +223,13 @@ CheckboxThemeData _getCheckboxTheme() {
       fillColor: MaterialStateProperty.resolveWith<Color>((states) => ColorAssets.primary),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(4)), side: BorderSide(width: 1, color: ColorAssets.primary)));
+}
+
+ListTileThemeData _getListTileTheme() {
+  return const ListTileThemeData(
+      iconColor: ColorAssets.primary,
+      selectedColor: ColorAssets.error,
+      shape:  Border(
+          //top: BorderSide(width: 1.0, color: ColorAssets.lightGrey, strokeAlign: StrokeAlign.center),
+          bottom: BorderSide(width: 1.0, color: ColorAssets.lightGrey)));
 }
