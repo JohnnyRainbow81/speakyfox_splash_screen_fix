@@ -69,9 +69,11 @@ class CustomInterceptor extends Interceptor {
           method: err.requestOptions.method,
           headers: err.requestOptions.headers..update(HttpHeaders.authorizationHeader, (_) => "Bearer $accessToken"),
         );
+        
         final response = await dio.request<dynamic>(err.requestOptions.path,
             data: err.requestOptions.data, queryParameters: err.requestOptions.queryParameters, options: options);
         handler.resolve(response);
+
       } catch (e) {
         debugPrint("Error in Dio.onErrorInterceptor: $e");
         ErrorHandler.handleError(e);

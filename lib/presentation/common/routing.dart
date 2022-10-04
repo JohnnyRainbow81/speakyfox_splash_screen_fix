@@ -10,6 +10,11 @@ import 'package:speakyfox/presentation/screens/authentication/registration/regis
 import 'package:speakyfox/presentation/screens/authentication/reset_password.dart/reset_password_screen.dart';
 import 'package:speakyfox/presentation/screens/home/home_screen.dart';
 import 'package:speakyfox/presentation/screens/onboarding/onboarding_pager.dart';
+import 'package:speakyfox/presentation/screens/profile/language_selection/language_selection_screen.dart';
+import 'package:speakyfox/presentation/screens/profile/my_purchases/my_purchases_screen.dart';
+import 'package:speakyfox/presentation/screens/profile/profile_screen.dart';
+import 'package:speakyfox/presentation/screens/profile/settings/settings_screen.dart';
+import 'package:speakyfox/presentation/screens/profile/unlock/unlock_screen.dart';
 import 'package:speakyfox/presentation/screens/test_screen.dart';
 
 // class Routes {
@@ -70,6 +75,11 @@ class Routing {
   static const String register = "/register";
   static const String onboarding = "/onboarding";
   static const String home = "/";
+  static const String profile = "/profile";
+  static const String myPurchases = "/myPurchases";
+  static const String unlock = "/unlock";
+  static const String settings = "/settings";
+  static const String languageSelection = "/languageSelection";
 
   static bool _isAppStart = true;
 
@@ -94,6 +104,12 @@ class Routing {
           return null; // no need to redirect
         },
         routes: <GoRoute>[
+           GoRoute(
+            // name: test,
+            path: test,
+            pageBuilder: (context, state) =>
+                Platform.isIOS ? const CupertinoPage(child: TestScreen()) : const MaterialPage(child: TestScreen()),
+          ),
           GoRoute(
               //name: login,
               path: login,
@@ -127,12 +143,38 @@ class Routing {
                 ? const CupertinoPage(child: ResetPasswordScreen())
                 : const MaterialPage(child: ResetPasswordScreen()),
           ),
+           GoRoute(
+            // name: test,
+            path: profile,
+            pageBuilder: (context, state) =>
+                Platform.isIOS ? CupertinoPage(child: ProfileScreen()) : MaterialPage(child: ProfileScreen()),
+          ),
+         
           GoRoute(
             // name: test,
-            path: test,
+            path: myPurchases,
             pageBuilder: (context, state) =>
-                Platform.isIOS ? const CupertinoPage(child: TestScreen()) : const MaterialPage(child: TestScreen()),
+                Platform.isIOS ? CupertinoPage(child: MyPurchasesScreen()) : MaterialPage(child: MyPurchasesScreen()),
           ),
+          GoRoute(
+            // name: test,
+            path: unlock,
+            pageBuilder: (context, state) =>
+                Platform.isIOS ? CupertinoPage(child: UnlockScreen()) : MaterialPage(child: UnlockScreen()),
+          ),
+          GoRoute(
+            // name: test,
+            path: settings,
+            pageBuilder: (context, state) =>
+                Platform.isIOS ? CupertinoPage(child: SettingsScreen()) : MaterialPage(child: SettingsScreen()),
+          ),
+          GoRoute(
+            // name: test,
+            path: languageSelection,
+            pageBuilder: (context, state) => Platform.isIOS
+                ? CupertinoPage(child: LanguageSelectionScreen())
+                : MaterialPage(child: LanguageSelectionScreen()),
+          )
         ],
         errorBuilder: (context, state) => ErrorCommonScreen(
               exception: state.error,

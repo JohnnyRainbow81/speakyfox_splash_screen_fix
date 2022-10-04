@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
+import 'package:speakyfox/presentation/common/routing.dart';
 import 'package:speakyfox/presentation/screens/profile/profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -29,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
                 centerTitle: true,
                 title: Image.asset(ImageAssets.speakyfoxLogo)),
             body: Padding(
-                padding: EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 8),
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 8),
                 child: Card(
                   child: ListView(children: [
                     Padding(
@@ -43,33 +44,33 @@ class ProfileScreen extends StatelessWidget {
                       leading: const Icon(Icons.shop),
                       title: const Text("Deine Käufe"),
                       trailing: const Icon(Icons.arrow_forward),
-                      onTap: () => Navigator.of(context).pushNamed(Routes.myPurchases),
+                      onTap: () => GoRouter.of(context).push(Routing.myPurchases),
                     ),
                     ListTile(
-                      leading: Icon(Icons.lock_open),
+                      leading:const Icon(Icons.lock_open),
                       title: const Text("Freischalten"),
                       trailing: const Icon(Icons.arrow_forward),
-                      onTap: () => Navigator.of(context).pushNamed(Routes.unlock),
+                      onTap: () => GoRouter.of(context).push(Routing.unlock),
                     ),
                     ListTile(
-                      leading: Icon(Icons.settings),
+                      leading:const Icon(Icons.settings),
                       title: const Text("Einstellungen"),
                       trailing: const Icon(Icons.arrow_forward),
-                      onTap: () => Navigator.of(context).pushNamed(Routes.settings),
+                      onTap: () => GoRouter.of(context).push(Routing.settings),
                     ),
                     ListTile(
-                      leading: Icon(Icons.language),
+                      leading: const Icon(Icons.language),
                       title: const Text("Sprachauswahl"),
                       trailing: const Icon(Icons.arrow_forward),
-                      onTap: () => Navigator.of(context).pushNamed(Routes.languageSelection),
+                      onTap: () => GoRouter.of(context).push(Routing.languageSelection),
                     ),
                     ListTile(
-                      leading: Icon(Icons.logout),
+                      leading:const Icon(Icons.logout),
                       title: const Text("Logout"),
                       trailing: const Icon(Icons.arrow_forward),
                       onTap: () {
                         _profileViewModel.logout();
-                        Navigator.of(context).pushNamedAndRemoveUntil(Routes.login, (route) => false);
+                        GoRouter.of(context).replace(Routing.login);
                       },
                     )
                   ]),

@@ -1,6 +1,8 @@
 import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
+import 'package:speakyfox/data/dtos/user_dto.dart';
+import 'package:speakyfox/data/local/user_local_source.dart';
 import 'package:speakyfox/data/mappers/order_mapper.dart';
 import 'package:speakyfox/data/mappers/subscription_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
@@ -18,13 +20,11 @@ import 'package:speakyfox/domain/repositories/user_repository.dart';
 class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   final ConnectivityService _connectivityService;
   final UserClient _userClient;
+  final UserLocalSource _userLocalSource;
 
-  UserRepositoryImpl(this._connectivityService, this._userClient);
+  UserRepositoryImpl(this._connectivityService, this._userClient, this._userLocalSource);
 
-  @override
-  Future<User> getCurrentUser() {
-    
-  }
+
 
   @override
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
@@ -38,8 +38,7 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   Future<bool> changePassword(ChangePasswordRequest request) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response =
-            await _userClient.changePassword(request.toMap());
+        final response = await _userClient.changePassword(request.toMap());
         bool success = response.data;
         return success;
       } catch (error) {
@@ -55,7 +54,7 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
   Future<String> createSetupIntent(String userId, PaymentMethodType paymentMethodType) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _userClient.createSetupIntent(userId, { "paymentMethodType" : paymentMethodType.name});
+        final response = await _userClient.createSetupIntent(userId, {"paymentMethodType": paymentMethodType.name});
         return response.data;
       } catch (error) {
         ErrorHandler.handleError(error);
@@ -179,6 +178,4 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
     // TODO: implement removePaymentMethod
     throw UnimplementedError();
   }
-  
-
 }

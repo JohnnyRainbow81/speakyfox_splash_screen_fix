@@ -10,6 +10,7 @@ import 'package:speakyfox/app/utilities.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
+import 'package:speakyfox/domain/services/user_service.dart';
 import 'package:speakyfox/presentation/common/resources/text_assets.dart';
 import 'package:stacked/stacked.dart';
 
@@ -45,7 +46,7 @@ class AuthenticationViewModel extends BaseViewModel {
   AuthenticationViewModel(
     this._authenticationService,
   ) {
-    User? user = _authenticationService.getCurrentUser();
+    User? user = _authenticationService.getUser();
 
     _username = user?.firstName ?? "";
     _email = user?.email ?? "";

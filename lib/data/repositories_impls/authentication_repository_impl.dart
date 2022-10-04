@@ -7,6 +7,7 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/dtos/identity_token_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
+import 'package:speakyfox/data/local/user_local_source.dart';
 import 'package:speakyfox/data/mappers/identity_token_mapper.dart';
 import 'package:speakyfox/data/mappers/ticket_mapper.dart';
 import 'package:speakyfox/data/mappers/user_mapper.dart';
@@ -28,10 +29,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationClient _authenticationClient;
   final TokenClient _tokenClient;
   final AuthenticationLocalSource _authenticationLocalSource;
+  final UserLocalSource _userLocalSource;
 
   AuthenticationRepositoryImpl(
     this._authenticationClient,
     this._authenticationLocalSource,
+    this._userLocalSource,
     this._tokenClient,
     this._connectivityService,
   );
@@ -124,13 +127,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<User> fetchUser(String authToken) async {
     try {
-      final UserDto user = await _authenticationLocalSource.loadUser();
+      final UserDto user = _userLocalSource.loadUser();
       return user.toUser();
     } catch (cacheError) {
       if (await _connectivityService.hasConnection()) {
         try {
           final response = await _authenticationClient.fetchUser(authToken);
-          _authenticationLocalSource.saveUser(response.data);
+          _userLocalSource.saveUser(response.data);
           return response.data.toUser();
         } catch (error) {
           ErrorHandler.handleError(error);
@@ -200,7 +203,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   User? loadUser() {
     try {
-      final UserDto user = _authenticationLocalSource.loadUser();
+      final UserDto user = _userLocalSource.loadUser();
       return user.toUser();
     } catch (cacheError) {
       return null;

@@ -18,11 +18,11 @@ class MyPurchasesScreen extends StatelessWidget {
           if (_myPurchasesViewModel.hasError) {
             //handle errors
           }
-          return Scaffold(
+          return  Scaffold(
             appBar: SettingsAppbar(
               title: "Meine Käufe",
             ),
-            body: const Padding(
+            body:  Padding(
               padding: EdgeInsets.only(top: 20, bottom: 8.0, left: 8.0, right: 8.0),
               child: Card(child: Center(child: Text("MyPurchases"))),
             ),

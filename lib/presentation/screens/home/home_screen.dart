@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () async {
-                      Navigator.of(context).pushNamed(Routes.profile);
+                      GoRouter.of(context).push(Routing.profile);
                       // List<Language> langs = await locator<LanguageService>().getSourceLanguages();
                       // setLanguages(langs);
                     },

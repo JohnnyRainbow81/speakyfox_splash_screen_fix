@@ -20,8 +20,8 @@ class UserService extends BaseService<User> {
     _userRepository = userRepositoryImpl;
   }
 
-  Future<User> getCurrentUser() {
-    _userRepository.getCurrentUser();
+  User? getCurrentUser() {
+   return  _authenticationService.getUser();
   }
 
   Future<String> attachPaymentMethodToUser(PaymentMethodType type, String externalPaymentMethodId) {
@@ -30,11 +30,11 @@ class UserService extends BaseService<User> {
 
   Future<bool> changePassword(String currentPassword, String newPassword) async {
     return _userRepository.changePassword(ChangePasswordRequest(
-        currentPassword: currentPassword, password: (await _authenticationService.getCredentials())!.user.password));
+        currentPassword: currentPassword, password: ( _authenticationService.getCredentials())!.user.password));
   }
 
   Future<String> createSetupIntent(PaymentMethodType paymentMethodType) async {
-    String userId = (await _authenticationService.getCredentials())!.user.id!;
+    String userId = ( _authenticationService.getCredentials())!.user.id!;
     return _userRepository.createSetupIntent(userId, paymentMethodType);
   }
 

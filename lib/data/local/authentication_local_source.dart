@@ -5,13 +5,12 @@ import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/dtos/identity_token_dto.dart';
 import 'package:speakyfox/data/dtos/user_dto.dart';
 
-enum Keys { ticket, user, identityToken }
+import 'keys.dart';
+
 
 class AuthenticationLocalSource {
   final SharedPreferences _sharedPreferences;
   AuthenticationLocalSource(this._sharedPreferences);
-
-
 
 
 

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/local/authentication_local_source.dart';
+import 'package:speakyfox/data/local/user_local_source.dart';
 import 'package:speakyfox/data/remote/authentication_client.dart';
 import 'package:speakyfox/data/remote/class_client.dart';
 import 'package:speakyfox/data/remote/coupon_client.dart';
@@ -36,6 +37,7 @@ import 'package:speakyfox/data/repositories_impls/subscription_repository_impl.d
 import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/repositories_impls/vocabulary_repository_impl.dart';
 import 'package:speakyfox/domain/repositories/authentication_repository.dart';
+import 'package:speakyfox/domain/services/active_language_service.dart';
 import 'package:speakyfox/domain/services/audio_service.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/domain/services/class_service.dart';
@@ -80,10 +82,11 @@ Future<void> initializeDependencies() async {
 
 //AuthenticationService
   locator.registerLazySingleton<TokenClient>(() => TokenClient(locator(), baseUrl: env.serverUrlAuth));
+  locator.registerLazySingleton<UserLocalSource>(() => UserLocalSource(locator())); // not very clean
   locator.registerLazySingleton<AuthenticationClient>(() => AuthenticationClient(locator()));
   locator.registerLazySingleton<AuthenticationLocalSource>(() => AuthenticationLocalSource(locator()));
   locator.registerLazySingleton<AuthenticationRepository>(
-      () => AuthenticationRepositoryImpl(locator(), locator(), locator(), locator()));
+      () => AuthenticationRepositoryImpl(locator(), locator(), locator(), locator(), locator()));
   locator.registerLazySingleton<AuthenticationService>(() => AuthenticationService(locator()));
 
 //set custom Interceptor when AuthenticationService is ready //FIXME  circular dependency here, waiting for feedback from Julien. Fix via dependency inversion?
@@ -116,6 +119,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<LanguageClient>(() => LanguageClient(locator(), baseUrl: "${env.serverUrl}languages"));
   locator.registerLazySingleton<LanguageRepositoryImpl>(() => LanguageRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<LanguageService>(() => LanguageService(locator()));
+
+  //ActiveLanguageService
+  locator.registerLazySingleton<ActiveLanguageService>(() => ActiveLanguageService());
 
   //LanguagePairsService
   locator.registerLazySingleton<LanguagePairClient>(
@@ -164,7 +170,7 @@ Future<void> initializeDependencies() async {
 
   //UserService
   locator.registerLazySingleton<UserClient>(() => UserClient(locator(), baseUrl: "${env.serverUrl}users"));
-  locator.registerLazySingleton<UserRepositoryImpl>(() => UserRepositoryImpl(locator(), locator()));
+  locator.registerLazySingleton<UserRepositoryImpl>(() => UserRepositoryImpl(locator(), locator(), locator()));
   locator.registerLazySingleton<UserService>(() => UserService(locator(), locator()));
 
   //VocabularyService

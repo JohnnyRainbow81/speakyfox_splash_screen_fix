@@ -336,18 +336,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
     version: "6.1.4"
-=======
-    version: "6.1.2"
-  firebase:
-    dependency: transitive
-    description:
-      name: firebase
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "9.0.3"
->>>>>>> Stashed changes
   firebase_core:
     dependency: "direct main"
     description:
@@ -382,32 +371,7 @@ packages:
       name: firebase_crashlytics_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
     version: "3.2.17"
-=======
-    version: "3.2.11"
-  firebase_performance:
-    dependency: "direct main"
-    description:
-      name: firebase_performance
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.3"
-  firebase_performance_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_performance_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1+16"
-  firebase_performance_web:
-    dependency: transitive
-    description:
-      name: firebase_performance_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.1+5"
->>>>>>> Stashed changes
   fixnum:
     dependency: transitive
     description:
