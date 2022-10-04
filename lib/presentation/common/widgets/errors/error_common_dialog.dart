@@ -174,7 +174,12 @@ class _ErrorCommonDialogState extends State<_ErrorCommonDialog> {
                         child: ElevatedButton(
                           onPressed: () {
                             _triggerAnim();
-                            widget.action == null ? GoRouter.of(context).pop() : widget.action!();
+                            //FIXME Because GoRouter.pop() gives us an Exception when we pop the Dialog with the following
+                            //message we use good old Navigator.pop() here:
+                            //"You have popped the last page off of the stack, there are no pages left to show
+                           // 'package:go_router/src/matching.dart':" 
+                           // See also https://github.com/flutter/flutter/issues/100933
+                            widget.action == null ? Navigator.of(context).pop() : widget.action!();
                           },
                           child: Text(widget.actionText),
                         ),
