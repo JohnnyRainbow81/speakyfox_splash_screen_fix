@@ -24,7 +24,7 @@ extension WordMapper on WordDto {
 extension WordDtoMapper on Word {
   WordDto toWordDto() {
     return WordDto(
-        id: id ??"",
+        id: id,
         index: index,
         entry: entry,
         metadata: metadata,

@@ -21,7 +21,7 @@ extension SentenceShellMapper on SentenceShellDto {
 extension SentenceShellDtoMapper on SentenceShell {
   SentenceShellDto toSentenceShellDto() {
     return SentenceShellDto(
-        id: id ?? "",
+        id: id,
         title: title,
         description: description,
         sentences: sentences.map((e) => e.toSentenceDto()).toList());

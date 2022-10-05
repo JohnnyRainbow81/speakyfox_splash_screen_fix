@@ -18,6 +18,6 @@ extension AnswerMapper on AnswerDto {
 
 extension AnswerDtoMapper on Answer {
   AnswerDto toAnswerDto() {
-    return AnswerDto(id: id ?? "", title: title, isCorrect: isCorrect);
+    return AnswerDto(id: id, title: title, isCorrect: isCorrect);
   }
 }

@@ -24,7 +24,7 @@ extension CouponMapper on CouponDto {
 extension CouponDtoMapper on Coupon {
   CouponDto toDto() {
     return CouponDto(
-        id: id ?? "",
+        id: id,
         key: key,
         name: name,
         amountOff: amountOff,

@@ -21,7 +21,7 @@ extension HighlightedPartMapper on HighlightedPartDto {
 extension HighLightedPartDtoMapper on HighlightedPart {
   HighlightedPartDto toHighlightedPartDto() {
     return HighlightedPartDto(
-        id: id ?? "",
+        id: id,
         modified: modified ??"",
         modifiedBy: modifiedBy ??"",
         created: created ??"",

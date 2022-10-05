@@ -27,7 +27,7 @@ extension ImageMapper on ImageDto {
 extension ImageDtoMapper on Image {
   ImageDto toImageDto() {
     return ImageDto(
-        id: id ??"",
+        id: id,
         name: name,
         size: size,
         contentType: contentType,

@@ -30,7 +30,7 @@ extension LanguageMapper on LanguageDto {
 extension LanguageDtoMapper on Language {
   LanguageDto toLanguageDto() {
     return LanguageDto(
-        id: id ?? "",
+        id: id,
         title: title,
         description: description,
         key: key,

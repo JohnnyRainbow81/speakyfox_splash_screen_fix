@@ -20,6 +20,6 @@ extension VocabularyShellMapper on VocabularyShellDto {
 
 extension VocabularyShellDtoMapper on VocabularyShell {
   VocabularyShellDto toVocabularyShellDto() {
-    return VocabularyShellDto(id: id ??"", title: title, description: description, vocabularies: vocabularies.map((e) => e.toVocabularyDto()).toList());
+    return VocabularyShellDto(id: id, title: title, description: description, vocabularies: vocabularies.map((e) => e.toVocabularyDto()).toList());
   }
 }

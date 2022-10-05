@@ -35,7 +35,7 @@ extension SentenceMapper on SentenceDto {
 extension SentenceDtoMapper on Sentence {
   SentenceDto toSentenceDto() {
     return SentenceDto(
-        id: id ?? "",
+        id: id,
         sentenceShellId: sentenceShellId,
         sentenceShell: sentenceShell.toSentenceShellDto(),
         isPublished: isPublished,

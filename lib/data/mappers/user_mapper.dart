@@ -39,7 +39,7 @@ extension UserMapper on UserDto {
 extension UserDtoMapper on User {
   UserDto toUserDto() {
     return UserDto(
-        id: id ?? "",
+        id: id,
         modified: modified ?? "",
         modifiedBy: modifiedBy ?? "",
         created: created ?? "",

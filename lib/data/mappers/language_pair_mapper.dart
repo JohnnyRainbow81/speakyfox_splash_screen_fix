@@ -31,7 +31,7 @@ extension LanguagePairMapper on LanguagePairDto {
 extension LanguagePairDtoMapper on LanguagePair {
   LanguagePairDto toLanguagePairDto() {
     return LanguagePairDto(
-        id: id ?? "",
+        id: id,
         title: title,
         description: description,
         subscriptions: subscriptions,

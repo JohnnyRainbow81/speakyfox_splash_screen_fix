@@ -25,7 +25,7 @@ extension AudioMapper on AudioDto {
 extension AudioDtoMapper on Audio {
   AudioDto toAudioDto() {
     return AudioDto(
-        id: id ?? "",
+        id: id,
         bucketName: bucketName,
         metadata: metadata,
         size: size,

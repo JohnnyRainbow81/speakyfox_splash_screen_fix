@@ -28,7 +28,7 @@ extension OrderMapper on OrderDto {
 extension OrderDtoMapper on Order {
   OrderDto toOrderDto() {
     return OrderDto(
-        id: id ??"",
+        id: id,
         modified: modified ??"",
         modifiedBy: modifiedBy ??"",
         created: created ??"",

@@ -34,7 +34,7 @@ extension GameMapper on GameDto {
 extension GameDtoMapper on Game {
   GameDto toGameDto() {
     return GameDto(
-        id: id ?? "",
+        id: id,
         modified: modified ?? "",
         modifiedBy: modifiedBy ?? "",
         created: created ?? "",

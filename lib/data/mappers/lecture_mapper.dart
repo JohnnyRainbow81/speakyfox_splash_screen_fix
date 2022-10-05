@@ -35,7 +35,7 @@ extension LectureMapper on LectureDto {
 extension LectureDtoMapper on Lecture {
   LectureDto toLectureDto() {
     return LectureDto(
-        id: id ?? "",
+        id: id,
         title: title,
         languagePairId: languagePairId,
         description: description,

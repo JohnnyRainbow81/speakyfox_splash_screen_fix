@@ -38,7 +38,7 @@ extension VocabularyMapper on VocabularyDto {
 extension VocabularyDtoMapper on Vocabulary {
   VocabularyDto toVocabularyDto() {
     return VocabularyDto(
-        id: id ?? "",
+        id: id,
         sourceWord: sourceWord,
         targetWord: targetWord,
         mnemonic: mnemonic,
