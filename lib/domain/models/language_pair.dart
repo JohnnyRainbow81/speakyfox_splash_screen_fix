@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'image.dart';
@@ -45,4 +46,9 @@ class LanguagePair extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'LanguagePair(title: $title, description: $description, key: $key, subscriptions: $subscriptions, icon: $icon, sourceLanguage: $sourceLanguage, sourceLanguageId: $sourceLanguageId, isPublished: $isPublished, targetLanguage: $targetLanguage, targetLanguageId: $targetLanguageId, webAppProductId: $webAppProductId, appStoreProductId: $appStoreProductId)';
+  }
 }

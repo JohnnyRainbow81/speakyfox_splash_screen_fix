@@ -17,14 +17,17 @@ ClassDto _$ClassDtoFromJson(Map<String, dynamic> json) => ClassDto(
       title: json['title'] as String,
       description: json['description'] as String,
       isPublished: json['isPublished'] as bool,
-      isOnboarding: json['isOnboarding'] as bool,
-      progress: json['progress'] as int,
+      isOnboarding: json['isOnboarding'] as bool?,
+      progress: json['progress'] as int?,
       order: json['order'] as int,
-      icon: ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
-      fileId: json['fileId'] as String,
-      languagePairId: json['languagePairId'] as String,
+      icon: json['icon'] == null
+          ? null
+          : ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
+      fileId: json['fileId'] as String?,
+      languagePairId: json['languagePairId'] as String?,
       isLocked: json['isLocked'] as bool,
-      languagePair: json['languagePair'] as String,
+      languagePair: LanguagePairDto.fromJson(
+          json['languagePair'] as Map<String, dynamic>),
       courses: (json['courses'] as List<dynamic>)
           .map((e) => CourseDto.fromJson(e as Map<String, dynamic>))
           .toList(),

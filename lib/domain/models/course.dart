@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/class.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 class Course extends ModelBase {
   String title;
@@ -18,7 +18,7 @@ class Course extends ModelBase {
   bool isLocked;
   bool isPublished;
   int order;
-  String classId;
+  String? classId;
   Course({
     required String id,
     required String modified,
@@ -39,7 +39,7 @@ class Course extends ModelBase {
     required this.isLocked,
     required this.isPublished,
     required this.order,
-    required this.classId,
+    this.classId,
   }) : super(
             id: id,
             modified: modified,
@@ -50,4 +50,9 @@ class Course extends ModelBase {
             deletedBy: deletedBy);
 
 
+
+  @override
+  String toString() {
+    return 'Course(title: $title, description: $description, fileId: $fileId, isOnboarding: $isOnboarding, languagePairId: $languagePairId, classs: $classs, progress: $progress, lectures: $lectures, icon: $icon, isLocked: $isLocked, isPublished: $isPublished, order: $order, classId: $classId)';
+  }
 }

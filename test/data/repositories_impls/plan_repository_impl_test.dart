@@ -13,14 +13,16 @@ import '../../http_client_test_setup.dart';
 
 void main() async {
   //Connectivity plugin error here
-
-  final dio = await getAuthenticatedHTTPClientForTesting();
-
   TestWidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  
+  final dio = await getAuthenticatedHTTPClientForTesting();
   final connectivityService = ConnectivityService();
+  
   PlanClient client = PlanClient(dio, baseUrl: "${TestConstants.baseUrlQA}plans");
-  Firebase.initializeApp();
   PlanRepositoryImpl planRepository = PlanRepositoryImpl(connectivityService, client);
+
+  //
   test(
     'getAll()',
     () async {

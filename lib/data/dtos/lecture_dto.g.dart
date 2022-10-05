@@ -28,7 +28,7 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
       course: json['course'] == null
           ? null
           : CourseDto.fromJson(json['course'] as Map<String, dynamic>),
-      progress: (json['progress'] as num).toDouble(),
+      progress: (json['progress'] as num?)?.toDouble(),
       offer: json['offer'] == null
           ? null
           : OfferDto.fromJson(json['offer'] as Map<String, dynamic>),

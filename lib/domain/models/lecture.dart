@@ -1,9 +1,10 @@
-import 'package:speakyfox/domain/models/model_base.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import "course.dart" show Course;
-import 'sequence.dart' show Sequence;
 import 'offer.dart' show Offer;
+import 'sequence.dart' show Sequence;
 
 class Lecture extends ModelBase {
   String title;
@@ -51,4 +52,9 @@ class Lecture extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Lecture(title: $title, languagePairId: $languagePairId, description: $description, isOnboarding: $isOnboarding, languagePair: $languagePair, isPublished: $isPublished, isLocked: $isLocked, order: $order, course: $course, progress: $progress, offer: $offer, offerId: $offerId, courseId: $courseId, sequences: $sequences)';
+  }
 }

@@ -22,7 +22,7 @@ class CourseDto extends BaseDto {
   bool isLocked;
   bool isPublished;
   int order;
-  String classId;
+  String? classId;
 
   CourseDto({
     required String id,
@@ -44,7 +44,7 @@ class CourseDto extends BaseDto {
     required this.isLocked,
     required this.isPublished,
     required this.order,
-    required this.classId,
+    this.classId,
   }) : super(
             id: id,
             created: created,

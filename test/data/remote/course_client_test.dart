@@ -11,21 +11,27 @@ import '../../http_client_test_setup.dart';
 void main() async {
   final dio = await getAuthenticatedHTTPClientForTesting();
 
-  CourseClient courseClient =
-      CourseClient(dio, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/courses/");
+  CourseClient courseClient = CourseClient(dio, baseUrl: "${TestConstants.baseUrlQA}courses");
 
   test("getById()", () async {
-    final response = await courseClient.getById("fa999236-6aeb-473b-b5f8-7b76f1e15ad8");
+    final response = await courseClient.getById("af64ae47-360f-4368-b1b4-63d765ceed65");
     Course course = response.data.toCourse();
+
+    expect(course.id, "af64ae47-360f-4368-b1b4-63d765ceed65");
 
     debugPrint(course.toString());
   });
 
   test('getAll()', () async {
-    //final response = await courseClient.getAll("");
+    final response = await courseClient.getAll("");
+    final courses = response.data.map((e) => e.toCourse()).toList();
 
-    //Not allowed for role = user
-    expect(courseClient.getAll(""), throwsException);
+    expect(courses, isNotNull);
+    expect(courses.first.id, isNotEmpty);
+    
+    for (final course in courses) {
+      debugPrint(course.toString());
+    }
   });
 }
 

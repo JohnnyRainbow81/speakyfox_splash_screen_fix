@@ -53,4 +53,7 @@ class Image extends DatabaseFile {
           deletedBy: deletedBy,
         );
 
+
+  @override
+  String toString() => 'Image(order: $order, coordinates: $coordinates)';
 }

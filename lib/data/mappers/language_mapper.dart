@@ -19,7 +19,7 @@ extension LanguageMapper on LanguageDto {
         description: description,
         key: key,
         icon: icon?.toImage(), //TODO standard Image? ask Julien
-        buttonImage: buttonImage.toImage(),
+        buttonImage: buttonImage?.toImage(),
         buttonFileId: buttonFileId,
         isPublished: isPublished,
         languagePair: 
@@ -35,7 +35,7 @@ extension LanguageDtoMapper on Language {
         description: description,
         key: key,
         icon: icon?.toImageDto(),
-        buttonImage: buttonImage.toImageDto(),
+        buttonImage: buttonImage?.toImageDto(),
         isPublished: isPublished,
         buttonFileId: buttonFileId,
         languagePair: [languagePair?.toLanguagePairDto()]);

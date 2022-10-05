@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/course.dart';
 import 'package:speakyfox/domain/models/image.dart';
+import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 class Class extends ModelBase {
   String title;
@@ -10,11 +11,11 @@ class Class extends ModelBase {
   bool isOnboarding;
   int progress;
   int order;
-  Image icon;
-  String fileId;
-  String languagePairId;
+  Image? icon;
+  String? fileId;
+  String? languagePairId;
   bool isLocked;
-  String languagePair; //FIXME type!
+  LanguagePair languagePair; //FIXME type!
   List<Course> courses;
   Class({
     required String id,
@@ -30,9 +31,9 @@ class Class extends ModelBase {
     required this.isOnboarding,
     required this.progress,
     required this.order,
-    required this.icon,
+    this.icon,
     required this.fileId,
-    required this.languagePairId,
+    this.languagePairId,
     required this.isLocked,
     required this.languagePair,
     required this.courses,
@@ -44,4 +45,9 @@ class Class extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Class(title: $title, description: $description, isPublished: $isPublished, isOnboarding: $isOnboarding, progress: $progress, order: $order, icon: $icon, fileId: $fileId, languagePairId: $languagePairId, isLocked: $isLocked, languagePair: $languagePair, courses: $courses)';
+  }
 }

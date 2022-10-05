@@ -4,6 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/dtos/base_dto.dart';
 import 'package:speakyfox/data/dtos/course_dto.dart';
 import 'package:speakyfox/data/dtos/image_dto.dart';
+import 'package:speakyfox/data/dtos/language_pair_dto.dart';
 
 part 'class_dto.g.dart';
 
@@ -12,14 +13,14 @@ class ClassDto extends BaseDto {
   String title;
   String description;
   bool isPublished;
-  bool isOnboarding;
-  int progress;
+  bool? isOnboarding;
+  int? progress;
   int order;
-  ImageDto icon;
-  String fileId;
-  String languagePairId;
+  ImageDto? icon;
+  String? fileId;
+  String? languagePairId;
   bool isLocked;
-  String languagePair; //FIXME type!
+  LanguagePairDto languagePair; //FIXME type!
   List<CourseDto> courses;
   ClassDto({
     required String id,

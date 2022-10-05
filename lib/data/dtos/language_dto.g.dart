@@ -20,10 +20,11 @@ LanguageDto _$LanguageDtoFromJson(Map<String, dynamic> json) => LanguageDto(
       icon: json['icon'] == null
           ? null
           : ImageDto.fromJson(json['icon'] as Map<String, dynamic>),
-      buttonImage:
-          ImageDto.fromJson(json['buttonImage'] as Map<String, dynamic>),
-      isPublished: json['isPublished'] as bool,
-      buttonFileId: json['buttonFileId'] as String,
+      buttonImage: json['buttonImage'] == null
+          ? null
+          : ImageDto.fromJson(json['buttonImage'] as Map<String, dynamic>),
+      isPublished: json['isPublished'] as bool?,
+      buttonFileId: json['buttonFileId'] as String?,
       languagePair: (json['languagesInPairs'] as List<dynamic>?)
           ?.map((e) => e == null
               ? null

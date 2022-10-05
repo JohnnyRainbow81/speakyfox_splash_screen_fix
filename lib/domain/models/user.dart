@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/foundation.dart';
+
 import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/role.dart';
 
@@ -62,6 +64,53 @@ class User extends ModelBase {
   @override
   String toString() {
     return 'User(formOfAddress: $formOfAddress, firstName: $firstName, lastName: $lastName, email: $email, normalizedEmail: $normalizedEmail, emailConfirmed: $emailConfirmed, userName: $userName, normalizedUserName: $normalizedUserName, accessFailedAccount: $accessFailedAccount, lockoutEnabled: $lockoutEnabled, password: $password, lockoutEnd: $lockoutEnd, roles: $roles, policies: $policies, currentLanguagePairId: $currentLanguagePairId, currentSourceLanguageId: $currentSourceLanguageId, currentTargetLanguageId: $currentTargetLanguageId, subscriptionIds: $subscriptionIds)';
+  }
+
+  @override
+  bool operator ==(covariant User other) {
+    if (identical(this, other)) return true;
+  
+    return 
+      other.formOfAddress == formOfAddress &&
+      other.firstName == firstName &&
+      other.lastName == lastName &&
+      other.email == email &&
+      other.normalizedEmail == normalizedEmail &&
+      other.emailConfirmed == emailConfirmed &&
+      other.userName == userName &&
+      other.normalizedUserName == normalizedUserName &&
+      other.accessFailedAccount == accessFailedAccount &&
+      other.lockoutEnabled == lockoutEnabled &&
+      other.password == password &&
+      other.lockoutEnd == lockoutEnd &&
+      listEquals(other.roles, roles) &&
+      listEquals(other.policies, policies) &&
+      other.currentLanguagePairId == currentLanguagePairId &&
+      other.currentSourceLanguageId == currentSourceLanguageId &&
+      other.currentTargetLanguageId == currentTargetLanguageId &&
+      listEquals(other.subscriptionIds, subscriptionIds);
+  }
+
+  @override
+  int get hashCode {
+    return formOfAddress.hashCode ^
+      firstName.hashCode ^
+      lastName.hashCode ^
+      email.hashCode ^
+      normalizedEmail.hashCode ^
+      emailConfirmed.hashCode ^
+      userName.hashCode ^
+      normalizedUserName.hashCode ^
+      accessFailedAccount.hashCode ^
+      lockoutEnabled.hashCode ^
+      password.hashCode ^
+      lockoutEnd.hashCode ^
+      roles.hashCode ^
+      policies.hashCode ^
+      currentLanguagePairId.hashCode ^
+      currentSourceLanguageId.hashCode ^
+      currentTargetLanguageId.hashCode ^
+      subscriptionIds.hashCode;
   }
 }
 

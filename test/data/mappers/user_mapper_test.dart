@@ -5,7 +5,9 @@ import 'package:speakyfox/domain/models/role.dart';
 import 'package:speakyfox/domain/models/user.dart';
 
 void main() {
-  test('user mapper ...', () async {
+
+  // This equality check ONLY returns true when your class overrides the == operator!
+  test('user mapper equality test', () async {
     User user = User(
         accessFailedAccount: 3,
         created: "bla",

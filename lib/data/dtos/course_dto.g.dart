@@ -32,7 +32,7 @@ CourseDto _$CourseDtoFromJson(Map<String, dynamic> json) => CourseDto(
       isLocked: json['isLocked'] as bool,
       isPublished: json['isPublished'] as bool,
       order: json['order'] as int,
-      classId: json['classId'] as String,
+      classId: json['classId'] as String?,
     );
 
 Map<String, dynamic> _$CourseDtoToJson(CourseDto instance) => <String, dynamic>{

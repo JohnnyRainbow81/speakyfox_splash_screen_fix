@@ -24,7 +24,7 @@ extension LectureMapper on LectureDto {
         isLocked: isLocked,
         order: order,
         course: course?.toCourse(),
-        progress: progress,
+        progress: progress ?? 0,
         offer: offer?.toOffer(),
         offerId: offerId,
         courseId: courseId,

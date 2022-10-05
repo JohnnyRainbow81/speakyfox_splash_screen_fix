@@ -10,11 +10,11 @@ abstract class ModelBase {
 
   ModelBase({
     required this.id,
-    required this.modified,
-    required this.modifiedBy,
-    required this.created,
-    required this.createdBy,
-    required this.deleted,
-    required this.deletedBy,
+    this.modified,
+    this.modifiedBy,
+    this.created,
+    this.createdBy,
+    this.deleted,
+    this.deletedBy,
   });
 }

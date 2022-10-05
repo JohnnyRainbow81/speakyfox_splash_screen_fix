@@ -21,7 +21,7 @@ class LectureDto extends BaseDto {
   bool isLocked;
   int? order;
   CourseDto? course;
-  double progress;
+  double? progress;
   OfferDto? offer;
   String? offerId;
   String courseId;
