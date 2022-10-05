@@ -20,7 +20,7 @@ void main() async {
 
   final dio = await getAuthenticatedHTTPClientForTesting();
 
-  LanguageClient languageClient = LanguageClient(dio);
+  LanguageClient languageClient = LanguageClient(dio, baseUrl: "${TestConstants.baseUrlQA}languages");
 
   //Let's mock ConnectivityService because it cries about not finding the Method Channel. Hopefully it works on the target platforms...
   final mockConnectivityService = MockConnectivityService();
@@ -32,6 +32,8 @@ void main() async {
     when(mockConnectivityService.hasConnection()).thenAnswer((_) async => true);
     final language = await languageService.getLanguageById("02c6e388-bcb1-427b-8b8d-d49704671c22");
 
+    expect(language.id, isNotNull);
+    
     debugPrint(language.toString());
   });
 }

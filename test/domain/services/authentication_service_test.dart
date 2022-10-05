@@ -25,29 +25,24 @@ void main() async {
     () async {
       when(mockAuthenticationRepository.accessToken(any)).thenAnswer((_) async => Ticket(
           accessToken: "123456", expiresIn: 3600, scope: "myScope", tokenType: "password", refreshToken: "ABCDEF"));
-
       when(mockAuthenticationRepository.fetchUser(any)).thenAnswer((_) async => MockUser());
+      when(mockAuthenticationRepository.saveCredentials(any)).thenAnswer((_) async => true);
+      when(mockAuthenticationRepository.loadCredentials()).thenAnswer((_) => IdentityToken(
+          accessToken: "123456", expires: "2022-10-22T13:17:21+0000", refreshToken: "ABCDEF", user: MockUser()));
 
       await authenticationService.login("test", "password123");
 
-      IdentityToken token = authenticationService.getCredentials()!;
+      IdentityToken? token = authenticationService.getCredentials();
+
       expect(token, isNotNull);
-      debugPrint("expires: ${token.expires}");
-      expect(token.accessToken, "123456");
-      expect(token.refreshToken, "ABCDEF");
-      expect(token.user, isA<User>());
-      expect(token.user, isNotNull);
-
+      expect(token?.accessToken, "123456");
+      expect(token?.refreshToken, "ABCDEF");
+      expect(token?.user, isA<User>());
+      expect(token?.user, isNotNull);
       expect(authenticationService.isAuthenticated(), true);
-      expect(authenticationService.isExpired(token), false);
-    },
-  );
+      expect(authenticationService.isExpired(token!), false);
 
-  test(
-    "isExpired()",
-    () {
-      //how to test privatemember variable that needs to be initialized first?
-      // authenticationService.isExpired();
+      debugPrint("expires: ${token?.expires}");
     },
   );
 
@@ -61,24 +56,4 @@ void main() async {
       expect(success, true);
     },
   );
-
-  test("refreshToken()", (() async {
-    authenticationService
-        .setCredentials(IdentityToken(expires: "3600", accessToken: "old", refreshToken: "old", user: MockUser()));
-
-    when(mockAuthenticationRepository.refreshToken(any)).thenAnswer(
-        (_) async => Ticket(accessToken: "new", expiresIn: 3600, scope: "", tokenType: "", refreshToken: "new"));
-
-    await authenticationService.refreshToken();
-
-    IdentityToken token = authenticationService.getCredentials()!;
-
-    expect(token, isNotNull);
-    expect(token.accessToken, "new");
-    expect(token.refreshToken, "old");
-    expect(token.user, isNotNull);
-    expect(authenticationService.isExpired(token), false);
-    expect(authenticationService.isAuthenticated(), true);
-    debugPrint(token.expires);
-  }));
 }

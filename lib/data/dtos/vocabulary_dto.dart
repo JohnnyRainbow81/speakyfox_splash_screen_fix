@@ -15,16 +15,16 @@ part 'vocabulary_dto.g.dart';
 class VocabularyDto extends BaseDto {
   String sourceWord;
   String targetWord;
-  String mnemonic;
+  String? mnemonic;
   String sourceSentence;
   String targetSentence;
-  SentenceDto sentence;
+  SentenceDto? sentence;
   String question;
   String imageNumber;
-  String languagePairId;
-  LanguagePairDto languagePair;
+  String? languagePairId;
+  LanguagePairDto? languagePair;
   String vocabularyShellId;
-  List<AnimationImageGroupDto> imageGroups;
+  List<AnimationImageGroupDto>? imageGroups;
   List<AnswerDto> answers;
   List<ImageDto> images;
   List<AudioDto> audios;
@@ -39,16 +39,16 @@ class VocabularyDto extends BaseDto {
     String? deletedBy,
     required this.sourceWord,
     required this.targetWord,
-    required this.mnemonic,
+    this.mnemonic,
     required this.sourceSentence,
     required this.targetSentence,
-    required this.sentence,
+    this.sentence,
     required this.question,
     required this.imageNumber,
-    required this.languagePairId,
-    required this.languagePair,
+    this.languagePairId,
+    this.languagePair,
     required this.vocabularyShellId,
-    required this.imageGroups,
+    this.imageGroups,
     required this.answers,
     required this.images,
     required this.audios,

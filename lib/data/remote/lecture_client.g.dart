@@ -18,16 +18,13 @@ class _LectureClient implements LectureClient {
   @override
   Future<Response<LectureDto>> getByIdDetailed(id, detailed) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'id': id.toJson(),
-      r'detailed': detailed
-    };
+    final queryParameters = <String, dynamic>{r'detailed': detailed};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<LectureDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<LectureDto>.fromJson(
@@ -38,9 +35,14 @@ class _LectureClient implements LectureClient {
   }
 
   @override
-  Future<Response<List<LectureDto>>> getAllV2(queryParams) async {
+  Future<Response<List<LectureDto>>> getAllV2(id, targetLanguageId,
+      [isOnboarding = false]) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'queryParams': queryParams};
+    final queryParameters = <String, dynamic>{
+      r'sourceLanguageId': id,
+      r'targetLanguageId': targetLanguageId,
+      r'isOnboarding': isOnboarding
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -62,16 +64,13 @@ class _LectureClient implements LectureClient {
   @override
   Future<Response<LectureDto>> getByIdDetailedV2(id, detailed) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'id': id.toJson(),
-      r'detailed': detailed
-    };
+    final queryParameters = <String, dynamic>{r'detailed': detailed};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<LectureDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<LectureDto>.fromJson(

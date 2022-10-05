@@ -20,14 +20,14 @@ extension FeedbackMapper on FeedbackDto {
         title: title,
         description: description,
         order: order,
-        type: type,
+        screenType: screenType,
         sequenceId: sequenceId,
-        sequence: sequence.toSequence(),
-        gameType: GameType.values.byName(gameType),
+        sequence: sequence?.toSequence(),
+        gameType: gameType,
         vocabularies: vocabularies.map((vocabulary) => vocabulary.toVocabulary()).toList(),
-        vocabularyShells: vocabularyShells.map((vocabularyShell) => vocabularyShell.toVocabularyShell()).toList(),
-        sentences: sentences.map((sentence) => sentence.toSentence()).toList(),
-        sentenceShells: sentenceShells.map((sentenceShell) => sentenceShell.toSentenceShell()).toList(),
+        vocabularyShells: vocabularyShells?.map((vocabularyShell) => vocabularyShell.toVocabularyShell()).toList(),
+        sentences: sentences?.map((sentence) => sentence.toSentence()).toList(),
+        sentenceShells: sentenceShells?.map((sentenceShell) => sentenceShell.toSentenceShell()).toList(),
         feedbackType: feedbackType);
   }
 }

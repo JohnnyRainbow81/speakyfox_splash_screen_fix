@@ -19,13 +19,13 @@ extension ScreenMapper on ScreenDto {
         title: title,
         description: description,
         order: order,
-        type: type,
+        screenType: screenType,
         sequenceId: sequenceId,
-        sequence: sequence.toSequence(),
+        sequence: sequence?.toSequence(),
         gameType: gameType,
         vocabularies: vocabularies.map((vocabulary) => vocabulary.toVocabulary()).toList(),
-        vocabularyShells: vocabularyShells.map((vocabularyShell) => vocabularyShell.toVocabularyShell()).toList(),
-        sentences: sentences.map((sentence) => sentence.toSentence()).toList(),
-        sentenceShells: sentenceShells.map((sentenceShell) => sentenceShell.toSentenceShell()).toList());
+        vocabularyShells: vocabularyShells?.map((vocabularyShell) => vocabularyShell.toVocabularyShell()).toList(),
+        sentences: sentences?.map((sentence) => sentence.toSentence()).toList(),
+        sentenceShells: sentenceShells?.map((sentenceShell) => sentenceShell.toSentenceShell()).toList());
   }
 }

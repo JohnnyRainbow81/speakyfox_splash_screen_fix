@@ -28,7 +28,7 @@ extension LectureMapper on LectureDto {
         offer: offer?.toOffer(),
         offerId: offerId,
         courseId: courseId,
-        sequences: sequences.map((sequence) => sequence.toSequence()).toList());
+        sequences: sequences != null ? sequences!.map((sequence) => sequence.toSequence()).toList() : []);
   }
 }
 

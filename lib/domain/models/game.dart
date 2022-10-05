@@ -12,23 +12,23 @@ class Game extends Screen {
 
   Game(
       {required String id,
-      required String modified,
-      required String modifiedBy,
-      required String created,
-      required String createdBy,
-      required String deleted,
-      required String deletedBy,
-      required ScreenType type,
-      required List<VocabularyShell> vocabularyShells,
-      required List<Sentence> sentences,
-      required List<SentenceShell> sentenceShells,
+      String? modified,
+      String? modifiedBy,
+      String? created,
+      String? createdBy,
+      String? deleted,
+      String? deletedBy,
+      required ScreenType? screenType,
+      List<VocabularyShell> ? vocabularyShells,
+      List<Sentence>? sentences,
+      List<SentenceShell>? sentenceShells,
       required String title,
       required String description,
       required this.instructions,
       required int order,
       required GameType gameType,
-      required Sequence sequence,
-      required String sequenceId,
+       Sequence? sequence,
+       String? sequenceId,
       required List<Vocabulary> vocabularies})
       : super(
             id: id,
@@ -41,10 +41,10 @@ class Game extends Screen {
             title: title,
             description: description,
             order: order,
-            type: type,
+            screenType: screenType,
             sequenceId: sequenceId,
             sequence: sequence,
-            gameType: gameType.name,
+            gameType: gameType,
             vocabularies: vocabularies,
             vocabularyShells: vocabularyShells,
             sentences: sentences,
@@ -52,33 +52,35 @@ class Game extends Screen {
 }
 
 enum GameType {
-  @JsonValue("vocabularyImageGame")
+  @JsonValue("VocabularyImage")
+  vocabularyImage,
+  @JsonValue("VocabularyImageGame")
   vocabularyImageGame,
-  @JsonValue("sentenceImageGame")
+  @JsonValue("SentenceImageGame")
   sentenceImageGame,
-  @JsonValue("vocabularyImageQuiz")
+  @JsonValue("VocabularyImageQuiz")
   vocabularyImageQuiz,
-  @JsonValue("vocabularyLearned")
+  @JsonValue("VocabularyLearned")
   vocabularyLearned,
-  @JsonValue("chooseTranslation")
+  @JsonValue("ChooseTranslation")
   chooseTranslation,
-  @JsonValue("tapWhatYouHear")
+  @JsonValue("TapWhatYouHear")
   tapWhatYouHear,
-  @JsonValue("matchWords")
+  @JsonValue("MatchWords")
   matchWords,
-  @JsonValue("singleTranslationWord")
+  @JsonValue("SingleTranslationWord")
   singleTranslationWord,
-  @JsonValue("singleTranslationSentence")
+  @JsonValue("SingleTranslationSentence")
   singleTranslationSentence,
-  @JsonValue("multipleTranslation")
+  @JsonValue("MultipleTranslation")
   multipleTranslation,
-  @JsonValue("swipingVocabularyImage")
+  @JsonValue("SwipingVocabularyImage")
   swipingVocabularyImage,
-  @JsonValue("translateThisSentence")
+  @JsonValue("TranslateThisSentence")
   translateThisSentence,
-  @JsonValue("translateSourceSentence")
+  @JsonValue("TranslateSourceSentence")
   translateSourceSentence,
-  @JsonValue("translateTargetSentence")
+  @JsonValue("TranslateTargetSentence")
   translateTargetSentence
 }
 

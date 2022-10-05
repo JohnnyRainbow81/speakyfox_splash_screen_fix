@@ -17,21 +17,23 @@ ScreenDto _$ScreenDtoFromJson(Map<String, dynamic> json) => ScreenDto(
       title: json['title'] as String,
       description: json['description'] as String,
       order: json['order'] as int,
-      type: $enumDecode(_$ScreenTypeEnumMap, json['type']),
-      sequenceId: json['sequenceId'] as String,
-      sequence: SequenceDto.fromJson(json['sequence'] as Map<String, dynamic>),
-      gameType: json['gameType'] as String,
+      screenType: $enumDecodeNullable(_$ScreenTypeEnumMap, json['screenType']),
+      sequenceId: json['sequenceId'] as String?,
+      sequence: json['sequence'] == null
+          ? null
+          : SequenceDto.fromJson(json['sequence'] as Map<String, dynamic>),
+      gameType: $enumDecode(_$GameTypeEnumMap, json['type']),
       vocabularies: (json['vocabularies'] as List<dynamic>)
           .map((e) => VocabularyDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      vocabularyShells: (json['vocabularyShells'] as List<dynamic>)
-          .map((e) => VocabularyShellDto.fromJson(e as Map<String, dynamic>))
+      vocabularyShells: (json['vocabularyShells'] as List<dynamic>?)
+          ?.map((e) => VocabularyShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      sentences: (json['sentences'] as List<dynamic>)
-          .map((e) => SentenceDto.fromJson(e as Map<String, dynamic>))
+      sentences: (json['sentences'] as List<dynamic>?)
+          ?.map((e) => SentenceDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      sentenceShells: (json['sentenceShells'] as List<dynamic>)
-          .map((e) => SentenceShellDto.fromJson(e as Map<String, dynamic>))
+      sentenceShells: (json['sentenceShells'] as List<dynamic>?)
+          ?.map((e) => SentenceShellDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -46,10 +48,10 @@ Map<String, dynamic> _$ScreenDtoToJson(ScreenDto instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'order': instance.order,
-      'type': _$ScreenTypeEnumMap[instance.type]!,
+      'screenType': _$ScreenTypeEnumMap[instance.screenType],
       'sequenceId': instance.sequenceId,
       'sequence': instance.sequence,
-      'gameType': instance.gameType,
+      'type': _$GameTypeEnumMap[instance.gameType]!,
       'vocabularies': instance.vocabularies,
       'vocabularyShells': instance.vocabularyShells,
       'sentences': instance.sentences,
@@ -57,7 +59,25 @@ Map<String, dynamic> _$ScreenDtoToJson(ScreenDto instance) => <String, dynamic>{
     };
 
 const _$ScreenTypeEnumMap = {
-  ScreenType.game: 'game',
-  ScreenType.feedback: 'feedback',
-  ScreenType.tip: 'tip',
+  ScreenType.game: 'Game',
+  ScreenType.feedback: 'Feedback',
+  ScreenType.tip: 'Tip',
+};
+
+const _$GameTypeEnumMap = {
+  GameType.vocabularyImage: 'VocabularyImage',
+  GameType.vocabularyImageGame: 'VocabularyImageGame',
+  GameType.sentenceImageGame: 'SentenceImageGame',
+  GameType.vocabularyImageQuiz: 'VocabularyImageQuiz',
+  GameType.vocabularyLearned: 'VocabularyLearned',
+  GameType.chooseTranslation: 'ChooseTranslation',
+  GameType.tapWhatYouHear: 'TapWhatYouHear',
+  GameType.matchWords: 'MatchWords',
+  GameType.singleTranslationWord: 'SingleTranslationWord',
+  GameType.singleTranslationSentence: 'SingleTranslationSentence',
+  GameType.multipleTranslation: 'MultipleTranslation',
+  GameType.swipingVocabularyImage: 'SwipingVocabularyImage',
+  GameType.translateThisSentence: 'TranslateThisSentence',
+  GameType.translateSourceSentence: 'TranslateSourceSentence',
+  GameType.translateTargetSentence: 'TranslateTargetSentence',
 };

@@ -5,18 +5,20 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speakyfox/app/environment.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-
+ 
   test(
     "Environment Setup",
     () async {
-      await BuildEnvironment.init();  //How to test with Environment variable?
-      print(env.toString());
+      //await BuildEnvironment.init(); //How to test with Environment variable?
+     
     },
   );
 }
-

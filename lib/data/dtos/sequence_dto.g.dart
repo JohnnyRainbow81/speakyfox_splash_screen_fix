@@ -17,10 +17,12 @@ SequenceDto _$SequenceDtoFromJson(Map<String, dynamic> json) => SequenceDto(
       title: json['title'] as String,
       description: json['description'] as String,
       progressType: $enumDecode(_$ProgressTypeEnumMap, json['progressType']),
-      games: (json['games'] as List<dynamic>)
-          .map((e) => GameDto.fromJson(e as Map<String, dynamic>))
+      games: (json['games'] as List<dynamic>?)
+          ?.map((e) => GameDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      parent: LectureDto.fromJson(json['parent'] as Map<String, dynamic>),
+      parent: json['parent'] == null
+          ? null
+          : LectureDto.fromJson(json['parent'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) =>
@@ -40,6 +42,6 @@ Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) =>
     };
 
 const _$ProgressTypeEnumMap = {
-  ProgressType.single: 'single',
-  ProgressType.whole: 'whole',
+  ProgressType.single: 'Single',
+  ProgressType.whole: 'Whole',
 };

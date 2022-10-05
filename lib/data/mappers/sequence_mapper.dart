@@ -16,14 +16,19 @@ extension SequenceMapper on SequenceDto {
         title: title,
         description: description,
         progressType: progressType,
-        games: games.map((game) => game.toGame()).toList(),
-        parent: parent.toLecture());
+        games: games != null ? games!.map((game) => game.toGame()).toList() : [],
+        parent: parent?.toLecture());
   }
 }
 
 extension SequenceDtoMapper on Sequence {
   SequenceDto toSequenceDto() {
     return SequenceDto(
-        id: id ?? "", title: title, description: description, progressType: progressType, games: games.map((e) => e.toGameDto()).toList(), parent: parent.toLectureDto());
+        id: id,
+        title: title,
+        description: description,
+        progressType: progressType,
+        games: games.map((e) => e.toGameDto()).toList(),
+        parent: parent?.toLectureDto());
   }
 }

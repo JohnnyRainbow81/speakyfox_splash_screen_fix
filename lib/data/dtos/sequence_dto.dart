@@ -13,8 +13,8 @@ class SequenceDto extends BaseDto {
   String title;
   String description;
   ProgressType progressType;
-  List<GameDto> games;
-  LectureDto parent;
+  List<GameDto>? games;
+  LectureDto? parent;
 
   SequenceDto({
     required String id,

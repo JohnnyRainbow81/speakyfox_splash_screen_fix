@@ -10,11 +10,11 @@ import 'sequence.dart' show Sequence;
 import 'vocabulary.dart' show Vocabulary;
 
 enum ScreenType {
-  @JsonValue("game")
+  @JsonValue("Game")
   game,
-  @JsonValue("feedback")
+  @JsonValue("Feedback")
   feedback,
-  @JsonValue("tip")
+  @JsonValue("Tip")
   tip
 }
 
@@ -22,14 +22,14 @@ class Screen extends ModelBase {
   String title;
   String description;
   int order;
-  ScreenType type;
-  String sequenceId;
-  Sequence sequence;
-  String gameType; //FIXME   only to Subclass?
+  ScreenType? screenType;
+  String? sequenceId;
+  Sequence? sequence;
+  GameType gameType; //FIXME   only to Subclass?
   List<Vocabulary> vocabularies;
-  List<VocabularyShell> vocabularyShells;
-  List<Sentence> sentences;
-  List<SentenceShell> sentenceShells;
+  List<VocabularyShell>? vocabularyShells;
+  List<Sentence>? sentences;
+  List<SentenceShell>? sentenceShells;
   Screen({
     required String id,
     String? modified,
@@ -41,14 +41,14 @@ class Screen extends ModelBase {
     required this.title,
     required this.description,
     required this.order,
-    required this.type,
-    required this.sequenceId,
-    required this.sequence,
+    this.screenType,
+     this.sequenceId,
+    this.sequence,
     required this.gameType,
     required this.vocabularies,
-    required this.vocabularyShells,
-    required this.sentences,
-    required this.sentenceShells,
+    this.vocabularyShells,
+    this.sentences,
+    this.sentenceShells,
   }) : super(
             id: id,
             modified: modified,

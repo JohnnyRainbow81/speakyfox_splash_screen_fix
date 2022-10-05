@@ -48,10 +48,10 @@ class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence>, Bas
   }
 
   @override
-  Future<List<Lecture>> getAllV2([String queryParameters = ""]) async {
+  Future<List<Lecture>> getAllV2(String sourceLanguageId, String targetLanguageId, [bool isOnboarding = false]) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _lectureClient.getAllV2(queryParameters);
+        final response = await _lectureClient.getAllV2(sourceLanguageId, targetLanguageId);
         return response.data.map((lectureDto) => lectureDto.toLecture()).toList();
       } catch (error) {
         ErrorHandler.handleError(error);

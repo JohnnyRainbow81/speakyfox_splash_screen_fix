@@ -13,19 +13,19 @@ part 'lecture_dto.g.dart';
 @JsonSerializable()
 class LectureDto extends BaseDto {
   String title;
-  String languagePairId;
+  String? languagePairId;
   String description;
   bool? isOnboarding;
   LanguagePairDto? languagePair;
-  bool isPublished;
+  bool? isPublished;
   bool isLocked;
   int? order;
   CourseDto? course;
   double? progress;
   OfferDto? offer;
   String? offerId;
-  String courseId;
-  List<SequenceDto> sequences = [];
+  String? courseId;
+  List<SequenceDto>? sequences = [];
   LectureDto({
     required String id,
     String? modified,
@@ -47,7 +47,7 @@ class LectureDto extends BaseDto {
     this.offer,
     this.offerId,
     required this.courseId,
-    required this.sequences,
+    this.sequences,
   }) : super(
             id: id,
             created: created,

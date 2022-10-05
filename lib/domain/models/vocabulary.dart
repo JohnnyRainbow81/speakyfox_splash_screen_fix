@@ -14,13 +14,13 @@ class Vocabulary extends ModelBase {
   String mnemonic;
   String sourceSentence;
   String targetSentence;
-  Sentence sentence;
+  Sentence? sentence;
   String question;
   String imageNumber;
-  String languagePairId;
-  LanguagePair languagePair;
+  String? languagePairId;
+  LanguagePair? languagePair;
   String vocabularyShellId;
-  List<AnimationImageGroup> imageGroups = [];
+  List<AnimationImageGroup>? imageGroups = [];
   List<Answer> answers = [];
   List<Image> images = [];
   List<Audio> audios = [];
@@ -43,7 +43,7 @@ class Vocabulary extends ModelBase {
     required this.languagePairId,
     required this.languagePair,
     required this.vocabularyShellId,
-    required this.imageGroups,
+    this.imageGroups,
     required this.answers,
     required this.images,
     required this.audios,

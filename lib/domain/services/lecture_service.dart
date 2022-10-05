@@ -17,8 +17,8 @@ class LectureService extends BaseService<Lecture> {
     return _lectureRepository.getAllLecturesByCourseId(courseId);
   }
 
-  Future<List<Lecture>> getAllV2([String queryParameters = ""]) {
-    return _lectureRepository.getAllV2();
+  Future<List<Lecture>> getAllV2(String sourceLanguageId, String targetLanguageId) {
+    return _lectureRepository.getAllV2(sourceLanguageId, targetLanguageId);
   }
 
   Future<Lecture> getByIdDetailed(String id, [bool detailed = false]) {

@@ -8,9 +8,9 @@ import 'package:speakyfox/domain/models/sentence_shell.dart';
 import 'package:speakyfox/domain/models/sentence.dart';
 
 enum FeedbackType {
-  @JsonValue("situative")
+  @JsonValue("Situative")
   situative,
-  @JsonValue("immediate")
+  @JsonValue("Immediate")
   immediate
 }
 
@@ -33,14 +33,14 @@ class Feedback extends Screen {
       required String title,
       required String description,
       required int order,
-      required ScreenType type,
-      required String sequenceId,
-      required Sequence sequence,
+      ScreenType? screenType,
+      String? sequenceId,
+       Sequence? sequence,
       required GameType gameType,
       required List<Vocabulary> vocabularies,
-      required List<VocabularyShell> vocabularyShells,
-      required List<Sentence> sentences,
-      required List<SentenceShell> sentenceShells,
+      List<VocabularyShell>? vocabularyShells,
+      required List<Sentence>? sentences,
+      List<SentenceShell>? sentenceShells,
       required this.feedbackType})
       : super(
             id: id,
@@ -53,10 +53,10 @@ class Feedback extends Screen {
             title: title,
             description: description,
             order: order,
-            type: type,
+            screenType: screenType,
             sequenceId: sequenceId,
             sequence: sequence,
-            gameType: gameType.name,
+            gameType: gameType,
             vocabularies: vocabularies,
             vocabularyShells: vocabularyShells,
             sentences: sentences,

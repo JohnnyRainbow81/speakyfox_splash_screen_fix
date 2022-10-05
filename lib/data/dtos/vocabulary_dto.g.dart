@@ -17,18 +17,22 @@ VocabularyDto _$VocabularyDtoFromJson(Map<String, dynamic> json) =>
       deletedBy: json['deletedBy'] as String?,
       sourceWord: json['sourceWord'] as String,
       targetWord: json['targetWord'] as String,
-      mnemonic: json['mnemonic'] as String,
+      mnemonic: json['mnemonic'] as String?,
       sourceSentence: json['sourceSentence'] as String,
       targetSentence: json['targetSentence'] as String,
-      sentence: SentenceDto.fromJson(json['sentence'] as Map<String, dynamic>),
+      sentence: json['sentence'] == null
+          ? null
+          : SentenceDto.fromJson(json['sentence'] as Map<String, dynamic>),
       question: json['question'] as String,
       imageNumber: json['imageNumber'] as String,
-      languagePairId: json['languagePairId'] as String,
-      languagePair: LanguagePairDto.fromJson(
-          json['languagePair'] as Map<String, dynamic>),
+      languagePairId: json['languagePairId'] as String?,
+      languagePair: json['languagePair'] == null
+          ? null
+          : LanguagePairDto.fromJson(
+              json['languagePair'] as Map<String, dynamic>),
       vocabularyShellId: json['vocabularyShellId'] as String,
-      imageGroups: (json['imageGroups'] as List<dynamic>)
-          .map(
+      imageGroups: (json['imageGroups'] as List<dynamic>?)
+          ?.map(
               (e) => AnimationImageGroupDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       answers: (json['answers'] as List<dynamic>)

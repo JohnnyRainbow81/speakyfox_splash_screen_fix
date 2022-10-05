@@ -7,6 +7,7 @@ import 'package:speakyfox/data/dtos/sentence_shell_dto.dart';
 import 'package:speakyfox/data/dtos/sequence_dto.dart';
 import 'package:speakyfox/data/dtos/vocabulary_dto.dart';
 import 'package:speakyfox/data/dtos/vocabulary_shell_dto.dart';
+import 'package:speakyfox/domain/models/game.dart';
 
 import '../../domain/models/screen.dart';
 
@@ -17,14 +18,17 @@ class ScreenDto extends BaseDto {
   String title;
   String description;
   int order;
-  ScreenType type;
-  String sequenceId;
-  SequenceDto sequence;
-  String gameType; //FIXME   only to Subclass?
+  ScreenType? screenType;
+  String? sequenceId;
+  SequenceDto? sequence;
+
+  @JsonKey(name: "type")
+  GameType gameType; //FIXME   only to Subclass?
+
   List<VocabularyDto> vocabularies;
-  List<VocabularyShellDto> vocabularyShells;
-  List<SentenceDto> sentences;
-  List<SentenceShellDto> sentenceShells;
+  List<VocabularyShellDto>? vocabularyShells;
+  List<SentenceDto>? sentences;
+  List<SentenceShellDto>? sentenceShells;
   ScreenDto({
     required String id,
     String? modified,
@@ -36,14 +40,14 @@ class ScreenDto extends BaseDto {
     required this.title,
     required this.description,
     required this.order,
-    required this.type,
+    this.screenType,
     required this.sequenceId,
-    required this.sequence,
+    this.sequence,
     required this.gameType,
     required this.vocabularies,
-    required this.vocabularyShells,
-    required this.sentences,
-    required this.sentenceShells,
+    this.vocabularyShells,
+    this.sentences,
+    this.sentenceShells,
   }) : super(
             id: id,
             created: created,

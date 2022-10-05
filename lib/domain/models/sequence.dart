@@ -5,9 +5,9 @@ import 'package:speakyfox/domain/models/lecture.dart';
 import 'game.dart';
 
 enum ProgressType {
-  @JsonValue("single")
+  @JsonValue("Single")
   single,
-  @JsonValue("whole")
+  @JsonValue("Whole")
   whole
 }
 
@@ -16,7 +16,7 @@ class Sequence extends ModelBase {
   String description;
   ProgressType progressType;
   List<Game> games;
-  Lecture parent;
+  Lecture? parent;
 
   Sequence({
     required String id,
@@ -30,7 +30,7 @@ class Sequence extends ModelBase {
     required this.description,
     required this.progressType,
     required this.games,
-    required this.parent,
+    this.parent,
   }) : super(
             id: id,
             modified: modified,

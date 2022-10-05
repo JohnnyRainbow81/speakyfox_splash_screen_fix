@@ -15,14 +15,14 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
-      languagePairId: json['languagePairId'] as String,
+      languagePairId: json['languagePairId'] as String?,
       description: json['description'] as String,
       isOnboarding: json['isOnboarding'] as bool?,
       languagePair: json['languagePair'] == null
           ? null
           : LanguagePairDto.fromJson(
               json['languagePair'] as Map<String, dynamic>),
-      isPublished: json['isPublished'] as bool,
+      isPublished: json['isPublished'] as bool?,
       isLocked: json['isLocked'] as bool,
       order: json['order'] as int?,
       course: json['course'] == null
@@ -33,9 +33,9 @@ LectureDto _$LectureDtoFromJson(Map<String, dynamic> json) => LectureDto(
           ? null
           : OfferDto.fromJson(json['offer'] as Map<String, dynamic>),
       offerId: json['offerId'] as String?,
-      courseId: json['courseId'] as String,
-      sequences: (json['sequences'] as List<dynamic>)
-          .map((e) => SequenceDto.fromJson(e as Map<String, dynamic>))
+      courseId: json['courseId'] as String?,
+      sequences: (json['sequences'] as List<dynamic>?)
+          ?.map((e) => SequenceDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

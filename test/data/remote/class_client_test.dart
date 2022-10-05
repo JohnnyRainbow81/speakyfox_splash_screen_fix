@@ -24,21 +24,3 @@ void main() async {
 
 
 
-/*   Future<Response<List<ClassDto>>> getAll(param) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'': param};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<List<ClassDto>>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<List<ClassDto>>.fromJson(
-      _result.data!,
-      (json) => (json as List<dynamic>)
-          .map<ClassDto>((i) => ClassDto.fromJson(i as Map<String, dynamic>))
-          .toList(),
-    );
-    return value; */
