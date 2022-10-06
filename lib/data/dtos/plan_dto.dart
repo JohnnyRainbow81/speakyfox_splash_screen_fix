@@ -10,17 +10,17 @@ part 'plan_dto.g.dart';
 @JsonSerializable()
 class PlanDto extends BaseDto {
   String title;
-  String description;
+  String? description;
   String displayTitle;
-  bool isPublished;
-  String interval;
+  bool? isPublished;
+  String? interval;
   int intervalCount;
   String currency;
   int unitAmount;
-  int trialPeriodDays;
-  int taxPercent;
+  int? trialPeriodDays;
+  double taxPercent;
   String productId;
-  ProductDto product;
+  ProductDto? product;
 
   PlanDto({
     required String id,
@@ -31,17 +31,17 @@ class PlanDto extends BaseDto {
     String? deleted,
     String? deletedBy,
     required this.title,
-    required this.description,
+    this.description,
     required this.displayTitle,
-    required this.isPublished,
-    required this.interval,
+    this.isPublished,
+    this.interval,
     required this.intervalCount,
     required this.currency,
     required this.unitAmount,
-    required this.trialPeriodDays,
+    this.trialPeriodDays,
     required this.taxPercent,
     required this.productId,
-    required this.product,
+    this.product,
   }) : super(
             id: id,
             created: created,

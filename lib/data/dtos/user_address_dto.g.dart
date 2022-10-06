@@ -9,7 +9,7 @@ part of 'user_address_dto.dart';
 UserAddressDto _$UserAddressDtoFromJson(Map<String, dynamic> json) =>
     UserAddressDto(
       city: json['city'] as String,
-      country: Map<String, String>.from(json['country'] as Map),
+      country: json['country'] as String,
       line1: json['line1'] as String,
       line2: json['line2'] as String,
       postal_code: json['postal_code'] as String,

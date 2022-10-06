@@ -16,26 +16,6 @@ class _SubscriptionClient implements SubscriptionClient {
   String? baseUrl;
 
   @override
-  Future<Response<SubscriptionDto>> createSubscription(id, subscription) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(subscription);
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<SubscriptionDto>>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'users/${id}/subscriptions',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<SubscriptionDto>.fromJson(
-      _result.data!,
-      (json) => SubscriptionDto.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
   Future<Response<bool>> cancel(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

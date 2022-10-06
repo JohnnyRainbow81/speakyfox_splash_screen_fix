@@ -4,12 +4,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'user_address_dto.g.dart';
 
-
 @JsonSerializable()
 class UserAddressDto {
-
   String city;
-  Map<String, String> country;
+  String country;
   String line1;
   String line2;
   String postal_code;
@@ -27,3 +25,14 @@ class UserAddressDto {
   Map<String, dynamic> toJson() => _$UserAddressDtoToJson(this);
 }
 
+// // @JsonSerializable()
+// // class CountryDTO {
+// //   String displayName;
+// //   String value;
+// //   CountryDTO({
+// //     required this.displayName,
+// //     required this.value,
+// //   });
+// //   factory CountryDTO.fromJson(Map<String, dynamic> json) => _$CountryDTOFromJson(json);
+// //   Map<String, dynamic> toJson() => _$CountryDTOToJson(this);
+// // }

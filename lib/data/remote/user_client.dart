@@ -16,7 +16,7 @@ abstract class UserClient with BaseClient<UserDto> {
   @POST("{id}")
   Future<Response<UserDto>> createUser(@Body() Map<String, dynamic> createUserRequest);
 
-  @POST("users/{userId}/payment-methods")
+  @POST("{userId}/payment-methods")
   Future<String> attachPaymentMethodToUser(@Path("userId") String userId, @Body() Map<String, dynamic> body);
 
   @GET("{userId}/orders")
@@ -38,6 +38,11 @@ abstract class UserClient with BaseClient<UserDto> {
       @Path("userId") String userId, @Body() Map<String, dynamic> paymentMethodType);
 
   @DELETE("{userId}/payment-methods")
-  Future<Response<bool>> removePaymentMethod(
-    @Path("userId") String userId, @Query("paymentMethodType") String paymentMethodType, @Query("externalId") String externalId);
+  Future<Response<bool>> removePaymentMethod(@Path("userId") String userId,
+      @Query("paymentMethodType") String paymentMethodType, @Query("externalId") String externalId);
+
+  @POST("{userId}/subscriptions")
+  @Headers({"Content-Type": "application/json"})
+  Future<Response<SubscriptionDto>> createSubscription(
+      @Path("id") String id, @Body() Map<String, dynamic> subscription);
 }

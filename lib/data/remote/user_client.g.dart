@@ -44,7 +44,7 @@ class _UserClient implements UserClient {
     _data.addAll(body);
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, 'users/${userId}/payment-methods',
+            .compose(_dio.options, '${userId}/payment-methods',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;
@@ -177,6 +177,30 @@ class _UserClient implements UserClient {
     final value = Response<bool>.fromJson(
       _result.data!,
       (json) => json as bool,
+    );
+    return value;
+  }
+
+  @override
+  Future<Response<SubscriptionDto>> createSubscription(id, subscription) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(subscription);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Response<SubscriptionDto>>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, '{userId}/subscriptions',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Response<SubscriptionDto>.fromJson(
+      _result.data!,
+      (json) => SubscriptionDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

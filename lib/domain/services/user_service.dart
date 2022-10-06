@@ -1,6 +1,7 @@
 import 'package:speakyfox/data/repositories_impls/user_repository_impl.dart';
 import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
+import 'package:speakyfox/data/requests/subscription_create.dart';
 import 'package:speakyfox/domain/models/user_payment_method.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
@@ -80,5 +81,9 @@ class UserService extends BaseService<User> {
   Future<bool> removePaymentMethod(String id, PaymentMethodType paymentMethodType, String externalId) {
     String id = _authenticationService.getUser()!.id!;
     return _userRepository.removePaymentMethod(id, paymentMethodType, externalId);
+  }
+
+   Future createSubscription(String userId, SubscriptionCreateRequest subscription) {
+    return _userRepository.createSubscription(userId, subscription);
   }
 }

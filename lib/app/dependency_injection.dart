@@ -140,7 +140,7 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<OfferService>(() => OfferService(locator()));
 
   //OrdersService
-  locator.registerLazySingleton<OrderClient>(() => OrderClient(locator(), baseUrl: "${env.serverUrl}orders"));
+  locator.registerLazySingleton<OrderClient>(() => OrderClient(locator(), baseUrl: "${env.serverUrl}")); // yea, no "order" path
   locator.registerLazySingleton<OrderRepositoryImpl>(() => OrderRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<OrderService>(() => OrderService(locator(), locator()));
 
@@ -164,7 +164,7 @@ Future<void> initializeDependencies() async {
 
   //SubscriptionsService
   locator.registerLazySingleton<SubscriptionClient>(
-      () => SubscriptionClient(locator(), baseUrl: "${env.serverUrl}orders")); //yea, "orders", not "subscriptions"
+      () => SubscriptionClient(locator(), baseUrl: "${env.serverUrl}subscriptions"));
   locator.registerLazySingleton<SubscriptionRepositoryImpl>(() => SubscriptionRepositoryImpl(locator(), locator()));
   locator.registerLazySingleton<SubscriptionService>(() => SubscriptionService(locator()));
 

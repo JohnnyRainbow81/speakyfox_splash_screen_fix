@@ -2,13 +2,15 @@ import 'package:speakyfox/app/connectivity_service.dart';
 import 'package:speakyfox/app/error_handling/error_handler.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/data/mappers/payment_method_mapper.dart';
+import 'package:speakyfox/data/mappers/plan_mapper.dart';
 import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
+import 'package:speakyfox/domain/models/plan.dart';
 import 'package:speakyfox/domain/repositories/base_repository.dart';
 import 'package:speakyfox/domain/repositories/plan_repository.dart';
 
 
-class PlanRepositoryImpl implements PlanRepository<PaymentMethod>, BaseRepository<PaymentMethod> {
+class PlanRepositoryImpl implements PlanRepository<Plan>, BaseRepository<Plan> {
   final ConnectivityService _connectivityService;
   final PlanClient _planClient;
 
@@ -31,12 +33,12 @@ class PlanRepositoryImpl implements PlanRepository<PaymentMethod>, BaseRepositor
   }
 
   @override
-  Future<List<PaymentMethod>> getAll(String param) async{
+  Future<List<Plan>> getAll(String param) async{
      {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _planClient.getAll(param);
-        return response.data.map((e) => e.toPaymentMethod()).toList();
+        return response.data.map((e) => e.toPlan()).toList();
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -50,11 +52,11 @@ class PlanRepositoryImpl implements PlanRepository<PaymentMethod>, BaseRepositor
   }
 
   @override
-  Future<PaymentMethod> getById(String id) async {
+  Future<Plan> getById(String id) async {
     if (await _connectivityService.hasConnection()) {
       try {
         final response = await _planClient.getById(id);
-        return response.data.toPaymentMethod();
+        return response.data.toPlan();
       } catch (error) {
         ErrorHandler.handleError(error);
       }
@@ -66,13 +68,13 @@ class PlanRepositoryImpl implements PlanRepository<PaymentMethod>, BaseRepositor
   }
 
   @override
-  Future<PaymentMethod> patchById(String id, PaymentMethod entity) {
+  Future<Plan> patchById(String id, Plan entity) {
     // TODO: implement patchById
     throw UnimplementedError();
   }
 
   @override
-  Future<PaymentMethod> post(PaymentMethod entity) {
+  Future<Plan> post(Plan entity) {
     // TODO: implement post
     throw UnimplementedError();
   }

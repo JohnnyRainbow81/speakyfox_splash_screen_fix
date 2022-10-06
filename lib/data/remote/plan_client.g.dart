@@ -39,80 +39,79 @@ class _PlanClient implements PlanClient {
   }
 
   @override
-  Future<Response<List<PaymentMethodDto>>> getAll(param) async {
+  Future<Response<List<PlanDto>>> getAll(param) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'': param};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<List<PaymentMethodDto>>>(
+        _setStreamType<Response<List<PlanDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<List<PaymentMethodDto>>.fromJson(
+    final value = Response<List<PlanDto>>.fromJson(
       _result.data!,
       (json) => (json as List<dynamic>)
-          .map<PaymentMethodDto>(
-              (i) => PaymentMethodDto.fromJson(i as Map<String, dynamic>))
+          .map<PlanDto>((i) => PlanDto.fromJson(i as Map<String, dynamic>))
           .toList(),
     );
     return value;
   }
 
   @override
-  Future<Response<PaymentMethodDto>> getById(id) async {
+  Future<Response<PlanDto>> getById(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<PaymentMethodDto>>(
+        _setStreamType<Response<PlanDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<PaymentMethodDto>.fromJson(
+    final value = Response<PlanDto>.fromJson(
       _result.data!,
-      (json) => PaymentMethodDto.fromJson(json as Map<String, dynamic>),
+      (json) => PlanDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<Response<PaymentMethodDto>> post(entity) async {
+  Future<Response<PlanDto>> post(entity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = entity;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<PaymentMethodDto>>(
+        _setStreamType<Response<PlanDto>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<PaymentMethodDto>.fromJson(
+    final value = Response<PlanDto>.fromJson(
       _result.data!,
-      (json) => PaymentMethodDto.fromJson(json as Map<String, dynamic>),
+      (json) => PlanDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<Response<PaymentMethodDto>> patchById(id, entity) async {
+  Future<Response<PlanDto>> patchById(id, entity) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': id};
     final _headers = <String, dynamic>{};
     final _data = entity;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<PaymentMethodDto>>(
+        _setStreamType<Response<PlanDto>>(
             Options(method: 'PATCH', headers: _headers, extra: _extra)
                 .compose(_dio.options, '',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<PaymentMethodDto>.fromJson(
+    final value = Response<PlanDto>.fromJson(
       _result.data!,
-      (json) => PaymentMethodDto.fromJson(json as Map<String, dynamic>),
+      (json) => PlanDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

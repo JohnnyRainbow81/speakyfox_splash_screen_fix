@@ -9,8 +9,8 @@ part 'payment_method_dto.g.dart';
 
 @JsonSerializable()
 class PaymentMethodDto extends BaseDto {
-  String name;
-  String description;
+  String? name;
+  String? description;
   String additionalInformation;
   String fileName;
   String fileId;
@@ -26,7 +26,7 @@ class PaymentMethodDto extends BaseDto {
     String? createdBy,
     String? deleted,
     String? deletedBy,
-    required this.name,
+    this.name,
     required this.description,
     required this.additionalInformation,
     required this.fileName,

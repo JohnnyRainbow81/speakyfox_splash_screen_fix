@@ -13,9 +13,7 @@ class SubscriptionService extends BaseService<Subscription> {
     _subscriptionRepository = subscriptionRepositoryImpl;
   }
 
-  Future createSubscription(String userId, SubscriptionCreateRequest subscription) {
-    return _subscriptionRepository.createSubscription(userId, subscription);
-  }
+ 
 
   Future<bool> cancel(String id) {
     return _subscriptionRepository.cancel(id);

@@ -7,29 +7,29 @@ class Plan extends ModelBase {
   String title;
   String description;
   String displayTitle;
-  bool isPublished;
-  String interval;
+  bool? isPublished;
+  String? interval;
   int intervalCount;
   String currency;
   int unitAmount;
   int trialPeriodDays;
-  int taxPercent;
+  double taxPercent;
   String productId;
-  Product product;
+  Product? product;
 
   Plan({
     required this.title,
     required this.description,
     required this.displayTitle,
-    required this.isPublished,
-    required this.interval,
+    this.isPublished,
+    this.interval,
     required this.intervalCount,
     required this.currency,
     required this.unitAmount,
     required this.trialPeriodDays,
     required this.taxPercent,
     required this.productId,
-    required this.product,
+    this.product,
     required String id,
     required String modified,
     required String modifiedBy,
@@ -45,4 +45,9 @@ class Plan extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Plan(title: $title, description: $description, displayTitle: $displayTitle, isPublished: $isPublished, interval: $interval, intervalCount: $intervalCount, currency: $currency, unitAmount: $unitAmount, trialPeriodDays: $trialPeriodDays, taxPercent: $taxPercent, productId: $productId, product: $product)';
+  }
 }

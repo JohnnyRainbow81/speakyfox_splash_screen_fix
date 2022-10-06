@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:speakyfox/domain/models/model_base.dart';
 
 class Order extends ModelBase {
@@ -40,4 +41,9 @@ class Order extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Order(copy: $copy, subscriptionId: $subscriptionId, effectiveFromUtc: $effectiveFromUtc, effectiveToUtc: $effectiveToUtc, paymentMethod: $paymentMethod, voucherCode: $voucherCode, priceWithoutVAT: $priceWithoutVAT, finalPriceWithVAT: $finalPriceWithVAT, vat: $vat, userId: $userId, externalIdentifier: $externalIdentifier)';
+  }
 }

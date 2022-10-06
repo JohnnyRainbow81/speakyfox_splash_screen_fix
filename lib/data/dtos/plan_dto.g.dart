@@ -15,17 +15,19 @@ PlanDto _$PlanDtoFromJson(Map<String, dynamic> json) => PlanDto(
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       title: json['title'] as String,
-      description: json['description'] as String,
+      description: json['description'] as String?,
       displayTitle: json['displayTitle'] as String,
-      isPublished: json['isPublished'] as bool,
-      interval: json['interval'] as String,
+      isPublished: json['isPublished'] as bool?,
+      interval: json['interval'] as String?,
       intervalCount: json['intervalCount'] as int,
       currency: json['currency'] as String,
       unitAmount: json['unitAmount'] as int,
-      trialPeriodDays: json['trialPeriodDays'] as int,
-      taxPercent: json['taxPercent'] as int,
+      trialPeriodDays: json['trialPeriodDays'] as int?,
+      taxPercent: (json['taxPercent'] as num).toDouble(),
       productId: json['productId'] as String,
-      product: ProductDto.fromJson(json['product'] as Map<String, dynamic>),
+      product: json['product'] == null
+          ? null
+          : ProductDto.fromJson(json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PlanDtoToJson(PlanDto instance) => <String, dynamic>{

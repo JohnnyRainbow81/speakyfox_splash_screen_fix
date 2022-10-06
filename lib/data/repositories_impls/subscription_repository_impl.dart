@@ -14,21 +14,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository<Subscription>
 
   SubscriptionRepositoryImpl(this._connectivityService, this._subscriptionClient);
 
-  @override
-  Future<Subscription> createSubscription(String userId, SubscriptionCreateRequest subscription) async {
-    if (await _connectivityService.hasConnection()) {
-      try {
-        final response = await _subscriptionClient.createSubscription(userId, {"subscription": subscription.toJson()});
-        return response.data.toSubscription();
-      } catch (error) {
-        ErrorHandler.handleError(error);
-      }
-    } else {
-      throw NoInternetConnectionUIException();
-    }
 
-    throw UIException(message: "SubscriptionRepositoryImpl.createSubscription()");
-  }
 
   @override
   Future<bool> cancel(String id) async {

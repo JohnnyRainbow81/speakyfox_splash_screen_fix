@@ -9,6 +9,7 @@ import 'package:speakyfox/data/mappers/user_mapper.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/requests/change_password_request.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
+import 'package:speakyfox/data/requests/subscription_create.dart';
 import 'package:speakyfox/domain/models/user.dart';
 import 'package:speakyfox/domain/models/subscription.dart';
 import 'package:speakyfox/domain/models/payment_method.dart';
@@ -186,5 +187,21 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
       throw NoInternetConnectionUIException();
     }
     throw UIException(message: "UserRepositoryImpl.removePaymentMethod()");
+  }
+
+    @override
+  Future<Subscription> createSubscription(String userId, SubscriptionCreateRequest subscription) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _userClient.createSubscription(userId, {"subscription": subscription.toJson()});
+        return response.data.toSubscription();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "SubscriptionRepositoryImpl.createSubscription()");
   }
 }

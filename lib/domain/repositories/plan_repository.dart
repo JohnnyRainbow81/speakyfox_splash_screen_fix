@@ -1,3 +1,5 @@
+import 'package:speakyfox/domain/models/payment_method.dart';
+
 abstract class PlanRepository<T> {
-  Future<List<T>> getPaymentMethodsByPlanId(String planId);
+  Future<List<PaymentMethod>> getPaymentMethodsByPlanId(String planId);
 }
