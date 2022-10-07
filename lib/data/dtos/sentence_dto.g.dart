@@ -29,11 +29,11 @@ SentenceDto _$SentenceDtoFromJson(Map<String, dynamic> json) => SentenceDto(
       targetHighlightedParts: (json['targetHighlightedParts'] as List<dynamic>)
           .map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      images: (json['images'] as List<dynamic>)
-          .map((e) => ImageDto.fromJson(e as Map<String, dynamic>))
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => ImageDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      audios: (json['audios'] as List<dynamic>)
-          .map((e) => AudioDto.fromJson(e as Map<String, dynamic>))
+      audios: (json['audios'] as List<dynamic>?)
+          ?.map((e) => AudioDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

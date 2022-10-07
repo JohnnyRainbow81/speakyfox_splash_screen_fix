@@ -195,7 +195,7 @@ class _UserClient implements UserClient {
                 headers: _headers,
                 extra: _extra,
                 contentType: 'application/json')
-            .compose(_dio.options, '{userId}/subscriptions',
+            .compose(_dio.options, '${id}/subscriptions',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<SubscriptionDto>.fromJson(

@@ -17,8 +17,8 @@ class Offer extends ModelBase {
   bool thankYouPageEnabled;
   bool registrationEnabled;
   bool loginEnabled;
-  String offerStart;
-  String offerEnd;
+  String? offerStart;
+  String? offerEnd;
   int originalAmount;
   String loginTitle;
   String referer;
@@ -47,8 +47,8 @@ class Offer extends ModelBase {
     required this.thankYouPageEnabled,
     required this.registrationEnabled,
     required this.loginEnabled,
-    required this.offerStart,
-    required this.offerEnd,
+     this.offerStart,
+     this.offerEnd,
     required this.originalAmount,
     required this.loginTitle,
     required this.referer,

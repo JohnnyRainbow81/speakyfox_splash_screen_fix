@@ -197,7 +197,7 @@ class LectureRepositoryImpl implements LectureRepository<Lecture, Sequence>, Bas
   Future updateProgress(String lectureId, double progress) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _lectureClient.updateProgress(lectureId, {"progress" : progress});
+        final response = await _lectureClient.updateProgress(lectureId, progress);
         //FIXME get rid of dynamic
         return response.data;
       } catch (error) {

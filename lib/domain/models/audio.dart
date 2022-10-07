@@ -4,16 +4,16 @@ import 'package:speakyfox/domain/models/database_file.dart';
 import 'language.dart';
 
 enum AudioType {
-  @JsonValue("word")
+  @JsonValue("Word")
   word,
-  @JsonValue("sentence")
+  @JsonValue("Sentence")
   sentence
 }
 
 enum AudioCodingKeys {
-  @JsonValue("audioType")
+  @JsonValue("AudioType")
   audioType,
-  @JsonValue("languageType")
+  @JsonValue("LanguageType")
   languageType
 }
 

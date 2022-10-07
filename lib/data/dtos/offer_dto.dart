@@ -12,26 +12,26 @@ part 'offer_dto.g.dart';
 class OfferDto extends BaseDto {
   String planId;
   String offerTitle;
-  String registrationTitle;
-  String descriptionTitle;
+  String? registrationTitle;
+  String? descriptionTitle;
   List<OfferDescriptionContentDto> descriptionContents = [];
   String offerContent;
-  String thankYouContent;
-  List<CouponDto> coupons = [];
-  bool thankYouPageEnabled;
+  String? thankYouContent;
+  List<CouponDto>? coupons = [];
+  bool? thankYouPageEnabled;
   bool registrationEnabled;
   bool loginEnabled;
-  String offerStart;
-  String offerEnd;
+  String? offerStart;
+  String? offerEnd;
   int originalAmount;
   String loginTitle;
-  String referer;
+  String? referer;
   bool isAllowedCoupon;
   String ref;
   PlanDto plan;
-  String details;
-  String planTitle;
-  String planDescription;
+  String? details;
+  String? planTitle;
+  String? planDescription;
 
   OfferDto({
     required String id,
@@ -47,9 +47,9 @@ class OfferDto extends BaseDto {
     required this.descriptionTitle,
     required this.descriptionContents,
     required this.offerContent,
-    required this.thankYouContent,
-    required this.coupons,
-    required this.thankYouPageEnabled,
+    this.thankYouContent,
+    this.coupons,
+    this.thankYouPageEnabled,
     required this.registrationEnabled,
     required this.loginEnabled,
     required this.offerStart,
@@ -60,9 +60,9 @@ class OfferDto extends BaseDto {
     required this.isAllowedCoupon,
     required this.ref,
     required this.plan,
-    required this.details,
-    required this.planTitle,
-    required this.planDescription,
+    this.details,
+    this.planTitle,
+    this.planDescription,
   }) : super(
             id: id,
             created: created,

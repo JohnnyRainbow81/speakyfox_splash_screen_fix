@@ -42,7 +42,7 @@ class AuthenticationService {
   }
 
   User? getUser() {
-    //returns User only if User already is saved locally. 
+    //returns User only if User already is saved locally.
     //A User exists locally from the point where he registered successfully.
     return _authenticationRepository.loadUser();
   }
@@ -189,6 +189,7 @@ class AuthenticationService {
 
   Future<bool> logout() async {
     //clear credentials here?
-    return await _authenticationRepository.clearCredentials();
+    _authenticationRepository.clearCredentials();
+    return await _authenticationRepository.logout();
   }
 }

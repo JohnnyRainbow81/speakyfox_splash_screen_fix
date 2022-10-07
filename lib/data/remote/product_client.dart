@@ -10,7 +10,4 @@ part 'product_client.g.dart';
 @RestApi()
 abstract class ProductClient with BaseClient<ProductDto> {
   factory ProductClient(Dio dio, {String baseUrl}) = _ProductClient;
-
-  @GET("/subscriptions/{id}")
-  Future<Response<SubscriptionDto>> getSubscriptionById(@Path("id") String id);
 }

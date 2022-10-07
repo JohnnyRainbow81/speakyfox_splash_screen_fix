@@ -33,7 +33,6 @@ class UserService extends BaseService<User> {
   }
 
   Future<String> createSetupIntent(PaymentMethodType paymentMethodType) async {
-    
     return _userRepository.createSetupIntent(user.id, paymentMethodType);
   }
 
@@ -43,7 +42,6 @@ class UserService extends BaseService<User> {
   }
 
   Future<Order> getOrdersOfCurrentUser() {
-
     return _userRepository.getOrdersOfCurrentUser(user.id);
   }
 
@@ -69,7 +67,7 @@ class UserService extends BaseService<User> {
   }
 
   Future<List<Subscription>> getSubscriptions() {
-    String id = _authenticationService.getUser()!.id!;
+    String id = _authenticationService.getUser()!.id;
 
     return _userRepository.getSubscriptions(id);
   }
@@ -83,7 +81,8 @@ class UserService extends BaseService<User> {
     return _userRepository.removePaymentMethod(id, paymentMethodType, externalId);
   }
 
-   Future createSubscription(String userId, SubscriptionCreateRequest subscription) {
+  Future createSubscription(String userId, SubscriptionCreateRequest subscription) {
     return _userRepository.createSubscription(userId, subscription);
   }
+
 }

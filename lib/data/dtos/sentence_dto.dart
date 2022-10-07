@@ -21,8 +21,8 @@ class SentenceDto extends BaseDto {
   String targetNormalized;
   List<HighlightedPartDto> sourceHighlightedParts;
   List<HighlightedPartDto> targetHighlightedParts;
-  List<ImageDto> images;
-  List<AudioDto> audios;
+  List<ImageDto>? images;
+  List<AudioDto>? audios;
 
   SentenceDto({
     required String id,
@@ -41,8 +41,8 @@ class SentenceDto extends BaseDto {
     required this.targetNormalized,
     required this.sourceHighlightedParts,
     required this.targetHighlightedParts,
-    required this.images,
-    required this.audios,
+     this.images,
+     this.audios,
   }) : super(
             id: id,
             created: created,

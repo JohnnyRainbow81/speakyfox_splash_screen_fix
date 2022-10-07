@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speakyfox/data/mappers/product_mapper.dart';
+import 'package:speakyfox/data/mappers/subscription_mapper.dart';
 import 'package:speakyfox/data/remote/product_client.dart';
 import 'package:dio/dio.dart';
+import '../../domain/services/mockito sanity test/my_service.dart';
 import '../../http_client_test_setup.dart';
 
 void main() async {
@@ -12,6 +14,7 @@ void main() async {
   group(
     ProductClient,
     () {
+  
       test(
         'getById',
         () async {
@@ -24,9 +27,9 @@ void main() async {
       test(
         'getAll',
         () async {
-           final response = await productClient.getAll("");
+          final response = await productClient.getAll("");
           final products = response.data.map((e) => e.toProduct()).toList();
-          for(final product in products) {
+          for (final product in products) {
             debugPrint(product.toString());
           }
         },

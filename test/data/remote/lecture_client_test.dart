@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:speakyfox/data/dtos/class_dto.dart';
+import 'package:speakyfox/data/dtos/course_dto.dart';
 import 'package:speakyfox/data/mappers/lecture_mapper.dart';
 import 'package:speakyfox/data/remote/lecture_client.dart';
 
@@ -10,7 +12,7 @@ void main() async {
   Dio dio = await getAuthenticatedHTTPClientForTesting();
 
   LectureClient lectureClient = LectureClient(dio, baseUrl: "${TestConstants.baseUrlQA}lectures");
-    test('getByIdDetailed', () async {
+  test('getByIdDetailed', () async {
     final response = await lectureClient.getByIdDetailed("fe225b45-9a9c-4a96-a89f-c73c0b859ffe", true);
     final lecture = response.data.toLecture();
 
@@ -26,9 +28,10 @@ void main() async {
   test(
     'getAllV2',
     () async {
-      //400 Error > use other source/target id combi
-      final response = await lectureClient.getAllV2("02c6e388-bcb1-427b-8b8d-d49704671c22", "745fb735-3fdd-4ff4-9359-ae70765fa889", false); //TODO
-     final lectures = response.data.map((e) => e.toLecture()).toList();
+      // Error, this call NEEDS /v2  !!
+      final response = await lectureClient.getAllV2(
+          "02c6e388-bcb1-427b-8b8d-d49704671c22", "49513cb6-32f1-4efd-9542-ad1ecd968c4f"); //TODO
+      final lectures = response.data.map((e) => e.toLecture()).toList();
 
       for (final lecture in lectures) {
         debugPrint(lecture.toString());
@@ -60,7 +63,20 @@ void main() async {
     'getAll',
     () async {
       final response = await lectureClient.getAll("");
+    },
+  );
 
+  test(
+    'updateProgress',
+    () async {
+      final response = await lectureClient.updateProgress("fe225b45-9a9c-4a96-a89f-c73c0b859ffe", 5);
+
+      debugPrint("runtimeType: ${response.data.runtimeType.toString()}");
+
+      final data = response.data as Map<String, dynamic>;
+      final course = CourseDto.fromJson(data);
+
+      debugPrint(course.toString());
     },
   );
 }

@@ -12,7 +12,4 @@ class ProductService extends BaseService<Product> {
     _productRepository = productRepositoryImpl;
   }
 
-  Future<Subscription> getSubscriptionById(String id) async {
-    return await _productRepository.getSubscriptionById(id);
-  }
 }

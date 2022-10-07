@@ -71,36 +71,9 @@ void main() async {
   );
 
   test(
-    'createSubscription',
+    'createSubscription / plan already subscribed', //works when plan to subscribe isn't subscribed yet
     () async {
-      final subscriptionRequest = SubscriptionDto(
-          id: "",
-          productDisplayTitle: "productDisplayTitle",
-          planDisplayTitle: "planDisplayTitle",
-          status: SubscriptionStatus.incomplete,
-          currentPeriodStart: DateTime.now().toIso8601String(),
-          currentPeriodEnd: DateTime.now().add(const Duration(days: 10)).toIso8601String(),
-          couponKey: "",
-          languages: [],
-          interval: "",
-          intervalCount: 5,
-          paymentMethod:
-              UserPaymentMethodDto(id: "550d2218-f8ef-410c-9524-438abe3e1e17", type: PaymentMethodType.payPal),
-          nextBillingAmount: 100,
-          invoices: []);
-
-      final response =
-          await userClient.createSubscription("64c4813e-68bf-4552-b8d9-7f8ce798a9ed", subscriptionRequest.toJson());
-
-      final subscription = response.data.toSubscription();
-
-      debugPrint(subscription.toString());
-    },
-  );
-}
-
-
-/* SubscriptionCreateRequest(
+      final subscriptionRequest = SubscriptionCreateRequest(
           coupon: "coupon",
           affiliateId: "",
           billingDetails: BillingDetailsRequest(
@@ -115,4 +88,16 @@ void main() async {
           externalSubscriptionId: "4083c53c-9469-4cc0-a9d1-446113f12d1c",
           offerId: "7dfddc1e-c88e-431f-b576-5b7a5c1b29c2",
           paymentMethodId: "74f1eacb-ce5d-410b-95e9-eba59380056e",
-          planId: "9d4d6877-ee24-4a6c-b0a2-3946e6756ae0") */
+          planId: "9d4d6877-ee24-4a6c-b0a2-3946e6756ae0");
+
+      //final response =
+      expect(userClient.createSubscription("64c4813e-68bf-4552-b8d9-7f8ce798a9ed", subscriptionRequest.toJson()),
+          throwsException);
+
+      //final subscription = response.data.toSubscription();
+
+      //debugPrint(subscription.toString());
+    },
+  );
+ 
+}

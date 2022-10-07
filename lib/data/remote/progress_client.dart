@@ -8,6 +8,6 @@ part 'progress_client.g.dart';
 abstract class ProgressClient with BaseClient<dynamic> {
   factory ProgressClient(Dio dio, {String baseUrl}) = _ProgressClient;
 
-  @PATCH("{id}")
-  Future<Response<dynamic>> updateProgress(@Path("id") String id, @Body() Map<String, dynamic> progress);
+  @PATCH("/{lectureId}")
+  Future<Response<dynamic>> updateProgress(@Path("lectureId") String lectureId, @Body() double progress);
 }

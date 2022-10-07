@@ -14,22 +14,6 @@ class ProductRepositoryImpl implements ProductRepository<Product, Subscription>,
 
   ProductRepositoryImpl(this._connectivityService, this._productClient);
 
-
-  @override
-  Future<Subscription> getSubscriptionById(String id) async {
-    if (await _connectivityService.hasConnection()) {
-      try {
-        final response = await _productClient.getSubscriptionById(id);
-        return response.data.toSubscription();
-      } catch (error) {
-        ErrorHandler.handleError(error);
-      }
-    } else {
-      throw NoInternetConnectionUIException();
-    }
-
-    throw UIException(message: "ProductRepositoryImpl.getSubscriptionById()");
-  }
   
   @override
   Future<List<Product>> getAll(String param) {

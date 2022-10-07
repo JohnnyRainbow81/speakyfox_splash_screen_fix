@@ -16,31 +16,31 @@ OfferDto _$OfferDtoFromJson(Map<String, dynamic> json) => OfferDto(
       deletedBy: json['deletedBy'] as String?,
       planId: json['planId'] as String,
       offerTitle: json['offerTitle'] as String,
-      registrationTitle: json['registrationTitle'] as String,
-      descriptionTitle: json['descriptionTitle'] as String,
+      registrationTitle: json['registrationTitle'] as String?,
+      descriptionTitle: json['descriptionTitle'] as String?,
       descriptionContents: (json['descriptionContents'] as List<dynamic>)
           .map((e) =>
               OfferDescriptionContentDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       offerContent: json['offerContent'] as String,
-      thankYouContent: json['thankYouContent'] as String,
-      coupons: (json['coupons'] as List<dynamic>)
-          .map((e) => CouponDto.fromJson(e as Map<String, dynamic>))
+      thankYouContent: json['thankYouContent'] as String?,
+      coupons: (json['coupons'] as List<dynamic>?)
+          ?.map((e) => CouponDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      thankYouPageEnabled: json['thankYouPageEnabled'] as bool,
+      thankYouPageEnabled: json['thankYouPageEnabled'] as bool?,
       registrationEnabled: json['registrationEnabled'] as bool,
       loginEnabled: json['loginEnabled'] as bool,
-      offerStart: json['offerStart'] as String,
-      offerEnd: json['offerEnd'] as String,
+      offerStart: json['offerStart'] as String?,
+      offerEnd: json['offerEnd'] as String?,
       originalAmount: json['originalAmount'] as int,
       loginTitle: json['loginTitle'] as String,
-      referer: json['referer'] as String,
+      referer: json['referer'] as String?,
       isAllowedCoupon: json['isAllowedCoupon'] as bool,
       ref: json['ref'] as String,
       plan: PlanDto.fromJson(json['plan'] as Map<String, dynamic>),
-      details: json['details'] as String,
-      planTitle: json['planTitle'] as String,
-      planDescription: json['planDescription'] as String,
+      details: json['details'] as String?,
+      planTitle: json['planTitle'] as String?,
+      planDescription: json['planDescription'] as String?,
     );
 
 Map<String, dynamic> _$OfferDtoToJson(OfferDto instance) => <String, dynamic>{

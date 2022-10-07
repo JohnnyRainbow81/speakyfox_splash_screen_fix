@@ -112,6 +112,10 @@ class MockAuthenticationRepository extends _i1.Mock
       (super.noSuchMethod(Invocation.method(#validateToken, [userId, token]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
   @override
+  _i6.Future<bool> logout() =>
+      (super.noSuchMethod(Invocation.method(#logout, []),
+          returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
+  @override
   _i6.Future<String> fetchDataProtection() =>
       (super.noSuchMethod(Invocation.method(#fetchDataProtection, []),
           returnValue: _i6.Future<String>.value('')) as _i6.Future<String>);

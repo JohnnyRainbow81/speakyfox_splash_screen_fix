@@ -8,15 +8,21 @@ languageId: "02c6e388-bcb1-427b-8b8d-d49704671c22"
 
 languagePairId: "fa701d3c-2306-45cd-ab3c-e89cb990cd1d"
 
+lectureId: "fe225b45-9a9c-4a96-a89f-c73c0b859ffe"
+
 sourceLanguageId: "02c6e388-bcb1-427b-8b8d-d49704671c22"
-targetLanguageId: "745fb735-3fdd-4ff4-9359-ae70765fa889"
+targetLanguageId: "49513cb6-32f1-4efd-9542-ad1ecd968c4f"
 
  courseId: "af64ae47-360f-4368-b1b4-63d765ceed65"
-
- lectureId: "fe225b45-9a9c-4a96-a89f-c73c0b859ffe"
 
  productId: "1b12b96e-9c85-413a-9fd9-fea850f5bec5"
 
  planId: "9d4d6877-ee24-4a6c-b0a2-3946e6756ae0"
 
  paymentMethodId: "74f1eacb-ce5d-410b-95e9-eba59380056e"
+
+ vocabularyId:  "f770ac9b-60be-41e6-82c3-7265e2b93462"
+
+ offerId: "dfddc1e-c88e-431f-b576-5b7a5c1b29c2"
+
+ subscriptionID: "4083c53c-9469-4cc0-a9d1-446113f12d1c"

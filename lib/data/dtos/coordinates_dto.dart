@@ -5,11 +5,11 @@ part 'coordinates_dto.g.dart';
 
 @JsonSerializable()
 class CoordinatesDto {
-  int x;
-  int y;
-  int? height;
-  int? width;
-  int? degree;
+  double x;
+  double y;
+  double? height;
+  double? width;
+  double? degree;
   CoordinatesDto({
     required this.x,
     required this.y,

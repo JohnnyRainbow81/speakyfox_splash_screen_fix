@@ -36,12 +36,16 @@ class _LectureClient implements LectureClient {
 
   @override
   Future<Response<List<LectureDto>>> getAllV2(id, targetLanguageId,
-      [isOnboarding = false]) async {
+      [isOnboarding = false,
+      lectureUrlName = "null",
+      lastModified = "null"]) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'sourceLanguageId': id,
       r'targetLanguageId': targetLanguageId,
-      r'isOnboarding': isOnboarding
+      r'isOnboarding': isOnboarding,
+      r'lectureUrlName': lectureUrlName,
+      r'lastModified': lastModified
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -129,21 +133,20 @@ class _LectureClient implements LectureClient {
   }
 
   @override
-  Future<Response<dynamic>> updateProgress(lectureId, progress) async {
+  Future<Response<CourseDto>> updateProgress(lectureId, progress) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'lectureId': lectureId};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(progress);
+    final _data = progress;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<dynamic>>(
+        _setStreamType<Response<CourseDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '',
+                .compose(_dio.options, '/${lectureId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<dynamic>.fromJson(
+    final value = Response<CourseDto>.fromJson(
       _result.data!,
-      (json) => json as dynamic,
+      (json) => CourseDto.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

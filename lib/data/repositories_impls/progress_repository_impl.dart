@@ -14,7 +14,7 @@ class ProgressRepositoryImpl implements ProgressRepository {
   Future<bool> updateProgress(String lectureId, double progress) async {
     if (await _connectivityService.hasConnection()) {
       try {
-        final response = await _progressClient.updateProgress(lectureId, {"progress": progress});
+        final response = await _progressClient.updateProgress(lectureId, progress);
         return response.data.toSubscription();
       } catch (error) {
         ErrorHandler.handleError(error);

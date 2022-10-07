@@ -189,7 +189,7 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
     throw UIException(message: "UserRepositoryImpl.removePaymentMethod()");
   }
 
-    @override
+  @override
   Future<Subscription> createSubscription(String userId, SubscriptionCreateRequest subscription) async {
     if (await _connectivityService.hasConnection()) {
       try {
@@ -202,6 +202,7 @@ class UserRepositoryImpl implements UserRepository, BaseRepository<User> {
       throw NoInternetConnectionUIException();
     }
 
-    throw UIException(message: "SubscriptionRepositoryImpl.createSubscription()");
+    throw UIException(message: "UserRepositoryImpl.createSubscription()");
   }
+
 }

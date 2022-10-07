@@ -48,11 +48,11 @@ const _$DatabaseTypeEnumMap = {
 };
 
 const _$AudioTypeEnumMap = {
-  AudioType.word: 'word',
-  AudioType.sentence: 'sentence',
+  AudioType.word: 'Word',
+  AudioType.sentence: 'Sentence',
 };
 
 const _$LanguageTypeEnumMap = {
-  LanguageType.sourceLanguage: 'sourceLanguage',
-  LanguageType.targetLanguage: 'targetLanguage',
+  LanguageType.sourceLanguage: 'SourceLanguage',
+  LanguageType.targetLanguage: 'TargetLanguage',
 };

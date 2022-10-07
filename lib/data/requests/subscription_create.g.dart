@@ -24,13 +24,13 @@ Map<String, dynamic> _$SubscriptionCreateRequestToJson(
         SubscriptionCreateRequest instance) =>
     <String, dynamic>{
       'planId': instance.planId,
-      'paymentMethodId': instance.paymentMethodId,
-      'coupon': instance.coupon,
+      'offerId': instance.offerId,
       'affiliateId': instance.affiliateId,
       'externalId': instance.externalId,
       'externalSubscriptionId': instance.externalSubscriptionId,
-      'offerId': instance.offerId,
-      'billingDetails': instance.billingDetails.toJson(),
+      'paymentMethodId': instance.paymentMethodId,
+      'coupon': instance.coupon,
+      'billingDetails': instance.billingDetails,
     };
 
 BillingDetailsRequest _$BillingDetailsRequestFromJson(
@@ -48,7 +48,7 @@ Map<String, dynamic> _$BillingDetailsRequestToJson(
       'name': instance.name,
       'email': instance.email,
       'phone': instance.phone,
-      'address': instance.address.toJson(),
+      'address': instance.address,
     };
 
 AddressRequest _$AddressRequestFromJson(Map<String, dynamic> json) =>

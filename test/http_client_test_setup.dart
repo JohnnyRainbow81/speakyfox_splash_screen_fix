@@ -8,7 +8,6 @@ import 'package:speakyfox/data/requests/authentication_body.dart';
 
 class TestConstants {
   static const String baseUrlQA = "https://speakyfox-api-qa.herokuapp.com/api/v1/";
-  static const userId_Julien = "";
 }
 
 Future<Dio> getAuthenticatedHTTPClientForTesting() async {
@@ -20,7 +19,7 @@ Future<Dio> getAuthenticatedHTTPClientForTesting() async {
 
   String accessToken = response.accessToken;
 
-  final dio = DioFactory.initialize(baseUrl: Constants.baseUrlAuthQA);
+  final dio = DioFactory.initialize(baseUrl: TestConstants.baseUrlQA);
   dio.options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
   return dio;
 }

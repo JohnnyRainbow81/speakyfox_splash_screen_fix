@@ -6,9 +6,9 @@ import 'package:speakyfox/domain/models/language_pair.dart';
 import 'package:speakyfox/domain/models/model_base.dart';
 
 enum LanguageType {
-  @JsonValue("sourceLanguage")
+  @JsonValue("SourceLanguage")
   sourceLanguage,
-  @JsonValue("targetLanguage")
+  @JsonValue("TargetLanguage")
   targetLanguage
 }
 

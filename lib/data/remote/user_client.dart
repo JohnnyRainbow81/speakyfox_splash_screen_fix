@@ -44,5 +44,7 @@ abstract class UserClient with BaseClient<UserDto> {
   @POST("{userId}/subscriptions")
   @Headers({"Content-Type": "application/json"})
   Future<Response<SubscriptionDto>> createSubscription(
-      @Path("id") String id, @Body() Map<String, dynamic> subscription);
+      @Path("userId") String id, @Body() Map<String, dynamic> subscription);
+
+ 
 }

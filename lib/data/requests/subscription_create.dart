@@ -9,12 +9,12 @@ part 'subscription_create.g.dart';
 @JsonSerializable()
 class SubscriptionCreateRequest {
   String planId;
-  String paymentMethodId;
-  String coupon;
+  String offerId;
   String affiliateId;
   String externalId;
   String externalSubscriptionId;
-  String offerId;
+  String paymentMethodId;
+  String coupon;
   BillingDetailsRequest billingDetails;
 
   SubscriptionCreateRequest({

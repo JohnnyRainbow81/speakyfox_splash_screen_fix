@@ -33,6 +33,9 @@ abstract class AuthenticationClient {
   @POST("/users/{userId}/confirm-email")
   Future<Response<bool>> validateToken(@Path("userId") String userId, @Body() token);
 
+   @GET("/api/v1/users/logout")
+  Future<Response<bool>> logout();//Nina says this might not work due to a lib error in backend (blame OpenIddict)
+      
 //Since these calls use the public speakyfox web url "https://www.speakyfox.com" we don't get our used-to custom [Response] type from backend 
 //so we need to use the generic Dio [Response]
   @GET(Constants.urlAGBs)
@@ -42,5 +45,6 @@ abstract class AuthenticationClient {
   @GET(Constants.urlDataProtectionClauses)
   @Headers(<String, dynamic>{"Content-type": "text/html"})
   Future<String> fetchDataProtection();
+  
 }
 

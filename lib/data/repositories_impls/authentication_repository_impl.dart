@@ -200,6 +200,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     return cleared;
   }
 
+
   @override
   User? loadUser() {
     try {
@@ -242,5 +243,23 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       throw NoInternetConnectionUIException();
     }
     throw UIException(message: "AuthenticationRepositoryImpl.fetchDataProtection()");
+  }
+
+
+  @override
+  Future<bool> logout() async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _authenticationClient.logout();
+        bool success = response.data;
+        return success;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw LoggedOutException();
+    }
+
+    throw UIException(message: "UserRepositoryImpl.logout()");
   }
 }

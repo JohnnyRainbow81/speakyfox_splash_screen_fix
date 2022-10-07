@@ -16,25 +16,6 @@ class _ProductClient implements ProductClient {
   String? baseUrl;
 
   @override
-  Future<Response<SubscriptionDto>> getSubscriptionById(id) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<SubscriptionDto>>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/subscriptions/${id}',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Response<SubscriptionDto>.fromJson(
-      _result.data!,
-      (json) => SubscriptionDto.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
   Future<Response<List<ProductDto>>> getAll(param) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'': param};

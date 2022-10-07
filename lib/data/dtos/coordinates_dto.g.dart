@@ -8,11 +8,11 @@ part of 'coordinates_dto.dart';
 
 CoordinatesDto _$CoordinatesDtoFromJson(Map<String, dynamic> json) =>
     CoordinatesDto(
-      x: json['x'] as int,
-      y: json['y'] as int,
-      height: json['height'] as int?,
-      width: json['width'] as int?,
-      degree: json['degree'] as int?,
+      x: (json['x'] as num).toDouble(),
+      y: (json['y'] as num).toDouble(),
+      height: (json['height'] as num?)?.toDouble(),
+      width: (json['width'] as num?)?.toDouble(),
+      degree: (json['degree'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$CoordinatesDtoToJson(CoordinatesDto instance) =>

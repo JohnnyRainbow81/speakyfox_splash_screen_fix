@@ -2,9 +2,9 @@
 import 'package:speakyfox/domain/models/animation_image_group.dart';
 import 'package:speakyfox/domain/models/answer.dart';
 import 'package:speakyfox/domain/models/audio.dart';
-import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language_pair.dart';
+import 'package:speakyfox/domain/models/model_base.dart';
 
 import 'sentence.dart' show Sentence;
 
@@ -55,4 +55,9 @@ class Vocabulary extends ModelBase {
             createdBy: createdBy,
             deleted: deleted,
             deletedBy: deletedBy);
+
+  @override
+  String toString() {
+    return 'Vocabulary(sourceWord: $sourceWord, targetWord: $targetWord, mnemonic: $mnemonic, sourceSentence: $sourceSentence, targetSentence: $targetSentence, sentence: $sentence, question: $question, imageNumber: $imageNumber, languagePairId: $languagePairId, languagePair: $languagePair, vocabularyShellId: $vocabularyShellId, imageGroups: $imageGroups, answers: $answers, images: $images, audios: $audios)';
+  }
 }

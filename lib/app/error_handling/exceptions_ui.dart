@@ -161,6 +161,15 @@ class LoggedOutException extends UIException {
         );
 }
 
+class LogoutNotSuccessfulException extends UIException {
+  LogoutNotSuccessfulException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Logout nicht erfolgreich.",
+          description: description ?? "Wir konnten dich leider nicht ausloggen.",
+        );
+}
+
 class UserException extends UIException {
   UserException({int? code, String? message, String? description})
       : super(

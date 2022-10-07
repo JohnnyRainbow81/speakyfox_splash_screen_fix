@@ -27,8 +27,8 @@ extension SentenceMapper on SentenceDto {
             sourceHighlightedParts.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList(),
         targetHighlightedParts:
             targetHighlightedParts.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList(),
-        images: images.map((image) => image.toImage()).toList(),
-        audios: audios.map((audio) => audio.toAudio()).toList());
+        images: images != null ? images!.map((image) => image.toImage()).toList() : [],
+        audios: audios != null ? audios!.map((audio) => audio.toAudio()).toList() : []);
   }
 }
 

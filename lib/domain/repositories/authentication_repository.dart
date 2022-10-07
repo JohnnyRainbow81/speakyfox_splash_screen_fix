@@ -28,6 +28,7 @@ abstract class AuthenticationRepository {
   Future<Lecture> setLastLecture(String lectureId);
 
   Future<bool> validateToken(String userId, String token);
+  Future<bool> logout();
 
   Future<String> fetchDataProtection();
   Future<String> fetchAGBs();
