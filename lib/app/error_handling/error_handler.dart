@@ -14,7 +14,8 @@ enum Errors {
   userPasswordCoupleInvalid,
   notImplementedYet,
   registrationFailed,
-  loginFailed
+  loginFailed,
+  environment,
 }
 
 //Main tasks:
@@ -64,19 +65,30 @@ class ErrorHandler {
     } else if (error is Errors) {
       switch (error) {
         case Errors.emailNotFound:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "EmailNotFoundException");
           throw EmailNotFoundException();
         case Errors.wrongPassword:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "WrongPasswordException");
           throw WrongPasswordException();
         case Errors.userNotFound:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "UserNotFoundException");
           throw UserNotFoundException();
         case Errors.userPasswordCoupleInvalid:
+          FirebaseCrashlytics.instance
+              .recordError(error, StackTrace.current, reason: "UserPasswordCoupleInvalidException");
           throw UserPasswordCoupleInvalidException();
         case Errors.notImplementedYet:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "NotImplementedYetException");
           throw NotImplementedYetException();
         case Errors.registrationFailed:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "RegistrationFailedException");
           throw RegistrationFailedException();
         case Errors.loginFailed:
-          throw LoginNotSuccessfulException();
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "LoginFailedException");
+          throw LoginFailedException();
+        case Errors.environment:
+          FirebaseCrashlytics.instance.recordError(error, StackTrace.current, reason: "EnvironmentException");
+          throw EnvironmentException();
       }
     } else if (error is Error) {
       //Errors should crash the app, because the app possibly won't be in recoverable state afterwards,

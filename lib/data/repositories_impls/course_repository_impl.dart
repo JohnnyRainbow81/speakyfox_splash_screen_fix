@@ -31,7 +31,7 @@ class CourseRepositoryImpl implements CourseRepository<Course>, BaseRepository<C
         throw NoInternetConnectionUIException();
       }
     }
-    throw LoginNotSuccessfulException();
+    throw LoginFailedException();
   }
 
   @override

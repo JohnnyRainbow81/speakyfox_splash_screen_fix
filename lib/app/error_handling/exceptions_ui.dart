@@ -103,7 +103,8 @@ class SocketUIException extends UIException {
       : super(
           code: code ?? 0,
           message: message ?? "Socket connection error",
-          description: description ?? "We're having trouble with connecting your device to our server for back and forth data exchange",
+          description: description ??
+              "We're having trouble with connecting your device to our server for back and forth data exchange",
         );
 }
 
@@ -112,7 +113,8 @@ class WebSocketUIException extends UIException {
       : super(
           code: code ?? 0,
           message: message ?? "Websocket connection error",
-          description: description ?? "We're having trouble with connecting your device to our server for back and forth data exchange",
+          description: description ??
+              "We're having trouble with connecting your device to our server for back and forth data exchange",
         );
 }
 
@@ -143,8 +145,8 @@ class UnauthenticateddUIException extends UIException {
         );
 }
 
-class LoginNotSuccessfulException extends UIException {
-  LoginNotSuccessfulException({int? code, String? message, String? description})
+class LoginFailedException extends UIException {
+  LoginFailedException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Login was not successful",
@@ -179,7 +181,7 @@ class UserException extends UIException {
         );
 }
 
-class ResetPasswordException extends UIException{
+class ResetPasswordException extends UIException {
   ResetPasswordException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
@@ -243,7 +245,7 @@ class CacheClearingException extends UIException {
 }
 
 class PaymentException extends UIException {
-   PaymentException({int? code, String? message, String? description})
+  PaymentException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Payment error",
@@ -251,9 +253,8 @@ class PaymentException extends UIException {
         );
 }
 
-
 class EmailNotFoundException extends UIException {
-   EmailNotFoundException({int? code, String? message, String? description})
+  EmailNotFoundException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Email nicht gefunden",
@@ -262,7 +263,7 @@ class EmailNotFoundException extends UIException {
 }
 
 class UserNotFoundException extends UIException {
-   UserNotFoundException({int? code, String? message, String? description})
+  UserNotFoundException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "User not found",
@@ -271,7 +272,7 @@ class UserNotFoundException extends UIException {
 }
 
 class WrongPasswordException extends UIException {
-   WrongPasswordException({int? code, String? message, String? description})
+  WrongPasswordException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Falsches Password?",
@@ -279,9 +280,8 @@ class WrongPasswordException extends UIException {
         );
 }
 
-
 class UserPasswordCoupleInvalidException extends UIException {
-   UserPasswordCoupleInvalidException({int? code, String? message, String? description})
+  UserPasswordCoupleInvalidException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Login fehlgeschlagen",
@@ -290,7 +290,7 @@ class UserPasswordCoupleInvalidException extends UIException {
 }
 
 class NotImplementedYetException extends UIException {
-   NotImplementedYetException({int? code, String? message, String? description})
+  NotImplementedYetException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Not implemented yet",
@@ -299,10 +299,19 @@ class NotImplementedYetException extends UIException {
 }
 
 class RegistrationFailedException extends UIException {
-   RegistrationFailedException({int? code, String? message, String? description})
+  RegistrationFailedException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
           message: message ?? "Registrierung fehlgeschlagen",
           description: description ?? "Leider konnten wir keinen Account für dich anlegen.",
+        );
+}
+
+class EnvironmentException extends UIException {
+  EnvironmentException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Fehler beim Initialisieren",
+          description: description ?? "Das Build-Environment konnte leider nicht geladen werden.",
         );
 }

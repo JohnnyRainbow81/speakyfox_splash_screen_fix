@@ -137,7 +137,7 @@ class _AuthenticationClient implements AuthenticationClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<bool>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/api/v1/users/logout',
+                .compose(_dio.options, '/users/logout',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(

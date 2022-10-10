@@ -52,7 +52,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       throw NoInternetConnectionUIException();
     }
 
-    throw LoginNotSuccessfulException();
+    throw LoginFailedException();
   }
 
   @override
@@ -67,7 +67,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } else {
       throw NoInternetConnectionUIException();
     }
-    throw LoginNotSuccessfulException();
+    throw LoginFailedException();
   }
 
   @override
@@ -83,7 +83,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } else {
       throw NoInternetConnectionUIException();
     }
-    throw LoginNotSuccessfulException();
+    throw LoginFailedException();
   }
 
   @override
@@ -200,7 +200,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     return cleared;
   }
 
-
   @override
   User? loadUser() {
     try {
@@ -244,7 +243,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     }
     throw UIException(message: "AuthenticationRepositoryImpl.fetchDataProtection()");
   }
-
 
   @override
   Future<bool> logout() async {

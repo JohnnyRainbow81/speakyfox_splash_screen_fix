@@ -268,5 +268,6 @@ class AuthenticationViewModel extends BaseViewModel {
     _usernameError = null;
     _emailError = null;
     _isRegistrationEmailSent = false;
+    _hasTextFieldFocus = false;
   }
 }

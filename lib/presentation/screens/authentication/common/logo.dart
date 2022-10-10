@@ -12,7 +12,7 @@ class Logo extends ViewModelWidget<AuthenticationViewModel> {
   Widget build(BuildContext context, AuthenticationViewModel viewModel) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 300),
-      alignment: Alignment.topCenter,
+      alignment: Alignment.bottomCenter,
       curve: Curves.decelerate,
       child: Image.asset(
         ImageAssets.speakyfoxLogo,

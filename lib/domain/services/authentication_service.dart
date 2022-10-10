@@ -190,6 +190,10 @@ class AuthenticationService {
   Future<bool> logout() async {
     //clear credentials here?
     _authenticationRepository.clearCredentials();
-    return await _authenticationRepository.logout();
+
+    //FIXME backend issue! > Nina says, the library openIddict doesn't work
+    //return _authenticationRepository.logout();
+
+    return true;
   }
 }

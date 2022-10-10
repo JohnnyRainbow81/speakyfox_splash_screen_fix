@@ -57,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                     onPressed: () async {
                       await locator<AuthenticationService>().logout();
-                      if (mounted) {
+                 
                         GoRouter.of(context).go(Routing.login);
-                      }
+                 
                     },
                     child: const Text("logout")),
                 const SizedBox(

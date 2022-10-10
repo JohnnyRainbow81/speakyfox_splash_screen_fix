@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 
 import 'package:speakyfox/app/constants.dart';
+import 'package:speakyfox/app/error_handling/error_handler.dart';
 
 enum BuildFlavor { development, qa, production }
 
@@ -77,7 +78,7 @@ class BuildEnvironment {
       flavor = BuildFlavor.production;
       map = jsonDecode(str);
     } else {
-      throw Exception("No environment could be loaded");
+      ErrorHandler.handleError(Errors.environment);
     }
 
     _env = BuildEnvironment._init(
