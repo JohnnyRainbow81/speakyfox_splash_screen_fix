@@ -26,9 +26,11 @@ SubscriptionDto _$SubscriptionDtoFromJson(Map<String, dynamic> json) =>
           .toList(),
       interval: json['interval'] as String,
       intervalCount: json['intervalCount'] as int,
-      paymentMethod: UserPaymentMethodDto.fromJson(
-          json['paymentMethod'] as Map<String, dynamic>),
-      nextBillingAmount: json['nextBillingAmount'] as int,
+      paymentMethod: json['paymentMethod'] == null
+          ? null
+          : UserPaymentMethodDto.fromJson(
+              json['paymentMethod'] as Map<String, dynamic>),
+      nextBillingAmount: json['nextBillingAmount'] as int?,
       invoices: (json['invoices'] as List<dynamic>)
           .map((e) => InvoiceDto.fromJson(e as Map<String, dynamic>))
           .toList(),

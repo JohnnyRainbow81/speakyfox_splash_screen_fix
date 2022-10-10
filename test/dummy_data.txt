@@ -26,3 +26,8 @@ targetLanguageId: "49513cb6-32f1-4efd-9542-ad1ecd968c4f"
  offerId: "dfddc1e-c88e-431f-b576-5b7a5c1b29c2"
 
  subscriptionID: "4083c53c-9469-4cc0-a9d1-446113f12d1c"
+
+
+//Files
+
+ image: "65819ea5-f68f-47cb-aa51-133d6052f7a6"

@@ -12,7 +12,8 @@ class FileDto extends BaseDto {
   String contentType;
   String name;
   FileType type;
-
+  dynamic data;
+  
   FileDto({
     required String id,
     String? modified,

@@ -23,7 +23,7 @@ extension SubscriptionMapper on SubscriptionDto {
         languages: languages.map((language) => language.toLanguage()).toList(),
         interval: interval,
         intervalCount: intervalCount,
-        paymentMethod: paymentMethod.toUserPaymentMethod(),
+        paymentMethod: paymentMethod?.toUserPaymentMethod(),
         nextBillingAmount: nextBillingAmount,
         invoices: invoices.map((invoice) => invoice.toInvoice()).toList());
   }

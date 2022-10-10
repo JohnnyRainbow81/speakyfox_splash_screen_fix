@@ -13,6 +13,17 @@ void main() async {
   SubscriptionClient subscriptionClient = SubscriptionClient(dio, baseUrl: "${TestConstants.baseUrlQA}subscriptions");
   group(SubscriptionClient, () {
     test(
+      'getById',
+      () async {
+        // 06851041-1bb2-481f-af96-7c3ce4f75667
+        final response = await subscriptionClient.getById("06851041-1bb2-481f-af96-7c3ce4f75667");
+
+        final subscription = response.data.toSubscription();
+
+        debugPrint(subscription.toString());
+      },
+    );
+    test(
       'getAll',
       () async {
         final response = await subscriptionClient.getAll("");

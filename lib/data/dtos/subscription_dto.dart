@@ -21,8 +21,8 @@ class SubscriptionDto extends BaseDto {
   List<LanguageDto> languages = [];
   String interval;
   int intervalCount;
-  UserPaymentMethodDto paymentMethod;
-  int nextBillingAmount;
+  UserPaymentMethodDto? paymentMethod;
+  int? nextBillingAmount;
   List<InvoiceDto> invoices;
 
   SubscriptionDto({

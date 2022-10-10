@@ -7,8 +7,8 @@ import 'package:speakyfox/presentation/common/widgets/list_tile_widget.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/common/widgets/rating_widget.dart';
 
-class TestScreen extends StatelessWidget {
-  const TestScreen({Key? key}) : super(key: key);
+class CITestScreen extends StatelessWidget {
+  const CITestScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

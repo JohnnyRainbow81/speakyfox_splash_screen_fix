@@ -2,11 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/model_base.dart';
 
 enum FileType {
-  @JsonValue("image")
+  @JsonValue("Image")
   image,
-  @JsonValue("audio")
+  @JsonValue("Audio")
   audio,
-  @JsonValue("file")
+  @JsonValue("File")
   file
 }
 

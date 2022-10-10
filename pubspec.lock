@@ -591,7 +591,7 @@ packages:
     source: hosted
     version: "4.0.1"
   image:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: image
       url: "https://pub.dartlang.org"
@@ -745,7 +745,7 @@ packages:
     source: hosted
     version: "0.2.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

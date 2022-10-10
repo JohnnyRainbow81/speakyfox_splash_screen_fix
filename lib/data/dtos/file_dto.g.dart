@@ -18,7 +18,7 @@ FileDto _$FileDtoFromJson(Map<String, dynamic> json) => FileDto(
       contentType: json['contentType'] as String,
       name: json['name'] as String,
       type: $enumDecode(_$FileTypeEnumMap, json['type']),
-    );
+    )..data = json['data'];
 
 Map<String, dynamic> _$FileDtoToJson(FileDto instance) => <String, dynamic>{
       'id': instance.id,
@@ -32,10 +32,11 @@ Map<String, dynamic> _$FileDtoToJson(FileDto instance) => <String, dynamic>{
       'contentType': instance.contentType,
       'name': instance.name,
       'type': _$FileTypeEnumMap[instance.type]!,
+      'data': instance.data,
     };
 
 const _$FileTypeEnumMap = {
-  FileType.image: 'image',
-  FileType.audio: 'audio',
-  FileType.file: 'file',
+  FileType.image: 'Image',
+  FileType.audio: 'Audio',
+  FileType.file: 'File',
 };

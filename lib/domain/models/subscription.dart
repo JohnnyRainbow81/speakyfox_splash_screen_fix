@@ -19,7 +19,7 @@ class Subscription extends ModelBase {
   String interval;
   int intervalCount;
   UserPaymentMethod? paymentMethod;
-  int nextBillingAmount;
+  int? nextBillingAmount;
   List<Invoice> invoices = [];
 
   Subscription({
