@@ -156,7 +156,7 @@ class AuthenticationViewModel extends BaseViewModel {
     } else {
       _emailLoginError = null;
     }
-    _emailLogin= email;
+    _emailLogin = email;
     notifyListeners();
   }
 
@@ -192,7 +192,6 @@ class AuthenticationViewModel extends BaseViewModel {
         _emailRegistrationError == null &&
         _isAGB_accepted == true &&
         _isDataProtectionAccepted == true;
-
   }
 
   //email validation has already been done at this point. "valid" then means, that
@@ -206,7 +205,7 @@ class AuthenticationViewModel extends BaseViewModel {
   Future<void> login() async {
     await runBusyFuture<bool?>(_authenticationService.login(_emailLogin, _passwordLogin));
     if (_authenticationService.isAuthenticated()) {
-      _passwordLogin = "";
+      _resetInputs();
       notifyListeners();
     }
   }
@@ -252,15 +251,11 @@ class AuthenticationViewModel extends BaseViewModel {
     _isRegistrationEmailSent = success ?? false;
 
     if (_isRegistrationEmailSent) {
-      //pre-fill login email with registration email
-      //leave password blank due to data protection
+
+      //pre-fill login email with registration email (leave password blank due to data protection)..
       _emailLogin = _emailRegistration;
-
-      //reset registration data
-      _usernameRegistration = "";
-      _emailRegistration = "";
-      _passwordRegistration = "";
-
+      //.. but reset other login / registration data
+      _resetInputs();   Hier stimmt was nicht
       notifyListeners();
     }
   }
@@ -300,7 +295,13 @@ class AuthenticationViewModel extends BaseViewModel {
     //TODO backend must offer data Protection HTML data first
   }
 
-  void reset() {
+  void _resetInputs() {
+    _usernameRegistration = "";
+    _emailRegistration = "";
+    _passwordRegistration = "";
+
+    _passwordLogin = "";
+
     _passwordRegistrationError = null;
     _usernameRegistrationError = null;
     _emailRegistrationError = null;
@@ -308,7 +309,9 @@ class AuthenticationViewModel extends BaseViewModel {
     _passwordLoginError = null;
     _emailLoginError = null;
 
-    _isRegistrationEmailSent = false;
+    _isAGB_accepted = false;
+    _isDataProtectionAccepted = false;
+
     _hasTextFieldFocus = false;
   }
 }

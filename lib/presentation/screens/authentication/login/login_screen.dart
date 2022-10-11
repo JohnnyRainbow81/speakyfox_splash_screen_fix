@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     _scrollController = ScrollController();
-    _authenticationViewModel.reset();
+    //_authenticationViewModel.reset();
 
     _node.addListener(onTextFieldFocus);
   }
