@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "555916548277",
-    "project_id": "diggitize-starterkit",
-    "storage_bucket": "diggitize-starterkit.appspot.com"
+    "project_number": "278018013804",
+    "project_id": "speakyfox-6ab59",
+    "storage_bucket": "speakyfox-6ab59.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:555916548277:android:fe2305d3cb6013062dc6fc",
+        "mobilesdk_app_id": "1:278018013804:android:5a7b682e5ec83a2003f649",
         "android_client_info": {
-          "package_name": "com.example.starterkit_flutter"
+          "package_name": "com.speakyfox.multiplatform"
         }
       },
       "oauth_client": [
         {
-          "client_id": "555916548277-s09qrvqe90df7gh8d635te1rvk3lnt7o.apps.googleusercontent.com",
+          "client_id": "278018013804-futga11n7fbgg5khod2qsfooaveeh9pn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDADrvQgxYJu6UP3JT--q4gUBVtI-VBUEw"
+          "current_key": "AIzaSyCOxekPsekcLvzmpe8sUrfZWGNs8Vu_RBY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "555916548277-s09qrvqe90df7gh8d635te1rvk3lnt7o.apps.googleusercontent.com",
+              "client_id": "278018013804-futga11n7fbgg5khod2qsfooaveeh9pn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

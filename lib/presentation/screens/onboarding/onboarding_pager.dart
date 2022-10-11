@@ -46,6 +46,10 @@ class _OnboardingPagerState extends State<OnboardingPager> {
     _pageController.dispose();
     super.dispose();
   }
+  
+  void goToLoginScreen() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +116,7 @@ class _OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         screenData.imageAsset != null
             ? AspectRatio(aspectRatio: 4 / 5, child: Image.asset(screenData.imageAsset!))

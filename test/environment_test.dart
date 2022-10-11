@@ -10,10 +10,11 @@ import 'package:speakyfox/app/environment.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
   test(
     "Environment Setup",
     () async {
-      await BuildEnvironment.init();
+      await BuildEnvironment.init();  //How to test with Environment variable?
       print(env.toString());
     },
   );

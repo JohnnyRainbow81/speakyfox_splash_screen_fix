@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -41,7 +42,18 @@ class AuthenticationService {
     return _authenticationRepository.clearCredentials();
   }
 
-  Future<bool> login(String username, String password) async {
+  User? getUser() {
+    //returns User only if User already is saved locally. 
+    //A User exists locally from the point where he registered successfully.
+    return _authenticationRepository.loadUser();
+  }
+
+  Future<bool> register(CreateProfileUserRequest user) async {
+    await _authenticationRepository.register(user);
+    return true;
+  }
+
+  Future<bool?> login(String username, String password) async {
     Ticket ticket = await _authenticationRepository.accessToken(
         AuthenticationRequestBody(userName: username, password: password, grantType: GrantType.password.name));
     User me = await _authenticationRepository.fetchUser("Bearer ${ticket.accessToken}");
@@ -71,25 +83,13 @@ class AuthenticationService {
     return false;
   }
 
-  Future<String?> tryInitializingAuthenticationFromCache() async {
-    IdentityToken? credentials = getCredentials();
-
-    bool hasValidCredentials = credentials != null && !isExpired(credentials);
-
-    if (hasValidCredentials == true) {
-      return credentials!.accessToken;
-    } else {
-      return null; //No valid authToken so return null
-    }
-  }
-
   bool isAuthenticated() {
     IdentityToken? credentials = getCredentials();
 
     return credentials != null && !isExpired(credentials);
   }
 
-  Future<bool> sendPasswordResetEmail(SendPasswordResetBody body) async {
+  Future<bool?> sendPasswordResetEmail(SendPasswordResetBody body) async {
     final bool success = await _authenticationRepository.sendPasswordResetEmail(body);
     return success;
   }
@@ -175,12 +175,21 @@ class AuthenticationService {
     setCredentials(identityToken);
   }
 
+  //See "TokenService" in SpeakyFox WebApp. Not sure if needed..
   Future<bool> validateToken(String userId, String token) {
     return _authenticationRepository.validateToken(userId, token);
   }
 
-  Future<bool> logout() async{
-    bool clearedCredentials = await _authenticationRepository.clearCredentials();
-    return clearedCredentials;
+  Future<String> fetchDataProtection() async {
+    return _authenticationRepository.fetchDataProtection();
+  }
+
+  Future<String> fetchAGBs() async {
+    return _authenticationRepository.fetchAGBs();
+  }
+
+  Future<bool> logout() async {
+    //clear credentials here?
+    return await _authenticationRepository.clearCredentials();
   }
 }

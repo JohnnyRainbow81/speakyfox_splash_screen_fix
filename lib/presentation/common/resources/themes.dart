@@ -19,6 +19,7 @@ ThemeData getApplicationTheme() {
     textButtonTheme: _getTextButtonTheme(),
     iconTheme: _getIconThemeData(),
     bottomSheetTheme: _getBottomSheetTheme(),
+    checkboxTheme: _getCheckboxTheme(),
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
@@ -48,7 +49,7 @@ TextTheme _getApplicationTextTheme() {
     headline4: TextStyle(
         fontSize: 32, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline5: TextStyle(
-        fontSize: 23, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
+        fontSize: 21, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     headline6: TextStyle(
         fontSize: 18, fontWeight: FontWeight.bold, color: ColorAssets.primary, fontFamily: FontAssets.primary), //b
     button: TextStyle(
@@ -112,14 +113,17 @@ ButtonThemeData _getButtonThemeData() {
 TextButtonThemeData _getTextButtonTheme() => TextButtonThemeData(style: _getTextButtonStyle());
 
 ButtonStyle _getTextButtonStyle() {
-  return ButtonStyle(
-      textStyle: MaterialStateProperty.all<TextStyle>(TextStyle(
+  return ButtonStyle(textStyle: MaterialStateProperty.all<TextStyle>(getUnderlinedTextStyle()));
+}
+
+TextStyle getUnderlinedTextStyle() {
+  return TextStyle(
     foreground: Paint()..color = ColorAssets.primary,
     fontSize: 13,
     fontWeight: FontWeight.w600,
     decoration: TextDecoration.underline,
     decorationColor: ColorAssets.primary,
-  )));
+  );
 }
 
 ElevatedButtonThemeData _getElevatedButtonThemeData() {
@@ -190,7 +194,7 @@ InputDecorationTheme _getInputDecorationTheme() {
     filled: true,
     focusColor: ColorAssets.error, //error color = debug only! change!
     iconColor: ColorAssets.bgBlueLight, errorMaxLines: 2,
-    suffixIconColor: ColorAssets.markupGreen, 
+    suffixIconColor: ColorAssets.markupGreen,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(32),
       borderSide: BorderSide.none,
@@ -209,4 +213,12 @@ InputDecorationTheme _getInputDecorationTheme() {
         borderSide: BorderSide(color: ColorAssets.error, width: 1.6)),
     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
   );
+}
+
+CheckboxThemeData _getCheckboxTheme() {
+  return CheckboxThemeData(
+      side: MaterialStateBorderSide.resolveWith((states) => const BorderSide(width: 1.6, color: ColorAssets.primary)),
+      fillColor: MaterialStateProperty.resolveWith<Color>((states) => ColorAssets.primary),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(4)), side: BorderSide(width: 1, color: ColorAssets.primary)));
 }

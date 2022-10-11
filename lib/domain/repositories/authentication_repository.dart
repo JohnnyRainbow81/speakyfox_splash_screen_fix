@@ -1,4 +1,5 @@
 import 'package:speakyfox/data/requests/authentication_body.dart';
+import 'package:speakyfox/data/requests/create_user_request.dart';
 import 'package:speakyfox/data/requests/refresh_token_body.dart';
 import 'package:speakyfox/data/requests/reset_password_body.dart';
 import 'package:speakyfox/data/requests/send_password_reset_body.dart';
@@ -11,8 +12,11 @@ abstract class AuthenticationRepository {
   Future<Ticket> accessToken(AuthenticationRequestBody body);
   Future<Ticket> refreshToken(RefreshTokenBody body);
 
+  Future<User> register(CreateProfileUserRequest user);
+
   Future<User> fetchUser(String authToken);
 
+  User? loadUser();
   IdentityToken? loadCredentials();
   Future<bool> saveCredentials(IdentityToken identityToken);
   Future<bool> clearCredentials();
@@ -24,4 +28,7 @@ abstract class AuthenticationRepository {
   Future<Lecture> setLastLecture(String lectureId);
 
   Future<bool> validateToken(String userId, String token);
+
+  Future<String> fetchDataProtection();
+  Future<String> fetchAGBs();
 }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 //delete if you don't need
 
 class Uuid {
@@ -24,7 +26,9 @@ class Uuid {
 }
 
 bool isValidEmail(String email) {
-  bool valid = RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(email);
+  bool valid = RegExp(
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+      .hasMatch(email);
   return valid;
 }
 
@@ -42,5 +46,14 @@ bool isValidPassword(String password) {
 //   (?=.*[a-z])       // should contain at least one lower case
 //   (?=.*?[0-9])      // should contain at least one digit
 //   (?=.*?[!@#\$&*~]) // should contain at least one Special character
-//   .{8,}             // Must be at least 8 characters in length  
+//   .{8,}             // Must be at least 8 characters in length
 // $
+
+bool isKeyboardVisible(BuildContext context) {
+  double inset = MediaQuery.of(context).viewInsets.bottom;
+  return inset > 0;
+}
+
+void ensureKeyboardIsHidden(BuildContext context) {
+    FocusManager.instance.primaryFocus?.unfocus();
+}

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speakyfox/app/connectivity_service.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/remote/plan_client.dart';
 import 'package:speakyfox/data/repositories_impls/plan_repository_impl.dart';
@@ -16,7 +17,8 @@ void main() async {
 
   String token = await getAuthTokenForTesting();
 
-  final dioV1 = await DioV1.initialize("");
+    final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+
   TestWidgetsFlutterBinding.ensureInitialized();
   final connectivityService = ConnectivityService();
   PlanClient client = PlanClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/plans");

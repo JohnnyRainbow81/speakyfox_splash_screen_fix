@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:speakyfox/app/connectivity_service.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/remote/language_client.dart';
 import 'package:speakyfox/data/repositories_impls/language_repository_impl.dart';
@@ -18,7 +19,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   String token = await getAuthTokenForTesting();
-  Dio dio = await DioV1.initialize("https://speakyfox-api-production.herokuapp.com/api/v1/languages/");
+    final dio =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+
   LanguageClient languageClient = LanguageClient(dio);
 
   //Let's mock ConnectivityService because it cries about not finding the Method Channel. Hopefully it works on the target platforms...

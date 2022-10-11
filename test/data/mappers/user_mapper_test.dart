@@ -33,13 +33,16 @@ void main() {
         subscriptionIds: ["sub123", "sub456"],
         userName: "Stefan81");
 
+// Convert to DTO...
     UserDto userDto = user.toUserDto();
 
+// And back from DTO
     User sameUser = userDto.toUser();
 
+// Should stillbe the same user data
     expect(sameUser, equals(user));
+
     print("user: ${user.toString()}");
     print("sameUser: ${sameUser.toString()}");
-
   });
 }

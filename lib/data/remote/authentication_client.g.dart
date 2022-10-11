@@ -16,50 +16,26 @@ class _AuthenticationClient implements AuthenticationClient {
   String? baseUrl;
 
   @override
-  Future<TicketDto> accessToken(body) async {
+  Future<Response<UserDto>> register(user) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'Content-type': 'application/x-www-form-urlencoded'
-    };
+    final _headers = <String, dynamic>{r'Content-type': 'application/json'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    _data.addAll(user.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<TicketDto>(Options(
+        _setStreamType<Response<UserDto>>(Options(
                 method: 'POST',
                 headers: _headers,
                 extra: _extra,
-                contentType: 'application/x-www-form-urlencoded')
-            .compose(_dio.options,
-                'https://speakyfox-api-qa.herokuapp.com/connect/token',
+                contentType: 'application/json')
+            .compose(_dio.options, '/users',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TicketDto.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<TicketDto> refreshToken(body) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'Content-type': 'application/x-www-form-urlencoded'
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<TicketDto>(Options(
-                method: 'POST',
-                headers: _headers,
-                extra: _extra,
-                contentType: 'application/x-www-form-urlencoded')
-            .compose(_dio.options,
-                'https://speakyfox-api-qa.herokuapp.com/connect/token',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = TicketDto.fromJson(_result.data!);
+    final value = Response<UserDto>.fromJson(
+      _result.data!,
+      (json) => UserDto.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
@@ -113,15 +89,19 @@ class _AuthenticationClient implements AuthenticationClient {
   Future<Response<bool>> sendPasswordResetEmail(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': 'application/json'};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Response<bool>>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '/users/password-reset',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<Response<bool>>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'application/json')
+            .compose(_dio.options, '/users/password-reset',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
       _result.data!,
       (json) => json as bool,
@@ -145,6 +125,44 @@ class _AuthenticationClient implements AuthenticationClient {
       _result.data!,
       (json) => json as bool,
     );
+    return value;
+  }
+
+  @override
+  Future<String> fetchAGBs() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-type': 'text/html'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+            method: 'GET',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'text/html')
+        .compose(_dio.options, 'https://speakyfox.com/agb/',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
+    return value;
+  }
+
+  @override
+  Future<String> fetchDataProtection() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-type': 'text/html'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+            method: 'GET',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'text/html')
+        .compose(_dio.options, 'https://speakyfox.com/datenschutzerklaerung/',
+            queryParameters: queryParameters, data: _data)
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data!;
     return value;
   }
 

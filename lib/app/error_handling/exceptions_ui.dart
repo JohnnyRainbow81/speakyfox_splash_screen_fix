@@ -134,12 +134,12 @@ class BadRequestUIException extends UIException {
         );
 }
 
-class UnauthorizedUIException extends UIException {
-  UnauthorizedUIException({int? code, String? message, String? description})
+class UnauthenticateddUIException extends UIException {
+  UnauthenticateddUIException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Unauthorized error",
-          description: description ?? "Authentication is necessary, says our server.",
+          message: message ?? "Fehler bei der Authentifizierung",
+          description: description ?? "Leider konnte unser Server dich nicht identifizieren.",
         );
 }
 
@@ -243,4 +243,57 @@ class PaymentException extends UIException {
 }
 
 
+class EmailNotFoundException extends UIException {
+   EmailNotFoundException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Email nicht gefunden",
+          description: description ?? "Wir konnten deine E-Mail Adresse leider nicht in unserem System finden",
+        );
+}
 
+class UserNotFoundException extends UIException {
+   UserNotFoundException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "User not found",
+          description: description ?? "We couldn't find any user with this name in our system",
+        );
+}
+
+class WrongPasswordException extends UIException {
+   WrongPasswordException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Falsches Password?",
+          description: description ?? "Dieses Password passt nicht zur E-Mail-Adresse",
+        );
+}
+
+
+class UserPasswordCoupleInvalidException extends UIException {
+   UserPasswordCoupleInvalidException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Login fehlgeschlagen",
+          description: description ?? "Diese E-Mail/Password Kombination existiert leider nicht.",
+        );
+}
+
+class NotImplementedYetException extends UIException {
+   NotImplementedYetException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Not implemented yet",
+          description: description ?? "...but will be available soon.",
+        );
+}
+
+class RegistrationFailedException extends UIException {
+   RegistrationFailedException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Registrierung fehlgeschlagen",
+          description: description ?? "Leider konnten wir keinen Account für dich anlegen.",
+        );
+}

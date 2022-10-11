@@ -7,12 +7,13 @@ import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:speakyfox/data/requests/authentication_body.dart' as _i7;
+import 'package:speakyfox/data/requests/create_user_request.dart' as _i9;
 import 'package:speakyfox/data/requests/refresh_token_body.dart' as _i8;
-import 'package:speakyfox/data/requests/reset_password_body.dart' as _i10;
-import 'package:speakyfox/data/requests/send_password_reset_body.dart' as _i11;
-import 'package:speakyfox/domain/models/identity_token.dart' as _i9;
+import 'package:speakyfox/data/requests/reset_password_body.dart' as _i11;
+import 'package:speakyfox/data/requests/send_password_reset_body.dart' as _i12;
+import 'package:speakyfox/domain/models/identity_token.dart' as _i10;
 import 'package:speakyfox/domain/models/lecture.dart' as _i4;
-import 'package:speakyfox/domain/models/role.dart' as _i12;
+import 'package:speakyfox/domain/models/role.dart' as _i13;
 import 'package:speakyfox/domain/models/ticket.dart' as _i2;
 import 'package:speakyfox/domain/models/user.dart' as _i3;
 import 'package:speakyfox/domain/repositories/authentication_repository.dart'
@@ -66,22 +67,32 @@ class MockAuthenticationRepository extends _i1.Mock
                   this, Invocation.method(#refreshToken, [body]))))
           as _i6.Future<_i2.Ticket>);
   @override
+  _i6.Future<_i3.User> register(_i9.CreateProfileUserRequest? user) =>
+      (super.noSuchMethod(Invocation.method(#register, [user]),
+              returnValue: _i6.Future<_i3.User>.value(
+                  _FakeUser_1(this, Invocation.method(#register, [user]))))
+          as _i6.Future<_i3.User>);
+  @override
   _i6.Future<_i3.User> fetchUser(String? authToken) => (super.noSuchMethod(
           Invocation.method(#fetchUser, [authToken]),
           returnValue: _i6.Future<_i3.User>.value(
               _FakeUser_1(this, Invocation.method(#fetchUser, [authToken]))))
       as _i6.Future<_i3.User>);
   @override
-  _i6.Future<bool> saveCredentials(_i9.IdentityToken? identityToken) =>
+  _i6.Future<bool> saveCredentials(_i10.IdentityToken? identityToken) =>
       (super.noSuchMethod(Invocation.method(#saveCredentials, [identityToken]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
   @override
+  _i6.Future<bool> clearCredentials() =>
+      (super.noSuchMethod(Invocation.method(#clearCredentials, []),
+          returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
+  @override
   _i6.Future<bool> resetPassword(
-          String? userId, _i10.ResetPasswordBody? body) =>
+          String? userId, _i11.ResetPasswordBody? body) =>
       (super.noSuchMethod(Invocation.method(#resetPassword, [userId, body]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
   @override
-  _i6.Future<bool> sendPasswordResetEmail(_i11.SendPasswordResetBody? body) =>
+  _i6.Future<bool> sendPasswordResetEmail(_i12.SendPasswordResetBody? body) =>
       (super.noSuchMethod(Invocation.method(#sendPasswordResetEmail, [body]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
   @override
@@ -100,6 +111,14 @@ class MockAuthenticationRepository extends _i1.Mock
   _i6.Future<bool> validateToken(String? userId, String? token) =>
       (super.noSuchMethod(Invocation.method(#validateToken, [userId, token]),
           returnValue: _i6.Future<bool>.value(false)) as _i6.Future<bool>);
+  @override
+  _i6.Future<String> fetchDataProtection() =>
+      (super.noSuchMethod(Invocation.method(#fetchDataProtection, []),
+          returnValue: _i6.Future<String>.value('')) as _i6.Future<String>);
+  @override
+  _i6.Future<String> fetchAGBs() =>
+      (super.noSuchMethod(Invocation.method(#fetchAGBs, []),
+          returnValue: _i6.Future<String>.value('')) as _i6.Future<String>);
 }
 
 /// A class which mocks [AuthenticationRequestBody].
@@ -246,11 +265,11 @@ class MockUser extends _i1.Mock implements _i3.User {
       super.noSuchMethod(Invocation.setter(#lockoutEnd, _lockoutEnd),
           returnValueForMissingStub: null);
   @override
-  List<_i12.Role> get roles =>
-      (super.noSuchMethod(Invocation.getter(#roles), returnValue: <_i12.Role>[])
-          as List<_i12.Role>);
+  List<_i13.Role> get roles =>
+      (super.noSuchMethod(Invocation.getter(#roles), returnValue: <_i13.Role>[])
+          as List<_i13.Role>);
   @override
-  set roles(List<_i12.Role>? _roles) =>
+  set roles(List<_i13.Role>? _roles) =>
       super.noSuchMethod(Invocation.setter(#roles, _roles),
           returnValueForMissingStub: null);
   @override
@@ -374,7 +393,7 @@ class MockTicket extends _i1.Mock implements _i2.Ticket {
 /// A class which mocks [IdentityToken].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIdentityToken extends _i1.Mock implements _i9.IdentityToken {
+class MockIdentityToken extends _i1.Mock implements _i10.IdentityToken {
   MockIdentityToken() {
     _i1.throwOnMissingStub(this);
   }

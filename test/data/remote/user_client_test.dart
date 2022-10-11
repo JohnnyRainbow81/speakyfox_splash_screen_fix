@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' hide Response;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/data/dio_factory.dart';
 import 'package:speakyfox/data/remote/user_client.dart';
 import 'package:speakyfox/data/requests/create_user_request.dart';
@@ -8,14 +9,15 @@ import '../../test_get_access_token.dart';
 
 void main() async {
   String token = await getAuthTokenForTesting();
-  final dioV1 = await DioV1.initialize("");
+    final dioV1 =  DioFactory.initialize(baseUrl:Constants.baseUrlAuthQA);
+
   UserClient userClient = UserClient(dioV1, baseUrl: "https://speakyfox-api-production.herokuapp.com/api/v1/users/");
   test('createUser() throws 405', (() async {
     CreateProfileUserRequest request =
         CreateProfileUserRequest(firstname: "Lea", lastname: "D", email: "email", password: "123pass", affiliateId: "");
 
     expectLater(
-        userClient.createUser(request.toMap()),
+        userClient.createUser(request.toJson()),
         throwsA(predicate(
             (f) => f is DioError && f.response?.statusCode == 405, "Forbidden to create User with this call")));
   }));

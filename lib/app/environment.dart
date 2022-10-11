@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:speakyfox/app/constants.dart';
@@ -25,8 +24,12 @@ class BuildEnvironment {
   static const String _keySupportedLanguages = "supportedLanguages";
   static const String _keyHmr = "hmr";
 
+  static const String _dev = "dev";
+  static const String _qa = "qa";
+  static const String _prod = "prod";
+
   final bool production;
-  final String serverUrlAuth = Constants.baseUrlAuth;
+  late final String serverUrlAuth;
   final String serverUrl;
   final String serverUrlV2;
   final String documentrApiUrl;
@@ -37,7 +40,7 @@ class BuildEnvironment {
   final List<String> supportedLanguages;
   final bool hmr;
 
-  final BuildFlavor flavor;
+  static late BuildFlavor flavor;
 
   BuildEnvironment._init(
       {required this.production,
@@ -50,35 +53,61 @@ class BuildEnvironment {
       required this.environmentName,
       required this.supportedLanguages,
       required this.hmr,
-      required this.flavor});
+      required this.serverUrlAuth});
 
   static Future<void> init() async {
     Map<String, dynamic> map = {};
-    if (kDebugMode || kProfileMode) { 
+
+    // Here we initially check in which Environment we are:
+    const String envString = String.fromEnvironment("env"); //delete later
+    print(
+      "environment : $envString",
+    );
+
+    if (envString == _dev) {
+      String str = await rootBundle.loadString("assets/environments/dev.json");
+      map = jsonDecode(str);
+      flavor = BuildFlavor.development;
+    } else if (envString == _qa) {
       String str = await rootBundle.loadString("assets/environments/qa.json");
       map = jsonDecode(str);
-    } else if (kReleaseMode) {
+      flavor = BuildFlavor.qa;
+    } else if (envString == _prod) {
       String str = await rootBundle.loadString("assets/environments/prod.json");
+      flavor = BuildFlavor.production;
       map = jsonDecode(str);
+    } else {
+      throw Exception("No environment could be loaded");
     }
+
     _env = BuildEnvironment._init(
-        production: map[_keyProduction],
-        serverUrl: map[_keyServerUrl],
-        serverUrlV2: map[_keyServerUrlV2],
-        documentrApiUrl: map[_keyDocumentrApiUrl],
-        documentrApiKey: map[_keyDocumentrApiKey],
-        defaultLanguage: map[_keyDefaultLanguage],
-        payPalClientId: map[_keyPayPalClientId],
-        environmentName: map[_keyEnvironmentName],
-        supportedLanguages: List<String>.from(map[_keySupportedLanguages]),
-        hmr: map[_keyHmr],
-        flavor: BuildFlavor.production);
+      production: map[_keyProduction],
+      serverUrlAuth: _getServerUrlAuth(),
+      serverUrl: map[_keyServerUrl],
+      serverUrlV2: map[_keyServerUrlV2],
+      documentrApiUrl: map[_keyDocumentrApiUrl],
+      documentrApiKey: map[_keyDocumentrApiKey],
+      defaultLanguage: map[_keyDefaultLanguage],
+      payPalClientId: map[_keyPayPalClientId],
+      environmentName: map[_keyEnvironmentName],
+      supportedLanguages: List<String>.from(map[_keySupportedLanguages]),
+      hmr: map[_keyHmr],
+    );
   }
 
-  
+  static String _getServerUrlAuth() {
+    switch (BuildEnvironment.flavor) {
+      case BuildFlavor.development:
+        return Constants.baseUrlAuthDev;
+      case BuildFlavor.qa:
+        return Constants.baseUrlAuthQA;
+      case BuildFlavor.production:
+        return Constants.baseUrlAuthProd;
+    }
+  }
 
   @override
   String toString() {
-    return 'BuildEnvironment(production: $production, serverUrl: $serverUrl, serverUrlV2: $serverUrlV2, documentrApiUrl: $documentrApiUrl, documentrApiKey: $documentrApiKey, defaultLanguage: $defaultLanguage, payPalClientId: $payPalClientId, environmentName: $environmentName, supportedLanguages: $supportedLanguages, hmr: $hmr, flavor: $flavor)';
+    return 'BuildEnvironment(production: $production, serverUrlAuth: $serverUrlAuth, serverUrl: $serverUrl, serverUrlV2: $serverUrlV2, documentrApiUrl: $documentrApiUrl, documentrApiKey: $documentrApiKey, defaultLanguage: $defaultLanguage, payPalClientId: $payPalClientId, environmentName: $environmentName, supportedLanguages: $supportedLanguages, hmr: $hmr)';
   }
 }

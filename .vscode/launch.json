@@ -8,25 +8,92 @@
             "name": "speakyfox: run all tests",
             "request": "launch",
             "type": "dart",
-            "program": "./test/"
+            "program": "./test/",
+            "args": [
+                "--dart-define",
+                "env=qa"]
            },
 
-        {
-            "name": "speakyfox",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "speakyfox (profile mode)",
+           {
+            "name": "speakyfox (debug mode dev)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define",
+                "env=dev"]
         },
         {
-            "name": "speakyfox (release mode)",
+            "name": "speakyfox (debug mode QA)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define",
+                "env=qa"]
+        },
+        {
+            "name": "speakyfox (debug mode production)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define",
+                "env=prod"],
+        },
+        {
+            "name": "speakyfox (profile mode dev)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define",
+                "env=dev"]
+        },
+        {
+            "name": "speakyfox (profile mode QA)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define",
+                "env=qa"]
+        },
+        {
+            "name": "speakyfox (profile mode production)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "args": [
+                "--dart-define",
+                "env=prod"]
+        },
+        {
+            "name": "speakyfox (release mode dev)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--dart-define",
+                "env=dev"]
+        },
+        {
+            "name": "speakyfox (release mode QA)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--dart-define",
+                "env=qa"]
+        },
+        {
+            "name": "speakyfox (release mode production)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": [
+                "--dart-define",
+                "env=prod"]
         }
     ]
 }
