@@ -86,10 +86,10 @@ class Routing {
           //User is not logged in > go to the authentication screens
           if (!loggedIn && !goingToLogin) return login;
 
-          //User started app and is still logged in > go to home screen
+          //User started app and is still logged in
           if (loggedIn && _isAppStart) {
             _isAppStart = false;
-            return null; // no need to redirect
+            return null; // no need to redirect (will be default "/" route)
           }
           return null; // no need to redirect
         },

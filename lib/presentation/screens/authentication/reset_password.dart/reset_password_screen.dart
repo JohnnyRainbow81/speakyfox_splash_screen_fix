@@ -33,14 +33,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   void initState() {
     super.initState();
     _authenticationViewModel.reset();
-    _emailController.text = _authenticationViewModel.email;
-    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
+    _emailController.text = _authenticationViewModel.emailLogin;
+    _emailController.addListener(() => _authenticationViewModel.validateEmailLogin(_emailController.text));
   }
 
   @override
   void dispose() {
     debugPrint("ResetPasswordScreen.dispose()");
-    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
+    _emailController.removeListener(() => _authenticationViewModel.validateEmailLogin);
     _emailController.dispose();
     super.dispose();
   }
@@ -95,7 +95,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           autofillHints: const [AutofillHints.email],
                           decoration: InputDecoration(
                               hintText: "E-Mail",
-                              errorText: _authenticationViewModel.emailError,
+                              errorText: _authenticationViewModel.emailLoginError,
                               prefixIcon: const Icon(Icons.email)),
                           controller: _emailController,
                         ),

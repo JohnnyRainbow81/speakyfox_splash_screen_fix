@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:speakyfox/app/utilities.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/resources/image_assets.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/authentication/common/logo.dart';
@@ -39,18 +36,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //If user is logged in when starting the app she gets directly transfered to home screen
-      if (_authenticationViewModel.isLoggedIn) {
-        goToHomeScreen();
-      }
+    _emailController.text = _authenticationViewModel.emailLogin;
+    _passwordController.text = _authenticationViewModel.passwordLogin;
+
+    _emailController.addListener(() => _authenticationViewModel.validateEmailLogin(_emailController.text));
+    _passwordController.addListener(() => _authenticationViewModel.validatePasswordLogin(_passwordController.text));
+
+    //if textfields already contain data after screen initialisation
+    //> check if they're valid by triggering validation listeners manually once
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      //this functionality needs to be registered inside this callback 
+      //because the Login-Screen might be the root route, 
+      //so it might not be disposed and therefore initState() won't be called again.
+      if (_emailController.text.isNotEmpty) _emailController.notifyListeners();
+      if (_passwordController.text.isNotEmpty) _passwordController.notifyListeners();
     });
-
-    _emailController.text = _authenticationViewModel.email;
-    _passwordController.text = _authenticationViewModel.password;
-
-    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
-    _passwordController.addListener(() => _authenticationViewModel.validatePassword(_passwordController.text));
 
     _scrollController = ScrollController();
     _authenticationViewModel.reset();
@@ -61,8 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     debugPrint("LoginScreen.dispose()");
-    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
-    _passwordController.removeListener(() => _authenticationViewModel.validatePassword);
+    _emailController.removeListener(() => _authenticationViewModel.validateEmailLogin);
+    _passwordController.removeListener(() => _authenticationViewModel.validatePasswordLogin);
 
     _emailController.dispose();
     _passwordController.dispose();
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 autofillHints: const [AutofillHints.email],
                                 decoration: InputDecoration(
                                   hintText: "E-Mail",
-                                  errorText: _authenticationViewModel.emailError,
+                                  errorText: _authenticationViewModel.emailLoginError,
                                   prefixIcon: const Icon(Icons.email),
                                 ),
                                 controller: _emailController,
@@ -172,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 autofillHints: const [AutofillHints.password],
                                 decoration: InputDecoration(
                                     hintText: "Passwort",
-                                    errorText: _authenticationViewModel.passwordError,
+                                    errorText: _authenticationViewModel.passwordLoginError,
                                     errorMaxLines: 8,
                                     prefixIcon: const Icon(Icons.key)),
                                 controller: _passwordController,
