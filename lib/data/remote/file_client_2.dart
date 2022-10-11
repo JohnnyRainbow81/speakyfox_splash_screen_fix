@@ -12,12 +12,12 @@ class FileClient2 {
   late String _localFilePath;
 
   FileClient2({required this.baseUrl, required this.path}) {
-    Map<String, String> headers = {HttpHeaders.acceptHeader: "image/png", HttpHeaders.contentTypeHeader: "image/png"};
+    Map<String, String> headers = {HttpHeaders.acceptHeader: "image/png"};
     BaseOptions options = BaseOptions(
         baseUrl: baseUrl,
         connectTimeout: 30 * 1000,
         headers: headers,
-        responseType: ResponseType.stream
+        responseType: ResponseType.stream   Hier weitermachen!! List<int> entgegennehmen und dann weiterverarbeiten
        );
     _dio = Dio(options);
     _dio.interceptors.add(PrettyDioLogger());

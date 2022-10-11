@@ -10,7 +10,7 @@ class OrderService {
   OrderService(this._authenticationService, this._orderRepository);
 
   Future<Order> createOrder(CreateOrderRequest orderRequest)async {
-    String userId = (await _authenticationService.getCredentials())!.user.id!;
+    String userId = (_authenticationService.getCredentials())!.user.id;
     return _orderRepository.createOrder(userId, orderRequest);
   }
 }
