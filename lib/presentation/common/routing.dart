@@ -95,40 +95,43 @@ class Routing {
         },
         routes: <GoRoute>[
           GoRoute(
-              //name: login,
               path: login,
               pageBuilder: (context, state) => Platform.isIOS
-                  ? const CupertinoPage(child: LoginScreen())
-                  : const MaterialPage(child: LoginScreen())),
+                  ? buildPageWithSlideTransition(
+                    context: context,
+                    state: state,
+                    child: const LoginScreen())
+                  : buildPageWithSlideTransition(
+                    context: context,
+                    state: state,
+                    child: const LoginScreen())),
           GoRoute(
-            //name: onboarding,
             path: onboarding,
             pageBuilder: (context, state) => Platform.isIOS
                 ? const CupertinoPage(child: OnboardingPager())
                 : const MaterialPage(child: OnboardingPager()),
           ),
           GoRoute(
-            // name: home,
             path: home,
             pageBuilder: (context, state) =>
                 Platform.isIOS ? const CupertinoPage(child: HomeScreen()) : const MaterialPage(child: HomeScreen()),
           ),
           GoRoute(
-            // name: register,
             path: register,
             pageBuilder: (context, state) => Platform.isIOS
-                ? const CupertinoPage(child: RegistrationScreen())
-                : const MaterialPage(child: RegistrationScreen()),
+                ? buildPageWithSlideTransition(
+                    context: context,
+                    state: state,
+                    child: const RegistrationScreen()) //const CupertinoPage(child: RegistrationScreen())
+                : buildPageWithSlideTransition(context: context, state: state, child: const RegistrationScreen()),
           ),
           GoRoute(
-            //name: resetPassword,
             path: resetPassword,
             pageBuilder: (context, state) => Platform.isIOS
                 ? const CupertinoPage(child: ResetPasswordScreen())
                 : const MaterialPage(child: ResetPasswordScreen()),
           ),
           GoRoute(
-            // name: test,
             path: test,
             pageBuilder: (context, state) =>
                 Platform.isIOS ? const CupertinoPage(child: TestScreen()) : const MaterialPage(child: TestScreen()),
@@ -141,4 +144,42 @@ class Routing {
             ));
     return _instance!;
   }
+}
+
+CustomTransitionPage buildPageWithFadeTransition({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(seconds: 2),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(opacity: animation, child: child),
+  );
+}
+
+CustomTransitionPage buildPageWithSlideTransition({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    transitionDuration: const Duration(milliseconds: 300),
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
