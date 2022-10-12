@@ -147,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 controller: _emailController,
                                 textInputAction: TextInputAction.next,
                                 onChanged: (email) => _authenticationViewModel.validateEmailLogin(email),
+                                enableSuggestions: true,
                                 onEditingComplete: (() {
                                   _emailController.text = _authenticationViewModel.emailLogin;
                                   _node.nextFocus();
@@ -172,7 +173,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   _node.unfocus();
                                 },
                               ),
-
                               _authenticationViewModel.isLoggedIn
                                   ? const Hint("Login erfolgreich!")
                                   : const SizedBox.shrink(),

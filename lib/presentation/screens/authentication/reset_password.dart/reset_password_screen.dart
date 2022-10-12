@@ -97,6 +97,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               errorText: _authenticationViewModel.emailLoginError,
                               prefixIcon: const Icon(Icons.email)),
                           controller: _emailController,
+                          onChanged: (email) => _authenticationViewModel.validateEmailLogin(email),
                           onEditingComplete: () => _emailController.text = _authenticationViewModel.emailLogin,
 
                         ),

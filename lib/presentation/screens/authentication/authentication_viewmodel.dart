@@ -25,7 +25,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   late String _emailLogin;
   late String _passwordLogin;
-
+  
 
   dom.Document? _AGBsHTML;
   dom.Document? _dataProtectionHTML;

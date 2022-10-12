@@ -26,7 +26,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();   
+
 
   final ScrollController _scrollController = ScrollController();
   final FocusScopeNode _node = FocusScopeNode();
@@ -101,7 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 20, bottom: 8.0, right: 8.0, left: 8.0),
                 child: Card(
                   child: Form(
-                      autovalidateMode: AutovalidateMode.onUserInteraction, 
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       key: _formKey,
                       child: FocusScope(
                         node: _node,
@@ -124,6 +125,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   height: 16,
                                 ),
                                 TextFormField(
+                                    enableSuggestions: true,
                                     enableInteractiveSelection: true,
                                     autofillHints: const [AutofillHints.name],
                                     decoration: InputDecoration(
@@ -142,6 +144,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   height: 16,
                                 ),
                                 TextFormField(
+                                    enableSuggestions: true,
                                     enableInteractiveSelection: true,
                                     autofillHints: const [AutofillHints.email],
                                     decoration: InputDecoration(
