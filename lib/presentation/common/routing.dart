@@ -96,15 +96,8 @@ class Routing {
         routes: <GoRoute>[
           GoRoute(
               path: login,
-              pageBuilder: (context, state) => Platform.isIOS
-                  ? buildPageWithSlideTransition(
-                    context: context,
-                    state: state,
-                    child: const LoginScreen())
-                  : buildPageWithSlideTransition(
-                    context: context,
-                    state: state,
-                    child: const LoginScreen())),
+              pageBuilder: (context, state) => buildPageWithSlideTransition(
+                  direction: TransitionDirection.down, context: context, state: state, child: const LoginScreen())),
           GoRoute(
             path: onboarding,
             pageBuilder: (context, state) => Platform.isIOS
@@ -112,19 +105,17 @@ class Routing {
                 : const MaterialPage(child: OnboardingPager()),
           ),
           GoRoute(
-            path: home,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? const CupertinoPage(child: HomeScreen()) : const MaterialPage(child: HomeScreen()),
-          ),
+              path: home,
+              pageBuilder: (context, state) =>
+                  buildPageWithScaleTransition(context: context, state: state, child: const HomeScreen())),
           GoRoute(
-            path: register,
-            pageBuilder: (context, state) => Platform.isIOS
-                ? buildPageWithSlideTransition(
-                    context: context,
-                    state: state,
-                    child: const RegistrationScreen()) //const CupertinoPage(child: RegistrationScreen())
-                : buildPageWithSlideTransition(context: context, state: state, child: const RegistrationScreen()),
-          ),
+              path: register,
+              pageBuilder: (context, state) => buildPageWithSlideTransition(
+                  direction: TransitionDirection.up,
+                  context: context,
+                  state: state,
+                  child: const RegistrationScreen()) //const CupertinoPage(child: RegistrationScreen())
+              ),
           GoRoute(
             path: resetPassword,
             pageBuilder: (context, state) => Platform.isIOS
@@ -146,6 +137,8 @@ class Routing {
   }
 }
 
+enum TransitionDirection { up, down, left, right }
+
 CustomTransitionPage buildPageWithFadeTransition({
   required BuildContext context,
   required GoRouterState state,
@@ -161,6 +154,7 @@ CustomTransitionPage buildPageWithFadeTransition({
 }
 
 CustomTransitionPage buildPageWithSlideTransition({
+  required TransitionDirection direction,
   required BuildContext context,
   required GoRouterState state,
   required Widget child,
@@ -170,8 +164,26 @@ CustomTransitionPage buildPageWithSlideTransition({
     transitionDuration: const Duration(milliseconds: 300),
     child: child,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
+      Offset begin, end;
+
+      switch (direction) {
+        case TransitionDirection.up:
+          begin = const Offset(0, -0.5);
+          end = Offset.zero;
+          break;
+        case TransitionDirection.down:
+          begin = const Offset(0, 0.5);
+          end = Offset.zero;
+          break;
+        case TransitionDirection.left:
+          begin = const Offset(-1, 0);
+          end = Offset.zero;
+          break;
+        case TransitionDirection.right:
+          begin = const Offset(1, 0);
+          end = Offset.zero;
+          break;
+      }
       const curve = Curves.ease;
 
       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
@@ -180,6 +192,24 @@ CustomTransitionPage buildPageWithSlideTransition({
         position: animation.drive(tween),
         child: child,
       );
+    },
+  );
+}
+
+CustomTransitionPage buildPageWithScaleTransition({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage(
+    key: state.pageKey,
+    child: child,
+    transitionDuration: const Duration(milliseconds: 400),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) { 
+      var tween = Tween<double>(begin: 0.8, end: 1.0);
+      var curvedTween = CurveTween(curve: Curves.elasticOut);
+      curvedTween.chain(tween);
+      return ScaleTransition(alignment: Alignment.center, scale: curvedTween.animate(animation), child: child);
     },
   );
 }
