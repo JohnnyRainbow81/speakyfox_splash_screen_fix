@@ -41,17 +41,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _emailController.text = _authenticationViewModel.emailRegistration;
     _passwordController.text = "";
 
-    _usernameController
-        .addListener(() => _authenticationViewModel.validateUsernameRegistration(_usernameController.text));
-    _passwordController
-        .addListener(() => _authenticationViewModel.validatePasswordRegistration(_passwordController.text));
-    _emailController.addListener(() => _authenticationViewModel.validateEmailRegistration(_emailController.text));
-
-    //if textfields already contain data after screen initialisation > check if they're valid by triggering validation listeners manually once
-    if (_usernameController.text.isNotEmpty) _usernameController.notifyListeners();
-    if (_emailController.text.isNotEmpty) _emailController.notifyListeners();
-    if (_passwordController.text.isNotEmpty) _passwordController.notifyListeners();
-
     _node.addListener(onTextFieldFocus);
   }
 
@@ -59,14 +48,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   void dispose() {
     debugPrint("RegistrationScreen.dispose()");
 
-    _usernameController.removeListener(() => _authenticationViewModel.validateUsernameRegistration);
-    _passwordController.removeListener(() => _authenticationViewModel.validatePasswordRegistration);
-    _emailController.removeListener(() => _authenticationViewModel.validateEmailRegistration);
-
     _usernameController.dispose();
     _passwordController.dispose();
     _emailController.dispose();
     _scrollController.dispose();
+
     _node.removeListener(onTextFieldFocus);
     _node.dispose();
 
@@ -79,6 +65,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void goToLoginScreen() {
     GoRouter.of(context).go(Routing.login);
+  }
+
+  //Sadly needed because the textfield controllers won't listen
+  void clearAllTextfields() {
+    _emailController.text = _authenticationViewModel.emailRegistration;
+    _usernameController.text = _authenticationViewModel.usernameRegistration;
+    _passwordController.text = _authenticationViewModel.passwordRegistration;
+    setState(() {});
   }
 
   @override
@@ -107,7 +101,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 padding: const EdgeInsets.only(top: 20, bottom: 8.0, right: 8.0, left: 8.0),
                 child: Card(
                   child: Form(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      autovalidateMode: AutovalidateMode.onUserInteraction, 
                       key: _formKey,
                       child: FocusScope(
                         node: _node,
@@ -130,16 +124,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   height: 16,
                                 ),
                                 TextFormField(
-                                  enableInteractiveSelection: true,
-                                  autofillHints: const [AutofillHints.name],
-                                  decoration: InputDecoration(
-                                      hintText: "Name",
-                                      errorText: _authenticationViewModel.usernameRegistrationError,
-                                      prefixIcon: const Icon(Icons.people)),
-                                  controller: _usernameController,
-                                  textInputAction: TextInputAction.next,
-                                  onEditingComplete: _node.nextFocus,
-                                ),
+                                    enableInteractiveSelection: true,
+                                    autofillHints: const [AutofillHints.name],
+                                    decoration: InputDecoration(
+                                        hintText: "Name",
+                                        errorText: _authenticationViewModel.usernameRegistrationError,
+                                        prefixIcon: const Icon(Icons.people)),
+                                    controller: _usernameController,
+                                    textInputAction: TextInputAction.next,
+                                    onChanged: (username) =>
+                                        _authenticationViewModel.validateUsernameRegistration(username),
+                                    onEditingComplete: (() {
+                                      _usernameController.text = _authenticationViewModel.usernameRegistration;
+                                      _node.nextFocus();
+                                    })),
                                 const SizedBox(
                                   height: 16,
                                 ),
@@ -152,7 +150,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         prefixIcon: const Icon(Icons.email)),
                                     controller: _emailController,
                                     textInputAction: TextInputAction.next,
-                                    onEditingComplete: _node.nextFocus),
+                                    onChanged: (email) => _authenticationViewModel.validateEmailRegistration(email),
+                                    onEditingComplete: (() {
+                                      _emailController.text = _authenticationViewModel.emailRegistration;
+                                      _node.nextFocus();
+                                    })),
                                 const SizedBox(
                                   height: 16,
                                 ),
@@ -167,14 +169,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       errorMaxLines: 8,
                                       prefixIcon: const Icon(Icons.key)),
                                   controller: _passwordController,
-                                  onEditingComplete: _node.unfocus,
+                                  onChanged: (password) =>
+                                      _authenticationViewModel.validatePasswordRegistration(password),
+                                  onEditingComplete: () {
+                                    _passwordController.text = _authenticationViewModel.passwordRegistration;
+                                    _node.unfocus();
+                                  },
                                 ),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 _authenticationViewModel.isRegistrationEmailSent
                                     ? const Hint("Wir haben dir eine Mail geschickt!")
-                                    : Container(),
+                                    : const SizedBox.shrink(),
                                 !_authenticationViewModel.busy(_authenticationViewModel.dataProtectionHTML)
                                     ? Row(
                                         mainAxisAlignment: MainAxisAlignment.start,
@@ -222,12 +229,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 ElevatedButton(
                                     onPressed: (_authenticationViewModel.isRegisterFormValid &&
                                             !_authenticationViewModel.isBusy)
-                                        ? () async => _authenticationViewModel.register()
+                                        ? () async {
+                                            _authenticationViewModel.register().then((_) {
+                                              if (_authenticationViewModel.isRegistrationEmailSent) {
+                                                clearAllTextfields();
+                                              }
+                                            });
+                                          }
                                         : null,
                                     child: _authenticationViewModel.isBusy
                                         ? const LoadingAnimation()
                                         : const Text("Zugang erstellen")),
-                                //const SizedBox(height: 16),
 
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

@@ -34,13 +34,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.initState();
     //_authenticationViewModel.reset();
     _emailController.text = _authenticationViewModel.emailLogin;
-    _emailController.addListener(() => _authenticationViewModel.validateEmailLogin(_emailController.text));
   }
 
   @override
   void dispose() {
     debugPrint("ResetPasswordScreen.dispose()");
-    _emailController.removeListener(() => _authenticationViewModel.validateEmailLogin);
     _emailController.dispose();
     super.dispose();
   }
@@ -48,6 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     debugPrint("ResetPasswordScreen.build() ");
+
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => _authenticationViewModel,
       disposeViewModel: false,
@@ -98,6 +97,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               errorText: _authenticationViewModel.emailLoginError,
                               prefixIcon: const Icon(Icons.email)),
                           controller: _emailController,
+                          onEditingComplete: () => _emailController.text = _authenticationViewModel.emailLogin,
+
                         ),
                         _authenticationViewModel.isLoggedIn
                             ? const Padding(

@@ -15,8 +15,6 @@ import 'package:stacked/stacked.dart';
 
 import '../../../domain/models/user.dart';
 
-enum AuthMode { login, registration, resetEmail }
-
 //ONE Viewmodel for ALL authentication-screens to have a single source for repeating & related data and logic
 class AuthenticationViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
@@ -27,6 +25,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   late String _emailLogin;
   late String _passwordLogin;
+
 
   dom.Document? _AGBsHTML;
   dom.Document? _dataProtectionHTML;
@@ -110,6 +109,18 @@ class AuthenticationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void validateEmailRegistration(String email) {
+    if (email.isEmpty) {
+      _emailRegistrationError = 'Gib bitte eine gültige Email-Adresse ein';
+    } else if (!isValidEmail(email)) {
+      _emailRegistrationError = 'Das Format der Emailadresse stimmt nicht';
+    } else {
+      _emailRegistrationError = null;
+    }
+    _emailRegistration = email;
+    notifyListeners();
+  }
+
   void validatePasswordRegistration(String password) {
     if (password.isEmpty) {
       _passwordRegistrationError = 'Bitte such dir ein gültiges Passwort aus';
@@ -123,6 +134,18 @@ class AuthenticationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void validateEmailLogin(String email) {
+    if (email.isEmpty) {
+      _emailLoginError = 'Gib bitte deine Email-Adresse ein';
+    } else if (!isValidEmail(email)) {
+      _emailLoginError = 'Das Format der Emailadresse stimmt nicht';
+    } else {
+      _emailLoginError = null;
+    }
+    _emailLogin = email;
+    notifyListeners();
+  }
+
   void validatePasswordLogin(String password) {
     if (password.isEmpty) {
       _passwordLoginError = 'Bitte gib dein Passwort ein';
@@ -133,30 +156,6 @@ class AuthenticationViewModel extends BaseViewModel {
       _passwordLoginError = null;
       _passwordLogin = password;
     }
-    notifyListeners();
-  }
-
-  void validateEmailRegistration(String email) {
-    if (email.isEmpty) {
-      _emailRegistrationError = 'Gib bitte eine gültige Email-Adresse ein';
-    } else if (!isValidEmail(email)) {
-      _emailRegistrationError = 'Das Format der Emailadresse stimmt nicht';
-    } else {
-      _emailRegistrationError = null;
-    }
-    _emailRegistration = email;
-    notifyListeners();
-  }
-
-  void validateEmailLogin(String email) {
-    if (email.isEmpty) {
-      _emailLoginError = 'Gib bitte deine Email-Adresse ein';
-    } else if (!isValidEmail(email)) {
-      _emailLoginError = 'Das Format der Emailadresse stimmt nicht';
-    } else {
-      _emailLoginError = null;
-    }
-    _emailLogin = email;
     notifyListeners();
   }
 
@@ -251,11 +250,11 @@ class AuthenticationViewModel extends BaseViewModel {
     _isRegistrationEmailSent = success ?? false;
 
     if (_isRegistrationEmailSent) {
-
       //pre-fill login email with registration email (leave password blank due to data protection)..
       _emailLogin = _emailRegistration;
       //.. but reset other login / registration data
-      _resetInputs();   Hier stimmt was nicht
+      _resetInputs();
+
       notifyListeners();
     }
   }
