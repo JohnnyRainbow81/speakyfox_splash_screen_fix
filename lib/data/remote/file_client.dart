@@ -1,37 +1,26 @@
 import 'dart:io';
-import 'dart:ui';
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import 'package:dio/dio.dart' hide Response, Headers;
-import 'package:retrofit/retrofit.dart';
-import 'package:speakyfox/data/dtos/file_dto.dart';
-import 'package:speakyfox/data/dtos/language_dto.dart';
-import 'package:speakyfox/data/dtos/response.dart';
-import 'package:speakyfox/data/remote/base_client.dart';
-import 'package:speakyfox/domain/models/audio.dart';
-import 'package:speakyfox/domain/models/image.dart';
-import 'package:speakyfox/domain/models/language.dart';
+class FileClient2 {
+  late Dio _dio;
+  late String baseUrl;
+  late String path;
 
-part 'file_client.g.dart';
+  late String _localFilePath;
 
-//TODO Ask Julien about file handling in general!
-//Neither the web app nor the backend give me a clear picture of how files are handled..
-@RestApi()
-abstract class FileClient with BaseClient<FileDto> {
-  factory FileClient(Dio dio, {String baseUrl}) = _FileClient;
+  FileClient2({required this.baseUrl, required this.path}) {
+    Map<String, String> headers = {HttpHeaders.acceptHeader: "application/octet-stream"};
+    BaseOptions options =
+        BaseOptions(baseUrl: baseUrl, connectTimeout: 30 * 1000, headers: headers, responseType: ResponseType.bytes);
+    _dio = Dio(options);
 
-  @GET("/{id}")
-  @Headers({"Content-type": "image/png"})
-  @MultiPart()
-  Future<Response<dynamic>> getFileById(@Path("id")String id);
+    //Log calls, but don't log response bodies cause they're too big
+    _dio.interceptors.add(PrettyDioLogger(compact: true,maxWidth: 100,responseBody: false ));
+  }
 
-  @POST("")
-  @FormUrlEncoded()
-  Future<Response> uploadFile(@Path("resource") String resource, @Path("entityId") String entityId);
-
-  @GET("")
-  Future<Response> getAllFiles(String filter, String type, ImageType? imageType, AudioType? audioType,
-      LanguageType? languageType, String languageId);
-
-  @GET("{id}/metadata")
-  Future<Response<dynamic>> GetMetadataById(@Path("id") String id);
+  Future<Response<Uint8List>> getFileById(String id) async {
+    return _dio.get("$baseUrl$path$id");
+  }
 }

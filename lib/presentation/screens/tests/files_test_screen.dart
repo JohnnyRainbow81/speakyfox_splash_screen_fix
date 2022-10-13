@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:speakyfox/data/remote/file_client_2.dart';
-import 'package:image/image.dart' as img;
+import 'package:speakyfox/data/remote/file_client.dart';
+//import 'package:image/image.dart' as img;
 
 class FilesTestScreen extends StatefulWidget {
   const FilesTestScreen({Key? key}) : super(key: key);
@@ -14,9 +14,8 @@ class FilesTestScreen extends StatefulWidget {
 class _FilesTestScreenState extends State<FilesTestScreen> {
   final FileClient2 fileClient = FileClient2(baseUrl: "https://speakyfox-api-qa.herokuapp.com/api/v1/", path: "files/");
 
-  Widget myWidget = const CircularProgressIndicator.adaptive();
+  Widget? myWidget; 
 
-  img.Image? image;
   File? file;
   @override
   void initState() {
@@ -27,11 +26,8 @@ class _FilesTestScreenState extends State<FilesTestScreen> {
 
   void getFile() async {
     try {
-      final response = await fileClient.getFileById("65819ea5-f68f-47cb-aa51-133d6052f7a6");
-      image = img.decodeImage(response.data.stream);
-      File('myImage').writeAsBytes(img.encodePng(image!)).then((value) {
-        file = value;
-        myWidget = SizedBox(height: 200, width: 200, child: Image.file(file!));
+      fileClient.getFileById("65819ea5-f68f-47cb-aa51-133d6052f7a6").then((value) {
+        myWidget = Image.memory(value.data!);
         setState(() {});
       });
     } catch (e) {
@@ -42,20 +38,26 @@ class _FilesTestScreenState extends State<FilesTestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("build()");
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: getFile),
-      appBar: AppBar(title: Text("test")),
+      appBar: AppBar(title: const Text("test")),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
             height: 100,
             width: 100,
             color: Colors.red,
           ),
-          myWidget,
-          Image.network("https://speakyfox-api-qa.herokuapp.com/api/v1/files/65819ea5-f68f-47cb-aa51-133d6052f7a6",)
+          AnimatedScale(
+            scale: myWidget != null ? 1.0 : 0,
+            duration: const Duration(seconds: 1),
+            child: myWidget,
+          ),
+          
         ],
       )),
     );

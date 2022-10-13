@@ -10,16 +10,15 @@ import '../../http_client_test_setup.dart';
 void main() async {
   final dio = await getAuthenticatedHTTPClientForTesting();
 
-  FileClient fileClient = FileClient(dio, baseUrl: "${TestConstants.baseUrlQA}files");
+  FileClient2 fileClient = FileClient2(path: "files", baseUrl: "${TestConstants.baseUrlQA}");
 
 //FIXME Doesn't work yet! Ask Julien about file handling
 
   test(
     'getImage',
     () async {
-      final response = await fileClient.getFileById("65819ea5-f68f-47cb-aa51-133d6052f7a6");
-      var image = Base64Decoder().convert(response.data);
-      Image.memory(image);
+      
+    
     },
   );
 }
