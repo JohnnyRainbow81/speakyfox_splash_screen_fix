@@ -35,7 +35,7 @@ dependencies:
   firebase_crashlytics: ^2.8.11 # protocolling crashes
   lottie: ^1.3.0 # reads animations from jsons, search web for free animations
   flutter_phoenix: ^1.0.0 # restarts the app
-  firebase_core: ^1.23.0 # core BaaS
+  firebase_core: ^1.24.0 # core BaaS
   #firebase_performance: ^0.8.3 # check performance
   flutter_native_splash: ^2.1.0 # helps to setup native splash screen before Flutter can take over
   uuid: ^3.0.6

@@ -20,14 +20,15 @@ ThemeData getApplicationTheme() {
     iconTheme: _getIconThemeData(),
     bottomSheetTheme: _getBottomSheetTheme(),
     checkboxTheme: _getCheckboxTheme(),
+    
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
     errorColor: ColorAssets.error,
     hintColor: ColorAssets.lightGrey,
-    indicatorColor: ColorAssets.primary,
+    indicatorColor: ColorAssets.primary, 
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
-      TargetPlatform.android: CupertinoPageTransitionsBuilder(), //Another one on Android?
+      TargetPlatform.android: ZoomPageTransitionsBuilder(), //Another one on Android?
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
     }),
   );
