@@ -14,13 +14,13 @@ class ClassDto extends BaseDto {
   String description;
   bool isPublished;
   bool? isOnboarding;
-  int? progress;
+  double? progress;
   int order;
   ImageDto? icon;
   String? fileId;
   String? languagePairId;
   bool isLocked;
-  LanguagePairDto languagePair; //FIXME type!
+  LanguagePairDto? languagePair; //FIXME type!
   List<CourseDto> courses;
   ClassDto({
     required String id,

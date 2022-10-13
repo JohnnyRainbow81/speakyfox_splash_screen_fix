@@ -8,4 +8,7 @@ part 'class_client.g.dart';
 @RestApi()
 abstract class ClassClient with BaseClient<ClassDto> {
   factory ClassClient(Dio dio, {String baseUrl}) = _ClassClient;
+
+  @GET("")
+  Future<Response<List<ClassDto>>> getAllByLanguagePairId(@Query("languagePairId") String languagePairId);
 }

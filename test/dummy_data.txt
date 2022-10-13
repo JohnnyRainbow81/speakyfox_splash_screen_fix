@@ -7,6 +7,7 @@ refreshToken: "eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZDQkMtSFM1MTIiLCJraWQiOiIxQ
 languageId: "02c6e388-bcb1-427b-8b8d-d49704671c22"
 
 languagePairId: "fa701d3c-2306-45cd-ab3c-e89cb990cd1d"
+                "649b2515-386f-4bb3-81ca-24f4c883b3aa"
 
 lectureId: "fe225b45-9a9c-4a96-a89f-c73c0b859ffe"
 
@@ -31,3 +32,4 @@ targetLanguageId: "49513cb6-32f1-4efd-9542-ad1ecd968c4f"
 //Files
 
  image: "65819ea5-f68f-47cb-aa51-133d6052f7a6"
+

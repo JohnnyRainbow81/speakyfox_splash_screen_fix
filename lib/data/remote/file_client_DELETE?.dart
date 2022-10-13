@@ -12,7 +12,7 @@ import 'package:speakyfox/domain/models/audio.dart';
 import 'package:speakyfox/domain/models/image.dart';
 import 'package:speakyfox/domain/models/language.dart';
 
-part 'file_client.g.dart';
+part 'file_client_DELETE?.g.dart';
 
 //TODO Ask Julien about file handling in general!
 //Neither the web app nor the backend give me a clear picture of how files are handled..

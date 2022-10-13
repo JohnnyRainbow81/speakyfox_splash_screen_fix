@@ -24,7 +24,7 @@ extension ClassMapper on ClassDto {
         fileId: fileId,
         languagePairId: languagePairId,
         isLocked: isLocked,
-        languagePair: languagePair.toLanguagePair(),
+        languagePair: languagePair?.toLanguagePair(),
         courses: courses.map((course) => course.toCourse()).toList());
   }
 }

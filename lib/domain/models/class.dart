@@ -9,13 +9,13 @@ class Class extends ModelBase {
   String description;
   bool isPublished;
   bool isOnboarding;
-  int progress;
+  double progress;
   int order;
   Image? icon;
   String? fileId;
   String? languagePairId;
   bool isLocked;
-  LanguagePair languagePair; //FIXME type!
+  LanguagePair? languagePair; //FIXME type!
   List<Course> courses;
   Class({
     required String id,

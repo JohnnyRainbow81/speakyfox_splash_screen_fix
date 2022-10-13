@@ -18,7 +18,7 @@ ClassDto _$ClassDtoFromJson(Map<String, dynamic> json) => ClassDto(
       description: json['description'] as String,
       isPublished: json['isPublished'] as bool,
       isOnboarding: json['isOnboarding'] as bool?,
-      progress: json['progress'] as int?,
+      progress: (json['progress'] as num?)?.toDouble(),
       order: json['order'] as int,
       icon: json['icon'] == null
           ? null
@@ -26,8 +26,10 @@ ClassDto _$ClassDtoFromJson(Map<String, dynamic> json) => ClassDto(
       fileId: json['fileId'] as String?,
       languagePairId: json['languagePairId'] as String?,
       isLocked: json['isLocked'] as bool,
-      languagePair: LanguagePairDto.fromJson(
-          json['languagePair'] as Map<String, dynamic>),
+      languagePair: json['languagePair'] == null
+          ? null
+          : LanguagePairDto.fromJson(
+              json['languagePair'] as Map<String, dynamic>),
       courses: (json['courses'] as List<dynamic>)
           .map((e) => CourseDto.fromJson(e as Map<String, dynamic>))
           .toList(),

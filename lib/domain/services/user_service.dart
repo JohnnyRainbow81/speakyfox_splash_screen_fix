@@ -29,7 +29,7 @@ class UserService extends BaseService<User> {
 
   Future<bool> changePassword(String currentPassword, String newPassword) async {
     return _userRepository.changePassword(ChangePasswordRequest(
-        currentPassword: currentPassword, password: (_authenticationService.getCredentials())!.user.password));
+        currentPassword: currentPassword, newPassword: (_authenticationService.getCredentials())!.user.password));
   }
 
   Future<String> createSetupIntent(PaymentMethodType paymentMethodType) async {
@@ -47,23 +47,6 @@ class UserService extends BaseService<User> {
 
   Future<List<UserPaymentMethod>> getPaymentMethods() {
     throw UnimplementedError();
-    //Angular code, translate to Dart:
-    //   return of([
-    //   Object.assign(new UserCreditCard(), {
-    //     brand: 'Visa',
-    //     lastFourDigits: '4929',
-    //     created: moment(),
-    //     expiryMonth: 4,
-    //     expiryYear: 2023
-    //   }),
-    //   Object.assign(new UserPayPal(), {
-    //     email: 'julien.ambos@ja-developer.de'
-    //   }),
-    //   Object.assign(new UserSepaDirectDebit(), {
-    //     lastFourDigits: '0293',
-    //     bankName: 'Deutsche Kreditbank'
-    //   })
-    // ] as any);
   }
 
   Future<List<Subscription>> getSubscriptions() {

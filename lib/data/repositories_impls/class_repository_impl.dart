@@ -5,12 +5,29 @@ import 'package:speakyfox/data/mappers/class_mapper.dart';
 import 'package:speakyfox/data/remote/class_client.dart';
 import 'package:speakyfox/domain/models/class.dart';
 import 'package:speakyfox/domain/repositories/base_repository.dart';
+import 'package:speakyfox/domain/repositories/class_repository.dart';
 
-class ClassRepositoryImpl implements BaseRepository<Class> {
+class ClassRepositoryImpl implements ClassRepository<Class>, BaseRepository<Class>  {
   final ConnectivityService _connectivityService;
   final ClassClient _classClient;
 
   ClassRepositoryImpl(this._classClient, this._connectivityService);
+
+  @override
+  Future<List<Class>> getAllByLanguagePairId(String languagePairId)async {
+    
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _classClient.getAllByLanguagePairId(languagePairId);
+        return response.data.map((e) => e.toClass()).toList();
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+    throw UIException(message: "ClassRepositoryImpl.getAllByLanguagePairId");
+  }
 
   @override
   Future<List<Class>> getAll(String param) async {
@@ -89,4 +106,6 @@ class ClassRepositoryImpl implements BaseRepository<Class> {
     }
     throw UIException(message: "ClassRepositoryImpl.removeById");
   }
+  
+
 }

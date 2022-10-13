@@ -14,8 +14,6 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository<Subscription>
 
   SubscriptionRepositoryImpl(this._connectivityService, this._subscriptionClient);
 
-
-
   @override
   Future<bool> cancel(String id) async {
     if (await _connectivityService.hasConnection()) {
@@ -34,15 +32,37 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository<Subscription>
   }
 
   @override
-  Future<List<Subscription>> getAll(String param) {
-    // TODO: implement getAll
-    throw UnimplementedError();
+  Future<List<Subscription>> getAll(String param) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _subscriptionClient.getAll("");
+        final subscriptions = response.data.map((e) => e.toSubscription()).toList();
+        return subscriptions;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "SubscriptionRepositoryImpl.getAll()");
   }
 
   @override
-  Future<Subscription> getById(String id) {
-    // TODO: implement getById
-    throw UnimplementedError();
+  Future<Subscription> getById(String id) async {
+    if (await _connectivityService.hasConnection()) {
+      try {
+        final response = await _subscriptionClient.getById(id);
+        final subscription = response.data.toSubscription();
+        return subscription;
+      } catch (error) {
+        ErrorHandler.handleError(error);
+      }
+    } else {
+      throw NoInternetConnectionUIException();
+    }
+
+    throw UIException(message: "SubscriptionRepositoryImpl.getAll()");
   }
 
   @override

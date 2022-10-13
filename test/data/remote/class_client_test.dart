@@ -11,6 +11,16 @@ void main() async {
   final dio = await getAuthenticatedHTTPClientForTesting();
 
   ClassClient classClient = ClassClient(dio, baseUrl: "${TestConstants.baseUrlQA}classes");
+  test(
+    'getByLanguagePairId',
+    () async {
+      final response = await classClient.getAllByLanguagePairId("649b2515-386f-4bb3-81ca-24f4c883b3aa");
+      final classes = response.data.map((e) => e.toClass()).toList();
+
+      for (final classs in classes) debugPrint(classs.toString());
+    },
+  );
+
   test('getAll()', () async {
     final response = await classClient.getAll("");
 
@@ -21,6 +31,3 @@ void main() async {
     }
   });
 }
-
-
-
