@@ -26,11 +26,13 @@ class ProfileViewModel extends BaseViewModel {
   Language? _targetLanguage;
 
   List<Subscription> _subscriptions = [];
+  List<Class> _classes = [];
 
   Language? get sourceLanguage => _sourceLanguage;
   Language? get targetLanguage => _targetLanguage;
 
   List<Subscription> get subscriptions => _subscriptions;
+  List<Class> get classes => _classes;
 
   Future<void> init() async {
     await getSubscriptions();
@@ -39,13 +41,15 @@ class ProfileViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<bool> changePassword(String currentPassword, String newPassword) async {
+  Future<bool> changePassword({required String currentPassword, required String newPassword}) async {
     bool? success = await runBusyFuture<bool?>(_userService.changePassword(currentPassword, newPassword));
     return success ?? false;
   }
 
   Future<void> getSubscriptions() async {
-    _subscriptions = await runBusyFuture<List<Subscription>?>(_userService.getSubscriptions()) ?? [];
+    List<Subscription>? list =
+        await runBusyFuture<List<Subscription>?>(_userService.getSubscriptions(), busyObject: subscriptions);
+    _subscriptions = list ?? [];
   }
 
   Future<bool> cancelSubscription(String id) async {
@@ -57,25 +61,30 @@ class ProfileViewModel extends BaseViewModel {
     String sourceLanguageId = _userService.user.currentSourceLanguageId;
     String targetLanguageId = _userService.user.currentTargetLanguageId;
 
-    _sourceLanguage = await runBusyFuture<Language?>(_languageService.getById(sourceLanguageId));
-    _targetLanguage = await runBusyFuture<Language?>(_languageService.getById(targetLanguageId));
+    _sourceLanguage =
+        await runBusyFuture<Language?>(_languageService.getById(sourceLanguageId), busyObject: _sourceLanguage);
+    _targetLanguage =
+        await runBusyFuture<Language?>(_languageService.getById(targetLanguageId), busyObject: _targetLanguage);
   }
 
   Future<void> chooseSourceLanguage(String sourceLanguageId) async {
-    Language? newSourceLanguage = await runBusyFuture<Language?>(_languageService.getById(sourceLanguageId));
+    Language? newSourceLanguage =
+        await runBusyFuture<Language?>(_languageService.getById(sourceLanguageId), busyObject: _sourceLanguage);
     _sourceLanguage = newSourceLanguage;
     notifyListeners();
   }
 
   Future<void> chooseTargetLanguage(String targetLanguageId) async {
-    Language? newTargetLanguage = await runBusyFuture<Language?>(_languageService.getById(targetLanguageId));
+    Language? newTargetLanguage =
+        await runBusyFuture<Language?>(_languageService.getById(targetLanguageId), busyObject: _targetLanguage);
     _targetLanguage = newTargetLanguage;
     notifyListeners();
   }
 
-  Future<List<Class>> getClasses() async {
-    List<Class>? classes = await runBusyFuture<List<Class>?>(_classService.getAll(""));
-    return classes ?? [];
+  Future<void> getClasses() async {
+    List<Class>? classes = await runBusyFuture<List<Class>?>(_classService.getAll(""), busyObject: _classes);
+    _classes = classes ?? [];
+    notifyListeners();
   }
 
   //ask Julien which purpose this call has!

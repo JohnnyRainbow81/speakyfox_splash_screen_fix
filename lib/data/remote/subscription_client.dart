@@ -10,11 +10,9 @@ part 'subscription_client.g.dart';
 abstract class SubscriptionClient with BaseClient<SubscriptionDto> {
   factory SubscriptionClient(Dio dio, {String baseUrl}) = _SubscriptionClient;
 
-  
-  
   //TODO check backend
   //public async Task<IActionResult> UpdateSubscription([FromRoute] Guid id, [FromBody] UpdateSubscriptionDTO updateSubscriptionDTO)
-  
-  @DELETE("subscriptions/{id}")
-  Future<Response<bool>> cancel(String id);
+
+  @DELETE("/{id}")
+  Future<Response<bool>> cancel(@Path("id") String id);
 }

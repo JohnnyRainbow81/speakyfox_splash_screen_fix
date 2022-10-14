@@ -50,7 +50,7 @@ void main() async {
 
   test(
     "getSubscriptions()",
-    () async {
+    () async { //4bab46f5-c9a5-45e6-a6ff-1c9396df1281
       final response = await userClient.getSubscriptions("64c4813e-68bf-4552-b8d9-7f8ce798a9ed");
       final subscriptions = response.data.map((e) => e.toSubscription()).toList();
 
@@ -64,7 +64,7 @@ void main() async {
     "changePassword() throws 400",
     //400 is OK here
     () async {
-      Map<String, dynamic> request = {"currentPassword": "wrong_password_blabla", "password": "shouldn'tWork"};
+      Map<String, dynamic> request = {"currentPassword": "wrong_password_blabla", "password": "shouldn't Work"};
       expectLater(userClient.changePassword(request),
           throwsA(predicate((f) => f is DioError && f.response?.statusCode == 400, "user/password couple is invalid")));
     },

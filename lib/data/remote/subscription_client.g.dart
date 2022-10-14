@@ -24,7 +24,7 @@ class _SubscriptionClient implements SubscriptionClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<bool>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'subscriptions/{id}',
+                .compose(_dio.options, '/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(

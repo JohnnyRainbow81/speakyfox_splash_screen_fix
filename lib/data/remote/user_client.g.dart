@@ -25,7 +25,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<UserDto>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, '{id}',
+                .compose(_dio.options, '/{id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<UserDto>.fromJson(
@@ -44,7 +44,7 @@ class _UserClient implements UserClient {
     _data.addAll(body);
     final _result = await _dio.fetch<String>(_setStreamType<String>(
         Options(method: 'POST', headers: _headers, extra: _extra)
-            .compose(_dio.options, '${userId}/payment-methods',
+            .compose(_dio.options, '/${userId}/payment-methods',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data!;
@@ -60,7 +60,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<OrderDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${userId}/orders',
+                .compose(_dio.options, '/${userId}/orders',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<OrderDto>.fromJson(
@@ -79,7 +79,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<List<SubscriptionDto>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${userId}/subscriptions',
+                .compose(_dio.options, '/${userId}/subscriptions',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<List<SubscriptionDto>>.fromJson(
@@ -106,7 +106,7 @@ class _UserClient implements UserClient {
                 headers: _headers,
                 extra: _extra,
                 contentType: 'application/json')
-            .compose(_dio.options, 'me/password',
+            .compose(_dio.options, '/me/password',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
@@ -127,7 +127,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<LanguagePairDto>>(
             Options(method: 'PATCH', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${userId}/language-pair',
+                .compose(_dio.options, '/${userId}/language-pair',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<LanguagePairDto>.fromJson(
@@ -148,7 +148,7 @@ class _UserClient implements UserClient {
         _setStreamType<Response<String>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(
-                    _dio.options, '${userId}/payment-methods/setup-intents',
+                    _dio.options, '/${userId}/payment-methods/setup-intents',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<String>.fromJson(
@@ -171,7 +171,7 @@ class _UserClient implements UserClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Response<bool>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, '${userId}/payment-methods',
+                .compose(_dio.options, '/${userId}/payment-methods',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<bool>.fromJson(
@@ -195,7 +195,7 @@ class _UserClient implements UserClient {
                 headers: _headers,
                 extra: _extra,
                 contentType: 'application/json')
-            .compose(_dio.options, '${id}/subscriptions',
+            .compose(_dio.options, '/${id}/subscriptions',
                 queryParameters: queryParameters, data: _data)
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Response<SubscriptionDto>.fromJson(

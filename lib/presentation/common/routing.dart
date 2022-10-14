@@ -90,21 +90,21 @@ class Routing {
 
   static GoRouter _init() {
     _instance = GoRouter(
-      initialLocation: test,
-        // redirect: (context, state) {
-        //   bool loggedIn = locator<AuthenticationService>().isAuthenticated();
-        //   bool goingToLogin = state.location == login || state.location == register || state.location == resetPassword;
+      //initialLocation: test,
+        redirect: (context, state) {
+          bool loggedIn = locator<AuthenticationService>().isAuthenticated();
+          bool goingToLogin = state.location == login || state.location == register || state.location == resetPassword;
 
-        //   //User is not logged in > go to the authentication screens
-        //   if (!loggedIn && !goingToLogin) return login;
+          //User is not logged in > go to the authentication screens
+          if (!loggedIn && !goingToLogin) return login;
 
-        //   //User started app and is still logged in > go to home screen
-        //   if (loggedIn && _isAppStart) {
-        //     _isAppStart = false;
-        //     return null; // no need to redirect
-        //   }
-        //   return null; // no need to redirect
-        // },
+          //User started app and is still logged in > go to home screen
+          if (loggedIn && _isAppStart) {
+            _isAppStart = false;
+            return null; // no need to redirect
+          }
+          return null; // no need to redirect
+        },
         routes: <GoRoute>[
           GoRoute(
             path: test,

@@ -41,15 +41,17 @@ class CustomInterceptor extends Interceptor {
   // use AuthenticationService here?? Because Dio <> AuthenticationService would be in a cyclic dependency then
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    (options, handler) {
-      IdentityToken? credentials = _authenticationService.getCredentials();
+    //https://medium.com/flutter-community/dio-interceptors-in-flutter-17be4214f363
 
-      if (credentials != null) {
-        String accessToken = credentials.accessToken;
-        options.headers.addEntries({MapEntry(HttpHeaders.authorizationHeader, "Bearer $accessToken")});
-      }
-      return super.onRequest(options, handler);
-    };
+    // TODO Add custom header "requiresToken" : "true" in individual client calls
+    // and use it here to specify which calls needs the auth token and which doesn't
+    IdentityToken? credentials = _authenticationService.getCredentials();
+
+    if (credentials != null) {
+      String accessToken = credentials.accessToken;
+      options.headers.putIfAbsent(HttpHeaders.authorizationHeader, (() => "Bearer $accessToken"));
+      return handler.next(options); //super.onRequest(options, handler);
+    }
 
     return super.onRequest(options, handler);
   }
@@ -67,17 +69,19 @@ class CustomInterceptor extends Interceptor {
         //re-issue the failed request with new accessToken:
         final options = Options(
           method: err.requestOptions.method,
-          headers: err.requestOptions.headers..update(HttpHeaders.authorizationHeader, (_) => "Bearer $accessToken"),
+          headers: err.requestOptions.headers
+            ..putIfAbsent(HttpHeaders.authorizationHeader, () => "Bearer $accessToken"),
         );
-        
+
         final response = await dio.request<dynamic>(err.requestOptions.path,
             data: err.requestOptions.data, queryParameters: err.requestOptions.queryParameters, options: options);
         handler.resolve(response);
-
       } catch (e) {
         debugPrint("Error in Dio.onErrorInterceptor: $e");
-        ErrorHandler.handleError(e);
       }
+    } else if (err.response?.statusCode == 404) {
+      // ErrorHandler.handleError(err);
+      return handler.next(err);
     }
     return handler.next(err);
   }

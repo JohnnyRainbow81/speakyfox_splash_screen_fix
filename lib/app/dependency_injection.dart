@@ -192,8 +192,9 @@ Future<void> initializeDependencies() async {
   locator.registerLazySingleton<AuthenticationViewModel>(() => AuthenticationViewModel(locator()));
 
 //HomeViewModel
-  locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
-
+  locator.registerLazySingleton<HomeViewModel>(() => HomeViewModel(locator(), locator()));
+  
+// ProfileViewModel
   locator.registerLazySingleton<ProfileViewModel>(() => ProfileViewModel(locator(), locator(), locator(), locator(), locator()));
 
   locator.registerLazySingleton<MyPurchasesViewModel>(() => MyPurchasesViewModel());

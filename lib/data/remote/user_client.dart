@@ -13,35 +13,35 @@ part 'user_client.g.dart';
 abstract class UserClient with BaseClient<UserDto> {
   factory UserClient(Dio dio, {String baseUrl}) = _UserClient;
 
-  @POST("{id}")
+  @POST("/{id}")
   Future<Response<UserDto>> createUser(@Body() Map<String, dynamic> createUserRequest);
 
-  @POST("{userId}/payment-methods")
+  @POST("/{userId}/payment-methods")
   Future<String> attachPaymentMethodToUser(@Path("userId") String userId, @Body() Map<String, dynamic> body);
 
-  @GET("{userId}/orders")
+  @GET("/{userId}/orders")
   Future<Response<OrderDto>> getOrdersOfCurrentUser(@Path("userId") String userId);
 
-  @GET("{userId}/subscriptions")
+  @GET("/{userId}/subscriptions")
   Future<Response<List<SubscriptionDto>>> getSubscriptions(@Path("userId") String userId);
 
-  @PATCH("me/password")
+  @PATCH("/me/password")
   @Headers({"Content-Type": "application/json"})
   Future<Response<bool>> changePassword(@Body() Map<String, dynamic> changePasswordRequest);
 
-  @PATCH("{userId}/language-pair")
+  @PATCH("/{userId}/language-pair")
   Future<Response<LanguagePairDto>> patchLanguagePairBySourceTargetLanguagesIds(
       @Path("userId") String userId, @Body() Map<String, dynamic> body);
 
-  @POST("{userId}/payment-methods/setup-intents")
+  @POST("/{userId}/payment-methods/setup-intents")
   Future<Response<String>> createSetupIntent(
       @Path("userId") String userId, @Body() Map<String, dynamic> paymentMethodType);
 
-  @DELETE("{userId}/payment-methods")
+  @DELETE("/{userId}/payment-methods")
   Future<Response<bool>> removePaymentMethod(@Path("userId") String userId,
       @Query("paymentMethodType") String paymentMethodType, @Query("externalId") String externalId);
 
-  @POST("{userId}/subscriptions")
+  @POST("/{userId}/subscriptions")
   @Headers({"Content-Type": "application/json"})
   Future<Response<SubscriptionDto>> createSubscription(
       @Path("userId") String id, @Body() Map<String, dynamic> subscription);
