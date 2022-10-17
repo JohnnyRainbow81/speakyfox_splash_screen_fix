@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -11,7 +13,7 @@ import 'package:speakyfox/presentation/screens/profile/profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -28,11 +30,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         viewModelBuilder: (() => _profileViewModel),
         disposeViewModel: false,
         builder: (_, __, ___) {
-          if (_profileViewModel.hasError) {
-            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+          if (_profileViewModel.hasAnyError) {
+            SchedulerBinding.instance.addPostFrameCallback((timeStamp) { 
               //Check if this screen is current screen(=shown to the user) because
               //there are 3 other screens listening to the same viewModel
-              showErrorCommonDialog(context: context, exception: _profileViewModel.modelError);
+              showErrorCommonDialog(context: context, exception: _profileViewModel.currentError);
               _profileViewModel.clearErrors();
             });
           }
@@ -114,11 +116,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     },
                   ),
                   _profileViewModel.busy(_profileViewModel.subscriptions)
-                      ? const LinearProgressIndicator()
+                      ? const LinearProgressIndicator()                                                           
                       : Text("${_profileViewModel.subscriptions.toString()}"),
                   ListTile(
                     leading: const Icon(Icons.cancel),
-                    title: const Text("cancelSubscription()"),
+                    title: const Text("cancelSubscription()"), 
                     onTap: () async {
                       _profileViewModel.cancelSubscription("dsfsdf").then((value) => setState(() {
                             cancelSubscriptionSuccess = value;

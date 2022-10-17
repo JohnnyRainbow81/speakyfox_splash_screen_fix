@@ -17,16 +17,16 @@ extension SentenceMapper on SentenceDto {
         deleted: deleted ?? "",
         deletedBy: deletedBy ?? "",
         sentenceShellId: sentenceShellId,
-        sentenceShell: sentenceShell.toSentenceShell(),
+        sentenceShell: sentenceShell?.toSentenceShell(),
         isPublished: isPublished,
         languagePairId: languagePairId,
-        languagePair: languagePair.toLanguagePair(),
+        languagePair: languagePair?.toLanguagePair(),
         sourceNormalized: sourceNormalized,
         targetNormalized: targetNormalized,
         sourceHighlightedParts:
-            sourceHighlightedParts.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList(),
+            sourceHighlightedParts?.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList() ?? [],
         targetHighlightedParts:
-            targetHighlightedParts.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList(),
+            targetHighlightedParts?.map((highlightedPart) => highlightedPart.toHighlightedPart()).toList() ?? [],
         images: images != null ? images!.map((image) => image.toImage()).toList() : [],
         audios: audios != null ? audios!.map((audio) => audio.toAudio()).toList() : []);
   }
@@ -37,10 +37,10 @@ extension SentenceDtoMapper on Sentence {
     return SentenceDto(
         id: id,
         sentenceShellId: sentenceShellId,
-        sentenceShell: sentenceShell.toSentenceShellDto(),
+        sentenceShell: sentenceShell?.toSentenceShellDto(),
         isPublished: isPublished,
         languagePairId: languagePairId,
-        languagePair: languagePair.toLanguagePairDto(),
+        languagePair: languagePair?.toLanguagePairDto(),
         sourceNormalized: sourceNormalized,
         targetNormalized: targetNormalized,
         sourceHighlightedParts: sourceHighlightedParts.map((e) => e.toHighlightedPartDto()).toList(),

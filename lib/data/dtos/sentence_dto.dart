@@ -13,14 +13,14 @@ part 'sentence_dto.g.dart';
 @JsonSerializable()
 class SentenceDto extends BaseDto {
   String sentenceShellId;
-  SentenceShellDto sentenceShell;
+  SentenceShellDto? sentenceShell;
   bool isPublished;
-  String languagePairId;
-  LanguagePairDto languagePair;
+  String? languagePairId;
+  LanguagePairDto? languagePair;
   String sourceNormalized;
   String targetNormalized;
-  List<HighlightedPartDto> sourceHighlightedParts;
-  List<HighlightedPartDto> targetHighlightedParts;
+  List<HighlightedPartDto>? sourceHighlightedParts;
+  List<HighlightedPartDto>? targetHighlightedParts;
   List<ImageDto>? images;
   List<AudioDto>? audios;
 

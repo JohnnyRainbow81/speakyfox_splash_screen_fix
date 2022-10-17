@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/domain/models/model_base.dart';
 import 'package:speakyfox/domain/models/lecture.dart';
+import 'package:speakyfox/domain/models/screen.dart';
 
 import 'game.dart';
 
@@ -17,6 +18,8 @@ class Sequence extends ModelBase {
   ProgressType progressType;
   List<Game> games;
   Lecture? parent;
+  int order;
+  List<Screen> screens;
 
   Sequence({
     required String id,
@@ -30,6 +33,8 @@ class Sequence extends ModelBase {
     required this.description,
     required this.progressType,
     required this.games,
+    required this.order,
+    required this.screens,
     this.parent,
   }) : super(
             id: id,

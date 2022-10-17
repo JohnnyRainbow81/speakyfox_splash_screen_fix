@@ -18,14 +18,17 @@ class ScreenDto extends BaseDto {
   String title;
   String description;
   int order;
+
+  @JsonKey(name: "type")
   ScreenType? screenType;
+
   String? sequenceId;
   SequenceDto? sequence;
 
-  @JsonKey(name: "type")
+ // @JsonKey(name: "type")
   GameType gameType; //FIXME   only to Subclass?
 
-  List<VocabularyDto> vocabularies;
+  List<VocabularyDto>? vocabularies;
   List<VocabularyShellDto>? vocabularyShells;
   List<SentenceDto>? sentences;
   List<SentenceShellDto>? sentenceShells;

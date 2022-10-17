@@ -129,7 +129,7 @@ class ErrorHandler {
             throw BadRequestUIException(code: dioError.response?.statusCode);
           case HttpStatus.forbidden:
             FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "forbidden");
-            throw HttpUIException(code: dioError.response?.statusCode);
+            throw ForbiddenException(code: dioError.response?.statusCode);
           case HttpStatus.unauthorized:
             FirebaseCrashlytics.instance.recordError(dioError.error, dioError.stackTrace, reason: "unauthenticated");
             throw UnauthenticateddUIException(code: dioError.response?.statusCode);

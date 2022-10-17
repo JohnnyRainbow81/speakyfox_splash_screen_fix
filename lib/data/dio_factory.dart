@@ -79,10 +79,7 @@ class CustomInterceptor extends Interceptor {
       } catch (e) {
         debugPrint("Error in Dio.onErrorInterceptor: $e");
       }
-    } else if (err.response?.statusCode == 404) {
-      // ErrorHandler.handleError(err);
-      return handler.next(err);
-    }
+    } 
     return handler.next(err);
   }
 }

@@ -17,14 +17,14 @@ ScreenDto _$ScreenDtoFromJson(Map<String, dynamic> json) => ScreenDto(
       title: json['title'] as String,
       description: json['description'] as String,
       order: json['order'] as int,
-      screenType: $enumDecodeNullable(_$ScreenTypeEnumMap, json['screenType']),
+      screenType: $enumDecodeNullable(_$ScreenTypeEnumMap, json['type']),
       sequenceId: json['sequenceId'] as String?,
       sequence: json['sequence'] == null
           ? null
           : SequenceDto.fromJson(json['sequence'] as Map<String, dynamic>),
-      gameType: $enumDecode(_$GameTypeEnumMap, json['type']),
-      vocabularies: (json['vocabularies'] as List<dynamic>)
-          .map((e) => VocabularyDto.fromJson(e as Map<String, dynamic>))
+      gameType: $enumDecode(_$GameTypeEnumMap, json['gameType']),
+      vocabularies: (json['vocabularies'] as List<dynamic>?)
+          ?.map((e) => VocabularyDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       vocabularyShells: (json['vocabularyShells'] as List<dynamic>?)
           ?.map((e) => VocabularyShellDto.fromJson(e as Map<String, dynamic>))
@@ -48,10 +48,10 @@ Map<String, dynamic> _$ScreenDtoToJson(ScreenDto instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'order': instance.order,
-      'screenType': _$ScreenTypeEnumMap[instance.screenType],
+      'type': _$ScreenTypeEnumMap[instance.screenType],
       'sequenceId': instance.sequenceId,
       'sequence': instance.sequence,
-      'type': _$GameTypeEnumMap[instance.gameType]!,
+      'gameType': _$GameTypeEnumMap[instance.gameType]!,
       'vocabularies': instance.vocabularies,
       'vocabularyShells': instance.vocabularyShells,
       'sentences': instance.sentences,

@@ -12,27 +12,28 @@ import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart'
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
 Future<void> showErrorCommonDialog(
     {required BuildContext context, dynamic exception, Function? action, String? actionText, String? animationAsset}) {
-  //if no [exception] was handed over here, show a basic UIException
+
+  // if no [exception] was handed over here, show a basic UIException
   if (exception == null) {
     UIException showInUIException = UIException();
     exception = showInUIException;
   }
 
-  //We differentiate between UIException, Exception and Error.
-  //We try to funnel every Exception as a UIException(for transparent/better UX) into here, but there
-  //might arrive other Exceptions we weren't able to catch & map into an UIException upfront.
-  //
-  //If [Error]s arrive here (which could but shouldn't happen), we let the user exit from the app by pressing a button.
-  //This might be (at least) a better UX than just crashing the app.
+  // We differentiate between UIException, Exception and Error.
+  // We try to funnel every Exception as a UIException(for transparent/better UX) into here, but there
+  // might arrive other Exceptions we weren't able to catch & map into an UIException upfront.
+  // 
+  // If [Error]s arrive here (which could but shouldn't happen), we let the user exit from the app by pressing a button.
+  // This might be (at least) a better UX than just crashing the app.
 
   if (exception is UIException) {
     //Handle [UIException]-types
     switch (exception.runtimeType) {
       //some global error handling if [onButtonPress]-callback is not provided in function parameters
       case CannotRecoverUIException:
-        //restarts the app
-        //careful here! The app restarts, but the dependency injection(via Get_it lib) cannot be restarted,
-        //because it's initialized outside of the Phoenix.rebirth-scope!
+        // restarts the app
+        // careful here! The app restarts, but the dependency injection(via Get_it lib) cannot be restarted,
+        // because it's initialized outside of the Phoenix.rebirth-scope!
         action = () => Future.delayed(const Duration(seconds: 1), () => Phoenix.rebirth(context));
         animationAsset = AnimationAssets.failed;
         actionText = "Restart";
@@ -42,7 +43,6 @@ Future<void> showErrorCommonDialog(
         actionText = "To Login";
         break;
     }
-
     return showDialog(
         context: context,
         builder: (context) => _ErrorCommonDialog(
@@ -53,7 +53,7 @@ Future<void> showErrorCommonDialog(
               actionText: actionText ?? "Okay",
             ));
   } else if (exception is Exception) {
-    //Handle more general [Exception]-types (other than [UIException])
+    // Handle more general [Exception]-types (other than [UIException])
     return showDialog(
         context: context,
         builder: (context) => _ErrorCommonDialog(
@@ -64,20 +64,20 @@ Future<void> showErrorCommonDialog(
               actionText: actionText ?? "Okay",
             ));
   } else {
-    //Handle [Error]-types
-
-    //The web says: [Error]s shouldn't be caught because they have faulty reasons caused by 'the' programmer.
-    //They should be fixed and should not occur in release.
-
-    //I think: Nevertheless it might be a good idea to at least let the user know that something happened we fucked up and the app cannot recover from.
-
-    // So if [exception] is a fatal [Error], the app will not be able to show the [CommonErrorDialog] but a fallback like the [CommonErrorWidget],
-    //(It's a simple text widget the framework might still show in erratic circumstances).
-
-    //Otherwise if the framework is still able to handle the [CommonErrorDialog] there will be an error message and a button the user can
-    //press to exit the app.
-
-    //So if the following [CommonErrorDialog]-build() fails, the [CommonErrorWidget]-fallback shows up.
+    // Handle [Error]-types
+ 
+    // The web says: [Error]s shouldn't be caught because they have faulty reasons caused by 'the' programmer.
+    // They should be fixed and should not occur in release.
+ 
+    // I think: Nevertheless it might be a good idea to at least let the user know that something happened we fucked up and the app cannot recover from.
+ 
+    //  So if [exception] is a fatal [Error], the app will not be able to show the [CommonErrorDialog] but a fallback like the [CommonErrorWidget],
+    // (It's a simple text widget the framework might still show in erratic circumstances).
+ 
+    // Otherwise if the framework is still able to handle the [CommonErrorDialog] there will be an error message and a button the user can
+    // press to exit the app.
+ 
+    // So if the following [CommonErrorDialog]-build() fails, the [CommonErrorWidget]-fallback shows up.
     return showDialog(
         context: context,
         builder: (context) => _ErrorCommonDialog(

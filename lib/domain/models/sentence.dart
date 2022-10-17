@@ -30,10 +30,10 @@ enum TermType {
 
 class Sentence extends ModelBase {
   String sentenceShellId;
-  SentenceShell sentenceShell;
+  SentenceShell? sentenceShell;
   bool isPublished;
-  String languagePairId;
-  LanguagePair languagePair;
+  String? languagePairId;
+  LanguagePair? languagePair;
   String sourceNormalized;
   String targetNormalized;
   List<HighlightedPart> sourceHighlightedParts = [];

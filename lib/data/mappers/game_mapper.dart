@@ -27,7 +27,7 @@ extension GameMapper on GameDto {
         gameType: gameType,
         sequence: sequence?.toSequence(),
         sequenceId: sequenceId,
-        vocabularies: vocabularies.map((vocabulary) => vocabulary.toVocabulary()).toList());
+        vocabularies: vocabularies?.map((vocabulary) => vocabulary.toVocabulary()).toList() ?? []);
   }
 }
 

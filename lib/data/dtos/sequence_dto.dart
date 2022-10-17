@@ -4,6 +4,7 @@ import 'package:speakyfox/data/dtos/base_dto.dart';
 
 import 'package:speakyfox/data/dtos/game_dto.dart';
 import 'package:speakyfox/data/dtos/lecture_dto.dart';
+import 'package:speakyfox/data/dtos/screen_dto.dart';
 import 'package:speakyfox/domain/models/sequence.dart';
 
 part 'sequence_dto.g.dart';
@@ -15,6 +16,8 @@ class SequenceDto extends BaseDto {
   ProgressType progressType;
   List<GameDto>? games;
   LectureDto? parent;
+  int order;
+  List<ScreenDto>? screens;
 
   SequenceDto({
     required String id,
@@ -29,6 +32,8 @@ class SequenceDto extends BaseDto {
     required this.progressType,
     required this.games,
     required this.parent,
+    required this.order,
+    this.screens,
   }) : super(
             id: id,
             created: created,

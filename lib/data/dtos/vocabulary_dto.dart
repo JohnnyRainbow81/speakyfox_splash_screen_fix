@@ -16,8 +16,8 @@ class VocabularyDto extends BaseDto {
   String sourceWord;
   String targetWord;
   String? mnemonic;
-  String sourceSentence;
-  String targetSentence;
+  String? sourceSentence;
+  String? targetSentence;
   SentenceDto? sentence;
   String question;
   String imageNumber;
@@ -40,8 +40,8 @@ class VocabularyDto extends BaseDto {
     required this.sourceWord,
     required this.targetWord,
     this.mnemonic,
-    required this.sourceSentence,
-    required this.targetSentence,
+     this.sourceSentence,
+     this.targetSentence,
     this.sentence,
     required this.question,
     required this.imageNumber,

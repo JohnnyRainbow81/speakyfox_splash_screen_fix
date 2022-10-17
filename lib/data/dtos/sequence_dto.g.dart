@@ -23,6 +23,10 @@ SequenceDto _$SequenceDtoFromJson(Map<String, dynamic> json) => SequenceDto(
       parent: json['parent'] == null
           ? null
           : LectureDto.fromJson(json['parent'] as Map<String, dynamic>),
+      order: json['order'] as int,
+      screens: (json['screens'] as List<dynamic>?)
+          ?.map((e) => ScreenDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) =>
@@ -39,6 +43,8 @@ Map<String, dynamic> _$SequenceDtoToJson(SequenceDto instance) =>
       'progressType': _$ProgressTypeEnumMap[instance.progressType]!,
       'games': instance.games,
       'parent': instance.parent,
+      'order': instance.order,
+      'screens': instance.screens,
     };
 
 const _$ProgressTypeEnumMap = {

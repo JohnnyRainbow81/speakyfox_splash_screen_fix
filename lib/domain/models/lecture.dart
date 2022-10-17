@@ -8,18 +8,18 @@ import 'sequence.dart' show Sequence;
 
 class Lecture extends ModelBase {
   String title;
-  String? languagePairId;
   String description;
   bool isOnboarding;
   LanguagePair? languagePair;
+  String? languagePairId;
   bool? isPublished;
   bool isLocked;
   int? order;
   Course? course;
+  String? courseId;
   double progress;
   Offer? offer;
   String? offerId;
-  String? courseId;
   List<Sequence> sequences = [];
 
   Lecture(

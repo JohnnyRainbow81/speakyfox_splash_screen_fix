@@ -15,19 +15,23 @@ SentenceDto _$SentenceDtoFromJson(Map<String, dynamic> json) => SentenceDto(
       deleted: json['deleted'] as String?,
       deletedBy: json['deletedBy'] as String?,
       sentenceShellId: json['sentenceShellId'] as String,
-      sentenceShell: SentenceShellDto.fromJson(
-          json['sentenceShell'] as Map<String, dynamic>),
+      sentenceShell: json['sentenceShell'] == null
+          ? null
+          : SentenceShellDto.fromJson(
+              json['sentenceShell'] as Map<String, dynamic>),
       isPublished: json['isPublished'] as bool,
-      languagePairId: json['languagePairId'] as String,
-      languagePair: LanguagePairDto.fromJson(
-          json['languagePair'] as Map<String, dynamic>),
+      languagePairId: json['languagePairId'] as String?,
+      languagePair: json['languagePair'] == null
+          ? null
+          : LanguagePairDto.fromJson(
+              json['languagePair'] as Map<String, dynamic>),
       sourceNormalized: json['sourceNormalized'] as String,
       targetNormalized: json['targetNormalized'] as String,
-      sourceHighlightedParts: (json['sourceHighlightedParts'] as List<dynamic>)
-          .map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
+      sourceHighlightedParts: (json['sourceHighlightedParts'] as List<dynamic>?)
+          ?.map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      targetHighlightedParts: (json['targetHighlightedParts'] as List<dynamic>)
-          .map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
+      targetHighlightedParts: (json['targetHighlightedParts'] as List<dynamic>?)
+          ?.map((e) => HighlightedPartDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       images: (json['images'] as List<dynamic>?)
           ?.map((e) => ImageDto.fromJson(e as Map<String, dynamic>))

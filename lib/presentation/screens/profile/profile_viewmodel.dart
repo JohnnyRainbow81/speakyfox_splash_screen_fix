@@ -48,8 +48,9 @@ class ProfileViewModel extends BaseViewModel {
 
   Future<void> getSubscriptions() async {
     List<Subscription>? list =
-        await runBusyFuture<List<Subscription>?>(_userService.getSubscriptions(), busyObject: subscriptions);
+        await runBusyFuture<List<Subscription>?>(_userService.getSubscriptions(), busyObject: _subscriptions);
     _subscriptions = list ?? [];
+    notifyListeners();
   }
 
   Future<bool> cancelSubscription(String id) async {

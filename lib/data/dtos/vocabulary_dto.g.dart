@@ -18,8 +18,8 @@ VocabularyDto _$VocabularyDtoFromJson(Map<String, dynamic> json) =>
       sourceWord: json['sourceWord'] as String,
       targetWord: json['targetWord'] as String,
       mnemonic: json['mnemonic'] as String?,
-      sourceSentence: json['sourceSentence'] as String,
-      targetSentence: json['targetSentence'] as String,
+      sourceSentence: json['sourceSentence'] as String?,
+      targetSentence: json['targetSentence'] as String?,
       sentence: json['sentence'] == null
           ? null
           : SentenceDto.fromJson(json['sentence'] as Map<String, dynamic>),

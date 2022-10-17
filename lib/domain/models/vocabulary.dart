@@ -12,8 +12,8 @@ class Vocabulary extends ModelBase {
   String sourceWord;
   String targetWord;
   String mnemonic;
-  String sourceSentence;
-  String targetSentence;
+  String? sourceSentence;
+  String? targetSentence;
   Sentence? sentence;
   String question;
   String imageNumber;

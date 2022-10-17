@@ -71,6 +71,15 @@ class HttpUIException extends UIException {
         );
 }
 
+class ForbiddenException extends UIException {
+  ForbiddenException({int? code, String? message, String? description})
+      : super(
+          code: code ?? 0,
+          message: message ?? "Authorisierungsfehler",
+          description: description ?? "Du besitzt leider nicht die Rechte, um diese Inhalte anzuzeigen.",
+        );
+}
+
 class ConnectTimeOutUIException extends UIException {
   ConnectTimeOutUIException({int? code, String? message, String? description})
       : super(
@@ -176,8 +185,8 @@ class UserException extends UIException {
   UserException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "We couldn't fetch your user data from our server.",
-          description: description ?? "Please try again.",
+          message: message ?? "Fehler beim Laden deiner Daten.",
+          description: description ?? "Leider konnten wir deine Daten nicht von unserem Server laden.",
         );
 }
 
@@ -185,8 +194,8 @@ class ResetPasswordException extends UIException {
   ResetPasswordException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "We are having trouble resetting your password.",
-          description: description ?? "Please try again.",
+          message: message ?? "Fehler beim Passwort Reset.",
+          description: description ?? "Leider konnten wir dein Passwort nicht zurücksetzen.",
         );
 }
 
@@ -194,8 +203,8 @@ class NotFoundUIException extends UIException {
   NotFoundUIException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Couldn't find resource",
-          description: description ?? "A resource you asked for could not be found on our servers.",
+          message: message ?? "Ressource nicht gefunden.",
+          description: description ?? "Wir konnten die Ressource leider nicht finden auf unserem Server.",
         );
 }
 
@@ -203,8 +212,8 @@ class InternalErrorException extends UIException {
   InternalErrorException({int? code, String? message, String? description})
       : super(
           code: code ?? 0,
-          message: message ?? "Internal Server Error",
-          description: description ?? "A situation occured our server couldn't handle.",
+          message: message ?? "Server Fehler",
+          description: description ?? "Unser Server kann deine Anfrage nicht verarbeiten.",
         );
 }
 
