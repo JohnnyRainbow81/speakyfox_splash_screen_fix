@@ -7,7 +7,19 @@ import 'font_assets.dart';
 ThemeData getApplicationTheme() {
   return ThemeData(
     primaryColor: ColorAssets.primary,
-    backgroundColor: ColorAssets.bgBlueLight,
+   // backgroundColor: ColorAssets.bgBlueLight,
+    colorScheme: const ColorScheme(
+        background: Colors.pink, //for debug only 
+        brightness: Brightness.light,
+        onBackground: Colors.green, //for debug only
+        primary: ColorAssets.primary,
+        onPrimary: ColorAssets.lightest,
+        error: ColorAssets.error,
+        onError: ColorAssets.lightest,
+        secondary: ColorAssets.lightest,
+        onSecondary: ColorAssets.primary,
+        surface: ColorAssets.lightest,
+        onSurface: ColorAssets.primary),
     scaffoldBackgroundColor: ColorAssets.background,
     fontFamily: FontAssets.primary,
     textTheme: _getApplicationTextTheme(),
@@ -20,13 +32,13 @@ ThemeData getApplicationTheme() {
     iconTheme: _getIconThemeData(),
     bottomSheetTheme: _getBottomSheetTheme(),
     checkboxTheme: _getCheckboxTheme(),
-    
+
     //primaryIconTheme: _getIconThemeData(),
     cardTheme: _getCardTheme(),
     appBarTheme: _getAppBarTheme(),
-    errorColor: ColorAssets.error,
+    //errorColor: ColorAssets.error,
     hintColor: ColorAssets.lightGrey,
-    indicatorColor: ColorAssets.primary, 
+    indicatorColor: ColorAssets.primary,
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
       TargetPlatform.android: ZoomPageTransitionsBuilder(), //Another one on Android?
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
