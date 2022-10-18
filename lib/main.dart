@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:speakyfox/app/environment.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
@@ -17,7 +18,10 @@ main() async {
   //Error handling setup
   //If an error is thrown in a zone, it stays within its boundaries
   runZonedGuarded(() async {
-    WidgetsFlutterBinding.ensureInitialized();
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+    // Show Splash Screen until basic initialisation is done
+   // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
 //**IMPORTANT! Every project needs an own Firebase-Account > check the init steps here:
 // https://firebase.google.com/docs/flutter/setup?platform=ios */
@@ -50,6 +54,9 @@ main() async {
 
     //dependency injection
     await initializeDependencies();
+
+    // Remove Splash Screen
+   // FlutterNativeSplash.remove();
 
     runApp(Phoenix(child: SpeakyFox()));
   }, (Object error, StackTrace stack) {

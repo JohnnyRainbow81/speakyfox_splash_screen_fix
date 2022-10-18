@@ -38,9 +38,9 @@ ThemeData getApplicationTheme() {
     appBarTheme: _getAppBarTheme(),
     //errorColor: ColorAssets.error,
     hintColor: ColorAssets.lightGrey,
-    indicatorColor: ColorAssets.primary,
+    indicatorColor: ColorAssets.primary, 
     pageTransitionsTheme: const PageTransitionsTheme(builders: {
-      TargetPlatform.android: ZoomPageTransitionsBuilder(), //Another one on Android?
+      TargetPlatform.android: ZoomPageTransitionsBuilder(), 
       TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
     }),
   );

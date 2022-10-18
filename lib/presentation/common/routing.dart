@@ -112,7 +112,7 @@ class Routing {
 
 enum TransitionDirection { up, down, left, right }
 
-CustomTransitionPage buildPageWithFadeTransition({
+CustomTransitionPage _buildPageWithFadeTransition({
   required BuildContext context,
   required GoRouterState state,
   required Widget child,
