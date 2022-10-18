@@ -61,6 +61,17 @@ flutter_icons:
   remove_alpha_ios: true
   background_color: "0xFF104281"
   adaptive_icon_background: "0xFF104281"
+
+flutter_native_splash:
+  color: "#ff0000" #debug color
+  image: assets/images/logo.png
+  android_12:
+   color: "#ff0000" #debug color
+   image: assets/images/logo.png
+  
+  android: true
+  ios: true
+  fullscreen: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
