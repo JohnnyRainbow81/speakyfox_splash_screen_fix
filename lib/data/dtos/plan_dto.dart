@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/dtos/base_dto.dart';
 import 'package:speakyfox/data/dtos/product_dto.dart';
 
-import '../../domain/models/plan.dart';
 
 part 'plan_dto.g.dart';
 

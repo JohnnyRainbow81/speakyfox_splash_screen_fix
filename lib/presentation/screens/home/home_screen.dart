@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/domain/models/language.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
 import 'package:speakyfox/domain/services/language_service.dart';
 import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/common_error_dialog.dart';
+import 'package:speakyfox/presentation/common/routing.dart';
+import 'package:speakyfox/presentation/common/widgets/errors/error_common_dialog.dart';
 import 'package:speakyfox/presentation/screens/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, model, child) {
           if (_homeViewModel.hasError) {
             SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-              showCommonErrorDialog(
+              showErrorCommonDialog(
                   context: context, exception: _homeViewModel.modelError, animationAsset: AnimationAssets.error);
               _homeViewModel.clearErrors();
             });
@@ -56,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                     onPressed: () async {
                       await locator<AuthenticationService>().logout();
-                      if(mounted) {
-                        Navigator.of(context).pushReplacementNamed(Routes.login);
+                      if (mounted) {
+                        GoRouter.of(context).go(Routing.login);
                       }
                     },
                     child: const Text("logout")),

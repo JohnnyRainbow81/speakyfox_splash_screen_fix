@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/constants.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
 import 'package:speakyfox/presentation/common/resources/image_assets.dart';
@@ -9,7 +10,7 @@ import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/common/widgets/loading_animation.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import '../../../../app/dependency_injection.dart';
-import '../../../common/widgets/errors/common_error_dialog.dart';
+import '../../../common/widgets/errors/error_common_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -31,15 +32,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   void initState() {
     super.initState();
-    _authenticationViewModel.reset();
-    _emailController.text = _authenticationViewModel.email;
-    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
+    //_authenticationViewModel.reset();
+    _emailController.text = _authenticationViewModel.emailLogin;
   }
 
   @override
   void dispose() {
     debugPrint("ResetPasswordScreen.dispose()");
-    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
     _emailController.dispose();
     super.dispose();
   }
@@ -47,6 +46,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     debugPrint("ResetPasswordScreen.build() ");
+
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => _authenticationViewModel,
       disposeViewModel: false,
@@ -56,7 +56,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             //Check if this screen is current screen(=shown to the user) because
             //there are 3 other screens listening to the same viewModel
             if (ModalRoute.of(context) != null && ModalRoute.of(context)!.isCurrent) {
-              showCommonErrorDialog(context: context, exception: _authenticationViewModel.modelError);
+              showErrorCommonDialog(context: context, exception: _authenticationViewModel.modelError);
               _authenticationViewModel.clearErrors();
             }
           });
@@ -94,9 +94,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           autofillHints: const [AutofillHints.email],
                           decoration: InputDecoration(
                               hintText: "E-Mail",
-                              errorText: _authenticationViewModel.emailError,
+                              errorText: _authenticationViewModel.emailLoginError,
                               prefixIcon: const Icon(Icons.email)),
                           controller: _emailController,
+                          onChanged: (email) => _authenticationViewModel.validateEmailLogin(email),
+                          onEditingComplete: () => _emailController.text = _authenticationViewModel.emailLogin,
+
                         ),
                         _authenticationViewModel.isLoggedIn
                             ? const Padding(
@@ -132,7 +135,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         const Spacer(),
                         //const SizedBox(height: 48,),
                         TextButton(
-                            onPressed: () => Navigator.of(context).pop(), //to Login Screen
+                            onPressed: () => GoRouter.of(context).pop(), //to Login Screen
                             child: const Text("Zurück zum Login")),
                       ],
                     ),

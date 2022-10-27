@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LongRoundedConfirmButton extends StatelessWidget {
   final String buttonText;
@@ -36,7 +37,7 @@ class LongRoundedConfirmButton extends StatelessWidget {
           ),
         ),
         onPressed: () { action?.call() ?? 
-          Navigator.of(context).pop();
+          GoRouter.of(context).pop();
         },
         child: Text(
           buttonText,

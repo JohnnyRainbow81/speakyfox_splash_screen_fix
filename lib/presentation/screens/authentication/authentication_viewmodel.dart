@@ -19,16 +19,23 @@ import '../../../domain/models/user.dart';
 class AuthenticationViewModel extends BaseViewModel {
   final AuthenticationService _authenticationService;
 
-  late String _username;
-  late String _password;
-  late String _email;
+  late String _usernameRegistration;
+  late String _emailRegistration;
+  late String _passwordRegistration;
+
+  late String _emailLogin;
+  late String _passwordLogin;
+  
 
   dom.Document? _AGBsHTML;
   dom.Document? _dataProtectionHTML;
 
-  String? _usernameError;
-  String? _passwordError;
-  String? _emailError;
+  String? _usernameRegistrationError;
+  String? _emailRegistrationError;
+  String? _passwordRegistrationError;
+
+  String? _emailLoginError;
+  String? _passwordLoginError;
 
   bool _isRegistrationEmailSent = false;
   bool _isResetEmailSent = false;
@@ -40,26 +47,20 @@ class AuthenticationViewModel extends BaseViewModel {
 
   int _waitTime = Constants.emailResendDelay;
 
-  Function? _allRegistrationInputsAreValidCallback;
-
   AuthenticationViewModel(
     this._authenticationService,
   ) {
     User? user = _authenticationService.getUser();
 
-    _username = user?.firstName ?? "";
-    _email = user?.email ?? "";
-    _password = "";
+    _usernameRegistration = "";
+    _emailRegistration = "";
+    _passwordRegistration = "";
 
-    //_loadJSON(TextAssets.AGBsJson, _AGBs);
-    //_loadJSON(TextAssets.dataProtectionJson, _dataProtection);
+    _emailLogin = user?.email ?? "";
+    _passwordLogin = "";
 
     loadAGBs();
     loadDataProtection();
-  }
-
-  set allRegistrationInputsAreValid(Function? callback) {
-    _allRegistrationInputsAreValidCallback = callback;
   }
 
   set hasTextFieldFocus(bool value) {
@@ -67,13 +68,19 @@ class AuthenticationViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  String get email => _email;
-  String get password => _password;
-  String get username => _username;
+  String get usernameRegistration => _usernameRegistration;
+  String get emailRegistration => _emailRegistration;
+  String get passwordRegistration => _passwordRegistration;
 
-  String? get userNameError => _usernameError;
-  String? get passwordError => _passwordError;
-  String? get emailError => _emailError;
+  String get emailLogin => _emailLogin;
+  String get passwordLogin => _passwordLogin;
+
+  String? get usernameRegistrationError => _usernameRegistrationError;
+  String? get passwordRegistrationError => _passwordRegistrationError;
+  String? get emailRegistrationError => _emailRegistrationError;
+
+  String? get passwordLoginError => _passwordLoginError;
+  String? get emailLoginError => _emailLoginError;
 
   bool get isLoggedIn => _authenticationService.isAuthenticated();
   bool get isResetEmailSent => _isResetEmailSent;
@@ -90,39 +97,64 @@ class AuthenticationViewModel extends BaseViewModel {
 
   String get waitTime => _waitTime.toString();
 
-  void validateUsername(String? username) {
-    if (username == null || username.isEmpty) {
-      _usernameError = 'Bitte gib deinen Namen oder deine E-Mail Adresse ein';
+  void validateUsernameRegistration(String username) {
+    if (username.isEmpty) {
+      _usernameRegistrationError = 'Bitte gib deinen Namen oder deine E-Mail Adresse ein';
     } else if (username.length < 3) {
-      _usernameError = "Der Name ist zu kurz";
+      _usernameRegistrationError = "Der Name ist zu kurz";
     } else {
-      _usernameError = null;
-      _username = username;
+      _usernameRegistrationError = null;
     }
+    _usernameRegistration = username;
     notifyListeners();
   }
 
-  void validatePassword(String? password) {
-    if (password == null || password.isEmpty) {
-      _passwordError = 'Bitte gib ein gültiges Passwort ein';
+  void validateEmailRegistration(String email) {
+    if (email.isEmpty) {
+      _emailRegistrationError = 'Gib bitte eine gültige Email-Adresse ein';
+    } else if (!isValidEmail(email)) {
+      _emailRegistrationError = 'Das Format der Emailadresse stimmt nicht';
+    } else {
+      _emailRegistrationError = null;
+    }
+    _emailRegistration = email;
+    notifyListeners();
+  }
+
+  void validatePasswordRegistration(String password) {
+    if (password.isEmpty) {
+      _passwordRegistrationError = 'Bitte such dir ein gültiges Passwort aus';
     } else if (!isValidPassword(password)) {
-      _passwordError =
+      _passwordRegistrationError =
           'Das Passwort muss mindestens \n einen Großbuchstaben,\n einen Kleinbuchstaben, \n eine Zahl, \n ein Sonderzeichen \n und mindestens 8 Zeichen enthalten';
     } else {
-      _passwordError = null;
-      _password = password;
+      _passwordRegistrationError = null;
+      _passwordRegistration = password;
     }
     notifyListeners();
   }
 
-  void validateEmail(String? email) {
-    if (email == null || email.isEmpty) {
-      _emailError = 'Gib bitte eine gültige Email-Adresse ein';
+  void validateEmailLogin(String email) {
+    if (email.isEmpty) {
+      _emailLoginError = 'Gib bitte deine Email-Adresse ein';
     } else if (!isValidEmail(email)) {
-      _emailError = 'Das Format der Emailadresse stimmt nicht';
+      _emailLoginError = 'Das Format der Emailadresse stimmt nicht';
     } else {
-      _emailError = null;
-      _email = email;
+      _emailLoginError = null;
+    }
+    _emailLogin = email;
+    notifyListeners();
+  }
+
+  void validatePasswordLogin(String password) {
+    if (password.isEmpty) {
+      _passwordLoginError = 'Bitte gib dein Passwort ein';
+    } else if (!isValidPassword(password)) {
+      _passwordLoginError =
+          'Dein Passwort besteht mindestens \n einen Großbuchstaben,\n einen Kleinbuchstaben, \n eine Zahl, \n ein Sonderzeichen \n und mindestens 8 Zeichen';
+    } else {
+      _passwordLoginError = null;
+      _passwordLogin = password;
     }
     notifyListeners();
   }
@@ -143,43 +175,36 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   bool get isLoginFormValid {
-    //if one of these is not empty means, it has successfully passed validation
-    return _email.isNotEmpty && _password.isNotEmpty && _emailError == null && _passwordError == null;
+    //if all input strings are not empty and all error strings are null(the textfield api needs them as 'null' to show visual error indications), the form is valid.
+    return _emailLogin.isNotEmpty &&
+        _passwordLogin.isNotEmpty &&
+        _emailLoginError == null &&
+        _passwordLoginError == null;
   }
 
   bool get isRegisterFormValid {
-    bool isAllValid = _username.isNotEmpty &&
-        _password.isNotEmpty &&
-        _email.isNotEmpty &&
-        _usernameError == null &&
-        _passwordError == null &&
-        _emailError == null &&
+    return _usernameRegistration.isNotEmpty &&
+        _passwordRegistration.isNotEmpty &&
+        _emailRegistration.isNotEmpty &&
+        _usernameRegistrationError == null &&
+        _passwordRegistrationError == null &&
+        _emailRegistrationError == null &&
         _isAGB_accepted == true &&
         _isDataProtectionAccepted == true;
-
-    if (isAllValid) {
-      if (_allRegistrationInputsAreValidCallback != null) {
-        _allRegistrationInputsAreValidCallback!();
-      }
-    }
-
-    return isAllValid;
   }
 
-  bool get isEmailFormValid {
-    //email validation has already been done at this point. "valid" then means, that
-    //the email string has been assigned a valid value that satisfies all email address criterias
-    return email.isNotEmpty;
-  }
+  //email validation has already been done at this point. "valid" then means, that
+  //the email string has been assigned a valid value that satisfies all email address criterias
+  bool get isEmailLoginFormValid => emailLogin.isNotEmpty;
 
-  bool isAlreadyLoggedIn() {
-    return _authenticationService.isAuthenticated();
-  }
+  bool get isEmailRegistrationFormValid => emailRegistration.isNotEmpty;
+
+  bool isAlreadyLoggedIn() => _authenticationService.isAuthenticated();
 
   Future<void> login() async {
-    await runBusyFuture<bool?>(_authenticationService.login(_email, _password));
+    await runBusyFuture<bool?>(_authenticationService.login(_emailLogin, _passwordLogin));
     if (_authenticationService.isAuthenticated()) {
-      _password = "";
+      _resetInputs();
       notifyListeners();
     }
   }
@@ -189,8 +214,8 @@ class AuthenticationViewModel extends BaseViewModel {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = false;
     //Better mock this call for testing
-    success =
-        await runBusyFuture<bool?>(_authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _email)));
+    success = await runBusyFuture<bool?>(
+        _authenticationService.sendPasswordResetEmail(SendPasswordResetBody(email: _emailLogin)));
 
     Timer.periodic(
       const Duration(seconds: 1),
@@ -216,12 +241,20 @@ class AuthenticationViewModel extends BaseViewModel {
   Future<void> register() async {
     //FIXME "type 'Null' is not a subtype of type 'bool' in type cast" > Error from stacked library doesn't return "false" but "null" so we need to make the return type nullable
     bool? success = await runBusyFuture<bool?>(_authenticationService.register(CreateProfileUserRequest(
-        firstname: "", lastname: _username, email: _email, password: _password, affiliateId: "")));
+        firstname: "",
+        lastname: _usernameRegistration,
+        email: _emailRegistration,
+        password: _passwordRegistration,
+        affiliateId: "")));
 
     _isRegistrationEmailSent = success ?? false;
 
     if (_isRegistrationEmailSent) {
-      _password = "";
+      //pre-fill login email with registration email (leave password blank due to data protection)..
+      _emailLogin = _emailRegistration;
+      //.. but reset other login / registration data
+      _resetInputs();
+
       notifyListeners();
     }
   }
@@ -232,7 +265,6 @@ class AuthenticationViewModel extends BaseViewModel {
   //Because the lib seems to identify the busy object via its pointer. Damnit. (Also Dart lang is to blame here imho)
 
   // > We have to hard-code setBusyForObject(_AGBsHTML) and also for _dataProtectionHTML.
-
   void loadAGBs() {
     setBusyForObject(_AGBsHTML, true);
 
@@ -262,10 +294,23 @@ class AuthenticationViewModel extends BaseViewModel {
     //TODO backend must offer data Protection HTML data first
   }
 
-  void reset() {
-    _passwordError = null;
-    _usernameError = null;
-    _emailError = null;
-    _isRegistrationEmailSent = false;
+  void _resetInputs() {
+    _usernameRegistration = "";
+    _emailRegistration = "";
+    _passwordRegistration = "";
+
+    _passwordLogin = "";
+
+    _passwordRegistrationError = null;
+    _usernameRegistrationError = null;
+    _emailRegistrationError = null;
+
+    _passwordLoginError = null;
+    _emailLoginError = null;
+
+    _isAGB_accepted = false;
+    _isDataProtectionAccepted = false;
+
+    _hasTextFieldFocus = false;
   }
 }

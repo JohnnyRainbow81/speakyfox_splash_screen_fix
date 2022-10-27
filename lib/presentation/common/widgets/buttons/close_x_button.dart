@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CloseXButton extends StatelessWidget {
   const CloseXButton({
@@ -8,22 +9,17 @@ class CloseXButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right:8.0, top: 8.0),
+      padding: const EdgeInsets.only(right: 8.0, top: 8.0),
       child: OutlinedButton(
         style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.symmetric(horizontal: 0)),
+          padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.symmetric(horizontal: 0)),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          side: MaterialStateProperty.all<BorderSide>(
-              const BorderSide(
-                  width: 0, color: Colors.transparent)),
-          minimumSize: MaterialStateProperty.all<Size>(
-              const Size.fromHeight(12)),
-          foregroundColor:
-              MaterialStateProperty.all<Color>(Colors.white),
+          side: MaterialStateProperty.all<BorderSide>(const BorderSide(width: 0, color: Colors.transparent)),
+          minimumSize: MaterialStateProperty.all<Size>(const Size.fromHeight(12)),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
         ),
         onPressed: () {
-          Navigator.of(context).pop();
+          GoRouter.of(context).pop();
         },
         child: const Align(
           alignment: Alignment.topRight,

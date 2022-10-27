@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:speakyfox/data/dtos/base_dto.dart';
 import 'package:speakyfox/data/dtos/class_dto.dart';
 import 'package:speakyfox/data/dtos/image_dto.dart';
-import 'package:speakyfox/data/dtos/language_pair_dto.dart';
 import 'package:speakyfox/data/dtos/lecture_dto.dart';
 
 part 'course_dto.g.dart';

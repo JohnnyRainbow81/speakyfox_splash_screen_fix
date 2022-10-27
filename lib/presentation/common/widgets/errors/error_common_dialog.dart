@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/error_handling/exceptions_ui.dart';
 import 'package:speakyfox/presentation/common/resources/animation_assets.dart';
 import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/routes.dart';
+import 'package:speakyfox/presentation/common/routing.dart';
 import 'package:speakyfox/presentation/common/widgets/animated_dialog_icon.dart';
 
 //The go-to method for presenting errors/exceptions to the user as a [Dialog].
-Future<void> showCommonErrorDialog(
+Future<void> showErrorCommonDialog(
     {required BuildContext context, dynamic exception, Function? action, String? actionText, String? animationAsset}) {
   //if no [exception] was handed over here, show a basic UIException
   if (exception == null) {
@@ -18,9 +18,9 @@ Future<void> showCommonErrorDialog(
     exception = showInUIException;
   }
 
-  //We differentiate between UIException, Exception and Error. 
+  //We differentiate between UIException, Exception and Error.
   //We try to funnel every Exception as a UIException(for transparent/better UX) into here, but there
-  //might arrive other Exceptions we weren't able to catch & map into an UIException upfront. 
+  //might arrive other Exceptions we weren't able to catch & map into an UIException upfront.
   //
   //If [Error]s arrive here (which could but shouldn't happen), we let the user exit from the app by pressing a button.
   //This might be (at least) a better UX than just crashing the app.
@@ -38,14 +38,14 @@ Future<void> showCommonErrorDialog(
         actionText = "Restart";
         break;
       case LoggedOutException:
-        action = () => Navigator.of(context).pushReplacementNamed(Routes.login);
+        action = () => GoRouter.of(context).go(Routing.login);
         actionText = "To Login";
         break;
     }
 
     return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: animationAsset,
               headline: exception?.message,
               subline: exception?.description,
@@ -54,9 +54,9 @@ Future<void> showCommonErrorDialog(
             ));
   } else if (exception is Exception) {
     //Handle more general [Exception]-types (other than [UIException])
-    showDialog(
+    return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: animationAsset,
               headline: "Exception happened",
               subline:
@@ -80,7 +80,7 @@ Future<void> showCommonErrorDialog(
     //So if the following [CommonErrorDialog]-build() fails, the [CommonErrorWidget]-fallback shows up.
     return showDialog(
         context: context,
-        builder: (context) => _CommonErrorDialog(
+        builder: (context) => _ErrorCommonDialog(
               animationAsset: AnimationAssets.failed,
               headline: "Oh no. It's bad.",
               subline: "Something unexpected happened which our app couldn't recover from.\nPlease restart the app.",
@@ -88,19 +88,16 @@ Future<void> showCommonErrorDialog(
               actionText: "Exit",
             ));
   }
-  //This should not happen
-  if (kDebugMode) print("This should not happen. Investigate!");
-  throw Error();
 }
 
-class _CommonErrorDialog extends StatefulWidget {
+class _ErrorCommonDialog extends StatefulWidget {
   final String? animationAsset;
   final String headline;
   final String subline;
   final String actionText;
   final Function? action;
 
-  const _CommonErrorDialog(
+  const _ErrorCommonDialog(
       {Key? key,
       this.animationAsset,
       required this.actionText,
@@ -110,10 +107,10 @@ class _CommonErrorDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<_CommonErrorDialog> createState() => _CommonErrorDialogState();
+  State<_ErrorCommonDialog> createState() => _ErrorCommonDialogState();
 }
 
-class _CommonErrorDialogState extends State<_CommonErrorDialog> {
+class _ErrorCommonDialogState extends State<_ErrorCommonDialog> {
   double _scale = 1.0;
 
   void _triggerAnim() {
@@ -177,6 +174,11 @@ class _CommonErrorDialogState extends State<_CommonErrorDialog> {
                         child: ElevatedButton(
                           onPressed: () {
                             _triggerAnim();
+                            //FIXME Because GoRouter.pop() gives us an Exception when we pop the Dialog with the following
+                            //message we use good old Navigator.pop() here:
+                            //"You have popped the last page off of the stack, there are no pages left to show
+                           // 'package:go_router/src/matching.dart':" 
+                           // See also https://github.com/flutter/flutter/issues/100933
                             widget.action == null ? Navigator.of(context).pop() : widget.action!();
                           },
                           child: Text(widget.actionText),

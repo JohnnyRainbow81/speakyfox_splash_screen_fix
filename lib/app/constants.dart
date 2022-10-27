@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 
 class Constants {
   //Examples > delete if you don't need
