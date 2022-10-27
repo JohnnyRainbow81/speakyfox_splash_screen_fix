@@ -37,11 +37,10 @@ dependencies:
   flutter_phoenix: ^1.0.0 # restarts the app
   firebase_core: ^1.24.0 # core BaaS
   #firebase_performance: ^0.8.3 # check performance
-  flutter_native_splash: ^2.1.0 # helps to setup native splash screen before Flutter can take over
   uuid: ^3.0.6
   go_router: ^5.0.3 #for better navigation and deep linking
-  mime: ^1.0.2
-  
+  flutter_keyboard_visibility: ^5.4.0
+
 dev_dependencies:
   mockito: ^5.3.0
   flutter_lints: ^2.0.1
@@ -53,7 +52,21 @@ dev_dependencies:
   change_app_package_name: ^1.1.0 #use for changing project name
   image: ^3.0.1 #convert images to bytes and vice versa
   path_provider: ^2.0.11 #get common paths on different platforms
+  flutter_native_splash: ^2.1.2 # helps to setup native splash screen before Flutter can take over
 
+#Generate splash screens for different OS
+flutter_native_splash:
+  color: "#42a5f5" #debug color
+  color_dark: "#42a5f5" #debug color
+  image: assets/images/logo.png
+  image_dark: assets/images/logo.png
+  android_12:
+    color: "#42a5f5" #debug color
+    background_color: "42a5f5"
+    color_dark: "#42a5f5" #debug color
+    image: assets/images/logo.png
+
+#Generate launcher icons for different OS
 flutter_icons:
   android: "launcher_icon"
   ios: true
@@ -61,17 +74,6 @@ flutter_icons:
   remove_alpha_ios: true
   background_color: "0xFF104281"
   adaptive_icon_background: "0xFF104281"
-
-flutter_native_splash:
-  color: "#ff0000" #debug color
-  image: assets/images/logo.png
-  android_12:
-   color: "#ff0000" #debug color
-   image: assets/images/logo.png
-  
-  android: true
-  ios: true
-  fullscreen: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

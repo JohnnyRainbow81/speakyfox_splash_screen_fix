@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:speakyfox/app/dependency_injection.dart';
 import 'package:speakyfox/domain/services/authentication_service.dart';
@@ -16,56 +13,6 @@ import 'package:speakyfox/presentation/screens/profile/profile_screen.dart';
 import 'package:speakyfox/presentation/screens/profile/settings/settings_screen.dart';
 import 'package:speakyfox/presentation/screens/profile/unlock/unlock_screen.dart';
 import 'package:speakyfox/presentation/screens/tests/ci_test_screen.dart';
-import 'package:speakyfox/presentation/screens/tests/files_test_screen.dart';
-
-// class Routes {
-//   // static const String test = "/test";
-//   // static const String login = "/login";
-//   // static const String resetPassword = "/resetPassword";
-//   // static const String register = "/register";
-//   // static const String onboarding = "/onboarding";
-//   // static const String home = "/home";
-
-//   // static Route<dynamic> getRoute(RouteSettings routeSettings) {
-//   //   switch (routeSettings.name) {
-//   //     case test:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => const TestScreen())
-//   //           : MaterialPageRoute(builder: (_) => const TestScreen());
-//   //     case login:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => const LoginScreen())
-//   //           : MaterialPageRoute(builder: (_) => const LoginScreen());
-//   //     case resetPassword:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => const ResetPasswordScreen())
-//   //           : MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
-//   //     case onboarding:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => const OnboardingPager())
-//   //           : MaterialPageRoute(builder: (_) => const OnboardingPager());
-//   //     case register:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => const RegistrationScreen())
-//   //           : MaterialPageRoute(builder: (_) => const RegistrationScreen());
-//   //     case home:
-//   //       return Platform.isIOS
-//   //           ? CupertinoPageRoute(builder: (_) => HomeScreen())
-//   //           : MaterialPageRoute(builder: (_) => HomeScreen());
-//   //     default:
-//   //       return _undefinedRouteScreen();
-//   //   }
-//   // }
-
-//   // static Route<dynamic> _undefinedRouteScreen() {
-//   //   const Widget undefinedRouteScreen = Scaffold(
-//   //     body: Center(child: Text("No Route found")),
-//   //   );
-//   //   return Platform.isIOS
-//   //       ? CupertinoPageRoute(builder: (_) => undefinedRouteScreen)
-//   //       : MaterialPageRoute(builder: (_) => undefinedRouteScreen);
-//   // }
-// }
 
 class Routing {
   static GoRouter? _instance;
@@ -98,73 +45,27 @@ class Routing {
           //User is not logged in > go to the authentication screens
           if (!loggedIn && !goingToLogin) return login;
 
-          //User started app and is still logged in > go to home screen
+          //User started app and is still logged in
           if (loggedIn && _isAppStart) {
             _isAppStart = false;
-            return null; // no need to redirect
+            return null; // no need to redirect (will be default "/" route)
           }
           return null; // no need to redirect
         },
         routes: <GoRoute>[
-          GoRoute(
-            path: test,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? const  CupertinoPage(child: FilesTestScreen()) : const MaterialPage(child: FilesTestScreen()),
-          ),
-          GoRoute(
-              path: login,
-              pageBuilder: (context, state) => Platform.isIOS
-                  ? const CupertinoPage(child: LoginScreen())
-                  : const MaterialPage(child: LoginScreen())),
-          GoRoute(
-            path: onboarding,
-            pageBuilder: (context, state) => Platform.isIOS
-                ? const CupertinoPage(child: OnboardingPager())
-                : const MaterialPage(child: OnboardingPager()),
-          ),
-          GoRoute(
-            path: home,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? const CupertinoPage(child: HomeScreen()) : const MaterialPage(child: HomeScreen()),
-          ),
-          GoRoute(
-            path: register,
-            pageBuilder: (context, state) => Platform.isIOS
-                ? const CupertinoPage(child: RegistrationScreen())
-                : const MaterialPage(child: RegistrationScreen()),
-          ),
-          GoRoute(
-            path: resetPassword,
-            pageBuilder: (context, state) => Platform.isIOS
-                ? const CupertinoPage(child: ResetPasswordScreen())
-                : const MaterialPage(child: ResetPasswordScreen()),
-          ),
-          GoRoute(
-            path: profile,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? CupertinoPage(child: ProfileScreen()) : MaterialPage(child: ProfileScreen()),
-          ),
-          GoRoute(
-            path: myPurchases,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? CupertinoPage(child: MyPurchasesScreen()) : MaterialPage(child: MyPurchasesScreen()),
-          ),
-          GoRoute(
-            path: unlock,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? CupertinoPage(child: UnlockScreen()) : MaterialPage(child: UnlockScreen()),
-          ),
-          GoRoute(
-            path: settings,
-            pageBuilder: (context, state) =>
-                Platform.isIOS ? CupertinoPage(child: SettingsScreen()) : MaterialPage(child: SettingsScreen()),
-          ),
-          GoRoute(
-            path: languageSelection,
-            pageBuilder: (context, state) => Platform.isIOS
-                ? CupertinoPage(child: LanguageSelectionScreen())
-                : MaterialPage(child: LanguageSelectionScreen()),
-          )
+          GoRoute(path: onboarding, builder: (context, state) => const OnboardingPager()),
+          GoRoute(path: register, builder: (context, state) => const RegistrationScreen()),
+          GoRoute(path: login, builder: (context, state) => const LoginScreen()),
+          GoRoute(path: resetPassword, builder: (context, state) => const ResetPasswordScreen()),
+          GoRoute(path: home, builder: (context, state) => const HomeScreen()),
+          GoRoute(path: profile, builder: (context, state) => const ProfileScreen()),
+          GoRoute(path: myPurchases, builder: (context, state) => MyPurchasesScreen()),
+          GoRoute(path: unlock, builder: (context, state) => UnlockScreen()),
+          GoRoute(path: settings, builder: (context, state) => SettingsScreen()),
+          GoRoute(path: languageSelection, builder: (context, state) => LanguageSelectionScreen()),
+          GoRoute(path: resetPassword, builder: (context, state) => const ResetPasswordScreen()),
+
+          GoRoute(path: test, builder: (context, state) => const CITestScreen()),
         ],
         errorBuilder: (context, state) => ErrorCommonScreen(
               exception: state.error,
@@ -174,3 +75,7 @@ class Routing {
     return _instance!;
   }
 }
+
+enum TransitionDirection { up, down, left, right }
+
+

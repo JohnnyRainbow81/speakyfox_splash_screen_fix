@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
-import 'package:speakyfox/app/utilities.dart';
-import 'package:speakyfox/presentation/common/resources/color_assets.dart';
-import 'package:speakyfox/presentation/common/resources/image_assets.dart';
 import 'package:speakyfox/presentation/common/widgets/hint.dart';
 import 'package:speakyfox/presentation/screens/authentication/authentication_viewmodel.dart';
 import 'package:speakyfox/presentation/screens/authentication/common/logo.dart';
@@ -39,21 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //If user is logged in when starting the app she gets directly transfered to home screen
-      if (_authenticationViewModel.isLoggedIn) {
-        goToHomeScreen();
-      }
-    });
-
-    _emailController.text = _authenticationViewModel.email;
-    _passwordController.text = _authenticationViewModel.password;
-
-    _emailController.addListener(() => _authenticationViewModel.validateEmail(_emailController.text));
-    _passwordController.addListener(() => _authenticationViewModel.validatePassword(_passwordController.text));
+    _emailController.text = _authenticationViewModel.emailLogin;
+    _passwordController.text = _authenticationViewModel.passwordLogin;
 
     _scrollController = ScrollController();
-    _authenticationViewModel.reset();
 
     _node.addListener(onTextFieldFocus);
   }
@@ -61,12 +47,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void dispose() {
     debugPrint("LoginScreen.dispose()");
-    _emailController.removeListener(() => _authenticationViewModel.validateEmail);
-    _passwordController.removeListener(() => _authenticationViewModel.validatePassword);
 
     _emailController.dispose();
     _passwordController.dispose();
     _scrollController.dispose();
+
     _node.removeListener(onTextFieldFocus);
     _node.dispose();
 
@@ -106,8 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      disposeViewModel: false,
       viewModelBuilder: () => _authenticationViewModel,
+      disposeViewModel: false,
       builder: (context, _, child) {
         debugPrint("LoginScreen.builder() ");
 
@@ -121,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
             }
           });
         }
+        
         return Scaffold(
           body: Center(
             child: Padding(
@@ -155,12 +141,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                 autofillHints: const [AutofillHints.email],
                                 decoration: InputDecoration(
                                   hintText: "E-Mail",
-                                  errorText: _authenticationViewModel.emailError,
+                                  errorText: _authenticationViewModel.emailLoginError,
                                   prefixIcon: const Icon(Icons.email),
                                 ),
                                 controller: _emailController,
                                 textInputAction: TextInputAction.next,
-                                onEditingComplete: _node.nextFocus,
+                                onChanged: (email) => _authenticationViewModel.validateEmailLogin(email),
+                                enableSuggestions: true,
+                                onEditingComplete: (() {
+                                  _emailController.text = _authenticationViewModel.emailLogin;
+                                  _node.nextFocus();
+                                }),
                               ),
                               const SizedBox(
                                 height: 24,
@@ -172,15 +163,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 autofillHints: const [AutofillHints.password],
                                 decoration: InputDecoration(
                                     hintText: "Passwort",
-                                    errorText: _authenticationViewModel.passwordError,
+                                    errorText: _authenticationViewModel.passwordLoginError,
                                     errorMaxLines: 8,
                                     prefixIcon: const Icon(Icons.key)),
                                 controller: _passwordController,
+                                onChanged: (password) => _authenticationViewModel.validatePasswordLogin(password),
                                 onEditingComplete: () {
+                                  _passwordController.text = _authenticationViewModel.passwordLogin;
                                   _node.unfocus();
                                 },
                               ),
-
                               _authenticationViewModel.isLoggedIn
                                   ? const Hint("Login erfolgreich!")
                                   : const SizedBox.shrink(),
