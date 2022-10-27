@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:speakyfox/presentation/common/widgets/errors/error_common_screen.dart';
-import '../presentation/common/resources/themes.dart';
-import '../presentation/common/routing.dart';
+import 'package:speakyfox/presentation/test_screen.dart';
 
 class SpeakyFox extends StatelessWidget {
   const SpeakyFox._();
@@ -13,10 +11,10 @@ class SpeakyFox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(),
-      routerConfig: Routing.instance,
+      initialRoute: "test",
+      routes: {"test": (context) => TestScreen()},
       // builder: (ctx, widget) {
       //   //Building an error widget to show to the user if a build()-method fails
       //   Widget error = const ErrorCommonScreen();
